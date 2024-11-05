@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация пользователя</title>
+    <style>
+        /* Основные стили */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .container h1 {
+            font-size: 24px;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            font-size: 14px;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input[type="email"],
+        .input-group input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input[type="email"]:focus,
+        .input-group input[type="password"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .checkbox-group {
+            text-align: left;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #218838;
+        }
+
+        .terms-link {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .terms-link:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Регистрация</h1>
+        
+        <!-- Поле ввода для электронной почты -->
+        <div class="input-group">
+            <label for="email">Электронный адрес</label>
+            <input type="email" id="email" placeholder="Введите ваш email" required>
+        </div>
+        
+        <!-- Поле ввода для пароля -->
+        <div class="input-group">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" placeholder="Введите ваш пароль" required>
+        </div>
+        
+        <!-- Чекбокс для согласия на обработку данных -->
+        <div class="checkbox-group">
+            <input type="checkbox" id="consent" required>
+            <label for="consent">Я согласен на <a href="#" class="terms-link">обработку персональных данных</a></label>
+        </div>
+        
+        <!-- Кнопка регистрации -->
+        <div class="button-container">
+            <button class="button">Зарегистрироваться</button>
+        </div>
+    </div>
+</body>
+</html>
+
