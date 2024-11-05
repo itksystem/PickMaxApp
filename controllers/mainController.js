@@ -5,6 +5,7 @@ var   exphbs  = require('express-handlebars');              // Шаблоны
 const version = '1.0.0'
 const { DateTime } = require('luxon');
 const SERVER_ERROR_MSG = 'Server error';
+require('dotenv').config();
 
 
 

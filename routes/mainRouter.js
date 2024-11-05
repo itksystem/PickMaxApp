@@ -4,6 +4,9 @@ const { registration, logon, logout, health, showcase, profile, basket, orders,
     outService, getOrder, createOrderSuccess, createOrderError,
     registrationConfirm, registrationSuccess,  registrationDecline} = require('../controllers/mainController');
 const authMiddleware = require('openfsm-middlewares-auth-service');
+const fetch = require('node-fetch');
+const AuthServiceClientHandler = require("openfsm-auth-service-client-handler");
+const authClient = new AuthServiceClientHandler();
 
 // сюда идем без проверки токена 
 router.get('/registration', registration);  // регистрация
@@ -25,6 +28,20 @@ router.get('/orders', authMiddleware.authenticateToken, orders);    // доба�
 router.get('/order/:id', authMiddleware.authenticateToken, getOrder); // удаление из корзины товара
 router.get('/order/create-succes', authMiddleware.authenticateToken, createOrderSuccess); // заказ создан успешно
 router.get('/order/create-error', authMiddleware.authenticateToken, createOrderError); // заказ не создан
+
+
+
+router.post('/api/auth/v1/login', async function (request, response) {
+    const { email, password } = request.body;
+    const res = await authClient.login(email, password);
+    if (res.success) {
+        response.status(200).json(res.data);
+    } else if (res.status) {
+        response.status(res.status).json(res.data);
+    } else {
+        response.status(500).json({ error: res.error || 'Неизвестная ошибка' });
+    }
+});
 
 
 module.exports = router;

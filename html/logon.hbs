@@ -113,11 +113,46 @@
         
         <!-- Кнопка авторизации -->
         <div class="button-container">
-            <button class="button">Войти</button>
+            <button class="button" onclick="login()">Войти</button>
         </div>
         
         <!-- Ссылка на восстановление пароля -->
         <a href="#" class="forgot-password">Забыли пароль?</a>
     </div>
+
+    <script>
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Проверка, чтобы поля не были пустыми
+            if (!email || !password) {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
+
+            // Выполнение AJAX-запроса для авторизации
+            fetch('/api/auth/v1/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email, password: password })
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    // Успешная авторизация
+                    window.location.href = '/showcase';
+                } else {
+                    // Ошибка авторизации
+                    window.location.href = '/logon-failed';
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка при авторизации:', error);
+                window.location.href = '/logon-failed';
+            });
+        }
+    </script>
 </body>
 </html>
