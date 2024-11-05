@@ -1,0 +1,173 @@
+/* Сброс стилей по умолчанию */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Стили для заголовка */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #e1e1e1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: top 0.3s ease-in-out;
+}
+
+.header__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+
+.header__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.header__menu-item a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.header__balance a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.header__currency {
+    position: relative;
+    cursor: pointer;
+}
+
+.currency__dropdown {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1001;
+}
+
+.header__currency:hover .currency__dropdown {
+    display: block;
+}
+
+.currency__dropdown label {
+    display: block;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.header__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.header__logo img {
+    height: 50px;
+}
+
+.header__nav {
+    display: flex;
+}
+
+.header__nav-list {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.header__nav-item a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.header__search {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: -webkit-fill-available;
+}
+
+.header__search input {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.header__search button {
+    padding: 6px 10px;
+    border: none;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.header__burger {
+    display: none;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+/* Адаптивные стили */
+@media (max-width: 240px) {
+    .header__top {
+        display: none;
+    }
+
+    .header__nav {
+        display: none;
+    }
+
+    .header__burger {
+        display: block;
+    }
+
+    .header__search {
+        display: none;
+    }
+
+    /* Мобильное меню при открытии */
+    .header--mobile-menu-open .header__nav {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .header__nav-list {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

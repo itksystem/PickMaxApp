@@ -1,0 +1,68 @@
+  <div class="card scrollbar-inner" style="display: inline-flex;">
+    <div class="card-body" style="padding: 1rem 1rem 1rem 1rem;">
+   <table id="table_id" name="table_id" class="table table-striped table-bordered" style="width:100%; font-size:13px; padding: 5px;">
+    <thead>
+        <tr class="header-first" >
+            <th style='width:60px; padding-right:0px; text-align: center;'>Заявка</th>
+            <th style='width:60px; padding-right:0px;text-align: center;'>Внешняя заявка</th>
+            <th style='max-width:60px; padding-right:0px;text-align: center;'>Дата закрытия</th>
+            <th style='max-width:60px; padding-right:0px;text-align: center;'>Время присутствия</th>
+            <th style='width:180px; padding-right:0px;text-align: center;'>Сотрудник</th>
+            <th style='width:180px; padding-right:0px;text-align: center;'>Группа</th>
+            <th style='width:60px; padding-right:0px;text-align: center;'>MID</th>
+            <th style='width:30px; padding-right:0px;text-align: center;'>Дистанция</th>
+            <th style='width:30px; padding-right:0px;text-align: center;'>Транспорт</th>
+            <th style='width:200px; padding-right:0px;text-align: center;'>Код обьекта</th>
+            <th style='width:280px; padding-right:0px;text-align: center;'>Согласование</th>
+            <th style='max-width:60px; padding-right:0px;text-align: center;'>C</th>
+            <th style='max-width:60px; padding-right:0px;text-align: center;'>R</th>
+            <th style='max-width:60px; padding-right:0px;text-align: center;'>T</th>
+        </tr>
+    </thead>
+    <thead>
+        <tr class="header-second" >
+            <th style='padding:5px;'><div style="display: inline-flex;"><input  class="text" id="id" name="id" placeholder='id'><span  class='clear' for='id' aria-hidden="true" style="color: #000;cursor: pointer; padding-top: 10px;">×</span></div></th>
+            <th style='padding:5px;'><div style="display: inline-flex;"><input  class="text" id="ext_id" name="ext_id" placeholder='ext_id'><span  class='clear' for='ext_id' aria-hidden="true" style="color: #000;cursor: pointer; padding-top: 10px;">×</span></div></th>
+            <th style='padding:5px;'><div style="display: inline-flex;"><input  class="datetime" id="finishdate" name="finishdate"  placeholder=' '><span  class='clear' for='finishdate'  aria-hidden="true" style="color: #000;cursor: pointer; padding-top: 10px;">×</span></div></th>
+            <th style='padding:5px;'><div style="display: inline-flex;"><input  class="datetime" id="triptime" name="tripTime" placeholder=' '><span class='clear' for='triptime' aria-hidden="true" style="color: #000;cursor: pointer; padding-top: 10px;">×</span></div></th>
+            <th style='padding:5px;'><div style="display: inline-flex;">
+	 		<div class="servicecalls-person"></div>
+			   <span  class='clear' for='person' aria-hidden="true" style="color: #000;cursor: pointer; padding-top: 10px;">×</span>
+			</div>
+		</th>
+            <th style='padding:5px;'><div style="display: inline-flex;"><div class="servicecalls-group"></div><span  class='clear' for='group' aria-hidden="true" style="color: #000;cursor: pointer; padding-top: 10px;">×</span></div></th>
+            <th style='padding:5px; text-align: center; vertical-align: middle;'><div style="display: inline-flex;"><div class="servicecalls-mid"><i class="fa fa-street-view"></i></div></div></th>
+            <th style='padding:5px; text-align: center; vertical-align: middle;'><div style="display: inline-flex;"><div class="servicecalls-distance"><i class="fa fa-road"></i></div></div></th>
+            <th style='padding:5px; text-align: center; vertical-align: middle;'>
+  		<div style="display: inline-flex; width: -webkit-fill-available;">	
+			<div class="servicecalls-mode"></div> 	   	      
+		       <span class='clear' for='servicecalls-mode' aria-hidden="true" style="color: #000;cursor: pointer; padding-top: 10px;">×</span>
+		</div>
+	    </th>
+            <th style='padding:5px;'><div style="display: inline-flex; width: -webkit-fill-available;"><input class="text"  id="search_code" name="search_code"  placeholder='Код обьекта' style="width:100%;"><span class='clear' for='searchCode' aria-hidden="true" style="color: #000;cursor: pointer; padding-top: 10px;">×</span></div></th>
+            <th style='padding:5px; display: inline-flex; width: -webkit-fill-available;'>
+		<div style="display: inline-flex; width: -webkit-fill-available;">	
+ 	   	  <select class="select" id="agreement" placeholder="" style="display: inline-flex; width: -webkit-fill-available;">
+		    <option value="" >Все запросы</option>
+		    <option value="0" >В обработке</option>
+		    <option value="-1">Нет транспортных расходов</option>
+		    <option value="1" >Транспортные расходы учтены</option>
+		  </select>
+	       <span class='clear' for='agreement' aria-hidden="true" style="color: #000;cursor: pointer; padding-top: 10px;">×</span></div>
+   	  </th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+       </tbody>
+     </table>
+    </div>
+   </div>
+ </div>
+  <!-- /.card-body -->
+   </div>
+
+<script src="/main/js/ui/ui.servicecalls.grid.js"></script>

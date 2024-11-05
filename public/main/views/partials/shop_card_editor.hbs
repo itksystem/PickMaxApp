@@ -1,0 +1,149 @@
+<div class="w-100">
+<div class="row">
+	<input type=hidden id="product_id" value="{{productCard.product_id}}">
+	<input type=hidden id="product_image_url" >
+</div>
+<div class="row">
+    <div class="w-100 card_editor_panel"></div>	    
+</div>
+<div class="row">
+   <div class="card card-editor w-100" >
+	<div class="card-header p-0 border-bottom-0">
+		<ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+			 <li class="nav-item">
+			   <a class="nav-link active" id="custom-tabs-four-description-tab" data-toggle="pill" href="#custom-tabs-four-description" role="tab" aria-controls="custom-tabs-four-description" aria-selected="false"><h2>Описание</h2></a>
+			 </li>
+			 <li class="nav-item">
+			   <a class="nav-link" id="custom-tabs-four-media-tab" data-toggle="pill" href="#custom-tabs-four-media" role="tab" aria-controls="custom-tabs-four-media" aria-selected="true"><h2>Изображения</h2></a>
+			 </li>
+			 <li class="nav-item">
+			   <a class="nav-link" id="custom-tabs-four-control-tab" data-toggle="pill" href="#custom-tabs-four-control" role="tab" aria-controls="custom-tabs-four-control" aria-selected="true"><h2>Управление</h2></a>
+			 </li>
+		</ul>
+	</div>
+       <div class="card-body">
+	<div class="tab-content" id="custom-tabs-four-tabContent">
+		<div class="tab-pane fade active show" id="custom-tabs-four-description" role="tabpanel" aria-labelledby="custom-tabs-four-description-tab">
+<!-- описание -->
+	<div class="row">
+	  <div class="col-6" style="margin-bottom: 0.5rem!important;">
+{{#ifEquals shop.category_id "JOBS" }}
+		  <h2>Должность</h2>
+{{else}}
+		  <h2>Название</h2>
+{{/ifEquals}}
+
+
+		</div>
+	</div>
+	<div class="row input-group  w-100">
+  	   	  <div class="col" style="margin-bottom: 0.5rem!important;">
+		  	  <textarea id ="title" rows=3 class="form-control" 
+   			     placeholder = "Введите название товара или услуги">{{productCard.title}}</textarea>
+		 </div>
+	</div>	
+	<div class="row input-group w-100">
+		  <div class="col-4" style="margin-bottom: 0.5rem!important;">
+{{#ifEquals shop.category_id "JOBS" }}
+       			<h2>Оклад </h2>
+{{else}}
+			<h2>Цена</h2>
+{{/ifEquals}}
+            	  </div>
+  	   	  <div class="col-6" style="margin-bottom: 0.5rem!important;">
+		  	  <input type="number" id ="price"  class="form-control" placeholder = "Введите цену"	
+			value="{{productCard.price}}">
+		 </div>
+  	   	  <div class="col-2" style="margin-bottom: 0.5rem!important; font-size: x-large;">₽</div>
+	</div>	
+	<div class="row">
+		  <div class="col-6" style="margin-bottom: 0.5rem!important;">
+			  <h2>Описание</h2>
+		</div>
+	</div>
+	<div class="row input-group  w-100">
+                 <div class="col" style="margin-bottom: 0.5rem!important;">
+			<textarea  id="description" rows=15 class="form-control editor-textarea" 
+   			     placeholder = "Введите описание товара">{{productCard.description}}</textarea>
+		</div>
+	</div>	
+
+
+<!-- описание -->
+</div>
+  <div class="tab-pane fade" id="custom-tabs-four-media" role="tabpanel" aria-labelledby="custom-tabs-four-media-tab">
+   <!-- медиа -->
+    <div class="row">
+       <div class="col w-100" ><h2>Галерея изображений</h2></div> 
+    </div>
+     <div class="card-media-component"></div> 
+    <!-- медиа -->
+ </div>
+
+<!-- Управление  -->
+<div class="tab-pane fade" id="custom-tabs-four-control" role="tabpanel" aria-labelledby="custom-tabs-four-control-tab">
+ <div class="row">
+	  <div class="col w-100" ><h2>Управление изображениями</h2></div> 
+ </div>
+ <div class="row">
+	<div class="col">
+		<div class="form-group">
+			<div class="form-check">
+				<input class="form-check-input" type="radio" 
+					{{#ifEquals productCard.image_transition "none"}}
+						  checked="checked"
+					{{/ifEquals}}
+					id="image-view-transition-type" name="image-view-transition-type" value="none">
+				<label class="form-check-label">Отключено</label>
+			</div>
+			<div class="form-check">
+				<input class="form-check-input" type="radio"
+					{{#ifEquals productCard.image_transition "slide"}}
+						  checked="checked"
+					{{/ifEquals}}                   
+					 id="image-view-transition-type" name="image-view-transition-type" value="slide">
+				<label class="form-check-label">Слайдинг</label>
+			</div>
+			<div class="form-check">
+				<input class="form-check-input" type="radio"
+					{{#ifEquals productCard.image_transition "crossfade"}}
+						  checked="checked"
+					{{/ifEquals}}                   
+					 id="image-view-transition-type" name="image-view-transition-type" value="crossfade">
+				<label class="form-check-label">Проявление</label>
+			</div>
+		</div>
+	</div>
+   </div>
+
+ <div class="row">
+	<div class="col">
+		<div class="form-group">
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" 
+					{{#ifEquals productCard.image_loop  "1"}}
+						  checked="checked"
+					{{/ifEquals}}                   
+					id="image-view-transition-loop" name="image-view-transition-loop" >
+				<label class="form-check-label">Повторять отображение картинок</label>
+			</div>
+		</div>
+	</div>
+   </div>
+
+</div>
+<!-- Управление  -->
+
+    	  </div>
+      </div>
+   </div>
+ </div>
+</div>
+ <div class="row">
+	<div class="col">
+	    <div class="card-editor-save-btn-contaner"></div>
+	</div>
+ </div>
+
+
+<script src="/main/pages/telegram/jobs/js/shop_card_editor.js"></script>

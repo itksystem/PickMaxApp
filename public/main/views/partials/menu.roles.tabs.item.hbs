@@ -1,0 +1,46 @@
+<div class="tab-content" id="custom-tabs-one-tabContent">
+          <div class="card" >
+              <div class="card-header">
+                <h3 class="card-title">Доступ к ролям</h3>
+                <div class="clearfix profile-access-roles-navigation" ></div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+               <div class="row">
+	               	<div class="col-sm">		  	
+			<button type="button" href="#" class="btn float-left btn-outline-primary new-role-add-btn" style="margin: 0 0 2rem 0;"><i class="fas p-1 fa-plus"></i>Добавить роль</button>
+	                </div>	
+                </div>	
+               <div class="row">
+                	<div class="col-sm">		  	
+        	             <div class="new-role-add-element d-flex"></div>
+	                </div>	
+                </div>	
+
+                <table class="table table-bordered profile-access-roles shadow">
+                  <thead>
+                    <tr>
+                      <th style="width: 10px; vertical-align: middle;">#</th>
+                      <th>Организация<br><br><select class="group-access-roles-names-filter form-control"  style="height: 2rem;"><option selected></option></select></th>
+                      <th style="width: 40px">ON/OFF<br><br></th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix profile-access-roles-navigation" ></div>
+
+  <hr>
+	<div class="callout callout-info" style="margin: 0rem 1rem 1rem 1rem;">
+		<p><b>{{labels.dialogChangeRolesTab.object_roles_description}}</b></br></br></p>
+		<p style='width: 85%;'>{{labels.dialogChangeRolesTab.object_roles_analyst}}</p>
+		<p style='width: 85%;'>{{labels.dialogChangeRolesTab.object_roles_coordinator}}</p>
+		<p style='width: 85%;'>{{labels.dialogChangeRolesTab.object_roles_manager}}</p>
+		<p style='width: 85%;'>{{labels.dialogChangeRolesTab.object_roles_security}}</p>
+		<p style='width: 85%;'></br>{{labels.dialogChangeRolesTab.object_roles_title}}</p>
+
+	</div>
+
+     </div>
+  </div>

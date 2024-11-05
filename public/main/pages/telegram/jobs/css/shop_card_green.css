@@ -1,0 +1,232 @@
+:root {
+  --menu-backgroupd-color : #1d925e;
+  --menu-article-background-color : #1d925e;
+  --menu-article-background-color-hover : #fa635e;
+  --menu-bottom-line-color: #1d925e;
+  --menu-title-color: #ffffff;
+  --shop_card__price--common-background-color : #fff762;
+  --shop_card__price--common-color : #1d925e;
+  --shop_page_title : #1d925e; 
+  --username-color: #0a0081;
+  --primary-color: white;
+  --secondary-color: #e74c3c;
+  --font-size: 0.5em;
+  --border-width: 0px;
+  --shop-button: #1d925e;
+  --promo-body-color : #ffffff;
+  --about-body-background-color : #ffffff;
+  --body-color : #303030;
+  --menu-item-size : 18%;
+  --menu-shop_basket_view-item-font-size : 0.7rem;
+  --menu-item-font-size: 0.6rem;
+  --menu-item-font-size2: 0.6rem;
+  --shop-page-title-font-size: 1.2rem;
+  --shop_card__title : #414141;
+  --shop_card__warning : #1d925e;
+  --shop_cards-background-color : #ffffff;
+  --shop_status_min_width : 10%;
+}
+
+.sidebar-box-title-closer-style {
+    color: var(--menu-backgroupd-color);
+}
+
+.sidebar-box-style {
+    border: 2px solid var(--menu-backgroupd-color);
+}
+
+.btn-card-add {
+    background-color: var(--menu-backgroupd-color); 
+}
+
+
+h1, h2, h3, h4, h5 {
+    color: var(--menu-article-background-color);
+}
+
+warning {
+    width: 100%;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--shop_card__warning);
+    padding: 0.3rem;
+    text-align : center;
+    position : absolute;	
+}
+
+.card_page_title{
+    width: max-content;
+    font-weight: 600;
+    font-size: var(--shop-page-title-font-size);
+    text-align: left;
+    color: var(--shop_page_title);
+    text-decoration: underline;
+}
+
+.page_title{
+    font-size: var(--shop-page-title-font-size);
+    color: var(--shop_page_title);
+}
+
+.page_title_row{
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 2px solid var(--menu-backgroupd-color);
+    padding: 0 1rem;
+}
+
+
+.page_article{
+    width: max-content;
+    font-weight: 600;
+    text-align: left;
+    color: var(--shop_page_title);
+    text-decoration: underline;
+    margin: 0.4rem 0;
+}
+
+
+p, p ul, ul {
+  color: var(--body-color);
+}
+
+.hint{
+   color: var(--tg-theme-hint-color);
+}
+
+.link{
+   color: var(--tg-theme-link-color);
+}
+
+
+body.promo{
+    background-color: var(--promo-body-color);
+}
+
+body.showcase, body.about, body.logistic, body.basket, body.orders{
+    background-color: var(--about-body-background-color);
+}
+
+.shop_cards{
+ background-color : var(--shop_cards-background-color);
+ margin: auto;
+}
+
+.shop_card_shop_enter_button{
+ color: var(--primary-color);
+ background-color: var(--shop-button);
+}
+
+.shop {
+  border-bottom: 0px solid var(--menu-bottom-line-color);
+  background-color: var(--menu-backgroupd-color);
+}                
+
+
+div.shop_promo {
+ font-size: var(--menu-shop_basket_view-item-font-size);
+ color: var(--primary-color);
+}
+
+div.shop_about, div.shop_logistic, div.shop_showcase, div.shop_orders, div.shop_basket, div.shop_logistic, div.shop_profile {
+ font-size: var(--menu-shop_basket_view-item-font-size);
+ color: var(--primary-color);
+}    
+                           
+div.shop_basket_view{
+ font-size: var(--menu-shop_basket_view-item-font-size);
+ color: var(--primary-color);
+}
+
+.shop_about_btn,
+.shop_basket_btn, 
+.shop_logistic_btn,
+.shop_showcase_btn,
+.shop_profile_btn,
+.shop_orders_btn  {
+  font-size: var(--menu-item-font-size);
+  color: var(--primary-color);
+  background-color: var(--menu-article-background-color);
+}
+
+.shop_about_btn:hover,
+.shop_logistic_btn:hover,
+.shop_basket_btn:hover,
+.shop_showcase_btn:hover,
+.shop_profile_btn:hover,
+.shop_orders_btn:hover
+{
+  color: var(--menu-title-color);
+}                
+
+.shop_promo_btn {
+  display: block;
+  float: left;
+  width : auto;
+  padding: 0.5rem;
+  font-weight: 400;
+  border : 0px;
+  text-align: center;
+  cursor: pointer; /* Меняем курсор при наведении */
+  margin-top: auto; /* Прижимаем кнопку к низу карточки */
+  transition: filter 0.3s ease; /* Добавляем анимацию с плавным переходом */
+}
+
+.shop_promo_btn:hover {
+  color: var(--menu-title-color);
+}                
+
+/******************** Продуктовая карта *************************/
+.product_card__title{
+  color: var(--shop_card__title);
+}
+
+.product_card__description{
+  color: var(--shop_card__title);
+}
+
+/* --------------------------------------------------------- */
+.shop_card__price--common {
+    color: var(--shop_card__price--common-color);
+    background-color: var(--shop_card__price--common-background-color);
+    border: 2px solid var(--shop_card__price--common-color);
+}
+
+.shop_card__title {
+    color: var(--shop_card__title);
+}
+
+.shop_card__add {
+  color: var(--primary-color);
+  background-color: var(--shop-button);
+}
+
+/************** Карточка заказа ********************************************************/
+div.row{
+    color: var(--body-color); 
+}
+
+/* Корзина  */
+.profile_system_params,.shop_orders_agreement,
+.delivery_firstname,.delivery_lastname,.delivery_username, .delivery_address, .delivery_phone, .logistic_editor_textarea {
+    color: var(--username-color); 
+}
+
+/***************************************************************************************/
+
+.shop_title {
+    color: var(--menu-article-background-color);
+}
+
+
+.shop_map_title{
+    color: var(--menu-article-background-color);
+}
+
+.profile-field-title {
+    color: var(--menu-backgroupd-color);
+}
+
+.card-thumbtack {
+    color: var(--menu-backgroupd-color);
+}

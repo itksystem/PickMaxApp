@@ -1,0 +1,33 @@
+<div class="wrapper">   
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-none card-tabs">
+              <div class="card-header p-0 pt-1">
+                 {{>menu.objects.tabs}}
+               </div>
+               <div class="card-body" id="output" style='overflow: auto;'>
+		  <div class="saved-route-alert-message alert alert-dismissible" style="padding: 0.3rem 0.4rem; margin: 0 1.5rem  0 1.5rem;; display: none;">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<h5>
+				     <i class="icon fas fa-exclamation-triangle"></i><span>На карте показан ранее сохраненный трек!</span><br>
+				     <span style="color:{{SAVED_ROUTE_COLOR}}; font-weight: bold;">Таким цветом выделен сохраненный трек сотрудника,</span>
+				     <span style="color:{{AUTO_ROUTE_COLOR}};  font-weight: bold;"> а этим цветом выделен трек прогнозируемый системой.</span>
+				     <span class="saved-route-alert-message-properties" 
+					style="padding-left: 1rem; cursor:pointer; font-weight: bold; text-decoration: underline; ">Подробнее...</span>
+				</h5>
+
+
+		   </div>                                                           
+               	  {{>menu.object.tabs.item}}
+                </div>
+              </div>
+             </div>
+           </div>
+      </div>
+    </section>
+  </div>
+<script src="/main/js/objects/profile.object.properties.js"></script>
+<script type="text/javascript"> $('[data-toggle="tooltip"]').tooltip(); </script>
+

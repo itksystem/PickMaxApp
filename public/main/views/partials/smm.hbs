@@ -1,0 +1,85 @@
+<form id='smm-publish-editor-dialog-form' name='smm-publish-editor-dialog-form'>
+<div class="wrapper">   
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class=" card-none card-tabs">
+              <div class="card-header p-0 pt-1">
+                <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="custom-tabs-one-1-tab" data-toggle="pill" href="#custom-tabs-one-1" role="tab" aria-controls="custom-tabs-one-1" aria-selected="true" 
+			flux='true' flux-event-name='call-dialog-1-click' flux-event-code='call-properties'>Публикация</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link " id="custom-tabs-one-2-tab" data-toggle="pill" href="#custom-tabs-one-2" role="tab" aria-controls="custom-tabs-one-1" aria-selected="true" 
+			flux='true' flux-event-name='call-dialog-2-click' flux-event-code='smm-text-tabs-item'>Фото & видео</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link " id="custom-tabs-one-3-tab" data-toggle="pill" href="#custom-tabs-one-3" role="tab" aria-controls="custom-tabs-one-1" aria-selected="true" 
+			flux='true' flux-event-name='call-dialog-3-click' flux-event-code='smm-group-tabs-item'>Группы</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link " id="custom-tabs-one-4-tab" data-toggle="pill" href="#custom-tabs-one-4" role="tab" aria-controls="custom-tabs-one-1" aria-selected="true" 
+			flux='true' flux-event-name='call-dialog-4-click' flux-event-code='smm-buttons-tabs-item'>Кнопки</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link " id="custom-tabs-one-5-tab" data-toggle="pill" href="#custom-tabs-one-5" role="tab" aria-controls="custom-tabs-one-1" aria-selected="true" 
+			flux='true' flux-event-name='call-dialog-5-click' flux-event-code='smm-tags-tabs-item'>Тэги</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link " id="custom-tabs-one-6-tab" data-toggle="pill" href="#custom-tabs-one-6" role="tab" aria-controls="custom-tabs-one-1" aria-selected="true" 
+			flux='true' flux-event-name='call-dialog-6-click' flux-event-code='smm-links-tabs-item'>Ссылки</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link " id="custom-tabs-one-7-tab" data-toggle="pill" href="#custom-tabs-one-7" role="tab" aria-controls="custom-tabs-one-1" aria-selected="true" 
+			flux='true' flux-event-name='call-dialog-7-click' flux-event-code='smm-watermark-tabs-item'>Watermark</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link " id="custom-tabs-one-8-tab" data-toggle="pill" href="#custom-tabs-one-8" role="tab" aria-controls="custom-tabs-one-1" aria-selected="true" 
+			flux='true' flux-event-name='call-dialog-8-click' flux-event-code='smm-time-tabs-item'>Время публикации</a>
+                  </li>
+                </ul>
+
+
+               <div class="card-body smm-publish-editor" id="output" call-id={{callId}} style="padding: 0rem 1.25rem 0rem 1.25rem;">
+		<div class="tab-content" id="custom-tabs-one-tabContent">
+		      <div class="tab-pane fade show active" id="custom-tabs-one-1" role="tabpanel" aria-labelledby="custom-tabs-one-1-tab" style="padding-left: 1rem;">
+	               	  {{>smm.text.tabs.item}}
+		      </div>
+		      <div class="tab-pane" id="custom-tabs-one-2" role="tabpanel" aria-labelledby="custom-tabs-one-2-tab" style="padding-left: 1rem;">
+	               	  {{>smm.media.tabs.item}}
+		      </div>
+		      <div class="tab-pane" id="custom-tabs-one-3" role="tabpanel" aria-labelledby="custom-tabs-one-3-tab" style="padding-left: 1rem;">
+	               	  {{>smm.group.tabs.item}}
+		      </div>
+		      <div class="tab-pane" id="custom-tabs-one-4" role="tabpanel" aria-labelledby="custom-tabs-one-4-tab" style="padding-left: 1rem;">
+	               	  {{>smm.buttons.tabs.item}}
+		      </div>
+		      <div class="tab-pane" id="custom-tabs-one-5" role="tabpanel" aria-labelledby="custom-tabs-one-5-tab" style="padding-left: 1rem;">
+	               	  {{>smm.tags.tabs.item}}
+		      </div>
+		      <div class="tab-pane" id="custom-tabs-one-6" role="tabpanel" aria-labelledby="custom-tabs-one-6-tab" style="padding-left: 1rem;">
+	               	  {{>smm.links.tabs.item}}
+		      </div>
+		      <div class="tab-pane" id="custom-tabs-one-7" role="tabpanel" aria-labelledby="custom-tabs-one-7-tab" style="padding-left: 1rem;">
+	               	  {{>smm.watermark.tabs.item}}
+		      </div>
+		      <div class="tab-pane" id="custom-tabs-one-8" role="tabpanel" aria-labelledby="custom-tabs-one-8-tab" style="padding-left: 1rem;">
+	               	  {{>smm.time.tabs.item}}
+		      </div>
+  	  	    </div>
+
+	           </div>
+                </div>
+              </div>
+             </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</form>
+<script src="/main/js/jquery.autocomplete.js"></script>
+<script src="/main/js/servicecalls/servicecalls.edit.js"></script>
+<script src="/main/js/servicecalls/servicecalls.edit.loader.js"></script>
+
+

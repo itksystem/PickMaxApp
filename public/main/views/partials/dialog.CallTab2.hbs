@@ -1,0 +1,149 @@
+﻿  <div class="row"><h3 class="callservice-title-article"> Данные подрядчика </h3> </div>	
+  <div class="row">
+	   <div class="col-sm-2 text-left"  style="padding-top: 0.3rem;"><label for="call-person" class="col-form-label font-weight-normal w-100 ">Сервисная организация</label></div>
+  	      <div class="col-sm-8">
+	         <div class="input-group mb-3" style="margin-bottom:0.5rem!important;">
+                    <div class="input-group-prepend"><span class="input-group-text" data-toggle="tooltip" data-placement="bottom" data-original-title="ORG">
+       	  			<i class="fas fa-user-friends"></i></span></div>  
+				<select class="form-control" 
+					id="call-org" 
+					name="call_org" 
+					maxlength="50"  placeholder="Организация" 
+					style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;">
+				 </select>
+  	            </div>		
+              </div>		               
+   	  </div>		
+       <div class="row">
+	   <div class="col-sm-2 text-left"  style="padding-top: 0.3rem;"><label for="call-person" class="col-form-label font-weight-normal w-100 ">Сервисная группа</label></div>
+  	      <div class="col-sm-8">
+	         <div class="input-group mb-3" style="margin-bottom:0.5rem!important;">
+                    <div class="input-group-prepend"><span class="input-group-text" data-toggle="tooltip" data-placement="bottom" data-original-title="GROUP">
+       	  			<i class="fas fa-user-friends"></i></span></div>  
+				<select class="form-control" 
+					id="call-workgroup" 
+					name="call_workgroup" 
+					maxlength="50"  placeholder="Группа" 
+					style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;">
+				 </select>
+  	            </div>		
+              </div>		               
+   	  </div>		
+
+
+       <div class="row">
+	   <div class="col-sm-2 text-left"  style="padding-top: 0.3rem;"><label for="call-person" class="col-form-label font-weight-normal w-100 ">Сотрудник</label></div>
+  	      <div class="col-sm-8">
+	         <div class="input-group mb-3" style="margin-bottom:0.5rem!important;">
+                    <div class="input-group-prepend"><span class="input-group-text" data-toggle="tooltip" data-placement="bottom" data-original-title="PERSNAME">
+       	  			<i class="fas fa-user"></i></span></div>  
+				<select class="form-control" 
+					id="call-person" 
+					name="call_person" 
+					maxlength="50"  placeholder="Категория обьекта" 
+					style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;">
+				 </select>
+  	            </div>		
+              </div>		               
+   	  </div>		
+
+
+
+       <div class="row">
+		   <div class="col-sm-2 text-left"  style="padding-top: 0.3rem;"><label for="call_mileage" class="col-form-label font-weight-normal w-100 ">Пробег пользователя (км)</label></div>
+		   <div class="col-sm-2">
+		        <div class="input-group mb-3" style="margin-bottom:0.5rem!important;">
+                 <div class="input-group-prepend"><span class="input-group-text" data-toggle="tooltip" data-placement="bottom" data-original-title="PROBEG">
+       		   	 <i class="fas fa-road"></i></span></div>   
+	                 <input id="call-mileage" name="call_mileage" class="form-control" maxlength="40" type=number
+				placeholder="{{labels.dialogChangeObjectTab1.probeg}}" 				
+			  	style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;" >             	  	               	  	  
+  	            </div>		
+              </div>		               
+	</div>		
+
+       <div class="row">
+	   <div class="col-sm-2 text-left"  style="padding-top: 0.3rem;"><label for="call_mode" class="col-form-label font-weight-normal w-100 ">Тип перемещения</label></div>
+  	      <div class="col-sm-4">
+	         <div class="input-group mb-3" style="margin-bottom:0.5rem!important;">
+                    <div class="input-group-prepend"><span class="input-group-text" data-toggle="tooltip" data-placement="bottom" data-original-title="Тип перемещения">
+       	  			<i class="fas fa-bus"></i></span></div>  
+				<select class="form-control" id="call-mode" name="call_mode" maxlength="50" placeholder="Тип транспорта" 
+					style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;">
+				 </select>
+  	            </div>		
+              </div>		               
+     	</div>		
+
+       <div class="row"><h3 class="callservice-title-article">Решение </h3> </div>	
+       <div class="row">
+  	      <div class="col-sm">
+	         <div class="input-group mb-3" style="margin-bottom:0.5rem!important;">
+		 <textarea id="call-solution" name="call_solution" 
+			class="form-control servicecall-textarea-scrollbar_10rem scrollbar-outer" rows="10" 
+			placeholder="Enter ..."  ></textarea>
+  	            </div>		
+              </div>		               
+     	</div>		
+
+  <div class="row"><h3 class="callservice-title-article"> Параметры для расчета пробега сотрудника в текущем маршрутном дне </h3> </div>	
+  <div class="row">
+    <div class="col-sm-6">
+
+  <div class="row">
+     <div class="col-sm">
+       <div class="row" style="padding: 1rem;">
+ 	     <div class="col-sm">
+                    <div class="custom-control custom-checkbox">
+                       <input id="start_local_address_exclude" name="start_local_address_exclude"  class="custom-control-input custom-control-input-danger"   type="checkbox">
+		       <label for="start_local_address_exclude" class="custom-control-label" style="font-weight: 500;">{{labels.dialogChangeCallTab2.start_local_address_exclude}}</label>
+  	            </div>		
+              </div>		               
+	</div>		
+
+       <div class="row" style="padding: 1rem;">
+ 	     <div class="col-sm">
+                    <div class="custom-control custom-checkbox">
+                       <input id="last_day_arrival_exclude" name="last_day_arrival_exclude"  class="custom-control-input custom-control-input-danger"   type="checkbox" >
+		       <label for="last_day_arrival_exclude" class="custom-control-label" style="font-weight: 500;">{{labels.dialogChangeCallTab2.last_day_arrival_exclude}}</label>
+  	            </div>		
+              </div>		        
+       </div>		
+
+       <div class="row" style="padding: 1rem;">
+ 	     <div class="col-sm">
+                    <div class="custom-control custom-checkbox">
+                       <input id="return_local_address_exclude" name="return_local_address_exclude"   class="custom-control-input custom-control-input-danger"   type="checkbox" >
+		       <label for="return_local_address_exclude" class="custom-control-label" style="font-weight: 500;">{{labels.dialogChangeCallTab2.return_local_address_exclude}}</label>
+  	            </div>		
+              </div>		        
+ 	 </div>		
+
+              </div>		        
+
+    <div class="col-sm-6">
+
+       <div class="row" style="padding: 1rem;">
+ 	     <div class="col-sm">
+                    <div class="custom-control custom-checkbox">
+                       <input id="start_local_address_include" name="start_local_address_include"   class="custom-control-input custom-control-input-success"   type="checkbox" >
+		       <label for="start_local_address_include" class="custom-control-label" style="font-weight: 500;">{{labels.dialogChangeCallTab2.start_local_address_include}}</label>
+  	            </div>		
+              </div>		        
+        </div>		
+       <div class="row" style="padding: 1rem;">
+ 	     <div class="col-sm">
+                    <div class="custom-control custom-checkbox">
+                       <input id="return_local_address_include" name="return_local_address_include"  class="custom-control-input custom-control-input-success"   type="checkbox" >
+		       <label for="return_local_address_include" class="custom-control-label" style="font-weight: 500;">{{labels.dialogChangeCallTab2.return_local_address_include}}</label>
+  	            </div>		
+              </div>		        
+   	  </div>		
+
+              </div>		        
+ 	 </div>		
+
+     </div>
+
+  </div>
+

@@ -1,0 +1,290 @@
+<div class="w-100" >
+ <div class="row">
+  <div class="col-sm">
+   <div class="row">
+    <div class="col-sm object-card-container">
+     <div class="col-sm text-center" style="box-shadow: 1px 1px 10px grey; padding-top: 5px; height:100%;">
+      <div class="row" style="height: 97.3%;  padding: 5px;">
+           <div id="map" class="container-fluid " style="width:100%; height:100%; min-height:{{mapSize}};"></div>
+      </div>
+   </div>
+</div>
+
+
+<div class="card container-fluid geozone-card-container right-menu-dialog">
+  <div class="card-body">
+    <ul class="nav nav-tabs" id="profile-user-tabs-one-tab" role="tablist">
+         <li class="nav-item">
+            <a class="nav-link active" id="profile-user-tabs-one-1-tab" data-toggle="pill" href="#profile-user-tabs-one-1" role="tab" aria-controls="profile-user-tabs-one-1" aria-selected="true" 
+		flux='true' flux-event-name='portal-article-click' flux-event-code='profile-self'>Основные</a>
+         </li>
+         <li class="nav-item">
+             <a class="nav-link" id="profile-user-tabs-one-2-tab" data-toggle="pill" href="#profile-user-tabs-one-2" role="tab" aria-controls="profile-user-tabs-one-2" aria-selected="false"
+		flux='true' flux-event-name='portal-article-click' flux-event-code='profile-groups'>Фото</a>
+         </li>
+   </ul>
+
+
+	<div class="tab-content" id="profile-user-tabs-one-tabContent">
+	   <div class="tab-pane fade show active" id="profile-user-tabs-one-1" role="tabpanel" aria-labelledby="profile-user-tabs-one-1-tab">
+      <div class="row">
+           <div class="col-sm">
+                  <div class="card container-fluid" id="user-editor-dialog">
+			<div class="card-body" >
+
+	<form id="profile-form" user-id="{{redirect_user_id}}" autocomplete="off">
+	       <div class="w-100" >
+        	   <div class="row">
+	              <div class="col-sm">
+        	             <div class="input-group mb-3" style="margin-bottom: 0.5rem!important;">
+                	        <label for="fio" class="col-sm-3 col-form-label font-weight-normal">{{labels.profile.username.text}}</label>
+	                        <div class="input-group-prepend"><span class="input-group-text"
+				data-toggle="tooltip" 
+				data-placement="{{tooltip.TIP_PROFILE_USERNAME.data-placement}}" 
+				data-original-title="{{tooltip.TIP_PROFILE_USERNAME.title}}">
+				<i class="fas fa-user"></i></span></div>                                                          
+	                        <input type="fio" class="form-control" placeholder="ФИО" 
+				  id="{{labels.profile.username.id}}" name="{{labels.profile.username.id}}"
+	  			  style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;" value="{{name}}">
+	                     </div>    
+
+
+                     <div class="input-group mb-3" style="margin-bottom: 0.5rem!important;">
+                         <label for="organization_id" class="col-sm-3 col-form-label font-weight-normal">{{labels.profile.org.text}}</label>
+                         <div class="input-group-prepend"><span class="input-group-text"
+			        data-toggle="tooltip" 
+				data-placement="{{tooltip.TIP_PROFILE_ORGNAME.data-placement}}"
+				data-original-title="{{tooltip.TIP_PROFILE_ORGNAME.title}}">
+			<i class="fas fa-user-friends"></i>
+			</span></div>
+		                   <select  class="form-control"  placeholder="Организация" title="Часовой пояс"
+					id="{{labels.profile.org.id}}" name="{{labels.profile.org.id}}"
+					style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;" >
+				         {{#each organizations}}
+						 <option value="{{this.organization_id}}" {{this.selected}}>{{this.organization_name}}</option>
+					 {{/each}}
+		                   </select>
+                     </div>
+
+                     <div class="input-group mb-3" style="margin-bottom: 0.5rem!important;">
+                         <label for="group_id" class="col-sm-3 col-form-label font-weight-normal">{{labels.profile.group.text}}</label>
+                         <div class="input-group-prepend"><span class="input-group-text">
+			  <i class="fas fa-user-friends" 
+				data-toggle="tooltip" 
+				data-placement="{{tooltip.TIP_PROFILE_GROUPNAME.data-placement}}" 
+				data-original-title="{{tooltip.TIP_PROFILE_GROUPNAME.title}}"></i>
+			 </span></div>
+		                   <select  class="form-control"  placeholder="Группа" title="Часовой Группа" 
+					id="{{labels.profile.group.id}}" name="{{labels.profile.group.id}}"
+					  style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;" >
+				         {{#each groups}}
+						 <option value="{{this.group_id}}" {{this.selected}}>{{this.group_name}}</option>
+					 {{/each}}
+		                   </select>
+                     </div>
+
+                     <div class="input-group mb-3" style="margin-bottom: 0.5rem!important;">
+                        <label for="access" class="col-sm-3 col-form-label font-weight-normal">{{labels.profile.access.text}}</label>
+                        <div class="input-group-prepend"><span class="input-group-text">
+			 <i class="fas fa-star" 
+					data-toggle="tooltip" 
+					data-placement="{{tooltip.TIP_PROFILE_ACCESS.data-placement}}" 
+					data-original-title="{{tooltip.TIP_PROFILE_ACCESS.title}}"></i></span></div>
+	         	          <select  class="form-control"  placeholder="Доступ" title="Часовой пояс" 
+					id="{{labels.profile.access.id}}" name="{{labels.profile.access.id}}"
+					style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;" >
+			                      <option value="0" {{#set-selected accessId 0}} {{/set-selected}}>Пользователь</option>
+			                      <option value="5" {{#set-selected accessId 5}} {{/set-selected}}>Продвинутый пользователь</option>
+			                      <option value="10" {{#set-selected accessId 10}} {{/set-selected}}>Администратор группы</option>
+			                      <option value="100" {{#set-selected accessId 100}} {{/set-selected}}>Суперадминистратор</option>
+		                      </select>
+                     </div>                                    
+
+                      <div class="input-group mb-3" style="margin-bottom: 0.5rem!important;">
+                        <label for="lastActivity" class="col-sm-3 col-form-label font-weight-normal">{{labels.profile.lastActivity.text}}</label>
+                        <div class="input-group-prepend"><span class="input-group-text">
+			<i class="fas fa-eye" 
+				data-toggle="tooltip" 
+				data-placement="{{tooltip.TIP_PROFILE_LASTACTIVITY.data-placement}}" 
+				data-original-title="{{tooltip.TIP_PROFILE_LASTACTIVITY.title}}"></i></span></div>
+                        <span type="last_activity" class="form-control" placeholder="last_activity" readonly style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;"></span>
+                     </div>                  
+		<hr>                
+                     <div class="input-group mb-3 has-validation" style="margin-bottom: 0.5rem!important;">
+                        <label for="email" 
+				class="email col-sm-3 col-form-label font-weight-normal"
+				pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required
+					>{{labels.profile.email.text}}</label>
+                        <div class="input-group-prepend"><span class="input-group-text">
+			<i class="fas fa-envelope" 
+				 data-toggle="tooltip"
+				 data-placement="{{tooltip.TIP_PROFILE_EMAIL.data-placement}}" 
+				 data-original-title="{{tooltip.TIP_PROFILE_EMAIL.title}}"></i></span></div>
+	                        <input type="text"
+				 id="{{labels.profile.email.id}}" name="{{labels.profile.email.id}}"
+ 	  	 		 class="form-control" placeholder="Электронная почта"  style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;"  value="" required>
+	  		        <div class="invalid-feedback">Проверьте Email. </div>
+                     </div>
+
+                     <div class="input-group mb-3" style="margin-bottom: 0.5rem!important;">
+                        <label for="phone" class="col-sm-3 col-form-label font-weight-normal">{{labels.profile.phone.text}}</label>
+                        <div class="input-group-prepend"><span class="input-group-text">
+			<i class="fas fa-phone"
+				data-toggle="tooltip" 
+				data-placement="{{tooltip.TIP_PROFILE_PHONE.data-placement}}" 
+				data-original-title="{{tooltip.TIP_PROFILE_PHONE.title}}"></i></span></div>
+                        <input type="phone" 
+				id="{{labels.profile.phone.id}}" name="{{labels.profile.phone.id}}"
+				class="form-control" placeholder="Телефон"  
+				style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;"  value="{{phone}}">
+                     </div>
+		<hr>                
+                     <div class="input-group mb-3" style="margin-bottom: 0.5rem!important;">
+                        <label for="UserID" class="col-sm-3 col-form-label font-weight-normal">ID</label>
+                        <div class="input-group-prepend"><span class="input-group-text">
+			<i class="fas fa-id-card"
+				data-toggle="tooltip" 
+				data-placement="{{tooltip.TIP_PROFILE_USERID.data-placement}}" 
+				data-original-title="{{tooltip.TIP_PROFILE_USERID.title}}"
+			></i></span>
+                     </div>                                                                                                                                                                    
+                        <span type="UserID" class="form-control" placeholder="UserID" readonly style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;">{{userId}}</span>
+                     </div>
+		<hr>                
+                   <div class="input-group mb-3" style="margin-bottom: 0.5rem!important;">
+                      <label for="timezone" class="col-sm-3 col-form-label font-weight-normal">{{labels.profile.timezone.text}}</label>
+                        <div class="input-group-prepend">
+                         <span class="input-group-text"><i class="fas fa-atlas"
+				data-toggle="tooltip" 
+				data-placement="{{tooltip.TIP_PROFILE_TIMEZONE.data-placement}}" 
+				data-original-title="{{tooltip.TIP_PROFILE_TIMEZONE.title}}"
+				></i></span>
+                      </div>
+		                   <select class="form-control" title="Часовой пояс" 
+					id="{{labels.profile.timezone.id}}" name="{{labels.profile.timezone.id}}"
+					style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;" >
+			                      <option value="0" {{#set-selected timezone 0}} {{/set-selected}}> (UTC) UTC</option>
+			                      <option value="2" {{#set-selected timezone 2}} {{/set-selected}}> (МСК-1) Калининградская область</option>
+			                      <option value="3" {{#set-selected timezone 3}} {{/set-selected}}> (МСК+0) Москва, Волгоград, Санкт-Петербург</option>
+			                      <option value="4" {{#set-selected timezone 4}} {{/set-selected}}> (МСК+1) Ижевск, Самара</option>
+			                      <option value="5" {{#set-selected timezone 5}} {{/set-selected}}> (МСК+2) Пермский край</option>
+			                      <option value="6" {{#set-selected timezone 6}} {{/set-selected}}> (МСК+3) Барнаул, Новосибирск, Омск, Томск</option>
+			                      <option value="7" {{#set-selected timezone 7}} {{/set-selected}}> (МСК+4) Тыва, Хакасия, Красноярск, Кемерово</option>
+			                      <option value="8" {{#set-selected timezone 8}} {{/set-selected}}> (МСК+5) Бурятия, Забайкальский край, Иркутская область</option>
+			                      <option value="9" {{#set-selected timezone 9}} {{/set-selected}}> (МСК+6) Амурская область</option>
+			                      <option value="10" {{#set-selected timezone 10}} {{/set-selected}}> (МСК+7) Приморский край, Хабаровский край, Магаданская область</option>
+			                      <option value="11" {{#set-selected timezone 11}} {{/set-selected}}> (МСК+8) Северные Курилы</option>
+			                      <option value="12" {{#set-selected timezone 12}} {{/set-selected}}> (МСК+9) Камчатский край, Чукотский АО</option>
+		                      </select>
+                    </div>
+
+                   <div class="input-group mb-3" style="margin-bottom: 0.5rem!important;">
+                     <label for="Address" class="col-sm-3 col-form-label font-weight-normal">{{labels.profile.address.text}}</label>
+                       <div class="input-group-prepend"><span class="input-group-text">
+			<i class="fas fa-address-card"
+				data-toggle="tooltip" 
+				data-placement="{{tooltip.TIP_PROFILE_ADDRESS.data-placement}}" 
+				data-original-title="{{tooltip.TIP_PROFILE_ADDRESS.title}}"
+			></i></span></div>
+                        <input type="Address"
+ 				 id="{{labels.profile.address.id}}" 
+				 name="{{labels.profile.address.id}}"
+ 				 class="form-control" placeholder="Address"  style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;" value="{{homePlaceAddress}}">
+                    </div>
+                
+                  <div class="input-group mb-3" style="margin-bottom: 0.5rem!important;">
+                      <label for="Latitude" class="col-sm-3 col-form-label font-weight-normal">{{labels.profile.latitude.text}}/{{labels.profile.longitude.text}}</label>
+                        <div class="input-group-prepend"><span class="input-group-text">
+			<i class="fas fa-map"
+				data-toggle="tooltip" 
+				data-placement="{{tooltip.TIP_PROFILE_LATITUDE.data-placement}}" 
+				data-original-title="{{tooltip.TIP_PROFILE_LATITUDE.title}}/{{tooltip.TIP_PROFILE_LONGITUDE.title}}"
+			></i></span></div>
+                        <input type="Latitude" 
+ 				id="{{labels.profile.latitude.id}}" name="{{labels.profile.latitude.id}}"
+				class="form-control" placeholder="Latitude"  style="height: calc(1.55rem + 15px); 
+				font-size: 1rem; padding-left: 0.5rem; min-width:9.5rem"   value="{{homePlaceLatitude}}">
+                        <input type="Longitude" 
+ 				id="{{labels.profile.longitude.id}}" name="{{labels.profile.longitude.id}}"
+				class="form-control" placeholder="Longitude"  style="height: calc(1.55rem + 15px); 
+				font-size: 1rem; padding-left: 0.5rem; min-width:9.5rem; margin-left: 0.5rem;"   value="{{homePlaceLongitude}}">
+
+                        <input type="hidden" id="search_code" name="search_code" class="form-control" placeholder="search_code"  >
+
+
+                  </div>
+                
+		<hr>                
+	                <div class="input-group mb-3" style="margin-bottom: 0.5rem!important;">
+        	           <label for="password" class="col-sm-3 col-form-label font-weight-normal">{{labels.profile.password.text}}</label>
+               	           <div class="input-group-prepend"><span class="input-group-text">
+				<i class="fas fa-key"
+					data-toggle="tooltip" 
+					data-placement="{{tooltip.TIP_PROFILE_PASSWORD.data-placement}}" 
+					data-original-title="{{tooltip.TIP_PROFILE_PASSWORD.title}}"
+				></i></span></div>
+                       		<input type="password"  class="form-control" name="password" id="password" value=""
+					placeholder="Введите новый password"  
+					style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;" 
+	                                readonly
+					onfocus="this.removeAttribute('readonly')"
+				 >
+	                  </div>
+                  </div>
+    	  </div>
+
+		<div class="row" style=" padding: 10px 0 5px  0px;">
+			  <div class="col-sm">
+				     <label for="blocked" style="padding: 2px 10px 0 10px;  font-weight: normal;float: left;">БЛОКИРОВАТЬ</label>
+					     <input class="form-control" type="checkbox" style="max-width: 1rem;height: 1rem;" name="blocked" id="blocked">
+			   </div>
+			   <div style="col-sm">
+			       <button id="profile-save-button" class="btn btn-lg btn-primary">
+			        <i class="fas fa-save"></i> Сохранить</button>
+			    </div>
+			</div>
+	          </div>
+  	</form>
+  		</div>
+             </div>
+           </div>
+         </div>  
+        </div>
+	   <div class="tab-pane fade" id="profile-user-tabs-one-2" role="tabpanel" aria-labelledby="profile-user-tabs-one-2-tab">
+	      <form id="fileupload" name="fileupload" action="/profile/photo/{{redirect_user_id}}" method="POST" enctype="multipart/form-data" >  	  	   
+	    	<div class="row">
+		    <div class="col-sm-4 profile-photo-load-poligon">
+			<a href="{{ redirect_user_image }}" class="image-thumbnail-user" data-lightbox="{{redirect_user_id}}-image-1" data-title="{{ redirect_user_image_title }}" >{{ redirect_user_name }}
+				     <img id="user-photo-image" name="user_photo_image" class="img-circle image-thumbnail-logged-user" src="{{ redirect_user_image }}" 
+				           class="img-circle elevation-2" alt="{{ redirect_user_image_title }}"
+				 	   style="width: 100%; cursor:pointer;">
+
+			</a>
+
+			        <span id="process-indicator"></span>
+				<span class="plugin-service-result"></span>
+ 			        <span id="upload-dlg-gallery-table"></span>
+			</div>
+			<div class="col-sm-8">
+				<span class="btn btn-lg btn-primary profile-image-change">
+				  <i class="fas fa-save"></i>Сменить
+				  <input name="photofile" type="file" name="files[]" accept=".jpg, .jpeg, .png"  multiple style="opacity: 0; width: 100%; position: absolute; left: 0; top: 0;">
+				</span>
+			</div>
+	            </div>
+	       </form>
+         </div>
+    </div>
+</div>
+
+    
+
+  </div>
+ </div>
+</div>
+
+
+ </div>
+
+
+</div>

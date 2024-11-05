@@ -1,0 +1,36 @@
+﻿<form id="object-change-form" name="object-change-form">
+          <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link  active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="false">{{labels.dialogChangeObject.tab1}}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="true">{{labels.dialogChangeObject.tab2}}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-three-messages-tab" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-controls="custom-tabs-three-messages" aria-selected="false">{{labels.dialogChangeObject.tab3}}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-three-settings-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-settings" aria-selected="false">{{labels.dialogChangeObject.tab4}}</a>
+                  </li>
+         </ul>
+
+         <div class="tab-content" id="custom-tabs-three-tabContent" >
+                  <div class="tab-pane fade active show" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+              		{{>dialog.ChangeObjectTab1}}
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+              		{{>dialog.ChangeObjectTab2}}
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
+              		{{>dialog.ChangeObjectTab3}}
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
+              		{{>dialog.ChangeObjectTab4}}
+                  </div>
+         </div>
+
+        <div class="modal-footer">
+             <button type="button" class="btn btn-lg btn-primary" id="change-object-name-btn-click" >{{labels.dialogChangeObject.change-object-btn-click}}</button>
+             <button type="button" class="btn btn-lg btn-default" id="change-object-close-btn-click" data-dismiss="modal">{{labels.dialogChangeObject.change-object-close-btn-click}}</button>
+          </div>
+</form>

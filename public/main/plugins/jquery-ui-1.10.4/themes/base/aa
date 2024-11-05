@@ -1,0 +1,30 @@
+ Volume in drive C has no label.
+ Volume Serial Number is 54CC-8153
+
+ Directory of C:\inetpub\wwwroot\js\jquery-ui-1.10.4\themes\base
+
+02/24/2014  11:08 AM    <DIR>          .
+02/24/2014  11:08 AM    <DIR>          ..
+02/24/2014  11:09 AM                 0 aa
+02/24/2014  11:02 AM    <DIR>          images
+01/17/2014  12:24 PM            32,409 jquery-ui.css
+01/17/2014  12:24 PM               839 jquery.ui.accordion.css
+01/17/2014  12:24 PM               300 jquery.ui.all.css
+01/17/2014  12:24 PM               321 jquery.ui.autocomplete.css
+01/17/2014  12:24 PM               779 jquery.ui.base.css
+01/17/2014  12:24 PM             2,540 jquery.ui.button.css
+01/17/2014  12:24 PM             1,472 jquery.ui.core.css
+01/17/2014  12:24 PM             3,636 jquery.ui.datepicker.css
+01/17/2014  12:24 PM             1,322 jquery.ui.dialog.css
+01/17/2014  12:24 PM             1,453 jquery.ui.menu.css
+01/17/2014  12:24 PM               617 jquery.ui.progressbar.css
+01/17/2014  12:24 PM             1,157 jquery.ui.resizable.css
+01/17/2014  12:24 PM               277 jquery.ui.selectable.css
+01/17/2014  12:24 PM             1,313 jquery.ui.slider.css
+01/17/2014  12:24 PM             1,184 jquery.ui.spinner.css
+01/17/2014  12:24 PM             1,222 jquery.ui.tabs.css
+01/17/2014  12:24 PM            17,619 jquery.ui.theme.css
+01/17/2014  12:24 PM               422 jquery.ui.tooltip.css
+02/24/2014  11:02 AM    <DIR>          minified
+              19 File(s)         68,882 bytes
+               4 Dir(s)  103,014,576,128 bytes free

@@ -1,0 +1,36 @@
+<div class="wrapper">   
+    <section class="content">
+      <div class="container-fluid">
+	    <div class="col-sm-12 profile-no-modal-header-line"  style="padding: 1rem;">
+       		 <h1>{{title}}</h1>
+		 <h4>{{name}}</h4>
+            </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-none card-tabs">
+              <div class="card-header p-0 pt-1">
+              {{>user_profile_tab_list}}
+            </div>
+               <div class="card-body" id="output" style='overflow: auto;'>
+               	  {{>user_profile_tab_content}}
+                </div>
+              </div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+
+<script src="/main/js/profile/profile.loader.js"></script>
+<script src="/main/js/roles/profile.roles.loader.js"></script>
+<script src="/main/js/services/profile.services.loader.js"></script> 
+<script src="/main/js/groups/profile.groups.loader.js"></script> 
+<script src="/main/js/functions/profile.functions.loader.js"></script> 
+<script src="/main/js/objects/profile.objects.loader.js"></script> 
+<script src="/main/js/geozones/profile.geozone.loader.js"></script>
+
+
+

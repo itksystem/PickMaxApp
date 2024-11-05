@@ -1,0 +1,24 @@
+/* Стили для <mobile-navbar-item> */
+
+.mobile-navbar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #555;
+  font-size: 12px;
+  transition: color 0.3s;
+}
+
+.mobile-navbar-item.active {
+  color: #007bff;
+}
+
+.mobile-navbar-item i {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.mobile-navbar-item:hover {
+  color: #007bff;
+}

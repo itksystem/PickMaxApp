@@ -1,0 +1,85 @@
+ Volume in drive C has no label.
+ Volume Serial Number is 54CC-8153
+
+ Directory of C:\inetpub\wwwroot\js\jquery-ui-1.10.4\ui\i18n
+ 
+02/24/2014  11:55 AM    <DIR>          .
+02/24/2014  11:55 AM    <DIR>          ..
+02/24/2014  11:55 AM                 0 aa
+01/17/2014  12:24 PM            75,327 jquery-ui-i18n.js
+01/17/2014  12:24 PM               896 jquery.ui.datepicker-af.js
+01/17/2014  12:24 PM             1,207 jquery.ui.datepicker-ar-DZ.js
+01/17/2014  12:24 PM             1,297 jquery.ui.datepicker-ar.js
+01/17/2014  12:24 PM               921 jquery.ui.datepicker-az.js
+01/17/2014  12:24 PM             1,146 jquery.ui.datepicker-be.js
+01/17/2014  12:24 PM             1,124 jquery.ui.datepicker-bg.js
+01/17/2014  12:24 PM               844 jquery.ui.datepicker-bs.js
+01/17/2014  12:24 PM               874 jquery.ui.datepicker-ca.js
+01/17/2014  12:24 PM               923 jquery.ui.datepicker-cs.js
+01/17/2014  12:24 PM               904 jquery.ui.datepicker-cy-GB.js
+01/17/2014  12:24 PM               890 jquery.ui.datepicker-da.js
+01/17/2014  12:24 PM               881 jquery.ui.datepicker-de.js
+01/17/2014  12:24 PM             1,199 jquery.ui.datepicker-el.js
+01/17/2014  12:24 PM               897 jquery.ui.datepicker-en-AU.js
+01/17/2014  12:24 PM               874 jquery.ui.datepicker-en-GB.js
+01/17/2014  12:24 PM               899 jquery.ui.datepicker-en-NZ.js
+01/17/2014  12:24 PM               893 jquery.ui.datepicker-eo.js
+01/17/2014  12:24 PM               888 jquery.ui.datepicker-es.js
+01/17/2014  12:24 PM               951 jquery.ui.datepicker-et.js
+01/17/2014  12:24 PM               913 jquery.ui.datepicker-eu.js
+01/17/2014  12:24 PM             1,164 jquery.ui.datepicker-fa.js
+01/17/2014  12:24 PM               945 jquery.ui.datepicker-fi.js
+01/17/2014  12:24 PM               918 jquery.ui.datepicker-fo.js
+01/17/2014  12:24 PM               913 jquery.ui.datepicker-fr-CA.js
+01/17/2014  12:24 PM               957 jquery.ui.datepicker-fr-CH.js
+01/17/2014  12:24 PM             1,042 jquery.ui.datepicker-fr.js
+01/17/2014  12:24 PM               890 jquery.ui.datepicker-gl.js
+01/17/2014  12:24 PM             1,016 jquery.ui.datepicker-he.js
+01/17/2014  12:24 PM             1,313 jquery.ui.datepicker-hi.js
+01/17/2014  12:24 PM               869 jquery.ui.datepicker-hr.js
+01/17/2014  12:24 PM               948 jquery.ui.datepicker-hu.js
+01/17/2014  12:24 PM             1,174 jquery.ui.datepicker-hy.js
+01/17/2014  12:24 PM               882 jquery.ui.datepicker-id.js
+01/17/2014  12:24 PM               946 jquery.ui.datepicker-is.js
+01/17/2014  12:24 PM               912 jquery.ui.datepicker-it.js
+01/17/2014  12:24 PM               902 jquery.ui.datepicker-ja.js
+01/17/2014  12:24 PM             1,414 jquery.ui.datepicker-ka.js
+01/17/2014  12:24 PM             1,117 jquery.ui.datepicker-kk.js
+01/17/2014  12:24 PM             1,330 jquery.ui.datepicker-km.js
+01/17/2014  12:24 PM               911 jquery.ui.datepicker-ko.js
+01/17/2014  12:24 PM             1,109 jquery.ui.datepicker-ky.js
+01/17/2014  12:24 PM               934 jquery.ui.datepicker-lb.js
+01/17/2014  12:24 PM               961 jquery.ui.datepicker-lt.js
+01/17/2014  12:24 PM               942 jquery.ui.datepicker-lv.js
+01/17/2014  12:24 PM             1,057 jquery.ui.datepicker-mk.js
+01/17/2014  12:24 PM             1,436 jquery.ui.datepicker-ml.js
+01/17/2014  12:24 PM               891 jquery.ui.datepicker-ms.js
+01/17/2014  12:24 PM               896 jquery.ui.datepicker-nb.js
+01/17/2014  12:24 PM               918 jquery.ui.datepicker-nl-BE.js
+01/17/2014  12:24 PM               922 jquery.ui.datepicker-nl.js
+01/17/2014  12:24 PM               893 jquery.ui.datepicker-nn.js
+01/17/2014  12:24 PM               888 jquery.ui.datepicker-no.js
+01/17/2014  12:24 PM               917 jquery.ui.datepicker-pl.js
+01/17/2014  12:24 PM               945 jquery.ui.datepicker-pt-BR.js
+01/17/2014  12:24 PM               868 jquery.ui.datepicker-pt.js
+01/17/2014  12:24 PM               905 jquery.ui.datepicker-rm.js
+01/17/2014  12:24 PM               989 jquery.ui.datepicker-ro.js
+01/17/2014  12:24 PM             1,117 
+/js/jquery-ui-1.10.4/ui/i18n/jquery.ui.datepicker-ru.js
+01/17/2014  12:24 PM               905 jquery.ui.datepicker-sk.js
+01/17/2014  12:24 PM               943 jquery.ui.datepicker-sl.js
+01/17/2014  12:24 PM               887 jquery.ui.datepicker-sq.js
+01/17/2014  12:24 PM               848 jquery.ui.datepicker-sr-SR.js
+01/17/2014  12:24 PM             1,037 jquery.ui.datepicker-sr.js
+01/17/2014  12:24 PM               890 jquery.ui.datepicker-sv.js
+01/17/2014  12:24 PM             1,496 jquery.ui.datepicker-ta.js
+01/17/2014  12:24 PM             1,274 jquery.ui.datepicker-th.js
+01/17/2014  12:24 PM             1,074 jquery.ui.datepicker-tj.js
+01/17/2014  12:24 PM               883 jquery.ui.datepicker-tr.js
+01/17/2014  12:24 PM             1,183 jquery.ui.datepicker-uk.js
+01/17/2014  12:24 PM             1,094 jquery.ui.datepicker-vi.js
+01/17/2014  12:24 PM               983 jquery.ui.datepicker-zh-CN.js
+01/17/2014  12:24 PM               981 jquery.ui.datepicker-zh-HK.js
+01/17/2014  12:24 PM               977 jquery.ui.datepicker-zh-TW.js
+              75 File(s)        148,354 bytes
+               2 Dir(s)  103,012,278,272 bytes free

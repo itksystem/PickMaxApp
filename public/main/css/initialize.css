@@ -1,0 +1,416 @@
+.ya-tooltip-inner {
+    padding: 0.5rem 0.5rem;
+    color: #fff;
+    text-align: left;
+    background-color: #fff;
+    border-radius: 0.25rem;
+    color: black;
+    border: 1px solid #000;
+    font-size: 17px;
+    font-family: arial;
+    font-style: normal;
+    font-weight: 200;
+    line-height: 1.1; 
+ }
+
+.tooltip-inner {
+    max-width: 200px;
+    padding: 0.5rem 0.5rem;
+    color: #fff;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 0.25rem;
+    color: black;
+    border: 1px solid #000;
+ }
+
+div.tooltip * {
+    font-size: 17px;
+    font-family: arial;
+    font-style: normal;
+    font-weight: 200;
+}
+
+.card {
+   margin-bottom: 1rem;
+}
+
+.modal-body {
+   margin-bottom: 0;
+   padding: 1rem 0rem 0rem 0rem;
+}
+
+.card-body {
+   padding: 1.25rem 1.25rem 0.2rem 1.25rem;
+ }
+
+.modal-sm2 {
+   max-width: 500px;
+}
+
+.modal-xxl {
+    max-width: 1440px;
+}
+
+
+ul.nav.nav-treeview li.nav-item {
+ margin-left: 10px;
+}
+
+ul.nav.nav-treeview li.nav-item-redirect {
+ margin-left: 10px;
+}
+
+
+a.contacts-page-navigation.active {
+    color: #ffffff;
+    background-color: #007bff;
+}
+
+a.profile-access-group-nav.active {
+    color: #ffffff;
+    background-color: #007bff;
+}
+
+.pagination-sm .page-link {
+   padding: 0.5rem 0.75rem;
+}
+
+.main-footer {
+    position: fixed;
+    display: inline-flex;
+    width: -webkit-fill-available;
+    z-index: 300;
+}
+
+
+.tab-content {
+  padding-top: 1rem;
+}
+
+div.content-wrapper {
+  max-width : 120rem;
+}
+
+div.content-wrapper .tab-pane{
+  margin-bottom: 5rem;
+}
+
+div.modal div.tab-pane.active{
+  margin-bottom: 1rem;
+}
+
+
+#poligon-objects-list, .right-menu-dialog{
+ max-width: 40rem; position: absolute; right: 10px; z-index: 300; background-color: white; margin: .3rem .3rem 0 0; box-shadow: 5px 5px 5px 0px #a7a0a0;
+}
+
+.input-element-component {
+    display : none;	
+    position: absolute;
+    z-index: 300;
+    width: 480px;
+    top: 40px;
+    left: 70px;
+    box-shadow: 1px 2px 3px #0a0a0a;
+}
+
+.pac-container{  /* выподающий список выбора геоадресов поднять на z-index 3000 чтобы отражать в модалке */
+ z-index : 3000;
+}
+
+span.track-map-waypoint-icon-content {
+    text-decoration: underline;
+    color: #0202be;
+
+}
+
+.trip-report td {
+   background-color: white;
+   font-size: 0.8rem;
+ }
+
+th.trip-report  {
+   background-color: ececec;
+   font-size: 0.8rem;
+ }
+
+
+
+
+span.trip-report-person-name{ font-size:1.0rem;}
+span.trip-report-date{ font-size:1.0rem;}
+span.trip-report-org-name{ font-size:1.0rem;}
+span.trip-report-group-name{ font-size:1.0rem;}
+span.trip-report-location-name{ font-size:1.0rem;}
+
+span.trip-report-person-name-value{ font-size:1.0rem;}
+span.trip-report-date-value{ font-size:1.0rem;}
+span.trip-report-org-name-value{ font-size:1.0rem;}
+span.trip-report-group-name-value{ font-size:1.0rem;}
+span.trip-report-location-name-value{ font-size:1.0rem;}
+
+.contact-profile-card{
+    max-width: 25rem;
+}
+
+
+.content-wrapper {
+    background-color: #FFFFFF;
+}
+
+.card {
+    box-shadow: 0 0 1px rgb(0 0 0 / 74%), 0 1px 3px rgb(0 0 0 / 77%);
+}
+
+.user-panel .image {
+    padding-left: unset;
+}
+
+.user-panel img {
+    height: 2.1rem;
+    width: 2.1rem;
+    float: left;
+    margin: 0 1rem 0 -0.5rem;
+}
+
+
+.badge-online {
+    color: #fff;
+    background-color: #4ae00b;
+    animation: badge-online-indicator-color-change 1s infinite;
+}
+
+.badge-offline {
+    color: #fff;
+  
+}
+
+.badge-online-indicator {
+    display: inline-block;
+    padding: 0.25em 0.25em 0.25em 0.25em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 50%;
+    width: 1rem;
+}
+
+.badge-offline-indicator {
+    display: inline-block;
+    padding: 0.25em 0.25em 0.25em 0.25em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 50%;
+    width: 1rem;
+    background-color: #ff0000;
+}
+
+.badge-profile {
+    height: 0.5rem;
+    width: 0.5rem;
+    position: absolute;
+    left: 3rem;
+    bottom: 0.4rem;
+}
+
+@keyframes badge-online-indicator-color-change  {
+  0% { background-color: #93f16b;}
+  25% { background-color: #79dd4f}
+  50% { background-color: #60c436;}
+  75% { background-color: #49ad1f;}
+  80% { background-color: #3ca011;}
+  90% { background-color: #329209;}
+  100% { background-color: #32a003;}
+}
+
+.contact-online-indicator {
+    bottom: 10%;
+    right: 30%;
+    position: absolute
+}
+
+
+.main-zero{
+  height: 872.667px;
+  background-image: url(/main/images/web-logo.png);
+  position: absolute;
+  background-position-x: center;
+  background-position-y: center;
+  background-repeat: no-repeat;
+}
+
+
+.trip-route-control-buttons{
+   padding: 0.3rem 0 0 0;
+}
+
+.trip-control-button{
+   margin: 0.1rem;
+}
+
+.trip-control-button.selected{
+    background-color: #e0e0e0;
+    border: 1px solid;
+}
+
+div.track-info-poligon {
+    width: 33.5rem;
+    position: absolute;
+    background-color: white;
+    padding: 0.4rem;
+    margin: 0.1rem 0.3rem 0 0.1rem;
+    box-shadow: 0 0 1px rgb(0 0 0 / 74%), 0 1px 3px rgb(0 0 0 / 77%);
+}
+
+div.distance-track-info-poligon {
+
+}
+
+div.duration-track-info-poligon {
+
+}
+
+span.distance-track-info-poligon-title {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.3rem;
+}
+
+span.duration-track-info-poligon-title {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.3rem;
+}
+
+span.distance-track-info-poligon-value {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.3rem;
+    color : red;
+}
+
+span.duration-track-info-poligon-value {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.3rem;
+    color : red;
+}
+
+
+.yandex-user-placemark {
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+.fa-min{
+    font-size: 0.3rem;
+    padding-right: 0.5rem;
+    top: -0.2rem;
+    position: relative;
+}
+
+.red {
+  color : red;
+}
+
+.green {
+  color : green;
+}
+
+.distance-exception-loading-spin{
+	display:none; background-image: url(/main/images/loaders/loading_v1.gif); 
+	width: 70px; 
+	height: 12px; 
+	background-repeat-x: no-repeat; 
+	background-repeat-y: no-repeat;
+}
+
+.table td, .table th {
+    padding: 0.5rem;
+    vertical-align: middle;
+}
+
+ 
+.servicecall-textarea-scrollbar_15rem {
+    height: 15rem;
+    font-size: 1rem; 
+    padding: 0.7rem;   
+    font-family: monospace; 
+    border-radius: 5px;
+}
+
+.servicecall-textarea-scrollbar_10rem {
+    height: 10rem;
+    font-size: 1rem; 
+    padding: 0.7rem;   
+    font-family: monospace; 
+    border-radius: 5px;
+}
+
+.
+.callservice-title-article {
+    margin-bottom: .5rem;
+    font-weight: 400;
+    font-size: 1.1rem;
+}
+
+.input-element-component2 {
+    display: none;
+    position: relative;
+    width: 100%;
+    max-width: 100rem;
+}
+
+
+.input-multi-element-component-value{
+    margin : 0.3rem;
+
+}
+
+input::placeholder {
+    font: 0.8rem sans-serif;
+    font-style: italic;
+}
+
+.main-sidebar {
+  overflow-x: hidden;
+}
+
+li.nav-item-redirect {
+    padding-left: 0rem;
+    font-size: 0.8rem;
+}
+
+li.nav-item-redirect i {
+    padding-left: 0.2rem;
+    font-size: 1rem;
+}
+
+li.nav-item-redirect p {
+    padding-left: 0.2rem;
+    font-size: 1rem;
+}
+
+.direct-chat-msg {
+    width: 40%;
+    margin: 1rem;
+    font-size: 1rem;
+}
+
+.tox-tinymce{
+    width: 100%;
+}
+
+.public-tags{
+    font-size: 1.4rem;
+    color: #040496;
+    font-weight: bold;
+}

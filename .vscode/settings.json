@@ -1,0 +1,29 @@
+{
+    "git.ignoreLimitWarning": true,
+    "sqltools.connections": [
+    
+        {
+            "previewLimit": 50,
+            "server": "192.168.65.104",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "DWH2",
+            "username": "dima",
+            "password": "sf67-po25",
+            "database": "sd_1c_servicecalls"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "185.87.193.23",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "newSmesDBMysql",
+            "database": "p436422_431221f",
+            "username": "sinyagin",
+            "password": "G00d$ecret"
+        }
+    ]
+}

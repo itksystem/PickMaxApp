@@ -1,0 +1,247 @@
+.btn{
+    cursor : pointer;
+}
+
+.btn-red-white {
+    color: #fff;
+    background-color: #bf0816; 
+    transition: filter 0.3s ease; /* Добавляем анимацию с плавным переходом */
+}
+
+.btn-red-white: hover {
+    color: #fff;
+    filter: brightness(1.2);
+}
+
+
+
+.btn-red-white.shop-theme {
+    color: #fff;
+    background: linear-gradient(to right, #bf0816 20%, #eeff 50%);
+    border-color: #bf0816;
+}
+
+.btn-red-white.shop-theme: hover {
+    color: #fff;
+    filter: brightness(1.2);
+}
+
+
+
+.btn-red:hover {
+    color: #fff;
+    filter: brightness(1.2);
+}
+
+
+.btn-red {
+    color: #fff;
+    background-color: #bf0816; 
+    transition: filter 0.3s ease; /* Добавляем анимацию с плавным переходом */
+}
+
+.btn-blue {
+    color: #fff;
+    background-color: #212fbe;
+    transition: filter 0.3s ease; /* Добавляем анимацию с плавным переходом */
+}
+
+.btn-blue:hover {
+    color: #fff;
+    filter: brightness(1.2);
+}
+
+
+.btn-green {
+    color: #fff;
+    background-color: #33770b;
+    transition: filter 0.3s ease; /* Добавляем анимацию с плавным переходом */
+}
+
+.btn-green:hover {
+    color: #fff;
+    filter: brightness(1.2);
+}
+
+.btn-gray {
+    color: #fff;
+    background-color: #6c757d;
+    transition: filter 0.3s ease; /* Добавляем анимацию с плавным переходом */
+}
+
+.btn-gray:hover {
+    color: #fff;
+    filter: brightness(1.2);
+}
+
+
+
+
+
+.profile_save_btn,
+.save_delivery_btn, 
+.basket_item_status_create_delivery,
+.basket_item_status_create_application{
+    background-color: #28a745;
+    padding: 0.8em;
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    text-align: center;
+    height: min-content;
+    cursor: pointer;
+    min-width: 50%;
+}
+
+.basket_item_status_pred_create_application{
+    background-color: #28a745;
+    padding: 0.8em;
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    text-align: center;
+    height: min-content;
+    cursor: pointer;
+}
+
+
+.basket_item_status_next_shopping{
+    background-color: #ffde27;
+    padding: 0.8em;
+    color: #ba0b0b;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    text-align: center;
+    height: min-content;
+    cursor: pointer;
+}
+
+                             
+/*.card_item_editor_image_btn,*/
+/*.card_editor_blocking_btn,*/
+/*.logistic_editor_btn*/
+/*,.card_editor_unblocking_btn*/
+/*
+ {
+    background-color: #28a745;
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    vertical-align: baseline;
+    text-align: center;
+    height: min-content;
+    margin: 0.5rem 1rem;
+    cursor : pointer;
+}
+*/
+
+.application_confirmed_btn{
+    background-color: #e700f9;
+    padding: 0.8em;
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    vertical-align: baseline;
+    text-align: center;
+    width: auto;
+    height: min-content;
+    margin: 0.1rem;
+    cursor : pointer;
+}
+
+.application_paid_btn{
+    background-color: #007bff;
+    padding: 0.8em;
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    vertical-align: baseline;
+    text-align: center;
+    width: auto;
+    height: min-content;
+    margin: 0.1rem;
+    cursor : pointer;
+}
+
+
+.application_execute_btn{
+    background-color: #28a745;
+    padding: 0.8em;
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    text-align: center;
+    height: min-content;
+    margin: 0.1rem;
+    cursor : pointer;
+}
+
+.application_messages_btn{
+    background-color: #fd7e14;
+    padding: 0.8em;
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    text-align: center;
+    height: min-content;
+    margin: 0.1rem;
+    cursor : pointer;
+}
+
+
+.application_reject_btn{
+    background-color: #f90000;
+    padding: 0.8em;
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    vertical-align: baseline;
+    text-align: center;
+    width: auto;
+    height: min-content;
+    margin: 0.1rem;
+    cursor : pointer;
+}
+
+
+.btn-card-add:hover {
+    color: #fff;
+    filter: brightness(1.2);
+}
+
+
+.btn-card-add {
+    color: #fff;
+    transition: filter 0.3s ease; /* Добавляем анимацию с плавным переходом */
+    padding: 0.2rem;
+}
+
+.btn-lg {
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.btn-menu-2 {
+    margin: 0.3rem 0.1rem;
+    font-size: 0.56rem;
+    text-align: center;
+    padding: 0.4rem 0.2rem;
+}
+
+.basket_remove_btn {
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-width: 100%;
+    text-align: center;
+    padding-top: 2rem;
+    font-size: 0.6rem;
+}
+
+.btn-lightgreen {
+    color: #fff;
+    background-color: #53bc15;
+    transition: filter 0.3s ease;
+}

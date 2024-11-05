@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{title}}</title>
+   <link href="/main/css/fonts.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/main/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/main/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="/main/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <link rel="stylesheet" href="/main/css/main.css">
+  <link rel="stylesheet" href="/main/css/icheck-bootstrap.css">
+
+
+<!--Google Map -->
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key={{ googleKey }}&libraries=places,drawing" ></script> -->
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey={{ yandexKey }}" type="text/javascript"></script>
+
+
+<link type="text/css" href="/main/plugins/jquery-ui-1.10.4/themes/base/jquery-ui.css" rel="stylesheet" />
+<script src="/main/plugins/jquery-ui-1.10.4/jquery-1.10.2.js"></script>
+<script src="/main/plugins/jquery-ui-1.10.4/ui/jquery-ui.js"></script>
+<script src="/main/plugins/jquery-ui-1.10.4/ui/jquery.ui.button.js"></script>
+<script src="/main/plugins/jquery-ui-1.10.4/ui/jquery.ui.tabs.js"></script>
+<script src="/main/plugins/jquery-ui-1.10.4/ui/jquery.ui.widget.js"></script>
+
+<script src="/main/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<link href="/main/js/ui/lightbox/css/lightbox.css" rel="stylesheet" />
+<script src="/main/js/ui/lightbox/js/lightbox.js"></script>
+
+<!-- overlayScrollbars -->
+<script src="/main/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="/main/dist/js/adminlte.js"></script>
+<script src="/main/js/functions.js"></script>
+<script src="/main/js/geo/geoLib.js"></script>
+
+<!-- UI component -->
+<link rel="stylesheet" type="text/css" href="/main/css/dataTables.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css" href="/main/js/ui/css/jquery.scrollbar.css"/>
+<script src="/main/js/jquery.geocomplete.min.js"></script>
+<script src="/main/js/datatables.js"></script>
+<script src="/main/js/dataTables.bootstrap4.min.js"></script>
+<link type="text/css" href="/main/css/toastr.css" rel="stylesheet" />
+<script src="/main/js/toastr.js"></script>
+<script src="/main/js/jquery.autocomplete.js"></script>
+<script src="/main/js/ui/ui.autocomplete.js"></script>
+<link rel="stylesheet" type="text/css" href="/main/js/ui/css/ui.autocomplete.css"/>
+<script src="/main/js/ui/jquery.scrollbar.min.js"></script>
+<script src="/main/js/storage/storage.js"></script>
+<script src="/main/js/ui/ui.loading.js"></script>
+<script src="/main/js/ui/ui.CreateTimeArrayController.js"></script>
+<script src="/main/js/ui/ui.idleTimeoutDialog.js"></script>
+<script src="/main/js/ui/ui.flux.js"></script>
+<script src="/main/js/ui/ui.modal.js"></script>
+<script src="/main/js/ui/ui.selectLoader.js"></script>
+<script src="/main/js/ui/ui.datetime2.js"></script>
+<script src="/main/js/ui/ui.inputDialog.js"></script>
+<script src="/main/js/ui/ui.inputDialog2.js"></script>
+<script src="/main/js/ui/ui.inputMultiDialog.js"></script>
+<script src="/main/js/ui/ui.infoDialog.js"></script>
+<script src="/main/js/ui/ui.js"></script>
+<script src="/main/js/ui/ui.events.handlers.js"></script>
+<script src="/main/js/ui/ui.ajax.js"></script>
+<script src="/main/js/ui/ui.initMap.js"></script> 
+<script src="/main/js/ui/ui.geoCompleteInput.js"></script> 
+<script src="/main/js/ui/ui.geoDrawEditor.js"></script> 
+<script src="/main/js/ui/ui.geoDrawViewer.js"></script> 
+<script src="/main/js/ui/ui.OrgGroupRelationComponent.js"></script> 
+<script src="/main/js/ui/ui.geoObject.Arrow.js"></script> 
+<script src="/main/js/ui/ui.geoTrack.js"></script>
+<script src="/main/js/ui/ui.ApproveTripButton.js"></script>
+<script src="/main/js/ui/ui.yandex.MultiRoute.js"></script>
+<script src="/main/js/ui/ui.RouteTrip.js"></script>
+<script src="/main/js/ui/ui.route.report.js"></script>
+<script src="/main/js/ui/ui.servicecalls.grid.call-edit.js"></script>
+<script src="/main/js/ui/ui.servicecalls.grid.object-edit.js"></script>
+<script src="/main/js/ui/ui.servicecalls.grid.object-create.js"></script>
+<script src="/main/js/ui/ui.yandex.user.js"></script>
+<script src="/main/js/ui/ui.yandex.user_local_place.js"></script> 
+<script src="/main/js/ui/ui.triproute.controls.js"></script> 
+<script src="/main/js/ui/ui.servicecalls_chat.js"></script> 
+<script src="/main/js/ui/ui.features.js"></script>
+<script src="/main/js/ui/ui.menu.js"></script>
+<script src="/main/js/ui/ui.OrgSelector.js"></script>
+<script src="/main/js/editors/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+
+ 
+<script src="/main/js/ui/ui.garbageСollector.js"></script>
+<!-- Models-->
+<script src="/main/js/model/user.js"></script>
+<script src="/main/js/model/me.js"></script>
+
+<!-- Select2 -->
+<link rel="stylesheet" href="/main/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="/main/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<script src="/main/plugins/select2/js/select2.full.min.js"></script>
+<script src="/main/plugins/daterangepicker/daterangepicker.js"></script>
+
+<!-- bootstrap slider -->
+<link   rel="stylesheet" href="/main/css/ion.rangeSlider.css">
+<script src="/main/js/ion.rangeSlider.min.js"></script>
+
+<link   rel="stylesheet" type="text/css" href="/main/css/ui.datetimepicker.css"/>
+<script src="/main/js/ui/ui.datetimepicker.full.js"/></script>
+<link   rel="stylesheet" type="text/css" href="/main/css/jquery.scrollbar.css"/>
+<script src="/main/js/ui/jquery.scrollbar.js"></script>
+<script src="/main/js/ui/ui.search.js"></script> 
+<script src="/main/js/ui/ui.global.messages.js"></script> 
+<script src="/main/js/groups/profile.access.groups.js"></script>
+<script src="/main/js/services/profile.access.services.js"></script>
+<script src="/main/js/functions/profile.access.functions.js"></script>
+<script src="/main/js/roles/profile.access.roles.js"></script>
+<script src="/main/js/objects/profile.access.objects.js"></script> 
+<script src="/main/js/geozones/profile.access.geozones.js"></script>
+<script src="/main/js/geozones/profile.geozone.services.relation.js"></script>
+<script src="/main/js/geozones/profile.geozone.users.relation.js"></script>
+
+<script src="/main/js/ui/ui.yandex.polyline.js"></script>
+<script src="/main/js/jquery.iframe-transport.js"></script>
+<script src="/main/js/fileupload/jquery.fileupload.js"></script>
+<script src="/main/js/ui/ui.uploadFile.js"></script>
+<script src="/main/js/ui/ui.permissions.js"></script>
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed " data-panel-auto-height-mode="height" style="display: inline; min-width:auto;">
+<div class="wrapper scrollbar-inner">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      {{> leftNavbarLinks }} <!-- Left navbar links -->
+      {{> rightNavbarLinks }}<!-- Right navbar links -->      
+  </nav>
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    {{> logo }}
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      {{> sidebarUserPanel }}    
+      <!-- SidebarSearch Form -->
+      {{> SidebarSelectedGroupForm }}    
+      {{> searchLeftPanel }}    
+      <!-- Sidebar Menu -->
+      {{> treeMenu }}
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" data-loading-screen="750">
+  
+  <div class="tab-content scrollbar-inner" >
+	<div class="wrapper">   
+	    <section class="content">
+	      <div class="container-fluid">
+	        <div class="row">
+        	  <div class="col-12">
+			     {{#ifEquals service "/groups"}}
+			           {{>groups}} 
+			      {{else ifEquals service "/functions"}}
+			           {{>functions}}
+			      {{else ifEquals service "/services"}}
+			           {{>services}}
+			      {{else ifEquals service "/roles"}}
+			           {{>roles}}
+			      {{else ifEquals service "/geozones"}}
+			           {{>geozones}}
+			      {{else ifEquals service "/licenses"}}
+			           {{>licenses}}
+			      {{else ifEquals service "/servicecalls"}}
+			           {{>servicecalls}}
+			      {{else ifEquals service "/objects"}}
+			           {{>objects}}
+			      {{else ifEquals service "/contacts"}}
+			           {{>contacts}}
+			      {{else ifEquals service "/profile/:id"}}
+			           {{>profile}}
+			      {{else ifEquals service "/servicecalls/create"}}
+			           {{>call_create}}
+			      {{else ifEquals service "/smm"}}
+			           {{>smm}}
+			     {{/ifEquals}}              
+	           </div>
+	        </div>
+	      </div>
+	   </section>
+	</div>
+    </div>
+  </div>
+  <!-- /.content-wrapper -->
+
+
+      {{> footer}}
+      <!-- Control Sidebar -->
+     <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>                                                                                      
+  <!-- /.control-sidebar -->
+ <input type='hidden' id="serviceId" name="serviceId">
+ <input type='hidden' id="selectedOrgId" name="selectedGroupId">
+ <input type='hidden' id="selectedGroupId" name="selectedGroupId">
+
+<!-- Postload properies -->
+ <script src="/main/js/initialize.js"></script>
+ <script src="/main/js/crypto-js.min.js"></script>
+
+<!-- SocketIO -->
+ <script src="/main/js/socket.io.min.js "></script>
+<!-- Socket handlers -->
+ <script src="/main/js/sockets/socket.io.js"></script>
+
+
+<!-- Css potload properies -->
+<link rel="stylesheet" type="text/css" href="/main/css/initialize.css"/>
+<link rel="stylesheet" type="text/css" href="/main/css/comments.css"/>
+
+
+
+</div>
+
+<script>
+    tinymce.init({
+      selector: '.editor-textarea',
+//      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+      plugins: 'emoticons link typography table',
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+//      tinycomments_mode: 'embedded',
+//      tinycomments_author: 'Author name',
+//      mergetags_list: [
+//        { value: 'First.Name', title: 'First Name' },
+//        { value: 'Email', title: 'Email' },
+//      ]
+    });
+
+</script>
+
+
+<script>
+  window.onload = function() { 
+    onLoadPage = true;		    
+  };
+</script>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(91552350, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+
+</script>
+
+</body>
+</html>
+
+
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TextInput Component Demo</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="text-input.css">
+</head>
+<body>
+
+  <h1>TextInput Component Demo</h1>
+
+  <text-input 
+    logo="fa-user" 
+    placeholder="Enter your name" 
+    text-length="30" 
+    text-pattern="^[a-zA-Z]+$" 
+    title="User Name">
+  </text-input>
+
+
+  <text-input 
+    logo="fa-envelope" 
+    placeholder="Enter your email" 
+    text-pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
+    title="Email Address">
+  </text-input>
+
+  <script src="text-input.js"></script>
+
+</body>
+</html>

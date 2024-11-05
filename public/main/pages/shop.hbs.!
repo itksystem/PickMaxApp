@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate" />
+   <meta http-equiv="pragma" content="no-cache" />
+
+   <title>{{shop.name}}</title>
+   <link href="/main/pages/telegram/jobs/css/variable.css" rel="stylesheet" />
+   <link href="/main/css/fonts.css" rel="stylesheet">
+   <link rel="stylesheet" href="/main/plugins/fontawesome-free/css/all.min.css"> <!-- Font Awesome -->
+   <script src="/main/js/telegram-web-app.js"></script> <!--Подключаем скрипт Web App telegram API -->
+
+   <link type="text/css" href="/main/plugins/jquery-ui-1.10.4/themes/base/jquery-ui.css" rel="stylesheet" />
+   <script>
+     const shopId = "{{shop.id}}";
+   </script>
+
+   <script src="/main/plugins/jquery-ui-1.10.4/jquery-1.10.2.js"></script>
+   <script src="/main/plugins/jquery-ui-1.10.4/ui/jquery-ui.js"></script>
+   <script src="/main/plugins/jquery-ui-1.10.4/ui/jquery.ui.button.js"></script>
+   <script src="/main/plugins/jquery-ui-1.10.4/ui/jquery.ui.tabs.js"></script>
+   <script src="/main/plugins/jquery-ui-1.10.4/ui/jquery.ui.widget.js"></script>
+  <!-- Theme style -->
+   <link rel="stylesheet" href="/main/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+   <link rel="stylesheet" href="/main/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+   <link rel="stylesheet" href="/main/css/icheck-bootstrap.css">
+<!-- Fotorama from CDNJS, 19 KB -->
+   <link href="/main/js/fotorama/4.6.4/fotorama.css" rel="stylesheet">
+   <script src="/main/js/fotorama/4.6.4/fotorama.dev.js"></script>
+
+   <script src="/main/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+   <link href="/main/js/ui/lightbox/css/lightbox.css" rel="stylesheet" />
+   <script src="/main/plugins/inputmask/jquery.inputmask.js"></script>
+   <script src="/main/js/ui/lightbox/js/lightbox.js"></script>
+   <script src="/main/dist/js/adminlte.js"></script>
+   <script src="/main/js/functions.js"></script>
+   <script src="/main/js/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
+   <script src="/main/pages/telegram/jobs/js/webapi.js"></script> 
+   <script src="/main/pages/telegram/jobs/js/components/ListComponent.js"></script>
+   <script src="/main/pages/telegram/jobs/js/components/ShopImageGallery.js"></script> 
+   <script src="/main/pages/telegram/jobs/js/components/ShopCardMediaGallery.js"></script> 
+   <script src="/main/pages/telegram/jobs/js/components/CustomElementFactory.js"></script> 
+   <script src="/main/pages/telegram/jobs/js/components/MainApp.js"></script> 
+   <script src="/main/pages/telegram/jobs/js/components/ProductCard.js"></script> 
+
+   <link href="/main/pages/telegram/jobs/css/x-element-contact-form-component.css" rel="stylesheet" />
+   <script src="/main/pages/telegram/jobs/js/components/TelegramContactFormComponent.js"></script>
+
+   <script src="/main/js/jquery.iframe-transport.js"></script>
+   <script src="/main/js/fileupload/jquery.fileupload.js"></script>
+   <script src="/main/js/ui/ui.uploadFile.js"></script>
+   <script src="/main/js/editors/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+   <link type="text/css" href="/main/css/toastr.css" rel="stylesheet" />
+   <script src="/main/js/toastr.js"></script>
+
+   <script src="/main/pages/telegram/jobs/js/components/request.js"></script>
+   <script src="/main/js/model/tg_user.js"></script> 
+   <script src="/main/js/model/tg_current_user.js"></script> 
+   <script src="/main/js/model/tg_shop.js"></script> 
+   <script src="/main/js/model/tg_current_shop.js"></script> 
+   <script src="/main/pages/telegram/jobs/js/shop.js"></script>
+
+   <script src="/main/pages/telegram/jobs/js/components/mobile-navbar/mobile-navbar.js"></script>
+
+</head>
+<style>
+body{
+ margin: auto;
+ line-height: inherit;
+ height : var(--tg-viewport-stable-height);
+ display: flex;
+ color: var(--tg-theme-text-color);
+ flex-direction: column;
+}
+</style>
+<body class="{{service}}">
+<nav>
+ <script src="/main/pages/telegram/jobs/js/redirect.js"></script>
+ <link type="text/css" href="/main/pages/telegram/jobs/css/shop_card_{{shop.theme}}.css" rel="stylesheet" />
+ <link type="text/css" href="/main/pages/telegram/jobs/css/sidebar.css" rel="stylesheet" />
+ <link type="text/css" href="/main/pages/telegram/jobs/css/buttons.css" rel="stylesheet" />
+ <link type="text/css" href="/main/pages/telegram/jobs/css/messages.css" rel="stylesheet" />
+ <link type="text/css" href="/main/pages/telegram/jobs/css/badges.css" rel="stylesheet" />
+ <link type="text/css" href="/main/pages/telegram/jobs/css/statuses.css" rel="stylesheet" />
+ <link type="text/css" href="/main/pages/telegram/jobs/css/cards{{shop.columns}}.css" rel="stylesheet" />
+ <link type="text/css" href="/main/pages/telegram/jobs/css/cards.css" rel="stylesheet" />
+ <link type="text/css" href="/main/pages/telegram/jobs/css/gallery.css" rel="stylesheet" />
+ <link type="text/css" href="/main/pages/telegram/jobs/css/card_media_gallery.css" rel="stylesheet" />
+
+<div class="shop">
+
+<input type="hidden" id ="shop_id"  value="{{shop.id}}">
+<input type="hidden" id ="category_id"  value="{{shop.category_id}}">
+<input type="hidden" id ="shop_title"  value="{{shop.name}}">
+<input type="hidden" id ="shop_address"  value="{{shop.address}}">
+<input type="hidden" id ="longitude" class="shop_address_longitude" value="{{shop.longitude}}">
+<input type="hidden" id ="latitude" class ="shop_address_latitude" value="{{shop.latitude}}">
+
+<input type="hidden" id="user_id">
+<input type="hidden" id="first_name">
+<input type="hidden" id="last_name">
+<input type="hidden" id="username">
+
+{{#ifEquals service "sandbox_empty"}}
+<!-- Sandbox -->
+{{else}}
+{{#ifEquals shop.id "telegram-demo-shops-showcase"}}
+     <div class="shop_about"><div class="shop_about_btn current-page" rel="about"><i class="fas fa-shop"></i><span> О сервисе</span></div></div>
+     <div class="shop_showcase"><div class="shop_showcase_btn current-page title-view" rel="showcase"><i class="fa fa-search"></i><span> Шаблоны</span></div></div>
+      {{else}}
+	{{#ifEquals shop.category_id "JOBS"}}
+		     <div class="shop_about"><div class="shop_about_btn current-page" rel="about"><i class="fas fa-phone"></i><span> О площадке</span></div></div>
+		     <div class="shop_showcase"><div class="shop_showcase_btn current-page title-view" rel="showcase"><i class="fa fa-search"></i><span> Вакансии</span></div></div>
+	      {{else}}
+		     <div class="shop_about"><div class="shop_about_btn current-page" rel="about"><i class="fas fa-phone"></i><span> Магазин</span></div></div>
+		     <div class="shop_showcase"><div class="shop_showcase_btn current-page title-view" rel="showcase"><i class="fa fa-search"></i><span> Товары</span></div></div>
+		     <div class="shop_logistic"><div class="shop_logistic_btn current-page title-view" rel="logistic"><i class="fa fa-car"></i><span> Доставка</span></div></div>
+	{{/ifEquals}}      
+{{/ifEquals}}      
+	{{#ifEquals shop.category_id "JOBS"}}
+
+	      {{else}}
+	  	  <div class="shop_orders"><div class="shop_orders_btn current-page title-view" rel="orders"><i class="fa fa-edit"></i><span> Заказы</span></div></div>
+   	          <div class="shop_basket"><div class="shop_basket_btn current-page title-view" rel="basket">
+		  <i class="fa fa-basket-shopping"></i><span class="badge-menu badge-success basket-counter">0</span><span> Корзина</span>
+		 </div></div>
+	{{/ifEquals}}      
+		 <div class="shop_profile">
+	             <div class="shop_profile_btn current-page title-view" rel="profile">
+			<i class="fa fa-user"></i><span id="mail_counter" class="badge-menu"></span><span> Профиль</span>
+	            </div>
+	        </div>
+	</div>
+{{/ifEquals}}      
+
+<script>
+    setTitle("{{service}}");
+    setDialogUsername("{{service}}");
+    openUserDialog();
+    tinymce.init({
+      selector: '.editor-textarea',
+      plugins: 'textcolor emoticons link image table',
+      menubar: false, 
+      mobile: {
+        menubar: false
+       },
+      toolbar:[ 'forecolor backcolor bold italic underline strikethrough image emoticons  align lineheight table | blocks fontfamily fontsize | checklist numlist bullist indent outdent |'],
+  setup: function(editor) {
+   	  editor.on('init', function () {
+		      // Устанавливаем размер шрифта
+		      editor.getBody().style.fontSize = '0.8rem'; // Замените на нужный размер шрифта
+	    });
+          editor.on('PostRender', function() {
+            var footer = document.querySelector('.tox-statusbar');
+            if (footer) {
+              footer.style.display = 'none';
+            }
+          })
+	}
+    });
+
+</script>
+
+<div class="main">
+    <div class="row">
+	<div class="col w-100 page_title"></div>
+	<div class="col w-100 page_title_addons"></div>
+    </div>
+			     {{#ifEquals service "promo"}}
+			           {{>shop_promo}} 
+			      {{else ifEquals service "about"}}
+			           {{>shop_about}}
+			      {{else ifEquals service "showcase"}}
+				      {{#ifEquals shop.columns "1"}}				
+				           {{>shop_showcase1 }}
+					      {{else}}				
+					   {{>shop_showcase2 }}
+	        		     {{/ifEquals}}              
+			      {{else ifEquals service "orders"}}
+			           {{>shop_orders}}
+			      {{else ifEquals service "basket"}}
+			           {{>shop_basket}}
+			      {{else ifEquals service "profile"}}
+			           {{>shop_profile}}
+			      {{else ifEquals service "profile_save_success"}}
+			           {{>shop_profile_save_success}}
+			      {{else ifEquals service "card"}}
+			           {{>shop_card}}
+			      {{else ifEquals service "promo_editor"}}
+			           {{>shop_promo_editor}}
+			      {{else ifEquals service "card_editor"}}
+			           {{>shop_card_editor}}
+			      {{else ifEquals service "about_editor"}}
+			           {{>shop_about_editor}}
+			      {{else ifEquals service "logistic"}}
+			           {{>shop_logistic}}
+			      {{else ifEquals service "logistic_editor"}}
+			           {{>shop_logistic_editor}}
+			      {{else ifEquals service "about_service"}}
+			           {{>shop_about_service}}
+			      {{else ifEquals service "delivery"}}
+			           {{>shop_delivery}}
+			      {{else ifEquals service "messages"}}
+			           {{>shop_messages}}
+			      {{else ifEquals service "application"}}
+			           {{>shop_application}}
+			      {{else ifEquals service "application_success"}}
+			           {{>shop_application_success}}
+			      {{else ifEquals service "application_failed"}}
+			           {{>shop_application_failed}}
+			      {{else ifEquals service "error-page"}}
+			           {{>shop_error_page}}
+			      {{else ifEquals service "application_execute"}}
+			           {{>shop_application_execute}}
+			      {{else ifEquals service "application_execute_done"}}
+			           {{>shop_application_execute_done}}
+			      {{else ifEquals service "application_execute_rejected"}}
+			           {{>shop_application_execute_rejected}}
+			      {{else ifEquals service "application_execute_confirmed"}}
+				   {{>shop_application_confirmed}}					
+			      {{else ifEquals service "application_execute_paid"}}
+				   {{>shop_application_execute_paid}}					
+			      {{else ifEquals service "message_sended"}}
+				   {{>shop_message_sended}}					
+			      {{else ifEquals service "sandbox_empty"}}
+				   {{>shop_sandbox_empty}}					
+        		     {{/ifEquals}}              
+ </div>
+</nav>
+
+  <mobile-navbar>
+    <mobile-navbar-item 
+      label="Магазин" 
+      icon="fa-eye" 
+      url="#main" 
+      active>
+    </mobile-navbar-item>
+    <mobile-navbar-item 
+      label="Товары" 
+      icon="fa-box" 
+      url="#products">
+    </mobile-navbar-item>
+    <mobile-navbar-item 
+      label="Доставка" 
+      icon="fa-truck" 
+      url="#logistic">
+    </mobile-navbar-item>
+    <mobile-navbar-item 
+      label="Заказы" 
+      icon="fa-shopping-cart" 
+      url="#orders">
+    </mobile-navbar-item>
+    <mobile-navbar-item 
+      label="Корзина" 
+      icon="fa-cart-plus" 
+      url="#basket">
+    </mobile-navbar-item>
+    <mobile-navbar-item 
+      label="Профиль" 
+      icon="fa-user" 
+      url="#profile">
+    </mobile-navbar-item>
+  </mobile-navbar>
+
+
+   <div class="footer fixed-bottom"></div>
+</body>
+
+
+  <script>
+    // Скрипт для управления активным пунктом меню
+    document.addEventListener('DOMContentLoaded', () => {
+      const navbar = document.querySelector('mobile-navbar');
+
+      navbar.addEventListener('click', (event) => {
+        const item = event.target.closest('mobile-navbar-item');
+        if (item) {
+          // Удаляем атрибут 'active' у всех пунктов
+          document.querySelectorAll('mobile-navbar-item').forEach(el => el.removeAttribute('active'));
+          // Добавляем атрибут 'active' к кликнутому пункту
+          item.setAttribute('active', '');
+        }
+      });
+    });
+  </script>
+
+
+{{#ifEquals  contour "production"}}
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(91552350, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/91552350" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+{{/ifEquals}}              
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список с иконками</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .ul-icon-list {
+            list-style-type: none; /* Убираем стандартные маркеры списка */
+            padding: 0;
+        }
+        .ul-icon-list li {
+            margin: 10px 0; /* Отступы между элементами списка */
+            font-size: 18px; /* Размер шрифта */
+            display: flex; /* Используем flexbox для выравнивания */
+            align-items: center; /* Вертикальное выравнивание иконок */
+        }
+        .ul-icon-list li i {
+            margin-right: 10px; /* Отступ между иконкой и текстом */
+            font-size: 24px; /* Размер иконки */
+        }
+    </style>
+</head>
+<body>
+    <ul class="ul-icon-list">
+        <li><i class="fas fa-home"></i> Главная</li>
+        <li><i class="fas fa-info-circle"></i> О нас</li>
+        <li><i class="fas fa-envelope"></i> Контакты</li>
+        <li><i class="fas fa-cog"></i> Услуги</li>
+        <li><i class="fas fa-image"></i> Галерея</li>
+    </ul>
+</body>
+</html>

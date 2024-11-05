@@ -1,0 +1,95 @@
+<div class="shop_cards">
+<!-- Карточка товара -->
+<input type=hidden id="product_id" value="{{productCard.product_id}}">
+<div class="row page_title_row">
+    <div class="card_page_title" style="text-decoration: none;">{{productCard.title}}</div>
+</div>
+<div class="row">
+   <div class="col-4">
+       <button class="btn btn-menu-2 btn-default pred-showcase-btn" rel="{{productCard.product_id}}">
+ 	   <i class="fa-solid fa-circle-arrow-left"></i>&nbsp;В каталог
+	</button>
+   </div>
+   <div class="col">  	
+     <div class="card_editor float-right" style="text-decoration: none;"></div>	    
+  </div>
+</div>
+<div class="row">
+
+<div class="col product_card">
+  <!-- Верхняя часть -->
+<!-- Изображение-ссылка товара -->
+ <div class="row">
+    <div class="col w-100">
+       <div class="fotorama" data-nav="thumbs">
+  	      {{#each productCard.media_files}} 
+	  	  <img src="{{this.url}}" rel="{{this.file_id}}">
+	      {{/each}}
+	</div>
+    </div>
+ </div>
+
+
+
+  <!-- Нижняя часть -->
+ <div class="row" style="padding: 1rem 0.1rem;">
+  <div class="col product_card__bottom">
+    <div class="product_card__prices">
+      <input type=hidden id="price" rel="{{productCard.product_id}}" value="{{productCard.price}}"> 	
+
+{{#ifEquals productCard.shop_id "telegram-demo-shops-showcase"}}
+      <div class="product_card__price product_card__price--common" style="font-size: 1.7rem;">от {{productCard.price}}{{productCard.currency_type}}/мес. </div>
+{{else}}
+      <div class="product_card__price product_card__price--common">{{productCard.price}}{{productCard.currency_type}} </div>
+{{/ifEquals}}      
+
+
+    </div>
+   </div>
+<!-- -->
+<div class="col-2 float-center">    
+    <div class="row text-center">
+      <div class="col float-right">
+{{#ifEquals productCard.has_my_like true }}
+  <i class="fa-heart fa-solid product_card_like_btn product-card-likes-icon" rel="{{productCard.product_id}}" style="font-size: 1.5rem;"></i>
+      {{else ifEquals productCard.has_my_like false }}
+  <i class="fa-regular fa-heart product_card_like_btn product-card-likes-icon" rel="{{productCard.product_id}}" style="font-size: 1.5rem;"></i>
+{{/ifEquals}}
+
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col float-right product-card-likes-icon">{{productCard.likes}}</div>
+    </div>
+</div>
+<div class="col-2 float-center">    
+    <div class="row text-center">
+        <div class="col float-right"><i class="fa-solid fa-bag-shopping product-card-sales-icon" style="font-size: 1.5rem;"></i></div>
+    </div>        
+    <div class="row text-center">
+        <div class="col float-right product-card-sales-icon">{{productCard.sales}}</div>
+    </div>
+</div>
+<!-- -->
+ </div>
+
+  <div class="row">
+   <div class="col product_card__bottom"> <!-- Кнопка добавить в корзину -->
+{{#ifEquals shop.category_id "JOBS" }}
+	<span style="font-size: 1.5rem;"><i class="fa fa-phone" style="font-size: 1.5rem;"></i> {{shop.phone}} </span>
+{{else}}
+          <button class="btn w-100 float-center btn-lg btn-card-add card-order-btn">В корзину <i class="fas fa-cart-plus fa-sm mr-1"></i></button>
+{{/ifEquals}}
+   </div>
+  </div>
+
+
+  <div class="row">
+  <hr>
+	 <div class="col product_card__description"></div>
+  </div>
+ </div>
+</div>
+</div>
+
+<script src="/main/pages/telegram/jobs/js/shop_card.js"></script>

@@ -1,0 +1,137 @@
+<div class="row">
+	 <div class="col">
+        	  <x-element-contact-form-component class="shop-x-element-contact-form-component"></x-element-contact-form-component>
+    	 </div>
+</div>
+
+<div class="row">
+  <div class="col w-100 text-left" ><h2>Письма</h2></div> 
+</div>
+
+<div class="row">
+    <div class="card  w-100" style="margin: 0.8rem; padding: 1rem;">
+	<div class="text-center col justify-content-center profile-messages-plg" ></div>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col w-100 text-left" ><h2>Данные для доставки</h2></div> 
+</div>
+
+<div class="row">
+         {{>shop_user_delivery_panel_input}}
+</div>
+
+
+{{#ifEquals is_owner true}}
+
+
+<div class="row">
+  <div class="col w-100 text-left" ><h2>Настройки магазина<br>(доступно только владельцу)</h2></div> 
+</div>
+
+<div class="row">
+    <div class="card  w-100" style="margin: 0.8rem; padding: 1rem;">
+	<div class="row">
+		  <div class="col w-100 text-left profile-field-title"  >Цветовая тема</div> 
+	</div>
+	<div class="row input-group">
+		  <div class="btn btn-lg btn-red shop-theme" >
+			<input type=radio name="theme" class="shop-theme" value = "red" {{#ifEquals shop.theme "red"}} checked {{/ifEquals}}></div>
+  		  <div class="btn btn-lg btn-blue shop-theme">
+			<input type=radio name="theme" class="shop-theme" value = "blue" {{#ifEquals shop.theme "blue"}} checked {{/ifEquals}}></div>
+		  <div class="btn btn-lg btn-green shop-theme">
+			<input type=radio name="theme" class="shop-theme" value = "green" {{#ifEquals shop.theme "green"}} checked {{/ifEquals}}></div>
+		  <div class="btn btn-lg btn-gray shop-theme">
+			<input type=radio name="theme" class="shop-theme" value = "gray" {{#ifEquals shop.theme "gray"}} checked {{/ifEquals}}></div>
+		  <div class="btn btn-lg btn-red-white shop-theme">
+			<input type=radio name="theme" class="shop-theme" value = "red-white" {{#ifEquals shop.theme "red-white"}} checked {{/ifEquals}}></div>
+
+	</div>	
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="card  w-100" style="margin: 0.8rem; padding: 1rem;">
+	<div class="row">
+		  <div class="col w-100 text-left profile-field-title"  >Колонок с товаром</div> 
+	</div>
+
+	<div class="row input-group">
+		  <div class="row w-100 my-auto shop-showcase-columns" >
+ 	  	    <div class="col-1 my-auto">
+			<input type=radio name="showcase_columns" class="shop-showcase-columns" value = "1" {{#ifEquals shop.columns 1}} checked {{/ifEquals}}>
+   	            </div>
+		     <div class="col-10 my-auto">Одна колонка</div>
+		    </div>	
+  		  <div class="row w-100 shop-showcase-columns my-auto">
+ 	  	      <div class="col-1 my-auto">
+			<input type=radio name="showcase_columns" class="shop-showcase-columns" value = "2" {{#ifEquals shop.columns 2}} checked {{/ifEquals}}>
+		     </div>
+		     <div class="col-10 my-auto">Две колонки</div>
+	         </div>	
+	</div>	
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="card  w-100" style="margin: 0.8rem; padding: 1rem;">
+	<div class="row">
+		  <div class="col w-100 text-left profile-field-title">Платежные данные для клиента</div> 
+	</div>
+	<div class="row">
+                 <div class="col shop_description" style="margin-bottom: 0.5rem!important;">
+			<textarea  id="shop_payment_description" 
+	 	  	 	  placeholder = 'Укажите как клиенту произвести оплату вашего товара'
+				  cols=auto
+				  rows=5 class="form-control editor-textarea" >
+					{{shop.payment_description}}
+			</textarea>
+		</div>
+	</div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="card profile_system_params w-100" >
+	 <div class="row">
+		  <div class="col w-100 text-left profile-field-title" >Лицензия</div> 
+	</div>
+
+	<div class="row input-group">
+		 <div class="col profile_system_params"><h3>Ключ лицензии</h3></div> 
+	</div>	
+	<div class="row input-group">
+                 <div class="col apikey profile_system_params" style="margin-bottom: 0.5rem!important;">
+			<span type="text">{{api.key}}</span>
+		</div>
+	</div>	
+	<div class="row input-group">
+		 <div class="col profile_system_params"><h3>Срок действия ключа</h3></div> 
+	</div>	
+	<div class="row input-group">
+                 <div class="col key_expiration_date profile_system_params" style="margin-bottom: 0.5rem!important;">
+			<span type="text">{{api.key_expiration_date}}</span>
+		</div>
+	</div>	
+	<div class="row input-group">
+		 <div class="col profile_system_params"><h3>Версия релиза</h3></div> 
+	</div>	
+	<div class="row input-group">
+                 <div class="col key_expiration_date profile_system_params" style="margin-bottom: 0.5rem!important;">
+			<span type="text">{{version}}</span>
+		</div>
+	</div>	
+
+   </div>
+</div>
+
+{{/ifEquals}}              
+<div class="row"><div class="col shop_profile_list"></div></div>
+</div>
+<script src="/main/pages/telegram/jobs/js/shop_profile.js"></script>
+
+

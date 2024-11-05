@@ -1,0 +1,28 @@
+ <div class="card delivery_card w-100" style="margin: 0.8rem; padding: 1rem;">
+	<div class="row">
+		  <div class="col w-100 text-left" ><h3>Данные заказчика</h3></div> 
+	</div>
+
+	<div class="row input-group">
+		  <div class="col-1 delivery_firstname" ><i class="fa fa-user"></i></div> 
+  	   	  <div class="col delivery_firstname" style="margin-bottom: 0.5rem!important;">
+		  	<input id ="user_delivery_name"  class="form-control" 
+			placeholder="Имя клиента" value="{{user.user_delivery_name}}"></input>
+		 </div>
+	</div>	
+	<div class="row input-group">
+		<div class="col-1 delivery_phone" ><i class="fa fa-phone"></i></div>
+  	  	 <div class="col delivery_phone" style="margin-bottom: 0.5rem!important;">
+			<input id ="user_delivery_phone" class="form-control" placeholder="Телефонный номер заказчика" 
+			 value="{{user.user_delivery_phone}}"></input>
+		</div>
+	</div>	
+	<div class="row input-group">
+		 <div class="col-1 delivery_address"><i class="fa fa-map"></i></div> 
+                 <div class="col delivery_address" style="margin-bottom: 0.5rem!important;">
+			<textarea id="user_delivery_address" rows=3 class="form-control" style="background-color: white;"
+			placeholder="Адрес для доставки"
+			>{{user.address}}</textarea>
+		</div>
+	</div>	
+ </div>	

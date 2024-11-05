@@ -1,0 +1,99 @@
+﻿  <div class="row">
+     <div class="col-sm">
+        <div class="row"><h3 class="callservice-title-article" > Данные о заказчике </h3> </div>	
+        <div class="row">
+		   <div class="col-sm-2 text-left"  style="padding-top: 0.3rem;"><label for="call_id" class="col-form-label font-weight-normal w-100 ">Запрос</label></div>
+		   <div class="col-sm-8">
+		        <div class="input-group mb-3" style="margin-bottom:0.5rem!important;">
+	                 <div class="input-group-prepend"><span class="input-group-text" data-toggle="tooltip" data-placement="bottom" data-original-title="ID">
+       			   	 <i class="fas fa-id-card"></i></span></div>   
+	        	         <input id="call-id" name="call_id" class="form-control" maxlength="50"	 placeholder="{{labels.dialogChangeObjectTab1.id}}" 				
+				 style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;" readonly>
+  	            </div>		
+              </div>		               
+	</div>		
+       <div class="row">
+	   <div class="col-sm-2 text-left"  style="padding-top: 0.3rem;"><label for="call-person" class="col-form-label font-weight-normal w-100 ">Заказчик</label></div>
+  	      <div class="col-sm-8">
+	         <div class="input-group mb-3" style="margin-bottom:0.5rem!important;">
+                    <div class="input-group-prepend"><span class="input-group-text" data-toggle="tooltip" data-placement="bottom"
+			 data-original-title="CALL_CUSTOMER_ORGNAME">
+       	  			<i class="fas fa-user-friends"></i></span></div>  
+				<select class="form-control" 
+					id="call-customer-id" 
+					name="call_customer_id" 
+					maxlength="50"  placeholder="Организация-заказчик" 
+					style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;">
+				 </select>
+  	            </div>		
+                 </div>		               
+	    </div>		
+
+       <div class="row">
+		   <div class="col-sm-2 text-left"  style="padding-top: 0.3rem;"><label for="call_id" class="col-form-label font-weight-normal w-100 ">Запрос в системе <br/> заказчика</label></div>
+		   <div class="col-sm-8">
+		        <div class="input-group mb-3" style="margin-bottom:0.5rem!important;">
+	                 <div class="input-group-prepend"><span class="input-group-text" data-toggle="tooltip" data-placement="bottom" data-original-title="ID">
+       			   	 <i class="fas fa-id-card"></i></span></div>   
+	        	         <input id="call-extid" name="call_extid" class="form-control" maxlength="50"	 placeholder="{{labels.dialogChangeObjectTab1.id}}" 				
+				 style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;" readonly>
+  	            </div>		
+              </div>		               
+	</div>		
+
+       <div class="row">
+	   <div class="col-sm-2 text-left"  style="padding-top: 0.3rem;"><label for="call-object-searchcode" class="col-form-label font-weight-normal w-100 ">Обьект</label></div>
+	      <div class="col-sm-8">
+	        <div class="input-group mb-3" style="margin-bottom:0.5rem!important;">
+	           <div class="input-group-prepend">
+			<span class="input-group-text" data-toggle="tooltip" data-placement="bottom" data-original-title="SEARCHCODE">
+       		   	 <i class="fas fa-desktop"></i></span></div>   
+	                 <input id="call-object-searchcode" name="call_object_searchcode" class="form-control" maxlength="50"	 placeholder="{{labels.dialogChangeObjectTab1.searchCode}}" 				
+	  		 style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;" >             	  	               	  	  
+  	            </div>		
+              </div>		               
+	</div>		
+
+
+       <div class="row">
+		   <div class="col-sm-2 text-left"  style="padding-top: 0.3rem;">
+		   <label for="call_deadline" class="col-form-label font-weight-normal w-100 ">Крайний срок</label></div>
+		   <div class="col-sm-3">
+		    <div class="input-group mb-3" style="margin-bottom:0.5rem!important;">
+                      <div class="input-group-prepend">
+  	  		 <span class="input-group-text" data-toggle="tooltip" data-placement="bottom" data-original-title="DEADLINE">
+       		   	 <i class="fas fa-calendar"></i></span></div>   
+	                 <input id="call-deadline" name="call_deadline" class="form-control date" maxlength="50"	
+	  		   placeholder="{{labels.dialogChangeObjectTab1.deadline}}" 				
+		 	   style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;" >             	  	               	  	  
+  	            </div>		
+                 </div>		               
+	    </div>		
+
+       <div class="row">
+		   <div class="col-sm-2 text-left"  style="padding-top: 0.3rem;">
+			<label class="col-form-label font-weight-normal w-100 ">Дата закрытия</label></div>
+		   <div class="col-sm-3">
+		        <div class="input-group mb-3" style="margin-bottom:0.5rem!important;">
+                  <div class="input-group-prepend"><span class="input-group-text" data-toggle="tooltip" data-placement="bottom" 
+			data-original-title="FINISHDATE">
+       		   	 <i class="fas fa-calendar"></i></span></div>   
+	                 <input id="call-finishdate" name="call_finishdate" class="form-control date" maxlength="50"	
+			   placeholder="{{labels.dialogChangeObjectTab1.finishdate}}" 				
+			   style="height: calc(1.55rem + 15px); font-size: 1rem; padding-left: 0.5rem;" >             	  	               	  	  
+  	            </div>		
+              </div>		               
+	    </div>		
+
+       <div class="row">
+  	      <div class="col-sm">
+	         <div class="row"><h3 class="callservice-title-article"> Информация от заказчика </h3> </div>	
+	         <div class="input-group mb-3" style="margin-bottom:0.5rem!important; height: 15rem;">
+	  	    <textarea id="call-information" name="call_information" class="servicecall-textarea-scrollbar_15rem scrollbar-outer form-control" rows="25" placeholder="Enter ..." ></textarea>
+  	            </div>		
+              </div>		               
+     	</div>		
+
+
+     </div>
+  </div>

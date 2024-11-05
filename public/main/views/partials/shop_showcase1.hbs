@@ -1,0 +1,94 @@
+<div class="shop_cards">
+<!-- Карточка товара -->
+<div class="row">
+    <div class="col card_editor"></div>	    
+</div>
+<div class="row">
+
+{{#each items}} 
+<div class="shop_card draggable">  <!-- Верхняя часть -->
+ <div class="row">
+   <div class="col">
+    <div class="ribbon-wrapper ribbon-lg product-item-{{this.active_status}}">
+      <div class="ribbon bg-danger">
+       {{#ifEquals active_status "active"}}
+         Активен
+       {{else ifEquals active_status "blocked"}}
+        Блокирован
+      {{/ifEquals}}
+      </div>
+    </div>
+  </div>
+ </div>
+
+ <!-- Изображение-ссылка товара -->
+
+ <div class="row">
+    <div class="col" showcase-card-btn" rel="{{this.product_id}}" >
+       {{#ifEquals this.is_owner true}}
+	  <div class="card-thumbtack text-center" rel="{{this.product_id}}">  <i class="fa-solid fa-thumbtack"></i> </div>
+        {{/ifEquals}}                   
+
+      <div class="shop_showcase_card__top showcase-card-btn" rel="{{this.product_id}}" >
+      <a href="/telegram/shop/{{this.shop_id}}/card/{{this.product_id}}/page">
+         <div   class="fotorama" 
+	        data-transition="{{this.image_transition}}"
+{{#ifEquals this.image_loop  "1"}}
+		data-loop="true"
+		data-autoplay="true" 
+	{{else}}
+		data-loop="false"
+		data-autoplay="false" 
+{{/ifEquals}}                   
+		data-width="100%" data-ratio="165/140">
+  	      {{#each this.media_files }} 
+	  	       <img src="{{this.url}}" rel="{{this.file_id}}" class="showcase-card-btn">
+	      {{/each}}
+   	  </div>
+	</a>
+	</div>
+    </div>
+ </div>
+
+
+ <div class="row">
+   <div class="col">
+    <div class="shop_card__bottom"> <!-- Нижняя часть -->
+      <!-- Цены на товар (с учетом скидки и без)-->
+      <div class="shop_card__prices">
+                    
+{{#ifEquals this.shop_id "telegram-demo-shops-showcase"}}
+        <div shopid="{{this.shop_id}}" class="shop_card__price shop_card__price--common" style="font-size:1rem;">от {{this.price}}&nbsp;{{this.currency_type}}/мес.</div>
+{{else}}
+        <div shopid="{{this.shop_id}}" class="shop_card__price shop_card__price--common">{{this.price}}&nbsp;{{this.currency_type}}</div>
+{{/ifEquals}}          
+
+      </div>
+  </div>
+  </div>
+ </div>
+
+ <div class="row">
+   <div class="col">
+      <div class="shop_card__title">
+ 	 <!-- Ссылка-название товара -->
+         <span class="shop_card__title text-container">{{this.title}}</span>
+      </div>
+  </div>
+ </div>
+ <div class="row">
+   <div class="col">
+      <div class="shop_card__btn">
+    <!-- Кнопка добавить в корзину -->
+    <button class="btn w-100 btn-lg btn-card-add showcase-card-btn" rel="{{this.product_id}}" >Выбрать <i class="fas fa-cart-plus fa-sm mr-1"></i></button>
+  </div>
+  </div>
+ </div>
+ 
+</div>
+
+{{/each}}
+</div>
+</div>
+<script src="/main/pages/telegram/jobs/js/components/product-card/product-card.js"></script>
+<script src="/main/pages/telegram/jobs/js/shop_showcase.js"></script>

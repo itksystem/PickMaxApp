@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Telegram WebApps API от ChatLabs</title>
+   <script src="/main/js/telegram-web-app.js"></script> <!--Подключаем скрипт Web App telegram API -->
+   <link type="text/css" href="/main/pages/telegram/jobs/css/card.css" rel="stylesheet" />
+
+</head>
+<style>
+      body{
+         display: flex;
+         color: var(--tg-theme-text-color);
+         background: var(--tg-theme-bg-color);
+         align-items: center;
+         flex-direction: column;
+         font-size: 20px;
+      }
+
+      .hint{
+         color: var(--tg-theme-hint-color);
+      }
+
+      .link{
+         color: var(--tg-theme-link-color);
+      }
+
+      .button{
+         background: var(--tg-theme-button-color);
+         color: var(--tg-theme-button-text-color);
+         border: none;
+         font-size: 20px;
+      }
+
+      .button:not(:last-child){
+         margin-bottom: 15px
+      }
+
+      #usercard{
+         text-align: center;
+      }
+   </style>
+</head>
+<body>
+<div id="usercard"> <!--Карточка профиля пользователя, который обращается к веб-приложению-->
+</div>
+
+ <script src="/main/pages/telegram/jobs/js/hander.js"></script>
+
+<!-- Сетка карточек товаров -->
+<div class="shop">
+ <div class="shop_about"><button class="shop_about_btn">О магзине</button>
+</div>
+<div class="basket"><button class="basket_btn">Корзина</button>
+</div>
+</div>
+<div class="cards">
+<!-- Карточка товара -->
+<div class="card">
+  <!-- Верхняя часть -->
+  <div class="card__top">
+    <!-- Изображение-ссылка товара -->
+    <a href="#" class="card__image">
+      <img
+        src="/main/pages/telegram/jobs/images/iphone6spacegray_2.jpg"
+        alt="Apple IPhone 14 PRO Max Gold"
+      />
+    </a>
+    <!-- Скидка на товар -->
+    <div class="card__label">-10%</div>
+  </div>
+  <!-- Нижняя часть -->
+  <div class="card__bottom">
+    <!-- Цены на товар (с учетом скидки и без)-->
+    <div class="card__prices">
+      <div class="card__price card__price--discount">135 000</div>
+      <div class="card__price card__price--common">150 000</div>
+    </div>
+    <!-- Ссылка-название товара -->
+    <a href="#" class="card__title">
+      Смартфон Apple IPhone 14 Pro Max 256Gb, золотой
+    </a>
+    <!-- Кнопка добавить в корзину -->
+    <button class="card__add">В корзину</button>
+  </div>
+</div>
+
+
+<!-- Карточка товара -->
+<div class="card">
+  <!-- Верхняя часть -->
+  <div class="card__top">
+    <!-- Изображение-ссылка товара -->
+    <a href="#" class="card__image">
+      <img
+        src="/main/pages/telegram/jobs/images/iphone6spacegray_2.jpg"
+        alt="Apple IPhone 14 PRO Max Gold"
+      />
+    </a>
+    <!-- Скидка на товар -->
+    <div class="card__label">-10%</div>
+  </div>
+  <!-- Нижняя часть -->
+  <div class="card__bottom">
+    <!-- Цены на товар (с учетом скидки и без)-->
+    <div class="card__prices">
+      <div class="card__price card__price--discount">135 000</div>
+      <div class="card__price card__price--common">150 000</div>
+    </div>
+    <!-- Ссылка-название товара -->
+    <a href="#" class="card__title">
+      Смартфон Apple IPhone 14 Pro Max 256Gb, золотой
+    </a>
+    <!-- Кнопка добавить в корзину -->
+    <button class="card__add">В корзину</button>
+  </div>
+</div>
+
+    <!-- Карточка товара .. -->
+<div class="card">
+  <!-- Верхняя часть -->
+  <div class="card__top">
+    <!-- Изображение-ссылка товара -->
+    <a href="#" class="card__image">
+      <img
+        src="/main/pages/telegram/jobs/images/iphone6spacegray_2.jpg"
+        alt="Apple IPhone 14 PRO Max Gold"
+      />
+    </a>
+    <!-- Скидка на товар -->
+    <div class="card__label">-10%</div>
+  </div>
+  <!-- Нижняя часть -->
+  <div class="card__bottom">
+    <!-- Цены на товар (с учетом скидки и без)-->
+    <div class="card__prices">
+      <div class="card__price card__price--discount">135 000</div>
+      <div class="card__price card__price--common">150 000</div>
+    </div>
+    <!-- Ссылка-название товара -->
+    <a href="#" class="card__title">
+      Смартфон Apple IPhone 14 Pro Max 256Gb, золотой
+    </a>
+    <!-- Кнопка добавить в корзину -->
+    <button class="card__add">В корзину</button>
+  </div>
+</div>
+
+<div class="card">
+  <!-- Верхняя часть -->
+  <div class="card__top">
+    <!-- Изображение-ссылка товара -->
+    <a href="#" class="card__image">
+      <img
+        src="/main/pages/telegram/jobs/images/iphone6spacegray_2.jpg"
+        alt="Apple IPhone 14 PRO Max Gold"
+      />
+    </a>
+    <!-- Скидка на товар -->
+    <div class="card__label">-10%</div>
+  </div>
+  <!-- Нижняя часть -->
+  <div class="card__bottom">
+    <!-- Цены на товар (с учетом скидки и без)-->
+    <div class="card__prices">
+      <div class="card__price card__price--discount">135 000</div>
+      <div class="card__price card__price--common">150 000</div>
+    </div>
+    <!-- Ссылка-название товара -->
+    <a href="#" class="card__title">
+      Смартфон Apple IPhone 14 Pro Max 256Gb, золотой
+    </a>
+    <!-- Кнопка добавить в корзину -->
+    <button class="card__add">В корзину</button>
+  </div>
+ </div>
+</body>
+</html>
+

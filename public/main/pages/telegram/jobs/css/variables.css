@@ -1,0 +1,47 @@
+:root {
+  --menu-backgroupd-color : #bf0817;
+  --menu-article-background-color : #bf0817;
+  --menu-article-background-color-hover : #fa635e;
+  --menu-bottom-line-color: #bf0817;
+  --menu-title-color: #ffffff;
+  --shop_card__price--common-background-color : #fff762;
+  --shop_card__price--common-color : #bf0817;
+  --shop_page_title : #bf0817; 
+  --username-color: #0a0081;
+  --primary-color: white;
+  --secondary-color: #e74c3c;
+  --font-size: 0.5em;
+  --border-width: 0px;
+  --shop-button: #bf0817;
+  --promo-body-color : #ffffff;
+  --about-body-background-color : #ffffff;
+  --body-background-color : #f6f6f9;
+  --body-color : #303030;
+  --menu-item-size : 15%;
+  --menu-shop_basket_view-item-font-size : 0.7rem;
+  --menu-item-font-size: 0.6rem;
+  --menu-item-font-size2: 0.6rem;
+  --shop-page-title-font-size: 1.2rem;
+  --shop_card__title : #414141;
+  --shop_card__warning : #bf0817;
+  --shop_cards-background-color : #ffffff;
+  --shop_status_min_width : 10%;
+/* Полотно приложения */
+  --main-body-padding :5rem 0.3rem 10rem 0.3rem;
+  --mobile-navbar-menu-color : #c2c2c2;
+  --mobile-navbar-menu-font-size : 1.4rem;
+
+/* Карточки */
+  
+
+/* статусы */
+ --order_new_status :  #007bff;
+ --order_new_status_end : #575d9f;
+ --order_paid_status :  #43cd62;
+ --order_paid_status_end : #28a745;
+ --order_done_status :  #43cd62;
+ --order_done_status_end :#218838;
+ --order_rejected_status : #fd8a95;
+ --order_rejected_status_end : #dc3545;
+
+}

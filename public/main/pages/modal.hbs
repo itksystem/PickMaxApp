@@ -1,0 +1,9 @@
+   {{#ifInclude service "/modal/profile"}}
+           {{>profile}} 
+   {{else ifInclude service "/modal/object"}}
+           {{>object}}
+   {{else ifInclude service "/modal/trip/view"}}
+           {{>trip}}
+   {{else ifInclude service "/modal/servicecalls"}}
+           {{>call}}
+   {{/ifInclude}}              

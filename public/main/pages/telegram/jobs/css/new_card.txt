@@ -1,0 +1,23 @@
+<article class="product-card" data-nm-id="31344425">
+    <div class="product-card__wrapper">
+        <a class="product-card__link" href="https://www.wildberries.ru/catalog/31344425/detail.aspx" aria-label="Протеиновые батончики без сахара 12 шт по 50 гр FitnesShock">
+            <div class="product-card__img-wrap">
+                <img class="product-card__image" loading="lazy" src="https://basket-03.wbbasket.ru/vol313/part31344/31344425/images/c516x688/1.webp" alt="Протеиновые батончики без сахара 12 шт по 50 гр FitnesShock">
+            </div>
+            <div class="product-card__info">
+                <h2 class="product-card__title">
+                    <span class="product-card__brand">FitnesShock</span>
+                    <span class="product-card__name">Протеиновые батончики без сахара 12 шт по 50 гр</span>
+                </h2>
+                <div class="product-card__price">
+                    <span class="product-card__current-price">849 ₽</span>
+                    <del class="product-card__old-price">1 459 ₽</del>
+                    <span class="product-card__discount">-39%</span>
+                    <span class="product-card__wallet-condition">с WB кошельком</span>
+                </div>
+            </div>
+        </a>
+    </div>
+</article>
+
+
