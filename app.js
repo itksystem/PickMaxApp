@@ -4,40 +4,15 @@ process.env.UV_THREADPOOL_SIZE = 128;        //  By default, Node has 4 workers 
                                             //  Try increasing your uv thread pool size
 
 const http=require('http');                   // Подключаем WebSocket ...
-const ws=require('ws');                       //
-const wss = new ws.Server({noServer: true});  //  
-var wsServer = null;
 const express    = require("express");   // подключение express
-const swaggerUi  = require("swagger-ui-express");
 const app        = express();	           // создаем объект приложения	
-const logger     = require("./smes/logs/logController.js"); // Работа с лог-файлами
-const auth       = require("./smes/smes-auth/auth.js");     // Работа с авторизацией, сесииями и таймлайнами
-const config     = require("./smes/params/params.js");
-const socketController  = require("./controllers/socketsController");
-const accessController  = require("./controllers/accessController");
-const db      = require("./smes/smes-dbconnector/dbConnector"); 
-const AuthController =  require("./controllers/telegramAuthController").Auth;
-const auditMiddleware = require('./middleware/auditMiddleware'); // подключаем наш middleware
-
-const telegramController = require("./controllers/telegramController");
-
-/* Socket IO initialization */
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
-let global=require("./smes/global/global")
+const logger     = require("./controllers/LoggerHandler"); // Работа с лог-файлами
+const middleware = require(""); // подключаем наш middleware
 
 
-var clients = [];
-/*  Pages, load objects*/
-const page={
-    // "main"        :  require("./public/main/pages/main"),
-    "contacts"    :  require("./public/main/pages/contacts.js"),
-    "profile"     :  require("./public/main/pages/profile.js"),
-    "addContact"  :  require("./public/main/pages/addContact.js"),
-    "error404"    :  require("./public/main/pages/404.js"),
-    "error500"    :  require("./public/main/pages/500.js")
-}
+
+
+
 
 /************************************************************************/                            
 var  params = config.getIniParams(); // загружаем ini-файл с настройками
@@ -421,8 +396,3 @@ io.on('connection', (socket) => {
  server.listen(3000, () => {
    console.log('Socket listening on *:3000');
  });
-
- global.io =io;
-
- // отправка push по расписанию
- setInterval(()=>{  socketController.sendFromDatabaseQueue(); }, 20000); 
