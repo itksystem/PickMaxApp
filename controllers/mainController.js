@@ -59,7 +59,7 @@ exports.logon = async function (request, response){
 exports.logout = async function (request, response){
     let _METHOD_ = 'logout';  
     try {
-         response.render(_dir_html +'/logout.hbs', {  });    
+         response.render(_dir_html +'/html/logout.hbs', {  });    
         } catch (error) {
         logger.error(error);       
     }   
@@ -98,7 +98,7 @@ exports.health = async function (request, response){
 exports.outService = async function (request, response){
     let _METHOD_ = 'outService';  
     try {
-        response.render(_dir_html +'/outService.hbs', {  });    
+        response.render(_dir_html +'/html/outService.hbs', {  });    
         } catch (error) {
         logger.error(error);       
     }   
@@ -107,7 +107,7 @@ exports.outService = async function (request, response){
   exports.showcase = async function (request, response){
     let _METHOD_ = 'showcase';  
     try {
-        response.render(_dir_html +'/showcase.hbs', {  });    
+        response.render(_dir_html +'/html/showcase.hbs', {  });    
         } catch (error) {
         logger.error(error);       
     }   
@@ -115,7 +115,7 @@ exports.outService = async function (request, response){
   exports.profile = async function (request, response){
     let _METHOD_ = 'profile';  
     try {
-        response.render(_dir_html +'/profile.hbs', {  });    
+        response.render(_dir_html +'/html/profile.hbs', {  });    
         } catch (error) {
         logger.error(error);       
     }   
@@ -123,7 +123,7 @@ exports.outService = async function (request, response){
   exports.basket = async function (request, response){
     let _METHOD_ = 'basket';  
     try {
-        response.render(_dir_html +'/basket.hbs', {  });    
+        response.render(_dir_html +'/html/basket.hbs', {  });    
         } catch (error) {
         logger.error(error);       
     }   
@@ -131,7 +131,7 @@ exports.outService = async function (request, response){
   exports.orders = async function (request, response){
     let _METHOD_ = 'orders';  
     try {
-        response.render(_dir_html +'/orders.hbs', {  });    
+        response.render(_dir_html +'/html/orders.hbs', {  });    
         } catch (error) {
         logger.error(error);       
     }   
@@ -139,7 +139,7 @@ exports.outService = async function (request, response){
   exports.getOrder = async function (request, response){
     let _METHOD_ = 'getOrder';  
     try {
-        response.render(_dir_html +'/getOrder.hbs', {  });    
+        response.render(_dir_html +'/html/getOrder.hbs', {  });    
         } catch (error) {
         logger.error(error);       
     }   
@@ -147,7 +147,7 @@ exports.outService = async function (request, response){
   exports.createOrderSuccess = async function (request, response){
     let _METHOD_ = 'getOrderSuccess';  
     try {
-        response.render(_dir_html +'/getOrderSuccess.hbs', {  });    
+        response.render(_dir_html +'/html/getOrderSuccess.hbs', {  });    
         } catch (error) {
         logger.error(error);       
     }   
@@ -155,7 +155,7 @@ exports.outService = async function (request, response){
   exports.createOrderError = async function (request, response){
     let _METHOD_ = 'getOrderError';  
     try {
-        response.render(_dir_html +'/getOrderError.hbs', {  });    
+        response.render(_dir_html +'/html/getOrderError.hbs', {  });    
         } catch (error) {
         logger.error(error);       
     }   

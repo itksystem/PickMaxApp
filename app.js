@@ -13,6 +13,9 @@ const PORT = process.env.PORT || 3000;
 
 const app        = express();	                             // создаем объект приложения	
 app.use(bodyParser.json());
+const cookieParser = require('cookie-parser');
+app.use(cookieParser()); // Подключаем cookie-parser для работы с cookies
+
 session          = require('express-session');
 flash            = require('connect-flash')
 

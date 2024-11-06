@@ -40,9 +40,9 @@ router.post('/api/auth/v1/login', async function (request, response) {
     const res = await authClient.login(email, password);
     if (res.success) {
         // Отправляем cookie с флагами HttpOnly и Secure
-        response.cookie('accessToken', res.data.token, {
+          response.cookie('accessToken', res.data.token, {
              httpOnly: true,
-             secure: true, // Требуется HTTPS
+             secure: false, // Требуется HTTPS
              sameSite: 'Strict', // Дополнительная защита от CSRF
             maxAge: 3600000 // Время жизни токена (1 час)
          });
