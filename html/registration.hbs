@@ -6,6 +6,10 @@
     <title>Регистрация пользователя</title>
     <style>
         /* Основные стили */
+        :root {
+            font-size: 16px;
+        }
+
         body {
             display: flex;
             justify-content: center;
@@ -13,45 +17,46 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f0f4f8;
+            background: url('/images/background.png') no-repeat center center fixed;
+            background-size: cover;
             color: #333;
         }
 
         .container {
-            background: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            background: rgba(255, 255, 255, 1.0);
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+            max-width: 25rem;
             width: 90%;
             text-align: center;
         }
 
         .container h1 {
-            font-size: 24px;
+            font-size: 1.5rem;
             color: #007bff;
-            margin-bottom: 20px;
+            margin-bottom: 1.25rem;
         }
 
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 0.9375rem;
             text-align: left;
         }
 
         .input-group label {
-            font-size: 14px;
+            font-size: 0.875rem;
             color: #555;
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 0.3125rem;
         }
 
         .input-group input[type="email"],
         .input-group input[type="password"] {
             width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+            padding: 0.625rem;
+            font-size: 1rem;
+            border: 0.0625rem solid #ccc;
+            border-radius: 0.5rem;
             box-sizing: border-box;
             transition: border-color 0.3s;
         }
@@ -62,34 +67,46 @@
             outline: none;
         }
 
+        .error-message {
+            color: #d9534f;
+            font-size: 0.8125rem;
+            margin-top: 0.3125rem;
+            display: none;
+        }
+
         .checkbox-group {
             text-align: left;
-            margin-top: 10px;
-            font-size: 14px;
+            margin-top: 0.625rem;
+            font-size: 0.875rem;
             color: #555;
         }
 
         .checkbox-group input[type="checkbox"] {
-            margin-right: 8px;
+            margin-right: 0.5rem;
         }
 
         .button-container {
-            margin-top: 20px;
+            margin-top: 1.25rem;
         }
 
         .button {
             width: 100%;
-            padding: 12px;
-            font-size: 16px;
+            padding: 0.75rem;
+            font-size: 1rem;
             color: #fff;
             background-color: #28a745;
             border: none;
-            border-radius: 8px;
+            border-radius: 0.5rem;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
-        .button:hover {
+        .button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .button:hover:enabled {
             background-color: #218838;
         }
 
@@ -102,35 +119,145 @@
         .terms-link:hover {
             color: #0056b3;
         }
+
+        /* Адаптивные стили */
+        @media (max-width: 1024px) {
+            .container {
+                max-width: 30rem;
+            }
+
+            .container h1 {
+                font-size: 1.75rem;
+            }
+
+            .button {
+                padding: 0.875rem;
+                font-size: 1.125rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 2rem;
+                max-width: 90%;
+            }
+
+            .container h1 {
+                font-size: 1.5rem;
+            }
+
+            .button {
+                padding: 0.75rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 412px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .container h1 {
+                font-size: 1.25rem;
+            }
+
+            .button {
+                padding: 0.625rem;
+                font-size: 0.9375rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .container h1 {
+                font-size: 1.125rem;
+            }
+
+            .input-group label {
+                font-size: 0.75rem;
+            }
+
+            .button {
+                padding: 0.625rem;
+                font-size: 0.875rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <img src="/images/pickmax.png" alt="pickmax.ru" style="max-width: 200px;">
         <h1>Регистрация</h1>
         
-        <!-- Поле ввода для электронной почты -->
         <div class="input-group">
             <label for="email">Электронный адрес</label>
-            <input type="email" id="email" placeholder="Введите ваш email" required>
+            <input type="email" id="email" placeholder="Введите ваш email" required oninput="validateEmail()">
+            <div id="emailError" class="error-message">Неверный формат email</div>
         </div>
         
-        <!-- Поле ввода для пароля -->
         <div class="input-group">
             <label for="password">Пароль</label>
             <input type="password" id="password" placeholder="Введите ваш пароль" required>
         </div>
         
-        <!-- Чекбокс для согласия на обработку данных -->
         <div class="checkbox-group">
-            <input type="checkbox" id="consent" required>
+            <input type="checkbox" id="consent" onchange="toggleButton()">
             <label for="consent">Я согласен на <a href="#" class="terms-link">обработку персональных данных</a></label>
         </div>
         
-        <!-- Кнопка регистрации -->
         <div class="button-container">
-            <button class="button">Зарегистрироваться</button>
+            <button class="button" id="registerButton" onclick="registration()" disabled>Зарегистрироваться</button>
         </div>
     </div>
+
+    <script>
+        function toggleButton() {
+            const consent = document.getElementById('consent').checked;
+            const emailValid = validateEmail();
+            document.getElementById('registerButton').disabled = !consent || !emailValid;
+        }
+
+        function validateEmail() {
+            const email = document.getElementById('email').value;
+            const emailError = document.getElementById('emailError');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const isValid = emailRegex.test(email);
+
+            emailError.style.display = isValid ? 'none' : 'block';
+            return isValid;
+        }
+
+        function registration() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (!email || !password || !validateEmail()) {
+                alert('Пожалуйста, заполните все поля правильно');
+                return;
+            }
+
+            fetch('/registration', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email, password: password })
+            })
+            .then(response => response.json().then(data => {
+                if (response.ok) {
+                    window.location.href = '/registration-success';
+                } else {
+                    window.location.href = '/registration-failure?message=' + encodeURIComponent(data.message);
+                }
+            }))
+            .catch(error => {
+                console.error('Ошибка при регистрации:', error);
+                window.location.href = '/out-service';
+            });
+        }
+    </script>
 </body>
 </html>
-

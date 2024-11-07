@@ -62,8 +62,9 @@
 </head>
 <body>
     <div class="container">
-        <h1>Ошибка подтверждения</h1>
-        <p>К сожалению, вы трижды ввели неверный код. Ваш запрос на регистрацию был отклонён.</p>
+        <h1>Ошибка регистрации!</h1>
+        <p>К сожалению, возникла ошибка. Ваш запрос на регистрацию был отклонён.</p>
+        <p id="error-message">Причина: %message%</p>
         <p>Вы можете попробовать пройти регистрацию заново.</p>
         
         <!-- Кнопка для повторной регистрации -->
@@ -71,5 +72,19 @@
             <button class="button" onclick="location.href='/registration'">Зарегистрироваться снова</button>
         </div>
     </div>
+
+    <script>
+        // Функция для получения параметра из строки запроса
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Подставляем значение параметра message в текст
+        const message = getQueryParam('message');
+        if (message) {
+            document.getElementById('error-message').textContent = `Причина: ${message}`;
+        }
+    </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ошибка подтверждения</title>
+    <title>Сессия истекла</title>
     <style>
         /* Основные стили */
         body {
@@ -13,7 +13,7 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #fdf2f2;
+            background: #f8f9fa;
             color: #333;
         }
 
@@ -62,13 +62,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>Ошибка подтверждения</h1>
-        <p>К сожалению, вы трижды ввели неверный код. Ваш запрос на регистрацию был отклонён.</p>
-        <p>Вы можете попробовать пройти регистрацию заново.</p>
+        <h1>Сессия истекла</h1>
+        <p>Ваша сессия завершена. Для продолжения работы необходимо заново авторизоваться.</p>
         
-        <!-- Кнопка для повторной регистрации -->
+        <!-- Кнопка для перехода на страницу авторизации -->
         <div class="button-container">
-            <button class="button" onclick="location.href='/registration'">Зарегистрироваться снова</button>
+            <button class="button" onclick="location.href='/logon'">Перейти к авторизации</button>
         </div>
     </div>
 </body>

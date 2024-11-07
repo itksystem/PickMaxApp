@@ -19,6 +19,8 @@ app.use(cookieParser()); // Подключаем cookie-parser для работ
 session          = require('express-session');
 flash            = require('connect-flash')
 
+app.use(express.static(__dirname + "/html"));
+
 
 app.use(function(request, response, next){
   console.log(request.url);  
@@ -26,6 +28,7 @@ app.use(function(request, response, next){
 });
 
 app.use('/', mainRouter);
+
 
 app.listen(PORT, () => {   // Запуск сервера
   logger.info(`Server is running on http://localhost:${PORT}`);

@@ -43,6 +43,15 @@ exports.registration = async function (request, response){
         logger.error(error);       
     }   
   }
+
+  exports.registrationFailure = async function (request, response){
+    let _METHOD_ = 'registrationFailure';  
+    try {
+         response.render(_dir_html +'/html/registration-failure.hbs', {  });    
+        } catch (error) {
+        logger.error(error);       
+    }   
+  }
   
 /* Страница авторизации */
 exports.logon = async function (request, response){
@@ -98,7 +107,17 @@ exports.health = async function (request, response){
 exports.outService = async function (request, response){
     let _METHOD_ = 'outService';  
     try {
-        response.render(_dir_html +'/html/outService.hbs', {  });    
+        response.render(_dir_html +'/html/out-service.hbs', {  });    
+        } catch (error) {
+        logger.error(error);       
+    }   
+  }
+
+     /* Страница недоступности сервиса из-за протухания сессии */
+exports.sessionClose = async function (request, response){
+    let _METHOD_ = 'outService';  
+    try {
+        response.render(_dir_html +'/html/session-close.hbs', {  });    
         } catch (error) {
         logger.error(error);       
     }   

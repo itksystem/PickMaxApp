@@ -117,7 +117,8 @@
         </div>
         
         <!-- Ссылка на восстановление пароля -->
-        <a href="#" class="forgot-password">Забыли пароль?</a>
+        <a href="/forgot-password" class="forgot-password">Забыли пароль?</a>
+        <a href="/registration" class="forgot-password">Зарегистрироваться</a>
     </div>
 
     <script>
@@ -132,7 +133,7 @@
             }
 
             // Выполнение AJAX-запроса для авторизации
-            fetch('/api/auth/v1/login', {
+            fetch('/logon', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
