@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate" />
+   <meta http-equiv="pragma" content="no-cache" />
+
+   <title>{{shop.name}}</title>
+   <link href="/css/variables.css" rel="stylesheet" />
+   <link href="/css/fonts.css" rel="stylesheet">
+   <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css"> <!-- Font Awesome -->
+   <link type="text/css" href="/plugins/jquery-ui-1.10.4/themes/base/jquery-ui.css" rel="stylesheet" />
+   <script>
+     const shopId = "{{shop.id}}";
+   </script>
+
+   <script src="/plugins/jquery-ui-1.10.4/jquery-1.10.2.js"></script>
+   <script src="/plugins/jquery-ui-1.10.4/ui/jquery-ui.js"></script>
+   <script src="/plugins/jquery-ui-1.10.4/ui/jquery.ui.button.js"></script>
+   <script src="/plugins/jquery-ui-1.10.4/ui/jquery.ui.tabs.js"></script>
+   <script src="/plugins/jquery-ui-1.10.4/ui/jquery.ui.widget.js"></script>
+  <!-- Theme style -->
+   <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+   <link rel="stylesheet" href="/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+   <link rel="stylesheet" href="/css/icheck-bootstrap.css">
+<!-- Fotorama from CDNJS, 19 KB -->
+   <link href="/js/fotorama/4.6.4/fotorama.css" rel="stylesheet">
+   <script src="/js/fotorama/4.6.4/fotorama.dev.js"></script>
+
+   <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+   <link href="/js/ui/lightbox/css/lightbox.css" rel="stylesheet" />
+   <script src="/plugins/inputmask/jquery.inputmask.js"></script>
+   <script src="/js/ui/lightbox/js/lightbox.js"></script>
+   <script src="/dist/js/adminlte.js"></script>
+   <script src="/js/functions.js"></script>
+   <script src="/js/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
+   <script src="/js/helpers/webapi.js"></script> 
+   <script src="/components/ListComponent.js"></script>
+   <script src="/components/ShopImageGallery.js"></script> 
+   <script src="/components/ShopCardMediaGallery.js"></script> 
+   <script src="/components/CustomElementFactory.js"></script> 
+   <script src="/components/MainApp.js"></script> 
+
+   <link href="/css/x-element-contact-form-component.css" rel="stylesheet" />
+   <script src="/components/TelegramContactFormComponent.js"></script>
+
+   <script src="/js/jquery.iframe-transport.js"></script>
+   <script src="/js/fileupload/jquery.fileupload.js"></script>
+   <script src="/js/ui/ui.uploadFile.js"></script>
+   <script src="/js/editors/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+   <link type="text/css" href="/css/toastr.css" rel="stylesheet" />
+   <script src="/js/toastr.js"></script>
+
+   <script src="/components/request.js"></script>
+   <script src="/models/tg_user.js"></script> 
+   <script src="/models/tg_current_user.js"></script> 
+   <script src="/models/tg_shop.js"></script> 
+   <script src="/models/tg_current_shop.js"></script> 
+   <script src="/js/helpers/shop.js"></script>
+
+</head>
+<style>
+body{
+ margin: auto;
+ line-height: inherit;
+ height : var(--tg-viewport-stable-height);
+ display: flex;
+ color: var(--tg-theme-text-color);
+ flex-direction: column;
+}
+</style>
+<body class="{{service}}">
+<nav>
+ <script src="/js/helpers/redirect.js"></script>
+ <link type="text/css" href="/css/shop_card_red.css" rel="stylesheet" />
+ <link type="text/css" href="/css/sidebar.css" rel="stylesheet" />
+ <link type="text/css" href="/css/buttons.css" rel="stylesheet" />
+ <link type="text/css" href="/css/messages.css" rel="stylesheet" />
+ <link type="text/css" href="/css/badges.css" rel="stylesheet" />
+ <link type="text/css" href="/css/statuses.css" rel="stylesheet" />
+ <link type="text/css" href="/css/cards{{shop.columns}}.css" rel="stylesheet" />
+ <link type="text/css" href="/css/cards.css" rel="stylesheet" />
+ <link type="text/css" href="/css/gallery.css" rel="stylesheet" />
+ <link type="text/css" href="/css/card_media_gallery.css" rel="stylesheet" />
+ <link type="text/css" href="/css/product-card.css" rel="stylesheet" />
+ <link rel="stylesheet" href="/css/dropdown-section.css"  />
+<div class="shop">
+
+<input type="hidden" id ="shop_id"  value="{{shop.id}}">
+<input type="hidden" id ="category_id"  value="{{shop.category_id}}">
+<input type="hidden" id ="shop_title"  value="{{shop.name}}">
+<input type="hidden" id ="shop_address"  value="{{shop.address}}">
+<input type="hidden" id ="longitude" class="shop_address_longitude" value="{{shop.longitude}}">
+<input type="hidden" id ="latitude" class ="shop_address_latitude" value="{{shop.latitude}}">
+
+<input type="hidden" id="user_id">
+<input type="hidden" id="first_name">
+<input type="hidden" id="last_name">
+<input type="hidden" id="username">
+
+
+</div>
+    <!-- Кастомный элемент верхнего меню -->
+
+<top-header></top-header>
+
+<script>
+    setTitle("{{service}}");
+    setDialogUsername("{{service}}");
+    openUserDialog();
+    tinymce.init({
+      selector: '.editor-textarea',
+      plugins: 'textcolor emoticons link image table',
+      menubar: false, 
+      mobile: {
+        menubar: false
+       },
+      toolbar:[ 'forecolor backcolor bold italic underline strikethrough image emoticons  align lineheight table | blocks fontfamily fontsize | checklist numlist bullist indent outdent |'],
+  setup: function(editor) {
+   	  editor.on('init', function () {
+		      // Устанавливаем размер шрифта
+		      editor.getBody().style.fontSize = '0.8rem'; // Замените на нужный размер шрифта
+	    });
+          editor.on('PostRender', function() {
+            var footer = document.querySelector('.tox-statusbar');
+            if (footer) {
+              footer.style.display = 'none';
+            }
+          })
+	}
+    });
+
+</script>
+
+<div class="main">
+    {{#ifEquals service "showcase"}}
+           {{>showcase }}
+    {{else i4fEquals service "orders"}}
+           {{>orders}}
+    {{else ifEquals service "basket"}}
+           {{>basket}}
+    {{else ifEquals service "profile"}}
+           {{>profile}}
+    {{/ifEquals}}              
+ </div>
+</nav>
+
+  <mobile-navbar>
+    <mobile-navbar-item 
+      label="Товары" 
+      icon="fa-box" 
+      url="/products">
+    </mobile-navbar-item>
+    <mobile-navbar-item 
+      label="Заказы" 
+      icon="fa-shopping-cart" 
+      url="/orders">
+    </mobile-navbar-item>
+    <mobile-navbar-item 
+      label="Корзина" 
+      icon="fa-cart-plus" 
+      url="/basket">
+    </mobile-navbar-item>
+    <mobile-navbar-item 
+      label="Профиль" 
+      icon="fa-user" 
+      url="/profile">
+    </mobile-navbar-item>
+  </mobile-navbar>
+   <div class="footer fixed-bottom"></div>
+</body>
+
+
+  <script src="/components/mobile-navbar/mobile-navbar.js"></script>
+  <script src="/components/dropdown-section/dropdown-section.js"></script>
+
+<>

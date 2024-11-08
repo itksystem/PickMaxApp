@@ -1,0 +1,105 @@
+.order_item_status_rejected{
+    background-color: var(--order_rejected_status);
+    border-color:  var(--order_rejected_status);
+    background: linear-gradient(var(--order_rejected_status), var(--order_rejected_status_end)) var(--order_rejected_status); 
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.6rem;
+    vertical-align: baseline;
+    text-align: center;
+    min-width: var(--shop_status_min_width);
+    margin: 0.2rem;
+    height: min-content;
+    font-weight: 600;
+}
+
+.order_item_status_sended{
+    background-color: var(--order_new_status);
+    border-color:  var(--order_new_status);
+    background: linear-gradient(var(--order_new_status), var(--order_new_status_end)) var(--order_new_status); 
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.6rem;
+    vertical-align: baseline;
+    text-align: center;
+    min-width: var(--shop_status_min_width);
+    margin: 0.2rem;
+    height: min-content;
+    font-weight: 600;
+}
+
+.order_item_status_confirmed{
+    background-color: var(--order_new_status);
+    border-color:  var(--order_new_status);
+    background: linear-gradient(var(--order_new_status), var(--order_new_status_end)) var(--order_new_status); 
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.6rem;
+    vertical-align: baseline;
+    text-align: center;
+    min-width: var(--shop_status_min_width);
+    margin: 0.2rem;
+    height: min-content;
+    font-weight: 600;
+}
+
+.order_item_status_new{
+    background-color: var(--order_new_status);
+    border-color:  var(--order_new_status);
+    background: linear-gradient(var(--order_new_status), var(--order_new_status_end)) var(--order_new_status); 
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.6rem;
+    vertical-align: baseline;
+    text-align: center;
+    min-width: var(--shop_status_min_width);
+    margin: 0.2rem;
+    height: min-content;
+    font-weight: 600;
+}
+
+.order_item_status_done{
+    background-color: var(--order_done_status);
+    border-color:  var(--order_done_status);
+    background: linear-gradient(var(--order_done_status), var(--order_done_status_end)) var(--order_done_status); 
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.6rem;
+    vertical-align: baseline;
+    text-align: center;
+    min-width: var(--shop_status_min_width);
+    margin: 0.2rem;
+    height: min-content;
+    font-weight: 600;
+}
+
+.order_item_status_send_to_seller{
+    background-color: var(--order_new_status);
+    border-color:  var(--order_new_status);
+    background: linear-gradient(var(--order_new_status), var(--order_new_status_end)) var(--order_new_status); 
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.6rem;
+    vertical-align: baseline;
+    text-align: center;
+    min-width: var(--shop_status_min_width);
+    margin: 0.2rem;
+    height: min-content;
+    font-weight: 600;
+}
+
+.order_item_status_paid{
+    background-color: var(--order_paid_status);
+    border-color:  var(--order_paid_status);
+    background: linear-gradient(var(--order_paid_status), var(--order_paid_status_end)) var(--order_paid_status); 
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.6rem;
+    vertical-align: baseline;
+    text-align: center;
+    min-width: var(--shop_status_min_width);
+    margin: 0.2rem;
+    height: min-content;
+    font-weight: 600;
+}
+

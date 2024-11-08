@@ -1,36 +1,42 @@
-
 // Rev_01.11.2021
-process.env.UV_THREADPOOL_SIZE = 128;        //  By default, Node has 4 workers to resolve DNS queries. If your DNS query takes long-ish time, requests will block on the DNS phase, and the symptom is exactly ESOCKETTIMEDOUT or ETIMEDOUT.
-const http=require('http');                                // Подключаем WebSocket ...
-const express    = require("express");                     // подключение express
-const bodyParser = require('body-parser');
+process.env.UV_THREADPOOL_SIZE = 128; // Увеличиваем пул потоков для DNS-запросов
 
-const logger     = require("./controllers/LoggerHandler"); // Работа с лог-файлами
-const router    = express.Router();
-const mainRouter = require("./routes/mainRouter");
-const middleware = require("openfsm-middlewares-auth-service");   // подключаем наш middleware
+const http = require('http');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const path = require('path');
+const hbs = require('hbs');
+const logger = require('./controllers/LoggerHandler');
+const mainRouter = require('./routes/mainRouter');
 const PORT = process.env.PORT || 3000;
 
-const app        = express();	                             // создаем объект приложения	
-app.use(bodyParser.json());
-const cookieParser = require('cookie-parser');
-app.use(cookieParser()); // Подключаем cookie-parser для работы с cookies
+const app = express(); // Создаем приложение Express
 
-session          = require('express-session');
-flash            = require('connect-flash')
+// Конфигурация middlewares
+app.use(bodyParser.json({ limit: '50mb', extended: true }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(cookieParser());
 
-app.use(express.static(__dirname + "/html"));
+// Установка движка шаблонов
+app.set('view engine', 'hbs');
+hbs.registerPartials(path.join(__dirname, 'html/partials'));
+
+// Статические файлы
+app.use(express.static(path.join(__dirname, 'html')));
+console.log(path.join(__dirname, 'html'))
 
 
-app.use(function(request, response, next){
-  console.log(request.url);  
+// Логирование запросов
+app.use((req, res, next) => {
+  console.log(req.url);
   next();
 });
 
+// Подключение маршрутов
 app.use('/', mainRouter);
 
-
-app.listen(PORT, () => {   // Запуск сервера
+// Запуск сервера
+app.listen(PORT, () => {
   logger.info(`Server is running on http://localhost:${PORT}`);
 });
-

@@ -1,0 +1,47 @@
+.shop_description img {
+   width: -webkit-fill-available;
+}
+
+.image-gallery-tumb-delete-icon {
+    position: absolute;
+    right: 0;
+    padding: 0.04rem 0.2rem 0.04rem 0.2rem;
+    background-color: #ef5959;
+    border-radius: 0.4rem;
+    font-size: 0.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    border-color: black;
+    cursor : pointer;
+}
+
+img.image-gallery-tumb {
+    max-width: -webkit-fill-available;
+    padding: 0.2rem;
+    width: 5rem;
+    float: right;
+    border-radius: 0.5rem;
+    height: 4rem;
+}
+
+.card.image-gallery-tumb{
+    max-width: -webkit-fill-available;
+    padding: 0.2rem  0.5rem;
+    width: 5rem;
+    float: right;
+    margin: 0.3rem;
+}
+
+.card.image-gallery-tumb:hover{
+    max-width: -webkit-fill-available;
+    padding: 0.2rem  0.5rem;
+    width: 5rem;
+    float: right;
+    margin: 0.3rem;
+    box-shadow: 4px 8px 16px rgba(255, 102, 51, 0.2);	
+}
+
+img.image-gallery-tumb:hover > img {
+  transform: scale(1.1);
+}
+

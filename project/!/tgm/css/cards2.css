@@ -1,0 +1,117 @@
+/* карточки заказа общие настройки */
+.shop_card {
+    width: 100%;
+    max-width: 187px;
+    border-radius: 1rem 1rem 0.4rem 0.4rem;
+    box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1), -1px -1px 0px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: 0.5s;
+    position: relative;
+    background-color: #fefcfc;
+    margin: 1%;
+    max-height: 18rem;
+
+
+}
+
+.shop_cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Медиа-запросы для разных разрешений экрана */
+
+/* Для мобильных устройств (до 576px ширины) */
+@media (max-width: 360px) {
+    .shop_card {
+        width: 48%; /* Одна карточка на строку */
+    }
+}
+
+
+/* Для мобильных устройств (до 576px ширины) */
+@media (max-width: 576px) {
+    .shop_card {
+        width: 48%; /* Одна карточка на строку */
+    }
+}
+
+/* Для планшетов (от 577px до 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+    .shop_card {
+        width: 48%; /* Две карточки на строку */
+    }
+}
+
+/* Для небольших экранов (от 769px до 992px) */
+@media (min-width: 769px) and (max-width: 992px) {
+    .shop_card {
+        width: 31%; /* Три карточки на строку */
+    }
+}
+
+/* Для больших экранов (от 993px) */
+@media (min-width: 993px) {
+    .shop_card {
+        width: 23%; /* Четыре карточки на строку */
+    }
+}
+
+
+/* ******************************* */
+/* depricated */
+.shop_card2 {
+    width: 46%;
+    border-radius: 1rem 1rem 0.4rem 0.4rem;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1), -3px 0px 4px rgba(0, 0, 0, 0.1), 3px 3px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: 0.5s;
+    position: relative;
+    float: left;
+    background-color: #fefcfc;
+    margin: 2%;
+    max-height: 18rem;
+}
+
+.shop_card__image > img {
+    border-radius: 1rem 1rem 0rem 0rem;
+    width: -webkit-fill-available;
+    transition: 0.5s;
+/*    height: 10rem;*/
+    height: initial;
+    object-fit: contain;
+}
+
+.text-container {
+    width: max-content; /* Ширина контейнера, в котором будет отображаться текст */
+    overflow: hidden; /* Скрытие текста, который не помещается в контейнер */
+    text-overflow: ellipsis; /* Добавление многоточия в конце обрезанного текста */
+}
+
+
+.shop_showcase_card__top {
+  position: relative;
+  overflow: hidden; /* Скрываем, что выходит за пределы */
+  text-align : center;
+  vertical-align: middle;
+  height: 8rem;
+  border-radius: 5% 5% 0 0;
+  left: auto;
+  top : auto;
+}
+
+
+div.shop_card__title {
+    display: flex;
+    margin: 0.2rem 0 0.5rem 0;
+    font-size: 0.75rem;
+    line-height: 150%;
+    height: 2.5rem;
+    padding: 0rem 0.5rem 0rem 0.5rem;
+    border-top: 2px solid #f0f0f0;
+    max-height: 2.5rem;
+
+}

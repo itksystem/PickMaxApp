@@ -1,0 +1,928 @@
+:root {
+  --shop_status_min_width : 10%;
+  --shop_order_font_size : 0.7rem;
+}
+
+html {
+ overflow-x: hidden;
+}
+
+body{
+ margin: auto;
+ display: flex;
+ flex-direction: column;
+ overflow-x: hidden;
+ font-family: system, -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe WP", Roboto, Ubuntu, Oxygen, Cantarell, "Fira Sans", "Helvetica Neue", Helvetica, "Lucida Grande", "Droid Sans", Tahoma, "Microsoft Sans Serif", sans-serif;
+
+/* "Roboto Condensed", sans-serif;   */
+}
+
+
+.main{
+  padding: var(--main-body-padding);
+  max-width: 40rem; 
+}
+
+.page_title {
+    width: max-content;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.5rem 0.5rem;
+    text-decoration: underline;
+}
+
+div.shop_orders_list div.container{
+ margin-left : 0;
+ max-width : 40rem;
+}
+
+.delivery_card{
+ margin-left : 0;
+ max-width : 40rem;
+}
+
+.card.profile_system_params{
+ max-width : 40rem;
+ margin: 0.8rem;
+ padding: 1rem;
+}
+
+.current_user_firstname, .current_user_lastname, .current_user_username {
+  font-size: 0.8rem;
+}
+
+.current_user {
+    font-size: 0.8rem;
+    color: #007bff;
+    display: none;
+    padding: 0 1rem 1rem 1rem;
+    border-radius: 0 0 .25rem .25rem;
+    box-shadow: -1px 2px 1px rgb(66 63 63 / 13%), 2px 1px 3px rgba(0,0,0,.2);
+}
+
+.page_title_username {
+  font-size: 0.8rem;
+  color: #007bff; 
+  cursor : pointer;
+}
+
+.shop-theme {
+    padding: 0.2rem 0.6rem;
+    font-size: 0.8rem;
+    margin: 0.4rem;
+}
+
+.shadow{
+ box-shadow: 2px 2px 0px rgb(0 0 0 / 19%);
+ border-radius: 5px;
+}
+
+
+.shop_about_page_btns {
+    min-height: -webkit-fill-available;
+    height: 3rem;
+}
+
+/* карточки заказа общие настройки */
+
+/* При наведении на карточку - меняем цвет тени */
+.shop_card:hover {
+  box-shadow: 4px 8px 16px rgba(255, 102, 51, 0.2);
+  border-radius: 1rem 1rem 0rem 0rem;
+}
+
+
+.shop_card__top {
+  position: relative;
+  overflow: hidden; /* Скрываем, что выходит за пределы */
+  text-align : center;
+  vertical-align: middle;
+}
+
+
+/* Контейнер для картинки */
+.shop_card__image {
+    display: block;
+    position: relative;
+    float: left;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem 1rem 0rem 0rem;
+}
+
+
+/* При наведении - увеличиваем картинку */
+.shop_card__image:hover > img {
+  transform: scale(1.1);
+  border-radius: 1rem 1rem 0rem 0rem;
+}
+
+.profile-messages-plg{
+   color: #000;
+   width: 100%;
+   padding: 1rem;
+}
+
+.card-editor{
+  margin: 0.8rem 0;
+  padding: 0.5rem 0.5rem;
+}
+
+/*********************** Продуктовая карта *******************************/
+.product_card{
+  width: 20rem;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Размещаем элементы в колонку */
+  border-radius: 4px;
+  transition: 0.2s;
+  position: relative;
+  float: left;
+  padding: 0.4rem 1rem;
+  margin: 0.4rem;
+
+}
+
+.product_card__image > img {
+  object-fit: cover; /* Встраиваем картинку в контейнер shop_card__image */
+  transition: 0.2s;
+  height: auto;
+  width: -webkit-fill-available;
+}
+
+/* Встраиваем картинку в контейнер shop_card__image */
+
+.img-circle-5 {
+    border-radius: 5% 5% 0% 0%;
+}
+
+.product_card__title{
+    height: auto;
+    overflow: hidden;
+    text-align: left;
+    vertical-align: middle;
+    font-size: 1.5rem;
+    padding: 1rem;
+}
+
+.product_card__prices {
+  padding: 0 0 0 0;
+  font-size: 2rem;
+  text-align: left;
+}
+
+.product_card__description{
+ height: auto;
+ overflow: hidden;
+ vertical-align: middle;
+ font-size: 1rem;
+ text-align: justify;
+ padding: 1rem 0 0 0;
+}
+
+/* ----------------- карточка заказа ---------------------------------------- */
+
+/************** Карточка заказа ********************************************************/
+
+.shop_orders_list  {
+/* padding : 0.2rem; */
+ width: -webkit-fill-available; 
+}
+
+
+.shop_orders_list .container {
+ padding : 0.2rem;
+ width: -webkit-fill-available; 
+}
+
+div.row{
+ font-size: 0.7rem;
+}
+
+
+div.row.order_title {
+ padding : 0.4rem;
+ font-size: var(--shop_order_font_size);
+}
+
+div.dotted {
+ border-bottom: 1px dotted #ededed;
+}
+
+div.row.order {
+ padding :  .4rem 0 .4rem 0.4rem;
+ font-size: 0.9rem;
+}
+
+
+.order_product_image{
+   width: 4rem;
+   padding: 0 0.4rem 0.4rem 0;
+}
+
+.shop_orders_list .container .card {
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,.1);
+    padding: 0.3rem 0.7rem 0;
+    margin: 0.2rem 0.2rem;
+    width: -webkit-fill-available;
+}
+
+.order_item_date{
+    min-width: 40%;
+    vertical-align: middle;
+    text-align: left;
+    color: #484646;
+}
+
+.order_item_count, .order_item_sum{
+    vertical-align: middle;
+    text-align: center;
+    color: #484646;
+    min-width: 10%;
+}
+
+/* Корзина  */
+.basket_item_date{
+  min-width : 30%;
+}
+
+.basket_item_count{
+  min-width : 10%;
+}
+
+.col.basket_item_status_rejected{
+    background-color: #f90000;
+    padding:  0.5em 0rem;
+    color: white;
+    border-radius: 0.3rem;
+    font-size: 0.6rem;
+    vertical-align: baseline;
+    text-align: center;
+    min-width: var(--shop_status_min_width);
+    margin: 0.2rem;
+    height: min-content;
+}
+
+
+.basket_product_image{
+   width: 4rem;
+}
+.basket_product_image_v2{
+    position: relative;
+    left: 0;
+    width: -webkit-fill-available;
+    border-radius: 0.4rem;
+    border: 1px solid #dadada;
+}
+
+.order_item_date{
+    min-width: 30%;
+    vertical-align: middle;
+    text-align: left;
+    color: #484646;
+}
+
+.order_item_count, .order_item_sum{
+    vertical-align: middle;
+    text-align: center;
+    color: #484646;
+    min-width: 10%;
+}
+
+
+.shop_application_description {
+    font-size: 1rem;
+    padding: 1rem 0  1rem 1rem;
+}
+
+.profile_system_params {
+    margin: 0 0rem 0 0.5rem;
+    padding: 0.1rem 0rem 0.3rem 0;
+    font-size: 0.8rem;
+    font-style: normal;
+}
+
+.delivery_firstname,.delivery_lastname,.delivery_username, .delivery_address, .delivery_phone, .logistic_editor_textarea {
+    margin: 0 0rem 0 0.5rem;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.8rem;
+    font-style: normal;
+}
+
+.shop_orders_agreement{
+    font-size: 0.8rem;
+    font-style: normal;
+    padding: 1rem;
+    text-align: justify;
+}
+
+/* Фио */
+.order_number {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-style: normal;
+    text-align: left;
+    font-weight: 600;
+}
+
+.col-1.first_name,
+.col-1.last_name,
+.col-1.city,
+.col-1.address,
+.col-1.phone {
+    margin: 0 0rem 0 0.5rem;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.8rem;
+    font-style: normal;
+    text-align: left;
+    font-weight: 400;
+}
+
+.col.first_name,
+.col.last_name,
+.col.city,
+.col.address,
+.col.phone {
+    margin: 0 0rem 0 0rem;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.8rem;
+    font-style: normal;
+    text-align: left;
+    font-weight: 400;
+}
+
+/***************************************************************************************/
+
+.shop_about {
+ width: 100%;
+}
+
+.shop_title {
+    width: 100%;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 0.3rem;
+}
+
+.shop_description {
+    font-weight: 400;
+    font-size: 0.8rem;
+}
+
+.shop_error_description{
+    font-weight: 400;
+    font-size: 1rem;
+    margin: 0.2rem;
+    padding: 1rem;
+}
+
+.shop_phone {
+    font-weight: 400;
+    font-size: 1rem;
+    text-align: center;
+}
+
+div.shop_phone i.fa {
+/*    color : white; */
+}
+
+.shop-contact-phone {
+    color: #bf0816;
+    padding: 1rem;
+    border: 2px solid #bf0816;
+    width: fit-content;
+    border-radius: 0.37rem;
+    font-size: 1.2rem;
+    margin: 1rem;
+}
+
+div.shop_phone a {
+    color : white;
+}
+
+.shop_address {
+  width: 100%;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.shop_map {
+    width: 100%;
+    padding-top : 1rem;
+}
+
+.shop_map_title{
+    text-align: center;
+    font-weight: 600;
+}
+
+.shop_footer {
+  text-align: center;
+}
+
+
+.profile-field-title {
+    font-size: 1rem;
+    padding: 0rem 0 0.5rem;
+    text-decoration: none;
+}
+
+
+.footer {
+    padding: 0.2rem 0.2rem 1rem 0.2rem;
+    font-size: 0.5rem;
+    color: black;
+}
+
+.shop_card_image{
+     width: 100%;
+}
+
+.shop_card_shop_enter_button{
+ position : relative;
+ top: -0.3rem;
+ width: 100%;
+ height : 2rem;
+ text-align : center;
+ vertical-align : middle;
+ z-index : 100;
+ border : 0px;
+ font-size : 1rem;
+}
+
+.shop {
+  width: 100%;
+  text-align : center;                           
+  position: fixed;
+  z-index: 9999;
+}                
+
+div.shop_promo {
+ width : 8%;
+ float: left;
+ vertical-align : middle;
+ text-align : center;
+ max-width: 2rem;
+}
+
+
+div.shop_about, div.shop_logistic, div.shop_showcase, div.shop_orders, div.shop_basket, div.shop_logistic, div.shop_profile {
+ width : 3.1rem;
+ float: left;
+ vertical-align : middle;
+ text-align : center;
+ max-width: 4rem;
+}    
+
+div.shop_basket_view{
+ width : 10%;
+ float: left;
+ vertical-align : middle;
+ text-align : center;
+ position: relative;
+ top: 0.3rem;
+ font-weight: bold;
+}
+
+.shop_about_btn,
+.shop_basket_btn, 
+.shop_logistic_btn,
+.shop_showcase_btn,
+.shop_profile_btn,
+.shop_orders_btn  {
+  display: block;
+  float: left;
+  font-weight: 400;
+  padding: 0.3rem 0.3rem 0.7rem 0.3rem;
+  text-align: center;
+  border : 0px;
+  cursor: pointer; /* Меняем курсор при наведении */
+  transition: 0.2s;
+  margin-top: auto; /* Прижимаем кнопку к низу карточки */
+  padding: 0.6rem 0.6rem 0.6rem 0.6rem;
+  transition: filter 0.3s ease; /* Добавляем анимацию с плавным переходом */
+}
+
+.shop_about_btn:hover,
+.shop_logistic_btn:hover,
+.shop_basket_btn:hover,
+.shop_showcase_btn:hover,
+.shop_profile_btn:hover,
+.shop_orders_btn:hover
+{
+  filter: brightness(1.2);
+} 
+
+.shop_promo_btn {
+  display: block;
+  float: left;
+  width : auto;
+  padding: 0.5rem;
+  font-weight: 400;
+  border : 0px;
+  text-align: center;
+  cursor: pointer; /* Меняем курсор при наведении */
+  margin-top: auto; /* Прижимаем кнопку к низу карточки */
+  transition: filter 0.3s ease; /* Добавляем анимацию с плавным переходом */
+}
+
+.shop_promo_btn:hover {
+  filter: brightness(1.2);
+}                
+
+/* Размещаем скидку на товар относительно изображения */
+.shop_card__label {
+  padding: 4px 8px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: #ff6633;
+  border-radius: 4px;
+  font-weight: 400;
+  font-size: 0.6rem;
+  color: #fff;
+}
+
+.shop_card__bottom {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto; /* Занимаем всю оставшуюся высоту карточки */
+  padding: 10px;
+}
+
+.shop_card__prices {
+  display: flex;
+  margin-bottom: 0.8rem;
+}
+
+.shop_card__price::after {
+  margin-left: 4px;
+  position: relative;
+}
+
+.shop_card__price--discount {
+  font-weight: 700;
+  font-size: 0.6rem;
+  color: #414141;
+  display: flex;
+  flex-wrap: wrap-reverse;
+}
+
+.shop_card__price--discount::before {
+  content: "Со скидкой";
+  font-weight: 400;
+  font-size: 0.6rem;
+  color: #bfbfbf;
+}
+
+
+.shop_card__price--common::before {
+  font-weight: 400;
+  font-size: 1.0rem;
+  color: #bfbfbf;
+}
+
+div.shop_card__title{
+/*   height : -webkit-fill-available;*/
+/*   border-top: 2px solid #f0f0f0;*/
+/*   padding: 0rem 0.5rem 0rem 0.5rem;*/
+}
+
+.shop_card__title:hover {
+  color: #ff6633;
+}
+
+.shop_card__add {
+  display: block;
+  width: 100%;
+  font-weight: 400;
+  font-size: 0.6rem;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #70c05b;
+  border-radius: 4px;
+  cursor: pointer; /* Меняем курсор при наведении */
+  transition: 0.2s;
+  margin-top: auto; /* Прижимаем кнопку к низу карточки */
+}
+
+.shop_card__add:hover {
+  border: 1px solid #ff6633;
+  background-color: #ff6633;
+  color: #fff;
+}                
+
+div.card.filled {
+  background-color: aliceblue;
+}
+
+p, p ul, ul {
+    position: relative;
+    font-size: 0.8rem;
+    margin: 0.3rem 0;
+}
+
+.image_load_error{
+    color: red;
+    margin: 1rem 0 0 0;
+}
+.image_load_success{
+    color: green;
+    margin: 1rem 0 0 0;
+}
+
+
+#product_image_error{
+    color: red;
+    margin: 1rem 0 0 0;
+}
+.basket_item_date,
+.basket_item_count,
+.basket_item_sum
+{
+   font-size: 0.85rem;
+}
+
+.product-item-active{
+ display : none;
+}
+
+.product-item-blocked{
+ display : block;
+}
+
+.shop-showcase-columns{
+   font-size: 0.85rem;
+   padding: 0.2rem;
+}
+
+.shop_logistic_description{
+   padding: 1rem;
+}
+
+.shop_card__btn {
+    margin: 0.5rem;
+    height: 2.5rem;
+}
+
+
+.shop_card__price--common {
+    font-weight: 600;
+    font-size: 1.4rem;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: flex-end;
+    padding: 0.4rem;
+    border-radius: 0.41rem;
+    z-index: 100;
+    bottom: 1rem;
+    position: absolute;
+}
+
+p img {
+  width: 92%;
+  border-radius: 1rem;
+}
+
+.shop_basket_footer{
+  margin: 0 1rem 3rem 0;
+}
+
+.product_card__description ol,
+.product_card__description ul,
+.product_card__description p,
+.product_card__description li,
+.product_card__description span {
+    font-size: 0.7rem;
+    line-height: 1.6;  
+    margin: 0;
+}
+
+.shop_description * {
+ /*   margin : 0;*/
+    padding: 0rem;
+    font-size: 0.7rem;
+    line-height: 1.6;
+}
+
+.page_title_row {
+     padding: 2rem 1rem 0 1rem;
+}
+
+.username_dialog {
+    padding: 3.5rem 1rem 0 1rem;   
+}
+
+.shop_about_page,
+.shop_promo_page {
+    padding-top: 1rem;
+}
+
+.card_page_title {
+    padding: 0rem  0 1rem 0.5rem;
+}
+
+.orders_sum {
+    padding: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.title_orders_summ {
+    padding: 0 0 0.5rem 0;
+    font-size: 0.8rem;
+    text-align: left;
+}
+
+.basket_trash_icon{
+    background-color: white;
+    border: 1px solid #fbfbfb;
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 50%;
+    vertical-align: middle;
+    text-align: center;
+    top: 0rem;
+    position: absolute;
+    padding-top: 0.2rem;
+    right: 0;
+    box-shadow: 1px 1px rgba(255,255,255,.2) inset, 1px 1px 5px rgb(243 243 243 / 50%), 1px 1px 1px 1px rgba(0,1,6,.2);
+}
+
+/* Текстовы контент  */
+
+.product_card__description ol{
+    margin: 0;
+    padding: 0.5rem 0rem 0 1.2rem;
+}
+
+.product_card__description ul{
+    margin: 0;
+    padding: 0.5rem 0rem 0 1.2rem;
+}
+
+.product_card__description li{
+  margin :  0;
+  padding :  0.1rem 0 0 0.1rem;
+}
+
+
+.product_card__description p {
+  margin: 0.3rem 0;
+  padding :  0;
+}
+
+.product_card__description div {
+  margin :  0;
+  padding :  0;
+}
+
+.card-body {
+  padding :  0.25rem;
+}
+
+.shop_card__price--common-black {
+    font-weight: 600;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: flex-end;
+    z-index: 100;
+    position: absolute;
+    font-size: 1.2rem;
+    font-family: 'Roboto Condensed';
+}
+
+.shop_card__price--common-black {
+    color: #322e2e;
+}
+
+img.card-photo-image-loading {
+    width: 2rem;
+    height: 2rem;
+    margin: 2rem 45%;
+    border-radius: 0px;
+}
+
+.card-photo-image {
+   width: 100%; 
+   cursor:pointer;
+}
+
+.form-check {
+    position: relative;
+    display: block;
+    padding: 0.4rem 1.25rem;
+    height: 1.3rem;
+}
+
+h1{
+    width: 100%;
+    font-weight: 600;
+    font-size: 1.2rem;
+/*    padding: 0.3rem; */
+}
+h2{
+    width: 100%;
+    font-weight: 600;
+    font-size: 1rem;
+/*    padding: 0.3rem 0;*/
+}
+
+h3{
+    width: 100%;
+    font-weight: 600;
+    font-size: 0.8rem;
+/*    padding: 0.3rem;  */
+}
+
+li.nav-item h3{
+    width: 100%;
+    font-weight: 600;
+    font-size: 0.8rem;
+} 
+
+
+h4{
+    width: 100%;
+    font-weight: 600;
+    font-size: 0.6rem;
+/*    padding: 0.3rem; */
+}
+h5{
+    width: 100%;
+    font-weight: 600;
+    font-size: 0.4rem;
+/*    padding: 0.3rem;  */
+}
+
+.nav-link {
+    display: block;
+    padding: 0.6rem .5rem;
+}
+
+.form-check-label {
+    margin: 0.3rem 0.1rem;
+}
+.card-media-component-photo-image {
+    width: -webkit-fill-available;
+}
+
+.card-thumbtack {
+    position: absolute;
+    right: -0rem;
+    top: -0rem;
+    z-index: 200;
+    border: 1px solid #c2c2c2;
+    padding: 0.4rem;
+    border-radius: 1rem;
+    background: #ffeded;
+    width: 2rem;
+    font-size: 1.3em;
+    box-shadow: 0px 0px 8px 2px rgb(66 63 63 / 13%);
+}
+
+.card-editor-save-btn{
+ /*  margin: 1rem 0.5rem;*/
+}
+
+body.error-page {
+  margin: unset;
+}
+
+.current_user h2{
+   text-decoration: underline;
+}
+
+.pred-order-dialog{
+  padding-top: 2rem;
+}
+
+div.shop-pult .nav-link {
+    display: block;
+    padding: 0.5rem .1rem;
+}
+
+.card-execute-buttons-dialog{
+ margin-top : 2rem;
+ padding: 0.2rem;
+
+}
+
+dd {
+    margin-bottom: 0rem;
+    margin-left: 0;
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem 0.2rem 0;
+    text-align: justify;
+}
+
+.status-button-orders-menu {
+    border-bottom: 1px solid #eee;
+    width : 100%;
+}

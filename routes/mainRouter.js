@@ -1,38 +1,35 @@
 const express = require('express');
 const router = express.Router();
-const { 
-    registration, logon, logout, health, 
-    showcase, profile, basket, orders,
-    outService, getOrder, createOrderSuccess, createOrderError,
-    registrationConfirm, registrationSuccess,  registrationDecline, 
-    registrationFailure, sessionClose } = require('../controllers/mainController');
+const common =  require("openfsm-common"); // Библиотека с общими параметрами
+const { health, page } = require('../controllers/mainController');
 const authMiddleware = require('openfsm-middlewares-auth-service');
 const fetch = require('node-fetch');
 const AuthServiceClientHandler = require("openfsm-auth-service-client-handler");
 const authClient = new AuthServiceClientHandler();
 
 // сюда идем без проверки токена 
-router.get('/registration', registration);  // регистрация
-router.get('/registration-confirm', registrationConfirm);  // подтверждение кодом полученным на email
-router.get('/registration-success', registrationSuccess);  // регистрация - успешно
-router.get('/registration-decline', registrationDecline);  // регистрация - отказано
-router.get('/registration-failure', registrationFailure);  // регистрация - неуспешна
+router.get('/registration',  async function (request, response) { page(request, response, common.COMMON_REGISTRATION_PAGE,{} ); });
+router.get('/registration-confirm',  async function (request, response) { page(request, response, common.COMMON_REGISTRATION_CONFIRM_PAGE,{} ); });
+router.get('/registration-success',  async function (request, response) { page(request, response, common.COMMON_REGISTRATION_SUCCESS_PAGE,{} ); });
+router.get('/registration-decline',  async function (request, response) { page(request, response, common.COMMON_REGISTRATION_DECLINE_PAGE,{} ); });
+router.get('/page-404',  async function (request, response) { page(request, response, common.COMMON_404_PAGE,{} ); });
 
-router.get('/logon', logon);        // отражение страницы авторизации
-router.get('/logout', authMiddleware.logout, logout); // отражение страницы с завершением сеанса
+
+router.get('/logon',  async function (request, response) { page(request, response, common.COMMON_LOGON_PAGE,{} ); });
+router.get('/logout',  authMiddleware.logout, async function (request, response) { page(request, response, common.COMMON_LOGOUT_PAGE,{} ); });
 router.get('/health', health);  // проверка доступности сервиса
-router.get('/out-service', outService); // сервис не доступен
-router.get('/session-close', sessionClose); // сервис не доступен
+router.get('/out-service',  async function (request, response) { page(request, response, common.COMMON_OUT_SERVICE_PAGE,{} ); });
+router.get('/session-close',  async function (request, response) { page(request, response, common.COMMON_SESSION_CLOSE_PAGE,{} ); });
 
-// сюда идем с проверкой токена
-router.get('/showcase', authMiddleware.authenticateTokenExternal, showcase);  // витрина магазина
-router.get('/profile', authMiddleware.authenticateTokenExternal, profile);   // профиль пользователя
-router.get('/basket', authMiddleware.authenticateTokenExternal, basket);    // отражение корзины
-
-router.get('/orders', authMiddleware.authenticateTokenExternal, orders);    // добавление в корзину
-router.get('/order/:id', authMiddleware.authenticateTokenExternal, getOrder); // удаление из корзины товара
-router.get('/order/create-succes', authMiddleware.authenticateTokenExternal, createOrderSuccess); // заказ создан успешно
-router.get('/order/create-error', authMiddleware.authenticateTokenExternal, createOrderError); // заказ не создан
+// Защищенная зона 
+router.get('/app', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_APP_PAGE,{} ); });
+router.get('/showcase', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_SHOWCASE_PAGE,{} ); });
+router.get('/profile', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_PROFILE_PAGE,{} ); });
+router.get('/basket', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_BASKET_PAGE,{} ); });
+router.get('/orders', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_ORDERS_PAGE,{} ); });
+router.get('/orders/:id', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_GET_ORDER_PAGE,{} ); });
+router.get('/orders/create-succes', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_GET_ORDER_SUCCESS_PAGE,{} ); });
+router.get('/orders/create-error', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_GET_ORDER_ERROR_PAGE,{} ); });
 
 
 router.post('/logout', (req, res) => {
