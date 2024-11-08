@@ -22,12 +22,12 @@ class TopHeader extends HTMLElement {
         // Создаем структуру HTML меню
        const linkElem = document.createElement('link');
        linkElem.setAttribute('rel', 'stylesheet');
-       linkElem.setAttribute('href', '/css/top-header.css');
+       linkElem.setAttribute('href', '/src/components/ui/top-header/css/top-header.css');
        this.shadowRoot.appendChild(linkElem);
 
        const linkElem2 = document.createElement('link');
        linkElem2.setAttribute('rel', 'stylesheet');
-       linkElem2.setAttribute('href', '/plugins/fontawesome-free/css/all.min.css');
+       linkElem2.setAttribute('href', '/src/pages/plugins/fontawesome-free/css/all.min.css');
        this.shadowRoot.appendChild(linkElem2);
 
        this.shadowRoot.innerHTML += `

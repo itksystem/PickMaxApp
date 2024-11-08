@@ -2,7 +2,7 @@ var mainApplication =  new MainApp();
 document.addEventListener('DOMContentLoaded', function() {
     try {
         let api = new WebAPI();
-        let user = new CurrentUser();
+      /*  let user = new CurrentUser();
         let shop = new CurrentShop(shopId);
 	shop.setCurrentShopId(shopId);
 	shop.getCurrentShopBasketCount(shopId, user.getUserId());
@@ -15,14 +15,14 @@ document.addEventListener('DOMContentLoaded', function() {
            .onPageClick('.shop_orders_btn', 'orders/page')
            .onPageClick('.shop_basket_btn', 'basket/page')
 	   .messageCountBadge(shopId, user, true);
-
+	*/
         let elementFactory = new ElementFactory();
-	let contactForm = elementFactory
+	/*let contactForm = elementFactory
 	    .define('x-element-contact-form-component', TelegramContactFormComponent)
 	    .query('x-element-contact-form-component.shop-x-element-contact-form-component')
 	    if(contactForm) 
 		contactForm.feature(true).setUser(user) .renderByClass('shop-x-element-contact-form-component');	
-
+	*/	
         } catch(e) {
       console.log(e);
     }

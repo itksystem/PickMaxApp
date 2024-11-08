@@ -4,8 +4,12 @@ const logger = require("../controllers/LoggerHandler"); // Работа с ло�
 const common = require("openfsm-common"); // Библиотека с общими параметрами
 const { health, renderPage } = require('../controllers/mainController');
 const authMiddleware = require('openfsm-middlewares-auth-service');
+
 const AuthServiceClientHandler = require("openfsm-auth-service-client-handler");
-const authClient = new AuthServiceClientHandler();
+const authClient = new AuthServiceClientHandler();              // интерфейс для  связи с MC AuthService
+const WarehouseServiceClientHandler = require("openfsm-warehouse-service-client-handler");
+const warehouseClient = new WarehouseServiceClientHandler();   // интерфейс для  связи с MC WarehouseService
+
 
 // Набор незащищенных маршрутов
 const publicRoutes = [
@@ -32,20 +36,38 @@ router.get('/health', health);
 
 // Набор защищенных маршрутов
 const protectedRoutes = [
-    { path: '/app', page: common.COMMON_APP_PAGE },
-    { path: '/showcase', page: common.COMMON_SHOWCASE_PAGE },
-    { path: '/profile', page: common.COMMON_PROFILE_PAGE },
-    { path: '/basket', page: common.COMMON_BASKET_PAGE },
-    { path: '/orders', page: common.COMMON_ORDERS_PAGE },
-    { path: '/orders/:id', page: common.COMMON_GET_ORDER_PAGE },
-    { path: '/orders/create-success', page: common.COMMON_GET_ORDER_SUCCESS_PAGE },
-    { path: '/orders/create-error', page: common.COMMON_GET_ORDER_ERROR_PAGE },
+    { method : 'GET', path: '/app', page: common.COMMON_APP_PAGE , service : {}},
+    { method : 'GET', path: '/products/page', page: common.COMMON_PRODUCTS_PAGE, service : { service : "products"} },
+    { method : 'GET', path: '/profile/page', page: common.COMMON_PROFILE_PAGE, service :{service : "profile"} },
+    { method : 'GET', path: '/basket/page', page: common.COMMON_BASKET_PAGE, service :{service : "basket"} },
+    { method : 'GET', path: '/orders/page', page: common.COMMON_ORDERS_PAGE, service :{service : "orders"} },
+
+    { method : 'GET', path: '/orders/:id', page: common.COMMON_GET_ORDER_PAGE, service :{} },
+    { method : 'GET', path: '/orders/create-success', page: common.COMMON_GET_ORDER_SUCCESS_PAGE, service :{} },
+    { method : 'GET', path: '/orders/create-error', page: common.COMMON_GET_ORDER_ERROR_PAGE, service :{} },    
 ];
 
 // Регистрация защищенных маршрутов
-protectedRoutes.forEach(({ path, page }) => {
-    router.get(path, authMiddleware.authenticateTokenExternal, async (req, res) => renderPage(req, res, page, {}));
+protectedRoutes.forEach(({ method, path, page, service }) => {
+    switch(method) {
+      case 'GET' : router.get(path, authMiddleware.authenticateTokenExternal, async (req, res) => renderPage(req, res, page, service));      
+    }
+    
 });
+
+router.get('/products/:id', //  
+    authMiddleware.authenticateTokenExternal,  
+    async (req, res) => {
+        const {id} = req.query.id;
+        if(!id) res.status(204).json();
+        const response = await warehouseClient.getProductById(id);
+        if (response.success) {
+            res.status(200).json(response.data);
+        } else {
+            logger.error(response.error || 'Неизвестная ошибка' );   
+            res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
+        }
+   });
 
 // Обработка POST-запросов
 router.post('/logout', (req, res) => {

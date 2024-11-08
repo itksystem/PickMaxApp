@@ -46,6 +46,7 @@
     "openfsm-auth-service-client-handler": "^1.0.2",
     "openfsm-common": "^1.0.0",
     "openfsm-middlewares-auth-service": "^1.0.3",
+    "openfsm-warehouse-service-client-handler": "^1.0.0",
     "os": "^0.1.2",
     "passport": "^0.6.0",
     "passport-google-oauth": "^2.0.0",

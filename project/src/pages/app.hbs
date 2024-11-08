@@ -8,6 +8,12 @@
    <meta http-equiv="pragma" content="no-cache" />
 
    <title>PickMax.Ru - товары для дома!</title>
+    <link rel="icon" type="image/png" href="/public/images/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/public/images/favicon.svg" />
+    <link rel="shortcut icon" href="/public/images/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/public/images/apple-touch-icon.png" />
+    <link rel="manifest" href="/public/images/site.webmanifest" />
+
    <link href="/src/pages/css/variables.css" rel="stylesheet" />
    <link href="/src/pages/css/fonts.css" rel="stylesheet">
    <link rel="stylesheet" href="/src/pages/plugins/fontawesome-free/css/all.min.css"> <!-- Font Awesome -->
@@ -58,6 +64,7 @@
    <script src="/src/store/models/tg_current_user.js"></script> 
    <script src="/src/store/models/tg_shop.js"></script> 
    <script src="/src/store/models/tg_current_shop.js"></script> 
+
    <script src="/src/shop.js"></script>
 
 </head>
@@ -86,23 +93,6 @@ body{
  <link type="text/css" href="/src/pages/css/card_media_gallery.css" rel="stylesheet" />
  <link type="text/css" href="/src/pages/css/product-card.css" rel="stylesheet" />
  <link rel="stylesheet" href="/src/pages/css/dropdown-section.css"  />
-<div class="shop">
-
-<input type="hidden" id ="shop_id"  value="{{shop.id}}">
-<input type="hidden" id ="category_id"  value="{{shop.category_id}}">
-<input type="hidden" id ="shop_title"  value="{{shop.name}}">
-<input type="hidden" id ="shop_address"  value="{{shop.address}}">
-<input type="hidden" id ="longitude" class="shop_address_longitude" value="{{shop.longitude}}">
-<input type="hidden" id ="latitude" class ="shop_address_latitude" value="{{shop.latitude}}">
-
-<input type="hidden" id="user_id">
-<input type="hidden" id="first_name">
-<input type="hidden" id="last_name">
-<input type="hidden" id="username">
-
-
-</div>
-    <!-- Кастомный элемент верхнего меню -->
 
 <top-header></top-header>
 
@@ -132,8 +122,8 @@ body{
 </script>
 
 <div class="main">
-    {{#ifEquals service "showcase"}}
-           {{>showcase }}
+    {{#ifEquals service "products"}}
+           {{>products}}
     {{else ifEquals service "orders"}}
            {{>orders}}
     {{else ifEquals service "basket"}}
@@ -148,22 +138,22 @@ body{
     <mobile-navbar-item 
       label="Товары" 
       icon="fa-box" 
-      url="/products">
+      url="/products/page">
     </mobile-navbar-item>
     <mobile-navbar-item 
       label="Заказы" 
       icon="fa-shopping-cart" 
-      url="/orders">
+      url="/orders/page">
     </mobile-navbar-item>
     <mobile-navbar-item 
       label="Корзина" 
       icon="fa-cart-plus" 
-      url="/basket">
+      url="/basket/page">
     </mobile-navbar-item>
     <mobile-navbar-item 
       label="Профиль" 
       icon="fa-user" 
-      url="/profile">
+      url="/profile/page">
     </mobile-navbar-item>
   </mobile-navbar>
    <div class="footer fixed-bottom"></div>

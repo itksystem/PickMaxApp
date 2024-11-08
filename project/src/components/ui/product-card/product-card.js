@@ -5,11 +5,11 @@ class ProductCard extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         const linkElem = document.createElement('link');
         linkElem.setAttribute('rel', 'stylesheet');
-        linkElem.setAttribute('href', '/css/product-card.css'); // Укажите правильный путь к CSS-файлу
+        linkElem.setAttribute('href', '/src/components/ui/product-card/css/product-card.css'); // Укажите правильный путь к CSS-файлу
         this.shadowRoot.appendChild(linkElem);
         const linkElem2= document.createElement('link');
         linkElem2.setAttribute('rel', 'stylesheet');
-        linkElem2.setAttribute('href', '/dist/css/adminlte.min.css'); // Укажите правильный путь к CSS-файлу
+        linkElem2.setAttribute('href', '/src/pages/plugins/adminlte/css/adminlte.min.css'); // Укажите правильный путь к CSS-файлу
         this.shadowRoot.appendChild(linkElem2);
                  
         // Создаем шаблон
