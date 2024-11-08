@@ -1,6 +1,7 @@
 // Rev_01.11.2021
 process.env.UV_THREADPOOL_SIZE = 128; // Увеличиваем пул потоков для DNS-запросов
 
+const common = require("openfsm-common"); // Библиотека с общими параметрами
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -20,12 +21,11 @@ app.use(cookieParser());
 
 // Установка движка шаблонов
 app.set('view engine', 'hbs');
-hbs.registerPartials(path.join(__dirname, 'html/partials'));
+// hbs.registerPartials(path.join(__dirname, 'html/partials'));
+hbs.registerPartials(common.COMMON_PATH_TO_PARTIALS);
 
 // Статические файлы
-app.use(express.static(path.join(__dirname, 'html')));
-console.log(path.join(__dirname, 'html'))
-
+app.use(express.static(common.COMMON_PATH_TO_SITE));
 
 // Логирование запросов
 app.use((req, res, next) => {

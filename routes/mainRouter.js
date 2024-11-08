@@ -1,70 +1,83 @@
 const express = require('express');
 const router = express.Router();
-const common =  require("openfsm-common"); // Библиотека с общими параметрами
-const { health, page } = require('../controllers/mainController');
+const logger = require("../controllers/LoggerHandler"); // Работа с лог-файлами
+const common = require("openfsm-common"); // Библиотека с общими параметрами
+const { health, renderPage } = require('../controllers/mainController');
 const authMiddleware = require('openfsm-middlewares-auth-service');
-const fetch = require('node-fetch');
 const AuthServiceClientHandler = require("openfsm-auth-service-client-handler");
 const authClient = new AuthServiceClientHandler();
 
-// сюда идем без проверки токена 
-router.get('/registration',  async function (request, response) { page(request, response, common.COMMON_REGISTRATION_PAGE,{} ); });
-router.get('/registration-confirm',  async function (request, response) { page(request, response, common.COMMON_REGISTRATION_CONFIRM_PAGE,{} ); });
-router.get('/registration-success',  async function (request, response) { page(request, response, common.COMMON_REGISTRATION_SUCCESS_PAGE,{} ); });
-router.get('/registration-decline',  async function (request, response) { page(request, response, common.COMMON_REGISTRATION_DECLINE_PAGE,{} ); });
-router.get('/page-404',  async function (request, response) { page(request, response, common.COMMON_404_PAGE,{} ); });
+// Набор незащищенных маршрутов
+const publicRoutes = [
+    { path: '/registration', page: common.COMMON_REGISTRATION_PAGE },
+    { path: '/registration-confirm', page: common.COMMON_REGISTRATION_CONFIRM_PAGE },
+    { path: '/registration-success', page: common.COMMON_REGISTRATION_SUCCESS_PAGE },
+    { path: '/registration-decline', page: common.COMMON_REGISTRATION_DECLINE_PAGE },
+    { path: '/page-404', page: common.COMMON_404_PAGE },
+    { path: '/logon', page: common.COMMON_LOGON_PAGE },
+    { path: '/out-service', page: common.COMMON_OUT_SERVICE_PAGE },
+    { path: '/session-close', page: common.COMMON_SESSION_CLOSE_PAGE },
+];
 
+// Регистрация незащищенных маршрутов
+publicRoutes.forEach(({ path, page }) => {
+    router.get(path, async (req, res) => renderPage(req, res, page, {}));
+});
 
-router.get('/logon',  async function (request, response) { page(request, response, common.COMMON_LOGON_PAGE,{} ); });
-router.get('/logout',  authMiddleware.logout, async function (request, response) { page(request, response, common.COMMON_LOGOUT_PAGE,{} ); });
-router.get('/health', health);  // проверка доступности сервиса
-router.get('/out-service',  async function (request, response) { page(request, response, common.COMMON_OUT_SERVICE_PAGE,{} ); });
-router.get('/session-close',  async function (request, response) { page(request, response, common.COMMON_SESSION_CLOSE_PAGE,{} ); });
+// Маршрут с middleware для выхода
+router.get('/logout', authMiddleware.logout, async (req, res) => renderPage(req, res, common.COMMON_LOGOUT_PAGE, {}));
 
-// Защищенная зона 
-router.get('/app', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_APP_PAGE,{} ); });
-router.get('/showcase', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_SHOWCASE_PAGE,{} ); });
-router.get('/profile', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_PROFILE_PAGE,{} ); });
-router.get('/basket', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_BASKET_PAGE,{} ); });
-router.get('/orders', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_ORDERS_PAGE,{} ); });
-router.get('/orders/:id', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_GET_ORDER_PAGE,{} ); });
-router.get('/orders/create-succes', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_GET_ORDER_SUCCESS_PAGE,{} ); });
-router.get('/orders/create-error', authMiddleware.authenticateTokenExternal,  async function (request, response) { page(request, response, common.COMMON_GET_ORDER_ERROR_PAGE,{} ); });
+// Маршрут для проверки доступности сервиса
+router.get('/health', health);
 
+// Набор защищенных маршрутов
+const protectedRoutes = [
+    { path: '/app', page: common.COMMON_APP_PAGE },
+    { path: '/showcase', page: common.COMMON_SHOWCASE_PAGE },
+    { path: '/profile', page: common.COMMON_PROFILE_PAGE },
+    { path: '/basket', page: common.COMMON_BASKET_PAGE },
+    { path: '/orders', page: common.COMMON_ORDERS_PAGE },
+    { path: '/orders/:id', page: common.COMMON_GET_ORDER_PAGE },
+    { path: '/orders/create-success', page: common.COMMON_GET_ORDER_SUCCESS_PAGE },
+    { path: '/orders/create-error', page: common.COMMON_GET_ORDER_ERROR_PAGE },
+];
 
+// Регистрация защищенных маршрутов
+protectedRoutes.forEach(({ path, page }) => {
+    router.get(path, authMiddleware.authenticateTokenExternal, async (req, res) => renderPage(req, res, page, {}));
+});
+
+// Обработка POST-запросов
 router.post('/logout', (req, res) => {
-    res.clearCookie('accessToken'); // Удаляем HttpOnly cookie
+    res.clearCookie('accessToken');
     res.status(200).json({ message: 'Вы вышли из системы' });
 });
 
-router.post('/logon', async function (request, response) {
-    const { email, password } = request.body;
-    const res = await authClient.login(email, password);
-    if (res.success) {
-        // Отправляем cookie с флагами HttpOnly и Secure
-          response.cookie('accessToken', res.data.token, {
-             httpOnly: true,
-             secure: false,      // Требуется HTTPS
-             sameSite: 'Strict', // Дополнительная защита от CSRF
-            maxAge: 3600000*3 // Время жизни токена (1 час)
-         });
-        response.status(200).json(res.data);
-    } else if (res.status) {
-        response.status(res.status).json(res.data);
+router.post('/logon', async (req, res) => {
+    const { email, password } = req.body;
+    const response = await authClient.login(email, password);
+    if (response.success) {
+        res.cookie('accessToken', response.data.token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'Strict',
+            maxAge: 10800000, // 3 часа
+        });
+        res.status(200).json(response.data);
     } else {
-        response.status(500).json({ error: res.error || 'Неизвестная ошибка' });
+        logger.error(response.error || 'Неизвестная ошибка' );   
+        res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
     }
 });
 
-router.post('/registration', async function (request, response) {
-    const { email, password } = request.body;
-    const res = await authClient.register(email, password);
-    if (res.success) {
-         response.status(200).json(res.data);
-    } else if (res.status) {
-        response.status(res.status).json(res.data);
+router.post('/registration', async (req, res) => {
+    const { email, password } = req.body;
+    const response = await authClient.register(email, password);
+    if (response.success) {
+        res.status(200).json(response.data);
     } else {
-        response.status(500).json({ error: res.error || 'Неизвестная ошибка' });
+        logger.error(response.error || 'Неизвестная ошибка' );   
+        res.status(response.status || 500).json({ error: response.error || common.COMMON_HTTP_CODE_500});
     }
 });
 
