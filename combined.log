@@ -163,3 +163,4 @@
 {"level":"info","message":"Server is running on http://localhost:3000","service":"billing-service","timestamp":"2024-11-08T20:01:45.537Z"}
 {"level":"info","message":"Server is running on http://localhost:3000","service":"billing-service","timestamp":"2024-11-08T20:03:02.627Z"}
 {"level":"info","message":"Server is running on http://localhost:3000","service":"billing-service","timestamp":"2024-11-08T20:20:55.239Z"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"billing-service","timestamp":"2024-11-08T20:21:23.826Z"}
