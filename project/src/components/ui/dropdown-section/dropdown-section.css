@@ -8,35 +8,6 @@
   --logistic-faq-container-font-color: #404040;
 }
 
-/* Общие стили */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    line-height: var(--logistic-flex-line-height);
-    color: #333;
-    background-color: #f9f9f9;
-}
-
-a {
-    color: #2980b9;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
-
 /* Контейнеры */
 .page-padding {
     padding: 1.25rem; /* 20px */
@@ -227,17 +198,6 @@ main {
     background-color: #1c5980;
 }
 
-/* Футер */
-.footer {
-    background-color: #2c3e50;
-    color: #fff;
-    text-align: center;
-    padding: 1.25rem 0; /* 20px 0 */
-}
-
-.footer p {
-    font-size: var(--logistic-flex-container-font-size);
-}
 
 /* Медиа-запросы */
 @media (max-width: 48rem) { /* 768px */

@@ -1,4 +1,5 @@
 const { createLogger, format, transports } = require('winston');
+require('dotenv').config();
 
 const logger = createLogger({
     level: 'info',
@@ -8,7 +9,7 @@ const logger = createLogger({
         format.splat(),
         format.json()
     ),
-    defaultMeta: { service: 'billing-service' },
+    defaultMeta: { service: 'pickapp-service' },
     transports: [
         new transports.File({ filename: 'error.log', level: 'error' }),
         new transports.File({ filename: 'combined.log' }),

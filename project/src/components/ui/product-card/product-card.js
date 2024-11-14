@@ -11,6 +11,10 @@ class ProductCard extends HTMLElement {
         linkElem2.setAttribute('rel', 'stylesheet');
         linkElem2.setAttribute('href', '/src/pages/plugins/adminlte/css/adminlte.min.css'); // Укажите правильный путь к CSS-файлу
         this.shadowRoot.appendChild(linkElem2);
+        const linkElem3= document.createElement('link');
+        linkElem3.setAttribute('rel', 'stylesheet');
+        linkElem3.setAttribute('href', '/src/components/ui/basket-button/css/basket-button.css'); // Укажите правильный путь к CSS-файлу
+        this.shadowRoot.appendChild(linkElem3);
                  
         // Создаем шаблон
         const template = document.createElement('template');
@@ -59,8 +63,9 @@ class ProductCard extends HTMLElement {
 		         </div>
 		       </div>
 	 	     </div>
-                   </div>
+		   </div>		 
                 </a>
+		<basket-button class="button-add-to-basket"></basket-button>
             </div>
 	  </div>
         `;
@@ -83,6 +88,7 @@ class ProductCard extends HTMLElement {
     // Наблюдаемые атрибуты
     static get observedAttributes() {
         return [
+            'product-id',
             'href',
             'status',
             'image-src',
@@ -106,8 +112,15 @@ class ProductCard extends HTMLElement {
         const element = this.shadowRoot.querySelector(selector);
 
         if (!element) return;
-
         switch(name) {
+	    case 'product-id':
+            const basketButton = this.shadowRoot.querySelector('.button-add-to-basket');
+		console.log(basketButton)
+            if (basketButton) {
+                basketButton.setAttribute('product-id', newValue || '');
+            }
+            break;
+
             case 'status':
                 this.shadowRoot.querySelector('.ribbon').textContent = (newValue != 'active' ? 'Блокирован' : '');
                 this.shadowRoot.querySelector('.ribbon').classList.add((newValue != 'active' ? 'bg-danger' : 'd-none')); 
@@ -169,6 +182,7 @@ class ProductCard extends HTMLElement {
     // Определение селекторов для каждого атрибута
     getSelector(attr) {
         const selectors = {
+            'product-id': '.button-add-to-basket',
             'href': '.link',
             'status': '.ribbon',
             'image-src': '.image',

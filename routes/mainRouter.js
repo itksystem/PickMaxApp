@@ -19,8 +19,10 @@ const publicRoutes = [
     { path: '/registration-decline', page: common.COMMON_REGISTRATION_DECLINE_PAGE },
     { path: '/page-404', page: common.COMMON_404_PAGE },
     { path: '/logon', page: common.COMMON_LOGON_PAGE },
+    { path: '/logon-failed', page: common.COMMON_LOGON_FAILED_PAGE},
+    { path: '/forgot-password', page: common.COMMON_FORGOT_PASSWORD_PAGE},
     { path: '/out-service', page: common.COMMON_OUT_SERVICE_PAGE },
-    { path: '/session-close', page: common.COMMON_SESSION_CLOSE_PAGE },
+    { path: '/session-close', page: common.COMMON_SESSION_CLOSE_PAGE },    
 ];
 
 // Регистрация незащищенных маршрутов
@@ -45,6 +47,9 @@ const protectedRoutes = [
     { method : 'GET', path: '/orders/:id', page: common.COMMON_GET_ORDER_PAGE, service :{} },
     { method : 'GET', path: '/orders/create-success', page: common.COMMON_GET_ORDER_SUCCESS_PAGE, service :{} },
     { method : 'GET', path: '/orders/create-error', page: common.COMMON_GET_ORDER_ERROR_PAGE, service :{} },    
+
+
+
 ];
 
 // Регистрация защищенных маршрутов
@@ -55,19 +60,6 @@ protectedRoutes.forEach(({ method, path, page, service }) => {
     
 });
 
-router.get('/products/:id', //  
-    authMiddleware.authenticateTokenExternal,  
-    async (req, res) => {
-        const {id} = req.query.id;
-        if(!id) res.status(204).json();
-        const response = await warehouseClient.getProductById(id);
-        if (response.success) {
-            res.status(200).json(response.data);
-        } else {
-            logger.error(response.error || 'Неизвестная ошибка' );   
-            res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
-        }
-   });
 
 // Обработка POST-запросов
 router.post('/logout', (req, res) => {

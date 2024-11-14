@@ -3,20 +3,23 @@ class WebRequest {
     this.config = {}
     this.SYNC = true;
     this.ASYNC = false;
+    this.tgInitData = (window.Telegram 
+		? (window.Telegram.WebApp 
+			? window.Telegram.WebApp.initData : '')
+		: '');
+
     return this
   }
 
 
  delete(url = '', params = {}, sync = false) {
-    const shopId = localStorage.getItem('shopId');
     const traceId = generateUUID();
     const dataToSend = typeof params === 'string' ? params : JSON.stringify(params);
-
+                 
     const headers = {
         'Content-Type': 'application/json',
-        'x-shop-id': shopId,
         'x-trace-id': traceId,
-        'x-tg-init-data': window.Telegram.WebApp ? window.Telegram.WebApp.initData : ''
+        'x-tg-init-data': this.tgInitData
     };
 
     const options = {
@@ -63,9 +66,8 @@ class WebRequest {
 
     const headers = {
         'Content-Type': 'application/json',
-        'x-shop-id': shopId,
         'x-trace-id': traceId,
-        'x-tg-init-data': window.Telegram.WebApp ? window.Telegram.WebApp.initData : ''
+        'x-tg-init-data': this.tgInitData
     };
 
     const options = {
@@ -121,9 +123,8 @@ class WebRequest {
     const traceId = generateUUID();
     const headers = {
                 'Content-Type': 'application/json',
-                'x-shop-id': shopId, 
 		'x-trace-id': traceId,
-		'x-tg-init-data' : window.Telegram.WebApp.initData 
+	        'x-tg-init-data': this.tgInitData
             };
 
   if (sync) {
@@ -172,9 +173,8 @@ uploadFile(url, file, sync = false) {
     const shopId = localStorage.getItem('shopId');
     const traceId = generateUUID();
     const headers = {
-                'x-shop-id': shopId, 
 		'x-trace-id': traceId,
-		'x-tg-init-data' : window.Telegram.WebApp.initData 
+	        'x-tg-init-data': this.tgInitData
             };
 
     return new Promise((resolve, reject) => {

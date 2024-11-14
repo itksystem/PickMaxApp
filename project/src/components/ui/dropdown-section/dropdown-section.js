@@ -1,4 +1,4 @@
-document.querySelectorAll('.toggle-content').forEach(button => {
+  document.querySelectorAll('.toggle-content').forEach(button => {
     button.addEventListener('click', function() {
         // Используем 'this' для ссылки на кнопку, по которой кликнули
         const collapse = this.closest('.header').nextElementSibling.querySelector('.collapse');
@@ -19,4 +19,4 @@ document.querySelectorAll('.toggle-content').forEach(button => {
             }
         }
     });
-});
+  });

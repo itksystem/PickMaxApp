@@ -10,6 +10,7 @@ const path = require('path');
 const hbs = require('hbs');
 const logger = require('./controllers/LoggerHandler');
 const mainRouter = require('./routes/mainRouter');
+const warehouseBffRouter = require('./routes/warehouseBffRouter');
 const PORT = process.env.PORT || 3000;
 
 const app = express(); // Создаем приложение Express
@@ -34,9 +35,16 @@ app.use((req, res, next) => {
 });
 
 // Подключение маршрутов
-app.use('/', mainRouter);
+app.use('/', mainRouter);      // вывод страниц 
+
+/* BFF для warehouseService */
+app.use('/api/bff/warehouse/', warehouseBffRouter);     
+
 
 // Запуск сервера
-app.listen(PORT, () => {
-  logger.info(`Server is running on http://localhost:${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`
+    ******************************************
+    * PickMax Service running on port ${process.env.PORT}   *
+    ******************************************`);
 });

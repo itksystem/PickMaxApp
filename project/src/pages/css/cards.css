@@ -20,7 +20,7 @@ body{
 
 .main{
   padding: var(--main-body-padding);
-  max-width: 40rem; 
+/*  max-width: 40rem; */
 }
 
 .page_title {

@@ -1,0 +1,49 @@
+:root {
+  --button-bg-color: #007bff;
+  --button-text-color: white;
+  --button-padding: 0.625rem 1.25rem; /* 10px 20px */
+  --button-border-radius: 0.3125rem; /* 5px */
+  --button-font-size: 0.85rem; /* 16px */
+  --button-gap: 0.625rem; /* 10px */
+}
+
+.basket-button {
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  border: none;
+  padding: var(--button-padding);
+  border-radius: var(--button-border-radius);
+  cursor: pointer;
+  font-size: var(--button-font-size);
+  width: 100%;
+}
+
+.basket-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--button-gap);
+}
+
+.basket-decrement,
+.basket-increment {
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  border: none;
+  padding: 0.3125rem 0.9375rem; /* 5px 15px */
+  border-radius: var(--button-border-radius);
+  cursor: pointer;
+  font-size: var(--button-font-size);
+  width: 100%;
+}
+
+.basket-count {
+  font-size: var(--button-font-size);
+}
+
+/* Убирает рамку по умолчанию при фокусе */
+.basket-button:focus,
+.basket-decrement:focus,
+.basket-increment:focus {
+  outline: none;
+}

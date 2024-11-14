@@ -245,9 +245,20 @@ class WebAPI {
 	          description : props.description
 		 }
    }
+/* запрос товаров */
+   getShopProductsMethod(){  return `/api/bff/warehouse/v1/products` }
+   getShopProductsPayload(productId){ return {} }
 
-   getShopProductsMethod(shop_id=null, active = true ){  return `/telegram/shop/${shop_id}/products?active=${active}` }
-   getShopProductsPayload(a){ return {}}
+/* Добавление товара в корзину */
+   addToBasketMethod(){  return `/api/bff/warehouse/v1/basket/product-add` }
+   addToBasketMethodPayload(productId, quantity){  return  { productId: productId, quantity: quantity } }
+/* Удвление товара в корзине */
+   removeFromBasketMethod(){  return `/api/bff/warehouse/v1/basket/product-remove` }
+   removeFromBasketMethodPayload(productId, quantity){  return { productId: productId, quantity: quantity } }
+/* Список товаров в корзине пользователя */
+   getShopBasketMethod(){  return `/api/bff/warehouse/v1/basket` }
+
+
   
    getShopProductMethod(shop_id=null, product_id = null){ return `/telegram/shop/${shop_id}/products/${product_id}/page`}
    getShopProductPayloadMethod(){ return {} }

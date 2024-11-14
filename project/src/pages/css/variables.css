@@ -1,47 +1,72 @@
 :root {
-  --menu-backgroupd-color : #bf0817;
-  --menu-article-background-color : #bf0817;
-  --menu-article-background-color-hover : #fa635e;
+  --menu-backgroupd-color: #bf0817;
+  --menu-article-background-color: #bf0817;
+  --menu-article-background-color-hover: #fa635e;
   --menu-bottom-line-color: #bf0817;
   --menu-title-color: #ffffff;
-  --shop_card__price--common-background-color : #fff762;
-  --shop_card__price--common-color : #bf0817;
-  --shop_page_title : #bf0817; 
+  --shop_card__price--common-background-color: #fff762;
+  --shop_card__price--common-color: #bf0817;
+  --shop_page_title: #bf0817; 
   --username-color: #0a0081;
   --primary-color: white;
   --secondary-color: #e74c3c;
   --font-size: 0.5em;
   --border-width: 0px;
   --shop-button: #bf0817;
-  --promo-body-color : #ffffff;
-  --about-body-background-color : #ffffff;
-  --body-background-color : #f6f6f9;
-  --body-color : #303030;
-  --menu-item-size : 15%;
-  --menu-shop_basket_view-item-font-size : 0.7rem;
+  --promo-body-color: #ffffff;
+  --about-body-background-color: #ffffff;
+  --body-background-color: #f6f6f9;
+  --body-color: #303030;
+  --menu-item-size: 15%;
+  --menu-shop_basket_view-item-font-size: 0.7rem;
   --menu-item-font-size: 0.6rem;
   --menu-item-font-size2: 0.6rem;
   --shop-page-title-font-size: 1.2rem;
-  --shop_card__title : #414141;
-  --shop_card__warning : #bf0817;
-  --shop_cards-background-color : #ffffff;
-  --shop_status_min_width : 10%;
-/* Полотно приложения */
-  --main-body-padding :5rem 0.3rem 10rem 0.3rem;
-  --mobile-navbar-menu-color : #c2c2c2;
-  --mobile-navbar-menu-font-size : 1.4rem;
+  --shop_card__title: #414141;
+  --shop_card__warning: #bf0817;
+  --shop_cards-background-color: #ffffff;
+  --shop_status_min_width: 10%;
 
-/* Карточки */
-  
+  /* Полотно приложения */
+  --main-body-padding: 5rem 0.3rem 10rem 0.3rem;
+  --mobile-navbar-menu-color: #c2c2c2;
+  --mobile-navbar-menu-font-size: 1.4rem;
 
-/* статусы */
- --order_new_status :  #007bff;
- --order_new_status_end : #575d9f;
- --order_paid_status :  #43cd62;
- --order_paid_status_end : #28a745;
- --order_done_status :  #43cd62;
- --order_done_status_end :#218838;
- --order_rejected_status : #fd8a95;
- --order_rejected_status_end : #dc3545;
+  /* Карточки */
+  --product-card-border-radius: 0.625rem; /* 10px */
+  --product-card-box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1); /* 0 2px 8px */
+  --product-card-bg-color: #fff;
+  --product-card-margin: 0.9% 0.9%; /* 5px */
+  --product-card-transition-duration: 0.3s;
+  --product-card-font-family: Arial, sans-serif;
+  --product-card-hover-transform: translateY(-0.3125rem); /* -5px */
+  --product-card-hover-box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2); /* 0 4px 12px */
+  --product-card-info-padding: 0.625rem; /* 10px */
+  --product-card-title-font-size: 0.8125rem; /* 13px */
+  --product-card-title-color: #555;
+  --product-card-title-padding: 0 0 0.5rem 0;
+  --product-card-brand-margin-bottom: 0.3125rem; /* 5px */
+  --product-card-name-font-size: 0.8125rem; /* 13px */
+  --product-card-name-color: #555;
+  --product-card-price-gap: 0.3125rem; /* 5px */
+  --product-card-current-price-font-size: 1rem; /* 16px */
+  --product-card-current-price-color: #e60000;
+  --product-card-old-price-font-size: 0.875rem; /* 14px */
+  --product-card-old-price-color: #999;
+  --product-card-discount-font-size: 0.8125rem; /* 13px */
+  --product-card-discount-color: #e60000;
+  --product-card-wallet-condition-font-size: 0.75rem; /* 12px */
+  --product-card-wallet-condition-color: #777;
+  --product-card-start-info-font-size: 0.75rem; /* 12px */
+  --product-card-start-info-color: #777;
 
+  /* Статусы */
+  --order_new_status: #007bff;
+  --order_new_status_end: #575d9f;
+  --order_paid_status: #43cd62;
+  --order_paid_status_end: #28a745;
+  --order_done_status: #43cd62;
+  --order_done_status_end: #218838;
+  --order_rejected_status: #fd8a95;
+  --order_rejected_status_end: #dc3545;
 }
