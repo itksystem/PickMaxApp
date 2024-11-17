@@ -11,6 +11,7 @@ const hbs = require('hbs');
 const logger = require('./controllers/LoggerHandler');
 const mainRouter = require('./routes/mainRouter');
 const warehouseBffRouter = require('./routes/warehouseBffRouter');
+const ordersBffRouter = require('./routes/ordersBffRouter');
 const PORT = process.env.PORT || 3000;
 
 const app = express(); // Создаем приложение Express
@@ -39,7 +40,7 @@ app.use('/', mainRouter);      // вывод страниц
 
 /* BFF для warehouseService */
 app.use('/api/bff/warehouse/', warehouseBffRouter);     
-
+app.use('/api/bff/orders/', ordersBffRouter); 
 
 // Запуск сервера
 app.listen(process.env.PORT, () => {

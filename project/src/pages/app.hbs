@@ -122,11 +122,17 @@ body{
 
 </script>
 
-<div class="main">
+<div class="main" service={{service}}>
     {{#ifEquals service "products"}}
            {{>products}}
     {{else ifEquals service "orders"}}
            {{>orders}}
+    {{else ifEquals service "order-create-error"}}
+           {{>order_create_error}}
+    {{else ifEquals service "order-delivery-error"}}
+           {{>order_delivery_error}}
+    {{else ifEquals service "order-delivery"}}
+           {{>order_delivery}}
     {{else ifEquals service "basket"}}
            {{>basket}}
     {{else ifEquals service "profile"}}
@@ -161,5 +167,10 @@ body{
 </body>
 
 
-  <script src="/src/components/ui/mobile-navbar/mobile-navbar.js"></script>
+ <script src="/src/components/ui/mobile-navbar/mobile-navbar.js"></script>
+ <script src="/src/components/ui/product-card/product-card.js"></script>
+ <link rel="stylesheet" href="/src/components/ui/basket-button/css/basket-button.css">                           
+
+  <script src="/src/components/ui/basket-button/basket-button.js"></script>
+
 </html>

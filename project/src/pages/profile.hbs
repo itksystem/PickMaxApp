@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сохранение профиля</title>
+    <style>
+        /* Основные стили */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7faff;
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .container h1 {
+            font-size: 24px;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            font-size: 14px;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Сохранение профиля</h1>
+        
+        <!-- Поле для ввода ФИО -->
+        <div class="input-group">
+            <label for="full-name">ФИО</label>
+            <input type="text" id="full-name" placeholder="Введите ваше ФИО" required>
+        </div>
+        
+        <!-- Поле для ввода email -->
+        <div class="input-group">
+            <label for="email">Электронная почта</label>
+            <input type="email" id="email" placeholder="Введите вашу почту" required>
+        </div>
+        
+        <!-- Поле для ввода адреса доставки -->
+        <div class="input-group">
+            <label for="address">Адрес доставки</label>
+            <input type="text" id="address" placeholder="Введите адрес доставки" required>
+        </div>
+        
+        <!-- Поле для ввода города клиента -->
+        <div class="input-group">
+            <label for="city">Город</label>
+            <input type="text" id="city" placeholder="Введите ваш город" required>
+        </div>
+        
+        <!-- Кнопка сохранения профиля -->
+        <div class="button-container">
+            <button class="button" onclick="saveProfile()">Сохранить</button>
+        </div>
+    </div>
+
+    <script>
+        function saveProfile() {
+            const fullName = document.getElementById('full-name').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+
+            // Проверка, чтобы поля не были пустыми
+            if (!fullName || !email || !address || !city) {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
+
+            // Выполнение AJAX-запроса для сохранения профиля
+            fetch('/save-profile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fullName, email, address, city })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Профиль успешно сохранен!');
+                    window.location.href = '/profile';
+                } else {
+                    alert('Ошибка при сохранении профиля');
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка при сохранении профиля:', error);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -257,6 +257,11 @@ class WebAPI {
    removeFromBasketMethodPayload(productId, quantity){  return { productId: productId, quantity: quantity } }
 /* Список товаров в корзине пользователя */
    getShopBasketMethod(){  return `/api/bff/warehouse/v1/basket` }
+/* Список товаров в корзине пользователя */
+   createOrderMethod(){  return `/api/bff/orders/v1/create` }
+/* Установка типа доставки */
+   setOrderDeliveryMethod(){  return `/api/bff/delivery/v1/select` }
+
 
 
   

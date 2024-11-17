@@ -1,21 +1,61 @@
 class BasketButton extends HTMLElement {
   constructor() {
     super();
-    this.productId = this.getAttribute('product-id') || 1;
-    this.count = 0;
-    this.api = new WebAPI();
 
+    // Свойства компонента
+    this.productId = this.getAttribute('product-id') || 1;
+    console.log(this.getAttribute('basket-count'));
+    this.count = parseInt(this.getAttribute('basket-count') || '0', 10); // Получаем значение count из атрибута
+
+    this.api = new WebAPI();
+    this.addUrl = this.getAttribute('add-url') || this.api.addToBasketMethod();
+    this.removeUrl = this.getAttribute('remove-url') || this.api.removeFromBasketMethod();
+
+    // Shadow DOM
+    this.attachShadow({ mode: 'open' });
+
+    // Подключение внешних стилей и отрисовка компонента
+    this.attachStyles();
     this.render();
     this.addEventListeners();
   }
 
+  // Метод для подключения внешних стилей
+  attachStyles() {
+    // Подключение стилей компонента
+    const basketButtonStyle = document.createElement('link');
+    basketButtonStyle.rel = 'stylesheet';
+    basketButtonStyle.href = '/src/components/ui/basket-button/css/basket-button.css';
+
+    // Подключение Font Awesome
+    const fontAwesomeStyle = document.createElement('link');
+    fontAwesomeStyle.rel = 'stylesheet';
+    fontAwesomeStyle.href = '/src/pages/plugins/fontawesome-free/css/all.min.css';
+
+    // Добавление в Shadow DOM
+    this.shadowRoot.appendChild(basketButtonStyle);
+    this.shadowRoot.appendChild(fontAwesomeStyle);
+  }
+
+  // Метод для рендеринга компонента
   render() {
+    // Очищаем Shadow DOM
+    const existingDiv = this.shadowRoot.querySelector('div');
+      if (existingDiv) {
+        this.shadowRoot.removeChild(existingDiv);
+    }
+
+
+    // Добавляем разметку в зависимости от состояния
+    const content = document.createElement('div');
     if (this.count === 0) {
-      this.innerHTML = `
-        <button class="basket-button add-to-basket">В корзину</button>
+      content.innerHTML = `
+        <button class="basket-button add-to-basket">
+          В корзину <i class="fa-solid fa-basket-shopping"></i> 
+        </button>
       `;
     } else {
-      this.innerHTML = `
+      content.innerHTML = `
         <div class="basket-counter">
           <button class="basket-decrement">-</button>
           <span class="basket-count">${this.count}</span>
@@ -23,95 +63,47 @@ class BasketButton extends HTMLElement {
         </div>
       `;
     }
+    this.shadowRoot.appendChild(content);
   }
 
+  // Метод для добавления слушателей событий
   addEventListeners() {
-    this.addEventListener('click', async (event) => {
+    this.shadowRoot.addEventListener('click', (event) => {
       if (event.target.classList.contains('add-to-basket')) {
-        await this.addToBasket();
+        this.updateBasket('add');
       } else if (event.target.classList.contains('basket-increment')) {
-        await this.incrementBasket();
+        this.updateBasket('add');
       } else if (event.target.classList.contains('basket-decrement')) {
-        await this.decrementBasket();
+        this.updateBasket('remove');
       }
     });
   }
 
-  async addToBasket() {
+  // Метод для обновления корзины
+  async updateBasket(action) {
+    const endpoint =
+      action === 'add'
+        ? this.addUrl // '/api/bff/warehouse/v1/basket/product-add'
+        : this.removeUrl // '/api/bff/warehouse/v1/basket/product-remove'
+	;
+
     try {
-      const response = await fetch('/api/bff/warehouse/v1/basket/product-add', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId: this.productId, quantity: 1 }),
-      });
-/*     let o = this;
-     let webRequest = new WebRequest();
-     let request = webRequest.post(o.api.addToBasketMethod(), o.api.addToBasketMethodPayload(this.productId, 1), false )
-      .then(function(data) {
-      })
-      .catch(function(error) {
-      });
-*/
-
-      const result = await response.json();
-      if (response.ok) {
-        this.count = result.basket.quantity;
-        this.render();
-      }
-    } catch (error) {
-      console.error('Error adding to basket:', error);
-    }
-  }
-
-  async incrementBasket() {
-    try {
-      const response = await fetch('/api/bff/warehouse/v1/basket/product-add', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId: this.productId, quantity: 1 }),
-      });
-/*     let o = this;
-     let webRequest = new WebRequest();
-     let request = webRequest.post(o.api.removeFromBasketMethod(), o.api.removeFromBasketMethodPayload(this.productId, 1), false )
-      .then(function(data) {
-      })
-      .catch(function(error) {
-      });
-*/
-
-      const result = await response.json();
-
-      if (response.ok) {
-        this.count = result.basket.quantity;
-        this.render();
-      }
-    } catch (error) {
-      console.error('Error incrementing basket:', error);
-    }
-  }
-
-  async decrementBasket() {
-    try {
-      const response = await fetch('/api/bff/warehouse/v1/basket/product-remove', {
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ productId: this.productId, quantity: 1 }),
       });
 
-      let o = this;
+      if (!response.ok) throw new Error('Ошибка при обновлении корзины');
+
       const result = await response.json();
-      if (response.ok) {
-        this.count = result.basket.quantity;
-        if (this.count === 0) {
-          this.render();
-        } else {
-          this.render();
-        }
-      }
+      this.count = result.basket.quantity;
+      this.render();
     } catch (error) {
-      console.error('Error decrementing basket:', error);
+      console.error(`Error during ${action} operation:`, error);
     }
   }
 }
 
+// Регистрация кастомного элемента
 customElements.define('basket-button', BasketButton);

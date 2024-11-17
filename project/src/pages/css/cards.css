@@ -926,3 +926,14 @@ dd {
     border-bottom: 1px solid #eee;
     width : 100%;
 }
+
+.delivery-content-card {
+  max-width : 19rem;
+}
+
+.delivery-content-card-info {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #616261;
+    text-align: center;
+}

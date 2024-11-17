@@ -43,26 +43,26 @@ const protectedRoutes = [
     { method : 'GET', path: '/profile/page', page: common.COMMON_PROFILE_PAGE, service :{service : "profile"} },
     { method : 'GET', path: '/basket/page', page: common.COMMON_BASKET_PAGE, service :{service : "basket"} },
     { method : 'GET', path: '/orders/page', page: common.COMMON_ORDERS_PAGE, service :{service : "orders"} },
-
-    { method : 'GET', path: '/orders/:id', page: common.COMMON_GET_ORDER_PAGE, service :{} },
-    { method : 'GET', path: '/orders/create-success', page: common.COMMON_GET_ORDER_SUCCESS_PAGE, service :{} },
-    { method : 'GET', path: '/orders/create-error', page: common.COMMON_GET_ORDER_ERROR_PAGE, service :{} },    
-
-
-
+    { method : 'GET', path: '/orders/create-error', page: common.COMMON_GET_ORDER_ERROR_PAGE, service :{service : "order-create-error"} },   
+    { method : 'GET', path: '/orders/delivery-failed', page: common.COMMON_GET_ORDER_SUCCESS_PAGE, service :{service : 'order-delivery-error'} }, 
+    { method : 'GET', path: '/orders/delivery/:orderId', page: common.COMMON_GET_ORDER_SUCCESS_PAGE, service :{service : 'order-delivery'} },
+    { method : 'GET', path: '/orders/:id', page: common.COMMON_GET_ORDER_PAGE, service :{} }, 
+        
 ];
 
 // Регистрация защищенных маршрутов
 protectedRoutes.forEach(({ method, path, page, service }) => {
     switch(method) {
-      case 'GET' : router.get(path, authMiddleware.authenticateTokenExternal, async (req, res) => renderPage(req, res, page, service));      
+      case 'GET' : router.get(path, authMiddleware.authenticateToken, async (req, res) => renderPage(req, res, page, service));      
     }
     
 });
 
 
 // Обработка POST-запросов
-router.post('/logout', (req, res) => {
+router.post('/logout', 
+    authMiddleware.logout,
+    (req, res) => {
     res.clearCookie('accessToken');
     res.status(200).json({ message: 'Вы вышли из системы' });
 });

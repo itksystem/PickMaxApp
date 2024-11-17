@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru" class="page">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="-1">
+  <meta name="Expires" value="Thu, 01 Jan 1999 00:00:00">
+  <meta name="Cache-Control" value="no-store, no-cache, must-revalidate">
+  <meta name="color-scheme" content="only light">
+  <title>Payture</title>
+  <link rel="preload" href="/src/assets/payture/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/src/assets/payture/fonts/Inter-Medium.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/src/assets/payture/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/src/assets/payture/fonts/Inter-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/src/assets/payture/css/styles.css">
+</head>
+
+
+<body class="visibility_">
+  <div class="page__wrapper" id="form">
+    <header class="header">
+  <div class="header__logo"></div>
+  <div class="header__description">
+    <div class="provider-name">Payture</div>
+    <div class="provider-description" translate-value="ProviderDescription">Процессинговый центр</div>
+  </div>
+  <div class="header__payment-type-logo"></div>
+</header>
+
+    <main class="main">
+      <div class="amount amount__main">{total} <span translate-value="Rub">₽</span></div>
+
+      <div class="good" id="product-name"></div>
+
+
+      <span class="response_json">{response_json}</span>
+
+<input type="hidden" name="Key" value="{key}" />
+<input type="hidden" name="oauth_Token" value="" />
+<input type="hidden" name="Amount" value="{amount}" />
+<input type="hidden" name="Total" value="{total}" />
+<input type="hidden" name="Product" value="{product}" />
+<input type="hidden" name="OrderId" value="{orderId}" />
+<input type="hidden" name="ProductDescription" value="{ProductDescription}" />
+<input type="hidden" name="Language" value="{language}" />
+
+      <div id="payment-methods" class="payment-methods">
+  <div class="payment-methods__inner">
+    <button type="button" class="button ico apple-pay" data-type="apple_pay"></button>
+    <button type="button" class="button ico google-pay" data-type="google_pay"></button>
+    <button type="button" class="button ico samsung-pay" data-type="samsung_pay"></button>
+  </div>
+</div>
+
+
+      <div id="errorTop" class="template-error">{error}</div>
+
+
+      <form id="payForm" class="pay-form">
+        <div class="payment-type-caption"></div>
+
+        <div id="card-one" class="CardType">
+          <div class="selectCard sc" id="selectCard">
+  <div class="caption">
+    <span translate-value="LinkedCards" class="label-text">Привязанные карты</span><a href="" id="removeCard" translate-value="RemoveCard" class="label-text">Удалить карту</a>
+  </div>
+
+  <select name="CardId">
+    <option selected="selected" value="FreePay" translate-value="NewCard"><span class="option">Новая карта</span></option>
+    {cards}
+  </select>
+
+</div>
+
+          <div id="card-block" class="form">
+  <div class="pan ic">
+  <div class="label-text" translate-value="CardNumber">Номер карты</div>
+  <input placeholder="∙ ∙ ∙ ∙    ∙ ∙ ∙ ∙    ∙ ∙ ∙ ∙    ∙ ∙ ∙ ∙" class="onlyNum onlyCardNum" type="tel" name="CardNumber" autocomplete="cc-number" next="DateTo" />
+  <div id="mp-arrow"></div>
+</div>
+
+  <div class="expiry ic">
+  <div class="label-text" translate-value="CardExpiryDate">Срок действия карты</div>
+  <input placeholder="MM/YY" id="date" class="onlyNum" name="DateTo" autocomplete="cc-exp" type="tel" next="SecureCode" prev="CardNumber" translate-placeholder="MMYY" maxlength="5"/>
+  <input id="EMonth" name="EMonth" type="hidden">
+  <input id="EYear" name="EYear" type="hidden">
+</div>
+
+  <div class="cvc ic">
+  <div class="label-text" translate-value="VerificationCode">Проверочный код</div>
+  <input placeholder="CVC" class="onlyNum" name="SecureCode" autocomplete="cc-csc" type="tel" next="Pay" prev="DateTo" />
+</div>
+
+  <div class="holder ic d-none">
+  <div class="label-text" translate-value="Cardholder">Имя и Фамилия на карте</div>
+  <input placeholder="IVAN IVANOV" class="cap onlyLat" name="CardHolder" autocomplete="cc-name" next="EChequeCustomerContact" prev="SecureCode" />
+</div>
+
+</div>
+
+
+          <input class="text" id="PaytureId" name="PaytureId" value="" type="hidden">
+
+          <div class="card-checkboxes">
+            <div class="checkmark-container addCard custom-checkbox custom-checkbox__remembercard">
+  <label class="add-card" id="addCard">
+    <input type="checkbox" name="AddCard" value="True" class="custom-checkbox__field"/>
+    <span class="checkmark custom-checkbox__content" translate-value="RememberCard">Запомнить карту</span>
+  </label>
+</div>
+
+            <div id="email-visibility" class="checkmark-container custom-checkbox custom-checkbox__getcheque">
+  <label class="caption">
+    <input type="checkbox" class="custom-checkbox__field" />
+    <span translate-value="EmailCaption" class="custom-checkbox__content">Получить квитанцию</span>
+  </label>
+</div>
+
+<div id="email" class="email d-none">
+  <div class="ic">
+    <input placeholder="E-MAIL" class="middle" type="text" autocomplete="email" name="EChequeCustomerContact" prev="SecureCode" next="Pay" />
+  </div>
+</div>
+
+          </div>
+        </div>
+        <div id="overlay-cvv">
+  <ul>
+    <li class="i2 ic cvc top-left-r bottom-left-r">
+        <div class="label-text" translate-value="VerificationCode">Проверочный код</div>
+        <input placeholder="CVV/CVC2" maxlength="4" class="onlyNum" name="google-cvv" autocomplete="new-password" type="tel" />
+        <input placeholder="CVV/CVC2" maxlength="3" class="onlyNum" name="yandex-cvv" autocomplete="new-password" type="tel" />
+    </li>
+
+    <li class="i3 ic ofh top-right-r bottom-right-r">
+        <button class="inner-button google button" type="button" translate-value="Pay">Оплатить</button>
+        <button class="inner-button yandex button" type="button" translate-value="Pay">Оплатить</button>
+    </li>
+  </ul>
+</div>
+
+      </form>
+      
+
+      <button class="button pay" type="submit" id="pay" name="Pay">
+  <span translate-value="Pay">Оплатить</span> {total} <span translate-value="Rub">₽</span>
+</button>
+
+      <button class="button cancel button__cancel only-mobile"  data-type="init" type="butoon" name="Cancel">
+  <span translate-value="Cancel">Cancel</span>
+</button>
+
+
+      <div class="footnote offer footnote__attention">
+  <div id="payture-conditions" translate-value="PaytureOffer">
+    Нажимая на кнопку «Оплатить», вы соглашаетесь с <a href="https://payture.com/termsofuse" target="_blank">условиями использования сервиса</a>
+  </div>
+</div>
+
+      <div class="footnote footnote__copyright" translate-value="PaytureFootnote">
+  Оплата будет произведена с помощью платёжного шлюза Рауture — №1 сертифицированный провайдер платежей согласно стандартам безопасности платёжных систем.
+</div>
+
+    </main>
+  </div>
+  <div id="overlay-wait">
+  <div>
+    <h2 data-lang="wait" translate-value="PaymentInProcessing">Платеж в обработке...</h2>
+    <div class="escapingBallGContainer"><div id="escapingBall_1" class="escapingBallG"></div></div>
+  </div>
+</div>
+
+  <div id="result">
+    <div class="page__wrapper">
+      
+      <main class="main">
+        <div id="response">{response_json}</div>
+<div class="return">
+  <div class="return-icon">
+    <svg class="return-icon__true" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="39" stroke="black" stroke-width="2"/>
+      <path d="M27.459 42.0345L35.5946 50.1701L53.2217 32.543" stroke="black" stroke-width="2"/>
+    </svg>
+    <svg class="return-icon__false" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="39" stroke="black" stroke-width="2"/>
+      <path d="M29 51L51 29" stroke="black" stroke-width="2"/>
+      <path d="M29 29L51 51" stroke="black" stroke-width="2"/>
+    </svg>
+    <svg class="return-icon__wait" width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="39" stroke="black" stroke-width="2"/>
+      <path d="M49.6787 59L49.6787 49.716C49.6787 44.5887 45.5221 40.4321 40.3948 40.4321V40.4321C35.2674 40.4321 31.1108 44.5887 31.1108 49.716L31.1108 59" stroke="black" stroke-width="2"/>
+      <path d="M31.1113 21.8643V31.1482C31.1113 36.2756 35.2679 40.4322 40.3953 40.4322V40.4322C45.5227 40.4322 49.6792 36.2756 49.6792 31.1482V21.8643" stroke="black" stroke-width="2"/>
+      <path d="M28.5 21.5742H52" stroke="black" stroke-width="2"/>
+      <path d="M28.5 59H52" stroke="black" stroke-width="2"/>
+    </svg>
+  </div>
+  <h3 class="return-title">{message}</h3>
+  <p class="message return-message"></p>
+  <p id="return-description" class="return-description" translate-value="ReturnDescription">
+    Через несколько секунд вы&nbsp;будете перемещены на&nbsp;страницу магазина или&nbsp;нажмите <a href='{redirecturl}'>сюда</a> чтобы перейти без&nbsp;ожидания
+  </p>
+  <div class="return-control">
+    <form action="{redirecturl}">
+      <button class="button button__arrow" type="submit">
+        <span translate-value="ReturnShop">Вернуться в магазин</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+      </main>
+    </div>
+    <footer class="footer">
+  <img src="/src/assets/payture/img/logo-cover.svg" alt="Payture" />
+</footer>
+
+  </div>
+</body>
+
+</html>

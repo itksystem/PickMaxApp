@@ -88,6 +88,7 @@ class ProductCard extends HTMLElement {
     // Наблюдаемые атрибуты
     static get observedAttributes() {
         return [
+            'basket-count',
             'product-id',
             'href',
             'status',
@@ -113,6 +114,15 @@ class ProductCard extends HTMLElement {
 
         if (!element) return;
         switch(name) {
+	    case 'basket-count':
+            const _basketButton = this.shadowRoot.querySelector('.button-add-to-basket');
+		console.log(_basketButton)
+            if (_basketButton) {
+                _basketButton.setAttribute('basket-count', newValue || '');
+            }
+
+            break;
+
 	    case 'product-id':
             const basketButton = this.shadowRoot.querySelector('.button-add-to-basket');
 		console.log(basketButton)
@@ -133,7 +143,7 @@ class ProductCard extends HTMLElement {
                 this.shadowRoot.querySelector('.image').src = (newValue == 'undefined' ? '' : newValue);
 		const image = this.shadowRoot.querySelector('.image');
 		image.onerror = () => {        // реакция на ошибку
-		    image.src = '/images/banners/card_no_photo_image.png';
+		    image.src = '/src/pages/images/card_no_photo_image.png';
                     this.shadowRoot.querySelector('.image').src = image.src;
 		};
                 break;
@@ -182,6 +192,7 @@ class ProductCard extends HTMLElement {
     // Определение селекторов для каждого атрибута
     getSelector(attr) {
         const selectors = {
+            'basket-count': '.button-add-to-basket',
             'product-id': '.button-add-to-basket',
             'href': '.link',
             'status': '.ribbon',

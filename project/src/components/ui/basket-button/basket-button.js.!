@@ -1,0 +1,98 @@
+class BasketButton extends HTMLElement {
+  constructor() {
+    super();
+    this.productId = this.getAttribute('product-id') || 1;
+    this.count = 0;
+    this.render();
+    this.addEventListeners();
+  }
+
+  render() {
+    if (this.count === 0) {
+      this.innerHTML = `
+        <button class="basket-button add-to-basket"><i class="fa-solid fa-basket-shopping"></i>В корзину</button>
+      `;
+    } else {
+      this.innerHTML = `
+        <div class="basket-counter">
+          <button class="basket-decrement">-</button>
+          <span class="basket-count">${this.count}</span>
+          <button class="basket-increment">+</button>
+        </div>
+      `;
+    }
+  }
+
+  addEventListeners() {
+    this.addEventListener('click', async (event) => {
+      if (event.target.classList.contains('add-to-basket')) {
+        await this.addToBasket();
+      } else if (event.target.classList.contains('basket-increment')) {
+        await this.incrementBasket();
+      } else if (event.target.classList.contains('basket-decrement')) {
+        await this.decrementBasket();
+      }
+    });
+  }
+
+  async addToBasket() {
+    try {
+      const response = await fetch('/api/bff/warehouse/v1/basket/product-add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId: this.productId, quantity: 1 }),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        this.count = result.basket.quantity;
+        this.render();
+      }
+    } catch (error) {
+      console.error('Error adding to basket:', error);
+    }
+  }
+
+  async incrementBasket() {
+    try {
+      const response = await fetch('/api/bff/warehouse/v1/basket/product-add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId: this.productId, quantity: 1 }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        this.count = result.basket.quantity;
+        this.render();
+      }
+    } catch (error) {
+      console.error('Error incrementing basket:', error);
+    }
+  }
+
+  async decrementBasket() {
+    try {
+      const response = await fetch('/api/bff/warehouse/v1/basket/product-remove', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId: this.productId, quantity: 1 }),
+      });
+
+      let o = this;
+      const result = await response.json();
+      if (response.ok) {
+        this.count = result.basket.quantity;
+        if (this.count === 0) {
+          this.render();
+        } else {
+          this.render();
+        }
+      }
+    } catch (error) {
+      console.error('Error decrementing basket:', error);
+    }
+  }
+}
+
+customElements.define('basket-button', BasketButton);
