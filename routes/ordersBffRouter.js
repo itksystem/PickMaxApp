@@ -27,7 +27,9 @@ router.post('/v1/health',
 router.post('/v1/order/create', 	
 	async (req, res) => {        
         try {
-            const response = await orderClient.create(commonFunction.getJwtToken(req));
+            const {referenceId} = req.body;
+            if(!referenceId) { throw(common.HTTP_CODES.BAD_REQUEST.code) }
+            const response = await orderClient.create(commonFunction.getJwtToken(req), referenceId);
             if (!response.success)  throw(response.status)
             res.status(200).json(response.data);            
         } catch (error) {            

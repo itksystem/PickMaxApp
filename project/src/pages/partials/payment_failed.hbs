@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оплата не удалась</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Подключение внешнего CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8d7da;
+        }
+        .failure-container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .failure-container h1 {
+            color: #dc3545;
+            font-size: 2rem;
+        }
+        .failure-container p {
+            font-size: 1.1rem;
+            margin: 15px 0;
+            color: #6c757d;
+        }
+        .button {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1.1rem;
+        }
+        .button:hover {
+            background-color: #c82333;
+        }
+        .button-secondary {
+            background-color: #6c757d;
+        }
+        .button-secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="failure-container">
+        <h1>Оплата не удалась</h1>
+        <p>К сожалению, ваш платеж не был завершен.</p>
+        <p>Пожалуйста, проверьте введенные данные или попробуйте снова.</p>
+        <p>Номер заказа: <strong>#12345</strong></p>
+
+        <a href="/orders/payment/retry" class="button">Попробовать снова</a>
+        <br><br>
+        <a href="/orders/page" class="button button-secondary">Вернуться к заказам</a>
+    </div>
+
+</body>
+</html>

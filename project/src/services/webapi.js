@@ -258,9 +258,14 @@ class WebAPI {
 /* Список товаров в корзине пользователя */
    getShopBasketMethod(){  return `/api/bff/warehouse/v1/basket` }
 /* Список товаров в корзине пользователя */
-   createOrderMethod(){  return `/api/bff/orders/v1/create` }
+   createOrderMethod(){  return `/api/bff/orders/v1/order/create` }
 /* Установка типа доставки */
    setOrderDeliveryMethod(){  return `/api/bff/delivery/v1/select` }
+/* Установка типа доставки */
+   setOrderDetailsMethod(orderId){  return `/api/bff/warehouse/v1/order/${orderId}/details` }
+
+
+
 
 
 

@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html lang="ru" class="page">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,21 +29,21 @@
 </header>
 
     <main class="main">
-      <div class="amount amount__main">{total} <span translate-value="Rub">₽</span></div>
+      <div class="amount amount__main">
+	<span name="payment-amount">{total}</span>
+	<span translate-value="Rub">₽</span></div>
 
-      <div class="good" id="product-name"></div>
+        <div class="good" id="product-name"></div>
 
-
-      <span class="response_json">{response_json}</span>
-
-<input type="hidden" name="Key" value="{key}" />
-<input type="hidden" name="oauth_Token" value="" />
-<input type="hidden" name="Amount" value="{amount}" />
-<input type="hidden" name="Total" value="{total}" />
-<input type="hidden" name="Product" value="{product}" />
-<input type="hidden" name="OrderId" value="{orderId}" />
-<input type="hidden" name="ProductDescription" value="{ProductDescription}" />
-<input type="hidden" name="Language" value="{language}" />
+        <span class="response_json">{response_json}</span>
+	<input type="hidden" name="Key" value="{key}" />
+	<input type="hidden" name="oauth_Token" value="" />
+	<input type="hidden" name="Amount" value="{amount}" />
+	<input type="hidden" name="Total" value="{total}" />
+	<input type="hidden" name="Product" value="{product}" />
+	<input type="hidden" name="OrderId" value="{orderId}" />
+	<input type="hidden" name="ProductDescription" value="{ProductDescription}" />
+	<input type="hidden" name="Language" value="{language}" />
 
       <div id="payment-methods" class="payment-methods">
   <div class="payment-methods__inner">
@@ -146,12 +143,14 @@
       </form>
       
 
-      <button class="button pay" type="submit" id="pay" name="Pay">
-  <span translate-value="Pay">Оплатить</span> {total} <span translate-value="Rub">₽</span>
+      <button class="payment-amount-button button pay" type="submit" id="pay" name="Payment-button">
+  <span translate-value="Pay">Оплатить</span> 
+  <span name="payment-amount-button">{total}</span> 
+  <span translate-value="Rub">₽</span>
 </button>
 
-      <button class="button cancel button__cancel only-mobile"  data-type="init" type="butoon" name="Cancel">
-  <span translate-value="Cancel">Cancel</span>
+      <button class="button cancel button__cancel only-mobile"  data-type="init" type="butoon" name="Payment-Cancel-Button">
+  <span name="payment-cancel-button" translate-value="Cancel">Cancel</span>
 </button>
 
 
@@ -216,9 +215,11 @@
     </div>
     <footer class="footer">
   <img src="/src/assets/payture/img/logo-cover.svg" alt="Payture" />
+<script src="/src/components/ui/top-header/top-header.js"></script>        
+<script src="/src/pages/partials/payment-demo.js"></script>
+
 </footer>
 
   </div>
 </body>
 
-</html>

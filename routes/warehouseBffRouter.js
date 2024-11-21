@@ -76,5 +76,19 @@ router.get('/v1/products/:id',
         }              
    });
    
+   router.get('/v1/order/:id/details', 	
+	async (req, res) => {          
+        try {            
+            const orderId = req.params.id;
+            if(!orderId) { throw(common.HTTP_CODES.BAD_REQUEST.code) }
+            const response = await warehouseClient.getOrderDetails(commonFunction.getJwtToken(req), orderId) ;
+            if (!response.success)  throw(response?.status || 500)
+                res.status(200).json(response.data);            
+        } catch (error) {
+                logger.error(error || 'Неизвестная ошибка' );   
+                res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
+        }              
+   });
+ 
 
    module.exports = router;

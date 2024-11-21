@@ -42,6 +42,7 @@
    <script src="/src/pages/js/functions.js"></script>
    <script src="/src/pages/js/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
    <script src="/src/services/webapi.js"></script> 
+   <script src="/src/services/common.js"></script>
 
    <script src="/src/components/widgets/ListComponent.js"></script>
    <script src="/src/components/widgets/ShopImageGallery.js"></script> 
@@ -66,6 +67,11 @@
    <script src="/src/store/models/tg_current_shop.js"></script> 
 
    <script src="/src/shop.js"></script>
+
+
+   <script src="/src/store/models/OrderDto.js"></script>
+
+
 
 </head>
 <style>
@@ -137,6 +143,12 @@ body{
            {{>basket}}
     {{else ifEquals service "profile"}}
            {{>profile}}
+    {{else ifEquals service "payment"}}
+           {{>payment}}
+    {{else ifEquals service "payment-success"}}
+           {{>payment_success}}
+    {{else ifEquals service "payment-failed"}}
+           {{>payment_failed}}
     {{/ifEquals}}              
  </div>
 </nav>

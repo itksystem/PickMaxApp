@@ -13,7 +13,7 @@ class OrderServiceClientHandler {
      * @returns {Object} - Объект с параметрами заказа
      */
 
-    async create(token) {
+    async create(token, referenceId) {
         try {
             const response = await fetch(process.env.ORDER_SERVICE_CREATE_URL, {
                 method: 'POST',                
@@ -21,7 +21,7 @@ class OrderServiceClientHandler {
                     'Content-Type' : 'application/json',
                     'Authorization': `Bearer ${token}`,
                   },
-                body: JSON.stringify({})
+                body: JSON.stringify({referenceId})
             }); 
             if (!response.ok)  throw(response.status);       
             let data;

@@ -8,6 +8,8 @@ class MainApp {
       this.page = 1; // Номер текущей страницы
       this.limit = 10; // Количество товаров для загрузки за раз
       this.loading = false; // Флаг, чтобы предотвратить повторную загрузку данных   
+      this.common = new CommonFunctions();
+      console.log(this);
       return this;
    }
 
@@ -168,11 +170,11 @@ class MainApp {
  showBasketOutput() {
   let o = this;
   let webRequest = new WebRequest();
-  const urlParams = new URLSearchParams(window.location.search); // Получаем текущий URL
   let request = webRequest.get(o.api.getShopBasketMethod(),  {}, false )
      .then(function(data) {
         console.log(data);
-	$("div.basket-container").prepend(o.basketTitleOutput(data.totalAmount)).show();
+        if(data.basket?.length> 0)
+	  $("div.basket-container").prepend(o.basketTitleOutput(data.totalAmount)).show();
         data.basket.forEach(item => {
               console.log(item);
               $("div.basket-container").append(o.basketItemCardOutput(item)).show();
@@ -186,32 +188,123 @@ class MainApp {
     return this;
  }
 
-
-createOrderButtonEventHadler() {
+  createOrderButtonEventHadler() {
     let o = this;
-    // Находим все кнопки с классом 'create-order'
+    console.log(o); //
+    o.referenceId = o.common.uuid(); // создаем referenceId
+                                        
     document.querySelectorAll('.create-order').forEach(button => {
-        button.addEventListener('click', function() {
-            let webRequest = new WebRequest();
-            // Отправляем POST-запрос
-            webRequest.post(o.api.createOrderMethod(), {}, false)
-                .then(function(data) {
-                    if (data && data.orderId) {
-                        // Перенаправляем на страницу доставки с orderId
-                        window.location.href = `/orders/delivery/${data.orderId}`;
-                    } else {
-                        console.error('Ответ не содержит orderId:', data);
-                        alert('Не удалось создать заказ. Попробуйте снова.');
-                    }
-                })
-                .catch(function(error) {
-                    console.error('createOrderButtonEventHadler.Произошла ошибка =>', error);
-                    window.location.href = '/orders/create-error';
-                });
+      button.addEventListener('click', function() {
+        let webRequest = new WebRequest();
+          webRequest.post(o.api.createOrderMethod(), {referenceId : o.referenceId }, false)
+           .then(function(data) {
+	     console.log(data);
+   	      let order = new OrderDto(data.order);
+  	       console.log(data.order);
+	       order.saveToLocalStorage(o.referenceId);
+	       if(!order) throw('Object order is null ', order)
+	         window.location.href = `/orders/delivery/${o.referenceId}`; //перешли на доставку
+              }).catch(function(error) {
+             console.error('createOrderButtonEventHadler.Произошла ошибка =>', error);
+            window.location.href = '/orders/create-error';
+          });
         });
+      });
+    }
+
+  showOrderDeliveryOutput(){
+   let o = this;
+   let webRequest = new WebRequest();
+   const url = window.location.pathname; // Получаем путь, например, /delivery/12345
+   const match = url.match(/^\/orders\/delivery\/([^/]+)$/);
+   o.referenceId = match ? match[1] : null;
+   let order = new OrderDto();
+   order.loadFromLocalStorage(this.referenceId);
+   console.log(order);
+
+   const options = document.querySelectorAll('.option');
+   const confirmButton = document.getElementById('delivery-confirm-button');
+   const backButton = document.getElementById('delivery-back-button');
+   let selectedOption = null;
+
+   options.forEach(option => {
+     option.addEventListener('click', () => {
+       if (selectedOption) {
+            selectedOption.classList.remove('selected');
+            }
+       option.classList.add('selected');
+       selectedOption = option;
+       confirmButton.disabled = false;
+      });
+   });
+
+   confirmButton.addEventListener('click', () => {
+    let api = new WebAPI();
+    if (selectedOption) {
+       order.setDeliveryId(selectedOption.dataset.type);
+       order.saveToLocalStorage(o.referenceId);
+       window.location.href = `/orders/payment/${this.referenceId}`; //перешли на платежи
+      }
     });
-  }
+
+    backButton.addEventListener('click', () => {
+        // Возврат на предыдущую страницу
+        window.location.href = '/orders/page';
+    });
+
+  return this;
+ }
+
+showPaymentPageOutput() {
+    let o = this;
+    let webRequest = new WebRequest();
+    const url = window.location.pathname; // Получаем путь, например, /delivery/12345
+    const match = url.match(/^\/orders\/payment\/([^/]+)$/);
+    o.referenceId = match ? match[1] : null;
+
+    let order = new OrderDto();
+    order.loadFromLocalStorage(this.referenceId);
+    console.log(order);
+
+    // Установка значений в элементы
+    document.querySelector('[name="payment-amount"]').textContent = order.getTotalAmount();
+    document.querySelector('[name="payment-amount-button"]').textContent = order.getTotalAmount();
+    document.querySelector('[name="CardNumber"]').value = '2202002200002222';
+    document.querySelector('[name="DateTo"]').value = '12/28';
+
+    // Обработка кнопки подтверждения оплаты
+    const confirmButton = document.querySelector('[name="Payment-button"]');
+    confirmButton.addEventListener('click', () => {
+        // Переход на страницу успеха
+        window.location.href = `/orders/payment/success/${o.referenceId}`;
+    });
+
+    // Обработка кнопки отмены оплаты
+    const backButton = document.querySelector('[name="Payment-Cancel-Button"]');
+    backButton.addEventListener('click', () => {
+        // Возврат на предыдущую страницу
+        window.location.href = '/orders/page';
+    });
+
+    return this;
+}
 
 
 }
 
+/*
+	          webRequest.post(o.api.setOrderDetailsMethod(order.orderId), {}, false)
+	           .then(function(orderDetails) {
+		     console.log(orderDetails);
+	             if (orderDetails.orderId == order.orderId && orderDetails.totalAmount && orderDetails.status) {
+//	                window.location.href = `/orders/payment`; 
+	              } else {
+	               console.error('Ответ содержит ошибки:', orderDetails);
+//		       window.location.href = '/orders/create-error';
+	              }
+	            }).catch(function(error) {
+	            console.error('createOrderButtonEventHadler.Произошла ошибка =>', error);
+//        	    window.location.href = '/orders/create-error';
+	          });
+
+*/
