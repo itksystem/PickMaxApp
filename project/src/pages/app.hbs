@@ -149,6 +149,9 @@ body{
            {{>payment_success}}
     {{else ifEquals service "payment-failed"}}
            {{>payment_failed}}
+    {{else ifEquals service "availability-error"}}
+           {{>order_availability_error}}
+
     {{/ifEquals}}              
  </div>
 </nav>

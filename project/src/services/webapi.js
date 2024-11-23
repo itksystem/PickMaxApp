@@ -263,7 +263,9 @@ class WebAPI {
    setOrderDeliveryMethod(){  return `/api/bff/delivery/v1/select` }
 /* Установка типа доставки */
    setOrderDetailsMethod(orderId){  return `/api/bff/warehouse/v1/order/${orderId}/details` }
-
+/* Отправка запроса на оплату  */
+   sendPaymentMethod(){  return `/api/bff/payment/v1/create` }
+   sendPaymentMethodPayload(order){  return order; }
 
 
 

@@ -60,7 +60,7 @@ class MainApp {
                 o.loading = false; // Сбрасываем флаг загрузки
             })
             .catch(function(error) {
-                console.error('initializeProductCard.Произошла ошибка =>', error);
+                console.log('initializeProductCard.Произошла ошибка =>', error);
                 o.loading = false; // Сбрасываем флаг загрузки при ошибке
             });
         }
@@ -78,7 +78,7 @@ class MainApp {
         });
 
     } catch (e) {
-        console.error('initializeProductCard.catch =>', e);
+        console.log('initializeProductCard.catch =>', e);
     }
     return this;
  }
@@ -161,7 +161,7 @@ class MainApp {
 		window.location.reload()
 	        })
 	     .catch(function(error) {
-	       console.error('showBasketOutput.Произошла ошибка =>', error);
+	       console.log('showBasketOutput.Произошла ошибка =>', error);
 	     });
         });
     });
@@ -183,7 +183,7 @@ class MainApp {
 	 o.createOrderButtonEventHadler();
         })                                
      .catch(function(error) {
-       console.error('showBasketOutput.Произошла ошибка =>', error);
+       console.log('showBasketOutput.Произошла ошибка =>', error);
      });
     return this;
  }
@@ -205,7 +205,10 @@ class MainApp {
 	       if(!order) throw('Object order is null ', order)
 	         window.location.href = `/orders/delivery/${o.referenceId}`; //перешли на доставку
               }).catch(function(error) {
-             console.error('createOrderButtonEventHadler.Произошла ошибка =>', error);
+             console.log('createOrderButtonEventHadler.Произошла ошибка =>', error);
+	     if(error.status == 409 ) {	
+       		 window.location.href = '/orders/payment/availability-error';
+ 	     } else
             window.location.href = '/orders/create-error';
           });
         });
@@ -255,56 +258,94 @@ class MainApp {
   return this;
  }
 
-showPaymentPageOutput() {
-    let o = this;
-    let webRequest = new WebRequest();
+ showPaymentPageOutput() {
+    const o = this;
+    const webRequest = new WebRequest();
     const url = window.location.pathname; // Получаем путь, например, /delivery/12345
     const match = url.match(/^\/orders\/payment\/([^/]+)$/);
     o.referenceId = match ? match[1] : null;
 
-    let order = new OrderDto();
-    order.loadFromLocalStorage(this.referenceId);
+    if (!o.referenceId) {
+        console.log("Invalid URL: referenceId not found");
+        return;
+    }
+
+    const order = new OrderDto();
+    order.loadFromLocalStorage(o.referenceId);
     console.log(order);
 
-    // Установка значений в элементы
-    document.querySelector('[name="payment-amount"]').textContent = order.getTotalAmount();
-    document.querySelector('[name="payment-amount-button"]').textContent = order.getTotalAmount();
-    document.querySelector('[name="CardNumber"]').value = '2202002200002222';
-    document.querySelector('[name="DateTo"]').value = '12/28';
+    const paymentAmount = document.querySelector('[name="payment-amount"]');
+    if (paymentAmount) paymentAmount.textContent = order.getTotalAmount();
 
-    // Обработка кнопки подтверждения оплаты
+    const paymentAmountButton = document.querySelector('[name="payment-amount-button"]');
+    if (paymentAmountButton) paymentAmountButton.textContent = order.getTotalAmount();
+
+    const cardNumber = document.querySelector('[name="CardNumber"]');
+    if (cardNumber) cardNumber.value = '2202002200002222';
+
+    const dateTo = document.querySelector('[name="DateTo"]');
+    if (dateTo) dateTo.value = '12/28';
+
     const confirmButton = document.querySelector('[name="Payment-button"]');
-    confirmButton.addEventListener('click', () => {
-        // Переход на страницу успеха
-        window.location.href = `/orders/payment/success/${o.referenceId}`;
-    });
+    if (confirmButton) {
+        confirmButton.addEventListener('click', () => {
+            const secureCode = document.querySelector('[name="SecureCode"]');
+             if (secureCode) {
+                let result = o.getPaymentResult(order)
+                  .then(function(paymentResult) {
+                   (paymentResult.status === true)
+                     ? window.location.href = `/orders/payment/success/${o.referenceId}`
+                     : window.location.href = `/orders/payment/failed/${o.referenceId}`
+                   })
+                .catch(function(error) {
+                  console.log('createOrderButtonEventHadler.Произошла ошибка =>', error);
+                  window.location.href = `/orders/payment/failed/${o.referenceId}`;
+              });
+            } 
+        });
+    }
 
-    // Обработка кнопки отмены оплаты
     const backButton = document.querySelector('[name="Payment-Cancel-Button"]');
-    backButton.addEventListener('click', () => {
-        // Возврат на предыдущую страницу
-        window.location.href = '/orders/page';
-    });
+    if (backButton) {
+        backButton.addEventListener('click', () => {
+            window.location.href = '/orders/page';
+        });
+    }
 
     return this;
-}
+ }
+
+
+ getPaymentResult(order) {
+    let o = this;
+    let webRequest = new WebRequest();
+    if (!o.api || typeof o.api.sendPaymentMethod !== 'function') {
+        console.log('API метод sendPaymentMethod не найден');
+        return Promise.reject('API метод sendPaymentMethod не найден');
+    }
+     const form = document.querySelector('#payForm'); // Найти форму по ID или другому селектору
+     const formData = new FormData(form); // Создать объект FormData
+	
+     // Собрать все данные в объект
+     const paymentDetails = {};
+       formData.forEach((value, key) => {
+           paymentDetails[key] = value;
+       });
+
+
+    order.paymentDetails = paymentDetails;
+    return webRequest.post(o.api.sendPaymentMethod(), order, false)
+        .then(function(paymentDetails) {
+            console.log(paymentDetails);
+            return paymentDetails;
+        })
+        .catch(function(error) {
+            console.log('Ошибка при отправке платежа:', error.message || error);
+            window.location.href = '/orders/create-error';
+        });
+  }
 
 
 }
 
-/*
-	          webRequest.post(o.api.setOrderDetailsMethod(order.orderId), {}, false)
-	           .then(function(orderDetails) {
-		     console.log(orderDetails);
-	             if (orderDetails.orderId == order.orderId && orderDetails.totalAmount && orderDetails.status) {
-//	                window.location.href = `/orders/payment`; 
-	              } else {
-	               console.error('Ответ содержит ошибки:', orderDetails);
-//		       window.location.href = '/orders/create-error';
-	              }
-	            }).catch(function(error) {
-	            console.error('createOrderButtonEventHadler.Произошла ошибка =>', error);
-//        	    window.location.href = '/orders/create-error';
-	          });
 
-*/

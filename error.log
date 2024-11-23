@@ -269,3 +269,83 @@
 {"code":"ECONNREFUSED","errno":"ECONNREFUSED","level":"error","message":"request to http://127.0.0.1:3003/api/orders/v1/order/create failed, reason: connect ECONNREFUSED 127.0.0.1:3003","service":"pickapp-service","stack":"FetchError: request to http://127.0.0.1:3003/api/orders/v1/order/create failed, reason: connect ECONNREFUSED 127.0.0.1:3003\n    at ClientRequest.<anonymous> (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\node-fetch\\lib\\index.js:1501:11)\n    at ClientRequest.emit (events.js:315:20)\n    at Socket.socketErrorListener (_http_client.js:469:9)\n    at Socket.emit (events.js:315:20)\n    at emitErrorNT (internal/streams/destroy.js:106:8)\n    at emitErrorCloseNT (internal/streams/destroy.js:74:3)\n    at processTicksAndRejections (internal/process/task_queues.js:80:21)","timestamp":"2024-11-21T21:03:04.428Z","type":"system"}
 {"code":"ECONNRESET","errno":"ECONNRESET","level":"error","message":"request to http://127.0.0.1:3003/api/orders/v1/order/create failed, reason: read ECONNRESET","service":"pickapp-service","stack":"FetchError: request to http://127.0.0.1:3003/api/orders/v1/order/create failed, reason: read ECONNRESET\n    at ClientRequest.<anonymous> (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\node-fetch\\lib\\index.js:1501:11)\n    at ClientRequest.emit (events.js:315:20)\n    at Socket.socketErrorListener (_http_client.js:469:9)\n    at Socket.emit (events.js:315:20)\n    at emitErrorNT (internal/streams/destroy.js:106:8)\n    at emitErrorCloseNT (internal/streams/destroy.js:74:3)\n    at processTicksAndRejections (internal/process/task_queues.js:80:21)","timestamp":"2024-11-21T21:08:25.213Z","type":"system"}
 {"code":"ECONNRESET","errno":"ECONNRESET","level":"error","message":"request to http://127.0.0.1:3003/api/orders/v1/order/create failed, reason: read ECONNRESET","service":"pickapp-service","stack":"FetchError: request to http://127.0.0.1:3003/api/orders/v1/order/create failed, reason: read ECONNRESET\n    at ClientRequest.<anonymous> (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\node-fetch\\lib\\index.js:1501:11)\n    at ClientRequest.emit (events.js:315:20)\n    at Socket.socketErrorListener (_http_client.js:469:9)\n    at Socket.emit (events.js:315:20)\n    at emitErrorNT (internal/streams/destroy.js:106:8)\n    at emitErrorCloseNT (internal/streams/destroy.js:74:3)\n    at processTicksAndRejections (internal/process/task_queues.js:80:21)","timestamp":"2024-11-21T21:12:45.658Z","type":"system"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2024-11-22T13:54:33.096Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2024-11-22T14:34:43.383Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2024-11-22T18:56:34.187Z"}
+{"level":"error","message":"email is not defined","service":"pickapp-service","stack":"ReferenceError: email is not defined\n    at PaymentServiceClientHandler.create (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-payment-service-client-handler\\PaymentServiceClientHandler.js:29:56)\n    at C:\\Distrib\\TZ\\PickMaxApp\\routes\\paymentRouter.js:17:50\n    at Layer.handle [as handle_request] (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\index.js:175:3)","timestamp":"2024-11-22T19:05:41.664Z"}
+{"level":"error","message":"email is not defined","service":"pickapp-service","stack":"ReferenceError: email is not defined\n    at PaymentServiceClientHandler.create (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-payment-service-client-handler\\PaymentServiceClientHandler.js:29:56)\n    at c:\\Distrib\\TZ\\PickMaxApp\\routes\\paymentRouter.js:17:50\n    at Layer.handle [as handle_request] (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\index.js:175:3)","timestamp":"2024-11-22T19:07:47.990Z"}
+{"level":"error","message":"email is not defined","service":"pickapp-service","stack":"ReferenceError: email is not defined\n    at PaymentServiceClientHandler.create (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-payment-service-client-handler\\PaymentServiceClientHandler.js:29:56)\n    at c:\\Distrib\\TZ\\PickMaxApp\\routes\\paymentRouter.js:17:50\n    at Layer.handle [as handle_request] (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\router\\index.js:175:3)","timestamp":"2024-11-22T19:07:57.118Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:10:17.259Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:13:23.426Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:15:47.376Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:17:23.451Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:18:10.005Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:18:18.973Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:19:12.058Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:20:10.533Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:34:58.600Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:36:03.486Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:42:00.539Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:44:06.722Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:47:00.267Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:47:32.214Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:47:38.339Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T19:48:29.904Z"}
+{"level":"error","message":422,"service":"pickapp-service","timestamp":"2024-11-22T19:49:01.648Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T20:42:17.024Z"}
+{"level":"error","message":"request to http://127.0.0.1:3001/api/auth/v1/login failed, reason: connect ECONNREFUSED 127.0.0.1:3001","service":"pickapp-service","timestamp":"2024-11-22T21:41:06.826Z"}
+{"code":"ECONNRESET","errno":"ECONNRESET","level":"error","message":"request to http://127.0.0.1:3002/api/warehouse/v1/basket/product-add failed, reason: read ECONNRESET","service":"pickapp-service","stack":"FetchError: request to http://127.0.0.1:3002/api/warehouse/v1/basket/product-add failed, reason: read ECONNRESET\n    at ClientRequest.<anonymous> (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\node-fetch\\lib\\index.js:1501:11)\n    at ClientRequest.emit (events.js:315:20)\n    at Socket.socketErrorListener (_http_client.js:469:9)\n    at Socket.emit (events.js:315:20)\n    at emitErrorNT (internal/streams/destroy.js:106:8)\n    at emitErrorCloseNT (internal/streams/destroy.js:74:3)\n    at processTicksAndRejections (internal/process/task_queues.js:80:21)","timestamp":"2024-11-22T22:33:48.541Z","type":"system"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T22:40:20.907Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T22:47:24.039Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T22:47:24.047Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T22:47:51.005Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T22:49:32.501Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T22:54:42.331Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T22:54:42.336Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T22:55:58.605Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T22:55:58.608Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T22:59:45.910Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T22:59:45.914Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T22:59:45.916Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T22:59:45.919Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T23:00:14.420Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T23:02:47.852Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T23:04:10.701Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T23:10:12.262Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T23:10:12.266Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T23:10:12.269Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T23:10:12.272Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T23:12:24.523Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T23:12:24.528Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T23:14:42.497Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T23:14:42.499Z"}
+{"level":"error","message":422,"service":"pickapp-service","timestamp":"2024-11-22T23:15:14.502Z"}
+{"level":"error","message":422,"service":"pickapp-service","timestamp":"2024-11-22T23:17:41.773Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2024-11-22T23:18:34.513Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-22T23:23:45.460Z"}
+{"level":"error","message":422,"service":"pickapp-service","timestamp":"2024-11-22T23:24:20.872Z"}
+{"level":"error","message":422,"service":"pickapp-service","timestamp":"2024-11-22T23:46:56.641Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-23T08:12:29.337Z"}
+{"level":"error","message":422,"service":"pickapp-service","timestamp":"2024-11-23T08:17:26.971Z"}
+{"level":"error","message":422,"service":"pickapp-service","timestamp":"2024-11-23T08:41:00.666Z"}
+{"level":"error","message":400,"service":"pickapp-service","timestamp":"2024-11-23T08:41:16.690Z"}
+{"level":"error","message":402,"service":"pickapp-service","timestamp":"2024-11-23T08:41:42.699Z"}
+{"level":"error","message":422,"service":"pickapp-service","timestamp":"2024-11-23T08:44:34.007Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-23T08:46:16.495Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-23T08:48:06.032Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-23T08:48:06.034Z"}
+{"level":"error","message":402,"service":"pickapp-service","timestamp":"2024-11-23T08:51:08.257Z"}
+{"level":"error","message":409,"service":"pickapp-service","timestamp":"2024-11-23T18:24:22.633Z"}
+{"level":"error","message":409,"service":"pickapp-service","timestamp":"2024-11-23T18:25:00.192Z"}
+{"level":"error","message":409,"service":"pickapp-service","timestamp":"2024-11-23T18:36:11.972Z"}
+{"level":"error","message":409,"service":"pickapp-service","timestamp":"2024-11-23T18:36:11.984Z"}
+{"level":"error","message":409,"service":"pickapp-service","timestamp":"2024-11-23T18:39:27.161Z"}
+{"level":"error","message":409,"service":"pickapp-service","timestamp":"2024-11-23T18:40:25.487Z"}
+{"level":"error","message":409,"service":"pickapp-service","timestamp":"2024-11-23T18:40:48.841Z"}
+{"level":"error","message":409,"service":"pickapp-service","timestamp":"2024-11-23T18:41:35.113Z"}
+{"level":"error","message":409,"service":"pickapp-service","timestamp":"2024-11-23T18:42:39.355Z"}
+{"level":"error","message":409,"service":"pickapp-service","timestamp":"2024-11-23T18:44:34.376Z"}
+{"level":"error","message":409,"service":"pickapp-service","timestamp":"2024-11-23T18:48:40.713Z"}
+{"level":"error","message":409,"service":"pickapp-service","timestamp":"2024-11-23T18:49:18.799Z"}
+{"level":"error","message":409,"service":"pickapp-service","timestamp":"2024-11-23T18:49:24.488Z"}
+{"level":"error","message":409,"service":"pickapp-service","timestamp":"2024-11-23T18:51:00.881Z"}
