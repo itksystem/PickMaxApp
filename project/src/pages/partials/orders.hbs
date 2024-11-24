@@ -1,39 +1,7 @@
-<div class="w-100">
-  <div class="row mb-3">
+<!-- Контейнер для карточек заказов -->
+<div class="orders-container"></div>
+<script src="/src/components/ui/top-header/top-header.js"></script>        
+<script src="/src/pages/partials/orders.js"></script>
+<script src="/src/components/ui/dropdown-section/dropdown-section.js"></script>
 
-<div class="card card-primary card-outline card-outline-tabs w-100" style="margin: 0.5rem; padding: 0.5rem;">
-  <div class="card-header p-0 border-bottom-0">
-    <ul class="nav nav-tabs" id="orders-tabs-tab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="orders-tabs-active-tab" data-toggle="pill" href="#orders-tabs-active" role="tab" aria-controls="orders-tabs-active" aria-selected="true">В работе</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="orders-tabs-done-tab" data-toggle="pill" href="#orders-tabs-done" role="tab" aria-controls="orders-tabs-done" aria-selected="false">Завершено</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="orders-tabs-rejected-tab" data-toggle="pill" href="#orders-tabs-rejected" role="tab" aria-controls="orders-tabs-rejected" aria-selected="false">Отменено</a>
-      </li>
-    </ul>
-  </div>
-  <div class="card-body">
-    <div class="tab-content" id="orders-tabs-tabContent">
-      <div class="tab-pane fade active show" id="orders-tabs-active" role="tabpanel" aria-labelledby="orders-tabs-active-tab">
-	<div class="w-100">
-		  <div class="row mb-3">
-			<div class="shop_orders_list"></div>
-		  </div>
-	</div>
-      </div>
-      <div class="tab-pane fade" id="orders-tabs-done" role="tabpanel" aria-labelledby="orders-tabs-done-tab">
-      </div>
-      <div class="tab-pane fade" id="orders-tabs-rejected" role="tabpanel" aria-labelledby="orders-tabs-rejected-tab">
-      </div>
-    </div>
-  </div>
-</div>
-
-  </div>
-</div>
-<script src="/main/pages/telegram/jobs/js/components/top-header/top-header.js"></script>
-<script src="/main/pages/telegram/jobs/js/shop_orders.js"></script>
 

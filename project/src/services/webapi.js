@@ -266,8 +266,9 @@ class WebAPI {
 /* Отправка запроса на оплату  */
    sendPaymentMethod(){  return `/api/bff/payment/v1/create` }
    sendPaymentMethodPayload(order){  return order; }
-
-
+/* Список заказо */
+   getShopOrdersMethod(){  return `/api/bff/orders/v1/orders` }
+   getShopOrdersMethodPayload(){  return {} }
 
 
 

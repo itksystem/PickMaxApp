@@ -20,4 +20,15 @@ class CommonFunctions {
   });
  }
 
+
+ORDER_STATUS = {
+  NEW: { class: 'order_item_status_new', description: "Новый заказ" },
+  RESERVED: { class: 'order_item_status_confirmed', description: "Зарезервирован" },
+  PAID: { class: 'order_item_status_paid', description: "Заказ оплачен" },
+  DELIVERY: { class: 'order_item_status_done', description: "Передан в доставку" },
+  DONE: { class: 'order_item_status_done', description: "Заказ доставлен" },
+  REJECTED: { class: 'order_item_status_rejected', description: "Заказ отменен" },
+}
+
+
 }

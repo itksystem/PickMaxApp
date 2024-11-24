@@ -443,6 +443,8 @@ class MainApp {
 
  showOrdersPageOutput(){
 return `
+    <div class="profile-container">
+
         <!-- Поле для ввода имени -->
         <div class="profile-input-group">
             <label for="firstName">Имя</label>
@@ -464,9 +466,7 @@ return `
         <!-- Поле для ввода имени -->
         <div class="profile-input-group">
             <label for="email">E-mail</label>
-            <span type="text" id="email" 
-		style="font-size: 1rem; color: #7a7a7a;"
-		placeholder="Введите ваше имя" readonly disable >demo@demo.ru</span>
+            <input type="text" id="email" placeholder="Введите ваше имя" value="demo@demo.ru" required >
         </div>
 
         
@@ -486,6 +486,7 @@ return `
         <div class="profile-button-container">
             <button class="profile-button" onclick="saveProfile()">Сохранить</button>
         </div>
+    </div>
 `;
  }
 
