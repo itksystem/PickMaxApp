@@ -441,34 +441,33 @@ class MainApp {
 
 
 
- showOrdersPageOutput(){
+ showProfilePage(profile){
 return `
-    <div class="profile-container">
+        <!-- Поле для отражения email -->
+        <div class="profile-input-group">
+            <label for="login">Login</label>
+            <span type="text" id="login" 
+		style="font-size: 1rem; color: #7a7a7a;"
+		placeholder="Введите ваше имя" readonly disable ></span>
+        </div>
 
         <!-- Поле для ввода имени -->
         <div class="profile-input-group">
-            <label for="firstName">Имя</label>
-            <input type="text" id="firstName" placeholder="Введите ваше имя" required>
+            <label for="name">Имя</label>
+            <input type="text" id="name" placeholder="Введите ваше имя" required >
         </div>
         
         <!-- Поле для ввода фамилии -->
         <div class="profile-input-group">
-            <label for="lastName">Фамилия</label>
-            <input type="text" id="lastName" placeholder="Введите вашу фамилию" required>
+            <label for="surname">Фамилия</label>
+            <input type="text" id="surname" placeholder="Введите вашу фамилию" required>
         </div>
         
         <!-- Поле для ввода отчества -->
         <div class="profile-input-group">
-            <label for="middleName">Отчество</label>
-            <input type="text" id="middleName" placeholder="Введите ваше отчество">
+            <label for="patronymic">Отчество</label>
+            <input type="text" id="patronymic" placeholder="Введите ваше отчество">
         </div>
-
-        <!-- Поле для ввода имени -->
-        <div class="profile-input-group">
-            <label for="email">E-mail</label>
-            <input type="text" id="email" placeholder="Введите ваше имя" value="demo@demo.ru" required >
-        </div>
-
         
         <!-- Поле для ввода номера телефона -->
         <div class="profile-input-group">
@@ -486,14 +485,36 @@ return `
         <div class="profile-button-container">
             <button class="profile-button" onclick="saveProfile()">Сохранить</button>
         </div>
-    </div>
 `;
  }
 
  showProfilePage(){
   let o = this;
   let webRequest = new WebRequest();
-  $("div.profile-container").prepend(o.showOrdersPageOutput()).show();
+  $("div.profile-container").prepend(o.showProfilePage()).show();
+  let request = webRequest.get(o.api.getShopProfileMethod(), {}, false )
+     .then(function(data) {
+	  console.log(data);
+          const login = document.querySelector('[id="login"]');
+          if (login) login.textContent = data?.profile?.login;
+
+          const surname = document.querySelector('[id="surname"]');
+          if (surname) login.value = data?.profile?.surname;
+
+          const name = document.querySelector('[id="name"]');
+          if (name) login.value = data?.profile?.name;
+
+          const patronymic = document.querySelector('[id="patronymic"]');
+          if (patronymic) login.value = data?.profile?.patronymic;
+
+          const address = document.querySelector('[id="address"]');
+          if (address) login.value = data?.profile?.address;
+        })                                
+     .catch(function(error) {
+       console.log('showOrdersPage.Произошла ошибка =>', error);
+     });
+    return this;
+
   
  }
 

@@ -591,3 +591,12 @@
 {"code":"ECONNRESET","errno":"ECONNRESET","level":"error","message":"request to http://127.0.0.1:3003/api/orders/v1/order/create failed, reason: read ECONNRESET","service":"pickapp-service","stack":"FetchError: request to http://127.0.0.1:3003/api/orders/v1/order/create failed, reason: read ECONNRESET\n    at ClientRequest.<anonymous> (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\node-fetch\\lib\\index.js:1501:11)\n    at ClientRequest.emit (events.js:315:20)\n    at Socket.socketErrorListener (_http_client.js:469:9)\n    at Socket.emit (events.js:315:20)\n    at emitErrorNT (internal/streams/destroy.js:106:8)\n    at emitErrorCloseNT (internal/streams/destroy.js:74:3)\n    at processTicksAndRejections (internal/process/task_queues.js:80:21)","timestamp":"2024-11-24T13:10:34.645Z","type":"system"}
 {"level":"error","message":404,"service":"pickapp-service","timestamp":"2024-11-24T13:10:52.210Z"}
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2024-11-24T15:36:31.984Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-25T17:17:13.483Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-25T17:20:23.981Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-25T17:20:38.028Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-25T17:23:55.617Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-25T17:25:56.797Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2024-11-25T17:26:53.697Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2024-11-25T17:56:05.022Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2024-11-25T18:04:06.197Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2024-11-25T18:04:06.213Z"}

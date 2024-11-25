@@ -441,39 +441,38 @@ class MainApp {
 
 
 
- showOrdersPageOutput(){
+ showProfilePageOutput(){
 return `
+        <!-- Поле для отражения email -->
+        <div class="profile-input-group">
+            <label for="login">Login</label>
+            <span type="text" id="login" 
+		style="font-size: 1rem; color: #7a7a7a;"
+		placeholder="Введите ваше имя" readonly disable ></span>
+        </div>
+
         <!-- Поле для ввода имени -->
         <div class="profile-input-group">
-            <label for="firstName">Имя</label>
-            <input type="text" id="firstName" placeholder="Введите ваше имя" required>
+            <label for="name">Имя</label>
+            <input type="text" id="firstname" placeholder="Введите ваше имя" required >
         </div>
-        
-        <!-- Поле для ввода фамилии -->
-        <div class="profile-input-group">
-            <label for="lastName">Фамилия</label>
-            <input type="text" id="lastName" placeholder="Введите вашу фамилию" required>
-        </div>
-        
+              
         <!-- Поле для ввода отчества -->
         <div class="profile-input-group">
-            <label for="middleName">Отчество</label>
-            <input type="text" id="middleName" placeholder="Введите ваше отчество">
+            <label for="patronymic">Отчество</label>
+            <input type="text" id="patronymic" placeholder="Введите ваше отчество">
         </div>
 
-        <!-- Поле для ввода имени -->
+        <!-- Поле для ввода фамилии -->
         <div class="profile-input-group">
-            <label for="email">E-mail</label>
-            <span type="text" id="email" 
-		style="font-size: 1rem; color: #7a7a7a;"
-		placeholder="Введите ваше имя" readonly disable >demo@demo.ru</span>
+            <label for="surname">Фамилия</label>
+            <input type="text" id="surname" placeholder="Введите вашу фамилию" required>
         </div>
-
         
         <!-- Поле для ввода номера телефона -->
         <div class="profile-input-group">
             <label for="phone">Номер телефона</label>
-            <input type="tel" id="phone" placeholder="+7 (XXX) XXX-XX-XX" required>
+            <input type="tel" id="phone" placeholder="7XXXXXXXXXX" required>
         </div>
         
         <!-- Поле для ввода адреса доставки -->
@@ -484,7 +483,10 @@ return `
         
         <!-- Кнопка сохранения -->
         <div class="profile-button-container">
-            <button class="profile-button" onclick="saveProfile()">Сохранить</button>
+            <button class="profile-button"  >Сохранить</button>
+        </div>
+        <div class="profile-button-container">
+            <a class="session-close">Выйти из магазина</a>
         </div>
 `;
  }
@@ -492,12 +494,69 @@ return `
  showProfilePage(){
   let o = this;
   let webRequest = new WebRequest();
-  $("div.profile-container").prepend(o.showOrdersPageOutput()).show();
+  $("div.profile-container").prepend(o.showProfilePageOutput()).show();
+  let request = webRequest.get(o.api.getShopProfileMethod(), {}, false )
+     .then(function(data) {
+	  console.log(data);
+          const login = document.querySelector('[id="login"]');
+          if (login) login.textContent = data?.profile?.login;
+
+          const surname = document.querySelector('[id="surname"]');
+          if (surname) surname.value = data?.profile?.surname;
+
+          const firstname = document.querySelector('[id="firstname"]');
+          if (firstname) firstname.value = data?.profile?.name;
+
+          const patronymic = document.querySelector('[id="patronymic"]');
+          if (patronymic) patronymic.value = data?.profile?.patronymic;
+
+          const phone = document.querySelector('[id="phone"]');
+          if (phone) phone.value = data?.profile?.phone;
+
+          const address = document.querySelector('[id="address"]');
+          if (address) address.value = data?.profile?.address;
+        })                                
+     .catch(function(error) {
+       console.log('showOrdersPage.Произошла ошибка =>', error);
+     });
+
+    const closeSessionButton = document.querySelector('[class="session-close"]');
+    if (closeSessionButton) {
+        closeSessionButton.addEventListener('click', () => {
+	  let request = webRequest.post(o.api.closeSessionMethod(), {}, false )
+	     .then(function(data) {
+		document.redirect(o.api.LOGON_URL());
+        })                                
+	     .catch(function(error) {
+	       console.log('showOrdersPage.Произошла ошибка =>', error);
+        });
+      });
+     }
+
+    const saveProfileButton = document.querySelector('[class="profile-button"]');
+    if (saveProfileButton) {
+        saveProfileButton.addEventListener('click', () => {
+	  let request = webRequest.post(o.api.saveShopProfileMethod(), 
+		{                                          
+		  surname : surname.value,
+		  name : firstname.value,
+		  patronymic : patronymic.value,
+		  phone : phone.value,
+		  address : address.value
+		},
+	 	  false )
+	     .then(function(data) {
+		alert('Профиль сохранен!');
+        })                                
+	     .catch(function(error) {
+	       console.log('showOrdersPage.Произошла ошибка =>', error);
+        });
+      });
+     }
+
+    return this;
   
  }
-
-
-
 }
 
 
