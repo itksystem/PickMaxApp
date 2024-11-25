@@ -42,7 +42,7 @@ class ClientServiceHandler {
             try {
                 const response = await fetch(process.env.CLIENT_PROFILE_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${token}`, },
+                    headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },
                     body: JSON.stringify(req.body)
                 });    
     

@@ -525,7 +525,7 @@ return `
         closeSessionButton.addEventListener('click', () => {
 	  let request = webRequest.post(o.api.closeSessionMethod(), {}, false )
 	     .then(function(data) {
-		document.redirect(o.api.LOGON_URL());
+		document.location.replace(o.api.LOGON_URL());
         })                                
 	     .catch(function(error) {
 	       console.log('showOrdersPage.Произошла ошибка =>', error);
