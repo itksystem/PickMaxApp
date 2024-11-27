@@ -8,4 +8,4 @@ COPY ./ /var/www
 RUN ls /var/www/*
 WORKDIR /var/www
 EXPOSE 3000
-CMD [ "node", "server.js" ]
+CMD [ "node", "app.js" ]

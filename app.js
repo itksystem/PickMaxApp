@@ -14,7 +14,7 @@ const paymentRouter = require('./routes/paymentRouter');
 const warehouseBffRouter = require('./routes/warehouseBffRouter');
 const ordersBffRouter = require('./routes/ordersBffRouter');
 const clientRouter = require('./routes/clientRouter');
-
+const promClient = require('prom-client'); //сбор метрик для Prometheus
 const PORT = process.env.PORT || 3000;
 
 const app = express(); // Создаем приложение Express
@@ -31,6 +31,33 @@ hbs.registerPartials(common.COMMON_PATH_TO_PARTIALS);
 
 // Статические файлы
 app.use(express.static(common.COMMON_PATH_TO_SITE));
+
+//  метрика Prometheus
+const httpRequestDuration = new promClient.Histogram({
+  name: 'http_request_duration_seconds',
+  help: 'Продолжительность HTTP-запросов в секундах',
+  labelNames: ['method', 'status', 'path'],
+});
+
+// следим за метриками
+app.use((req, res, next) => {
+  const end = httpRequestDuration.startTimer({ method: req.method, path: req.path });
+  res.on('finish', () => {
+    end({ status: res.statusCode });
+  });
+  next();
+});
+
+// Маршрут /metrics
+app.get('/metrics', async (req, res) => {
+  try {
+    const metrics = await promClient.register.metrics();
+    res.set('Content-Type', promClient.register.contentType);
+    res.end(metrics);
+  } catch (error) {
+    res.status(500).end('Failed to load metrics');
+  }
+});
 
 // Логирование запросов
 app.use((req, res, next) => {

@@ -13,6 +13,7 @@ const warehouseClient = new WarehouseServiceClientHandler();   // интерфе
 
 // Набор незащищенных маршрутов
 const publicRoutes = [
+    { path: '/', page: common.COMMON_PRODUCTS_PAGE, service : { service : "products"} },
     { path: '/registration', page: common.COMMON_REGISTRATION_PAGE },
     { path: '/registration-confirm', page: common.COMMON_REGISTRATION_CONFIRM_PAGE },
     { path: '/registration-success', page: common.COMMON_REGISTRATION_SUCCESS_PAGE },
@@ -26,8 +27,8 @@ const publicRoutes = [
 ];
 
 // Регистрация незащищенных маршрутов
-publicRoutes.forEach(({ path, page }) => {
-    router.get(path, async (req, res) => renderPage(req, res, page, {}));
+publicRoutes.forEach(({ path, page, service = undefined}) => {
+    router.get(path, async (req, res) => renderPage(req, res, page, service ));
 });
 
 // Маршрут с middleware для выхода
