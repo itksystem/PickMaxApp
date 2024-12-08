@@ -100,6 +100,7 @@ main {
     flex-direction: row-reverse;
 }
 
+
 .delivery-image {
     flex: 1 1 40%;
 }
@@ -125,6 +126,44 @@ main {
     padding-left: 1.25rem; /* 20px */
     color: var(--logistic-flex-container-font-color);
 }
+
+
+.error-page-image {
+    flex: 1 1 40%;
+}
+
+.error-page-content {
+    flex: 1 1 55%;
+}
+
+.error-page-content h3 {
+    font-size: var(--logistic-flex-container-h3);
+    margin-bottom: 0.625rem; /* 10px */
+    color: #2980b9;
+}
+
+.error-page-content p {
+    font-size: var(--logistic-flex-container-font-size);
+    margin-bottom: 0.625rem; /* 10px */
+    color: var(--logistic-flex-container-font-color);
+}
+
+.error-page-content ul {
+    list-style-type: disc;
+    padding-left: 1.25rem; /* 20px */
+    color: var(--logistic-flex-container-font-color);
+}
+
+.error-page-option {
+    background-color: #fff;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+}
+
+
+
+
 
 /* FAQ */
 .faq-item {

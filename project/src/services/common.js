@@ -27,7 +27,9 @@ ORDER_STATUS = {
   PAID: { class: 'order_item_status_paid', description: "Заказ оплачен" },
   DELIVERY: { class: 'order_item_status_done', description: "Передан в доставку" },
   DONE: { class: 'order_item_status_done', description: "Заказ доставлен" },
-  REJECTED: { class: 'order_item_status_rejected', description: "Заказ отменен" },
+
+  DECLINE: { class: 'order_item_status_done', description: "Заказа отменен" },
+  COURIER_SEARCH: { class: 'order_item_status_confirmed', description: "Поиск курьера" },
 }
 
 

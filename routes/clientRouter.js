@@ -9,21 +9,30 @@ const ClientServiceHandler = require("../handlers/ClientServiceHandler");
 const clientService = new ClientServiceHandler();              // интерфейс для  связи с MC AuthService
 const AuthServiceClientHandler = require("openfsm-auth-service-client-handler");
 const authClient = new AuthServiceClientHandler();              // интерфейс для  связи с MC AuthService
+const axios = require('axios'); // Импорт библиотеки axios
+
 
 const CommonFunctionHelper = require("openfsm-common-functions")
-const commonFunction= new CommonFunctionHelper();
+const ResponseHelper = require("openfsm-response-helper")
+const _response = new ResponseHelper();
 
 
 /* Получить профиль клиента */
 router.get('/v1/profile', 	
 	async (req, res) => {        
         try {
-            const response = await clientService.profile(req, res);        
-            if (!response.success)  throw(response.status)
-             res.status(200).json(response.data);    
-        } catch (error) {
-            logger.error(error );   
-            res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  new CommonFunctionHelper().getDescriptionByCode((Number(error) || 500)) });            
+            const profile = await clientService.profile(req, res);        
+            if (!profile.success) throw({code : 422, message : "Client profile not found" })
+                _response
+                    .setCode(200)                    
+                    .setData(profile.data)
+                    .send(res);    
+        } catch (error) {            
+                _response
+                    .setCode(error.code)
+                    .setStatus(false)
+                    .setMessage(error.message)
+                    .send(res);                    
         }
 });
 
@@ -31,12 +40,18 @@ router.get('/v1/profile',
 router.post('/v1/profile', 	
 	async (req, res) => {        
         try {
-            const response = await clientService.saveProfile(req, res);        
-            if (!response.success)  throw(response.status)
-             res.status(200).json(response.data);    
+            const profile = await clientService.saveProfile(req, res);        
+            if (!profile.success)  throw({code : profile.status, message : "Не удалось сохранить профиль пользователя" })             
+                _response
+                    .setCode(200)                    
+                    .setData(profile.data)
+                    .send(res);    
         } catch (error) {
-            logger.error(error );   
-            res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  new CommonFunctionHelper().getDescriptionByCode((Number(error) || 500)) });            
+                _response
+                    .setCode(error.code)
+                    .setStatus(false)
+                    .setMessage(error.message)
+                    .send(res);                    
         }
 });
 
@@ -44,15 +59,41 @@ router.post('/v1/profile',
 router.post('/v1/logout', 	
 	async (req, res) => {        
         try {
-            const response = await authClient.logout(req, res);        
-            if (!response.success)  throw(response.status)
-             res.status(200).json(response.data);    
+            const logout = await authClient.logout(req, res);        
+            if (!logout.success)  throw({code : logout.status, message : "Ошибка при выполнении операции выхода из сессии" })
+                _response
+                    .setCode(200)                    
+                    .setData(logout.data)
+                    .send(res);    
         } catch (error) {
-            logger.error(error );   
-            res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  new CommonFunctionHelper().getDescriptionByCode((Number(error) || 500)) });            
+            _response
+                    .setCode(error.code)
+                    .setStatus(false)
+                    .setMessage(error.message)
+                    .send(res);                    
         }
 });
 
 
+/* Дадата */
+router.get('/v1/suggest/address', async (req, res) => {        
+    try {
+        const profile = await clientService.getSuggestAddress(req, res);        
+        if (!profile.success)  throw({code : profile.status, message : "Не получить адрес ищ сервиса Dadata" })             
+            _response
+                .setCode(200)                    
+                .setData(profile.data)
+                .send(res);    
+    } catch (error) {
+            _response
+                .setCode(error.code)
+                .setStatus(false)
+                .setMessage(error.message)
+                .send(res);                    
+    }
+   } 
+);
 
+
+  
 module.exports = router;

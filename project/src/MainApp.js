@@ -32,6 +32,14 @@ class MainApp {
         </product-card>
 `
   }
+
+ showCaseEmptyPageOutput(){
+  return `
+	<section class="error-page error-page-option text-center page-padding block-space">
+	    <span class="error-page-title center-text">Сервис товаров временно недоступен</span>
+	</section>`;
+ }
+
   
  showCasePage() {
     try {
@@ -61,6 +69,8 @@ class MainApp {
             })
             .catch(function(error) {
                 console.log('initializeProductCard.Произошла ошибка =>', error);
+		$("div.product-card-container").append(o.showCaseEmptyPageOutput()).show();
+		toastr.error('Ошибка при получении товаров', 'Товары', {timeOut: 3000});
                 o.loading = false; // Сбрасываем флаг загрузки при ошибке
             });
         }
@@ -112,9 +122,7 @@ class MainApp {
   return `
 	<section class="outside-city delivery-option page-padding block-space">
 	    <h2 class="header-title">В корзине нет товаров </h2>
-	</section>
-`;
-
+	</section>`;
  }
 
 
@@ -422,7 +430,6 @@ class MainApp {
   $("div.orders-container").prepend(o.OrdersPageTitle()).show();
   let request = webRequest.get(o.api.getShopOrdersMethod(), o.api.getShopOrdersMethodPayload(), false )
      .then(function(data) {
-
 	console.log(data);
         (data?.orders?.length == 0)
 	 ?  $("div.orders-container").prepend(o.OrdersEmptyPage()).show()
@@ -441,6 +448,31 @@ class MainApp {
 
 
 
+ inputText(label, id, placeholder, required, feedbackError){
+  return `
+        <div class="profile-input-group">
+	     <label for="${id}" class="form-label">${label}</label>
+	      <input type="text" class="form-control" id="${id}"  placeholder="${placeholder}" ${required}>
+	      <div id="${id}-error" class="invalid-feedback" style="display: none;">${feedbackError}</div>
+	 </div>`
+ } 
+
+ inputAutoComplete(label, id, placeholder, required, feedbackError){
+  return `
+        <div class="profile-input-group">
+	     <label for="${id}" class="form-label">${label}</label>
+        	  <x-autocomplete 
+			id="${id}"  
+			placeholder="${placeholder}" 
+			url = "/api/bff/client/v1/town"
+			${required}></x-autocomplete>
+  	         <div id="${id}-error" class="invalid-feedback" style="display: none;">${feedbackError}</div>
+	</div>`
+ } 
+
+
+
+
  showProfilePageOutput(){
 return `
         <!-- Поле для отражения email -->
@@ -451,29 +483,35 @@ return `
 		placeholder="Введите ваше имя" readonly disable ></span>
         </div>
 
-        <!-- Поле для ввода имени -->
-        <div class="profile-input-group">
-            <label for="name">Имя</label>
-            <input type="text" id="firstname" placeholder="Введите ваше имя" required >
-        </div>
-              
-        <!-- Поле для ввода отчества -->
-        <div class="profile-input-group">
-            <label for="patronymic">Отчество</label>
-            <input type="text" id="patronymic" placeholder="Введите ваше отчество">
-        </div>
 
-        <!-- Поле для ввода фамилии -->
         <div class="profile-input-group">
-            <label for="surname">Фамилия</label>
-            <input type="text" id="surname" placeholder="Введите вашу фамилию" required>
-        </div>
-        
-        <!-- Поле для ввода номера телефона -->
+	    <label for="firstname" class="form-label">Имя</label>
+	    <input type="text" class="form-control" id="firstname"  placeholder="Введите ваше имя" required>
+	    <div class="valid-feedback">
+	      Success!
+	    </div>
+	 </div>
+	
         <div class="profile-input-group">
-            <label for="phone">Номер телефона</label>
-            <input type="tel" id="phone" placeholder="7XXXXXXXXXX" required>
-        </div>
+	    <label for="patronymic" class="form-label">Отчество</label>
+	    <input type="text" class="form-control" id="patronymic"  placeholder="Введите ваше отчество" required>
+	    <div class="valid-feedback">
+	      Success!
+	    </div>
+	  </div>
+        <div class="profile-input-group">
+	    <label for="surname" class="form-label">Фамилия</label>
+	    <input type="text" class="form-control" id="surname" placeholder="Введите ваше отчество" required>
+	    <div class="valid-feedback">
+	      Success!
+	    </div>               
+	  </div>
+
+        <div class="profile-input-group">
+	      <label for="phone">Телефон</label>
+	      <input type="text" id="phone" class="form-control" placeholder="+7 (XXX) XXX-XXXX">
+	      <div id="phone-error" class="invalid-feedback" style="display: none;">Пожалуйста, введите номер в формате +7 (XXX) XXX-XXXX.</div>
+	 </div>
         
         <!-- Поле для ввода адреса доставки -->
         <div class="profile-input-group">
@@ -491,33 +529,70 @@ return `
 `;
  }
 
+
+ 
+
+ setProfileValueElement(elementSelector, value) {
+    const el = document.querySelector(elementSelector);
+    if (el) el.textContent = value;
+    if (el) el.value = value;
+ }
+
  showProfilePage(){
   let o = this;
   let webRequest = new WebRequest();
-  $("div.profile-container").prepend(o.showProfilePageOutput()).show();
   let request = webRequest.get(o.api.getShopProfileMethod(), {}, false )
      .then(function(data) {
 	  console.log(data);
-          const login = document.querySelector('[id="login"]');
-          if (login) login.textContent = data?.profile?.login;
+	  if(!data) {
+	       toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
+	  } else {
+ 		 $("div.profile-container div.card-body").append(o.inputText(`Email`, `login`,  `Электронный адрес`, `readonly`, ``));
+		 $("div.profile-container div.card-body").append(o.inputText(`Фамилия`,`surname`, `Укажите вашу фамилию`, `requred`, ``));
+ 		 $("div.profile-container div.card-body").append(o.inputText(`Имя`,`firstname`, `Укажите ваше имя `, `requred`, ``));
+		 $("div.profile-container div.card-body").append(o.inputText(`Отчество`,`patronymic`, `Укажите ваше отчество `, `requred`, ``));
+ 		 $("div.profile-container div.card-body").append(o.inputText(`Телефон`,`phone`, `Укажите номер телефона `, `requred`, `Пожалуйста, введите номер в формате +7 (XXX) XXX-XXXX`));
+		 $("div.profile-container div.card-body").append(o. inputAutoComplete(`Адрес`,`address`,`Укажите адрес доставки`, `requred`, `Заполните данные для доставки товара`));
 
-          const surname = document.querySelector('[id="surname"]');
-          if (surname) surname.value = data?.profile?.surname;
-
-          const firstname = document.querySelector('[id="firstname"]');
-          if (firstname) firstname.value = data?.profile?.name;
-
-          const patronymic = document.querySelector('[id="patronymic"]');
-          if (patronymic) patronymic.value = data?.profile?.patronymic;
-
-          const phone = document.querySelector('[id="phone"]');
-          if (phone) phone.value = data?.profile?.phone;
-
-          const address = document.querySelector('[id="address"]');
-          if (address) address.value = data?.profile?.address;
+	  	 o.setProfileValueElement('[id="login"]', data.profile?.login ?? '') 
+	  	 o.setProfileValueElement('[id="surname"]', data?.profile?.surname ?? '') 
+	  	 o.setProfileValueElement('[id="firstname"]', data?.profile?.name ?? '') 
+	  	 o.setProfileValueElement('[id="patronymic"]', data?.profile?.patronymic ?? '') 
+	  	 o.setProfileValueElement('[id="phone"]', data?.profile?.phone ?? '') 
+	  	 o.setProfileValueElement('[id="address"]', data?.profile?.address ?? 'адрес') 
+              // Слушатели событий
+		var validator = new InputMaskValidator({ id : 'phone', error : 'phone-error'});
+		const autocomplete = document.getElementById('address');
+		 autocomplete
+		        .setUrl('/api/bff/client/v1/cities?query=') // Установите URL для поиска
+			.setPlaceholder('Введите данные для доставки - город, улицу, дом, квартиру...')
+		        .onRequest(() => {
+			   console.log('Запрос к API отправлен');
+		        })
+		        .onLoad((response) => {
+		            console.log('Данные загружены', response);
+		            if(!response.data) { 
+				autocomplete.hideItemsBlock() 
+			     } else {
+		              (response?.data?.length == 0)
+			        ? autocomplete.hideItemsBlock()
+		                : response.data.forEach(item => {
+				   console.log(item)
+				   console.log(item.fiasId)
+				   console.log(item.value)
+		                   autocomplete.dropDownListItemDraw(item, item.fiasId, item.value);
+		           });
+			  }	
+		        })
+		        .onSelect((item) => {
+		            console.log('Выбран элемент', item);
+		        });
+                      
+       	  }
         })                                
      .catch(function(error) {
-       console.log('showOrdersPage.Произошла ошибка =>', error);
+       console.log('showProfilePage.Произошла ошибка =>', error);
+       toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
      });
 
     const closeSessionButton = document.querySelector('[class="session-close"]');
@@ -528,7 +603,8 @@ return `
 		document.location.replace(o.api.LOGON_URL());
         })                                
 	     .catch(function(error) {
-	       console.log('showOrdersPage.Произошла ошибка =>', error);
+	       console.log('showProfilePage.Произошла ошибка =>', error);
+	       toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
         });
       });
      }
@@ -546,10 +622,11 @@ return `
 		},
 	 	  false )
 	     .then(function(data) {
-		alert('Профиль сохранен!');
+	       toastr.success('Профиль сохранен', 'Профиль', {timeOut: 3000});
         })                                
 	     .catch(function(error) {
-	       console.log('showOrdersPage.Произошла ошибка =>', error);
+	       console.log('showProfilePage.Произошла ошибка =>', error);
+	       toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
         });
       });
      }

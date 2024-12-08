@@ -22,14 +22,14 @@ class ClientServiceHandler {
 
             const data = await response.json();
             if (response.ok) {
-                console.log(`Get Me successfully.`);
+                console.log(`Get profile successfully.`);
                 return { success: true, data };
             } else {
-                console.log(`Get Me failed.`);
+                console.log(`Get profile failed.`);
                 return { success: false, status: response.status, data };
             }
         } catch (error) {
-                console.log(`Get Me failed.`);
+                console.log(`Get profile failed.`);
             return { success: false, error: error.message };
         }
     }
@@ -48,18 +48,45 @@ class ClientServiceHandler {
     
                 const data = await response.json();
                 if (response.ok) {
-                    console.log(`Get Me successfully.`);
+                    console.log(`Get saveProfile successfully.`);
                     return { success: true, data };
                 } else {
-                    console.log(`Get Me failed.`);
+                    console.log(`Get saveProfile failed.`);
                     return { success: false, status: response.status, data };
                 }
             } catch (error) {
-                    console.log(`Get Me failed.`);
+                    console.log(`Get saveProfile failed.`);
                 return { success: false, error: error.message };
             }
         }
-     
+           /**
+     * Метод для получения сервисных данных пользователя от AuthService
+     * @returns {Object} - Объект с результатом
+     */
+           async getSuggestAddress(req, res) {
+            try {
+                const query = req.query.query;
+                const url = new URL(process.env.CLIENT_DADATA_SUGGEST_ADDRESS_URL);
+                url.searchParams.append('query', query); // Добавляем параметр 'query' в строку запроса
+
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, }
+                });    
+    
+                const data = await response.json();
+                if (response.ok) {
+                    console.log(`Get getSuggestAddress successfully.`);
+                    return { success: true, data };
+                } else {
+                    console.log(`Get getSuggestAddress failed.`);
+                    return { success: false, status: response.status, data };
+                }
+            } catch (error) {
+                    console.log(`Get getSuggestAddress failed.`);
+                return { success: false, error: error.message };
+            }
+        }
 }
 
 module.exports = ClientServiceHandler;

@@ -86,6 +86,7 @@ body{
 }
 </style>
 <body class="{{service}}">
+<nav>
  <script src="/src/utils/redirect.js"></script>
  <link type="text/css" href="/src/pages/css/shop_card_red.css" rel="stylesheet" />
  <link type="text/css" href="/src/pages/css/sidebar.css" rel="stylesheet" />
@@ -154,8 +155,9 @@ body{
 
     {{/ifEquals}}              
  </div>
+</nav>
 
- <mobile-navbar>
+  <mobile-navbar>
     <mobile-navbar-item 
       label="Товары" 
       icon="fa-box" 
@@ -177,7 +179,7 @@ body{
       url="/profile/page">
     </mobile-navbar-item>
   </mobile-navbar>
- <div class="footer fixed-bottom"></div>
+   <div class="footer fixed-bottom"></div>
 </body>
 
 

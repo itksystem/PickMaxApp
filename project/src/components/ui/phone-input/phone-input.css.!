@@ -1,0 +1,39 @@
+.phone-input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.phone-input-label {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.phone-input-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-color: #e9ecef;
+  border-radius: 0.5rem;
+  border: 1px solid #ced4da;
+  padding: 0.5rem;
+}
+
+.phone-input-field {
+  flex-grow: 1;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.phone-input-field:focus {
+  outline: none;
+}
+
+.phone-input-error {
+  color: red;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}

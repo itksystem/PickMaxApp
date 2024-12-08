@@ -1,0 +1,39 @@
+.phone-input-group {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.phone-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.phone-input-field {
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+  flex-grow: 1;
+  padding-right: 30px; /* Учитываем место для кнопки очистки */
+}
+
+.clear-button {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  color: #999;
+  cursor: pointer;
+}
+
+.clear-button:hover {
+  color: #333;
+}
+
+.phone-input-error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}

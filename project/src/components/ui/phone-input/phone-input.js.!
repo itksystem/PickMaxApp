@@ -1,0 +1,65 @@
+class PhoneInput extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+
+    // HTML разметка
+    this.shadowRoot.innerHTML = `
+      <link rel="stylesheet" href="phone-input.css">
+      <div class="phone-input-group">
+        <label class="phone-input-label"></label>
+        <div class="phone-input-container">
+          <input 
+            type="text" 
+            class="phone-input-field" 
+            placeholder="(+7) 999-999-9999" />
+        </div>
+        <div class="phone-input-error"></div>
+      </div>
+    `;
+
+    this.inputField = this.shadowRoot.querySelector('.phone-input-field');
+    this.errorElement = this.shadowRoot.querySelector('.phone-input-error');
+    this.labelElement = this.shadowRoot.querySelector('.phone-input-label');
+
+    this.inputField.addEventListener('input', this.formatInput.bind(this));
+  }
+
+  // Метод для форматирования ввода
+  formatInput(event) {
+    const input = event.target;
+    let value = input.value.replace(/\D/g, ''); // Удаляем все символы, кроме цифр.
+
+    // Проверяем, чтобы номер начинался с "7" (или добавляем +7 по умолчанию)
+    if (!value.startsWith('7')) {
+      value = '7' + value;
+    }
+
+    // Ограничиваем ввод до 11 цифр (формат "+7" + 10 цифр)
+    value = value.slice(0, 11);
+
+    // Форматирование по маске (+7) 999-999-9999
+    let formattedValue = `(+${value.slice(0, 1)}) `; // Добавляем код страны
+    if (value.length > 1) formattedValue += `${value.slice(1, 4)}-`; // Первая группа (914)
+    if (value.length > 4) formattedValue += `${value.slice(4, 7)}-`; // Вторая группа (404)
+    if (value.length > 7) formattedValue += `${value.slice(7)}`; // Последняя группа
+
+    input.value = formattedValue;
+
+    // Проверка на валидность ввода
+    if (value.length < 11) {
+      this.errorElement.textContent = `Укажите телефонный номер в формате ${this.getAttribute('placeholder')}`;
+    } else {
+      this.errorElement.textContent = '';
+    }
+  }
+
+  connectedCallback() {
+    // Настройка атрибутов, если они заданы
+    this.labelElement.textContent = this.getAttribute('label') || 'Phone Number';
+    this.inputField.placeholder = this.getAttribute('placeholder') || '(+7) 999-999-9999';
+  }
+}
+
+// Регистрируем пользовательский элемент
+customElements.define('phone-input', PhoneInput);

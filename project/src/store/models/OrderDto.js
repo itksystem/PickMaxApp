@@ -7,6 +7,7 @@ class OrderDto {
         this.createdAt = dbRecord?.createdAt || null;
         this.updatedAt = dbRecord?.updatedAt || undefined;
         this.referenceId = dbRecord?.referenceId || undefined;
+        this.deliveryId = dbRecord?.deliveryId || undefined;
     }
 
     // Метод для проверки валидности статуса

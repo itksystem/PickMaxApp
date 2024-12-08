@@ -18,6 +18,7 @@ const publicRoutes = [
     { path: '/registration-confirm', page: common.COMMON_REGISTRATION_CONFIRM_PAGE },
     { path: '/registration-success', page: common.COMMON_REGISTRATION_SUCCESS_PAGE },
     { path: '/registration-decline', page: common.COMMON_REGISTRATION_DECLINE_PAGE },
+    { path: '/registration-failure', page: common.COMMON_REGISTRATION_FAILURE_PAGE },
     { path: '/page-404', page: common.COMMON_404_PAGE },
     { path: '/logon', page: common.COMMON_LOGON_PAGE },
     { path: '/logon-failed', page: common.COMMON_LOGON_FAILED_PAGE},

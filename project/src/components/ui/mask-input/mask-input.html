@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mask Input</title>
+    <!-- Подключение CSS -->
+    <link rel="stylesheet" href="mask-input.css">
+   <script src="inputmask.js"></script>
+</head>
+<body>
+    <!-- Пример использования компонента -->
+    <mask-input 
+        label="Телефон" 
+        placeholder="+7 (XXX) XXX-XXXX" 
+        error-message="Введите номер телефона в формате +7 (XXX) XXX-XXXX.">
+    </mask-input>
+
+        <div class="profile-input-group">
+	      <label for="phone">Телефон</label>
+	      <input type="text" id="phone" class="form-control" placeholder="+7 (XXX) XXX-XXXX">
+	      <div id="phone-error" class="invalid-feedback" style="display: none;">Пожалуйста, введите номер в формате +7 (XXX) XXX-XXXX.</div>
+	 </div>
+
+
+    <!-- Подключение скрипта -->
+    <script src="mask-input.js"></script>             
+
+<script>
+// Валидация ввода
+function validatePhoneInput() {
+
+  const phoneInput = document.getElementById('phone');
+  const phoneError = document.getElementById('phone-error');
+  const inputMask = new Inputmask("+7 (999) 999-9999");
+  const isComplete = phoneInput.inputmask.isComplete();
+  inputMask.mask(phoneInput);  
+
+  if (!isComplete) {
+    // Если ввод некорректен, добавляем классы и показываем сообщение
+    phoneInput.classList.add('is-invalid');
+    phoneError.style.display = 'block';
+  } else {
+    // Убираем ошибку, если ввод корректен
+    phoneInput.classList.remove('is-invalid');
+    phoneInput.classList.add('is-valid');
+    phoneError.style.display = 'none';
+   }
+ }
+
+	// Подключение Inputmask
+	const phoneInput = document.getElementById('phone');
+	const phoneError = document.getElementById('phone-error');
+	const inputMask = new Inputmask("+7 (999) 999-9999");
+	// Применяем маску
+	inputMask.mask(phoneInput);
+
+	// Слушатели событий
+	phoneInput.addEventListener('blur', validatePhoneInput);
+	phoneInput.addEventListener('input',validatePhoneInput);
+
+
+// Регистрация элемента
+	customElements.define('mask-input', MaskInput);
+
+	const input = document.getElementById('input');
+	const error = document.getElementById('error');
+	const inputMask2 = new Inputmask("+7 (999) 999-9999");
+
+	inputMask2.mask(input);
+
+
+        input.addEventListener('blur', _validate);
+        input.addEventListener('input',_validate);
+
+  function _validate() {
+	const input = document.getElementById('input');
+	const error = document.getElementById('error');
+	const inputMask2 = new Inputmask("+7 (999) 999-9999");
+
+	  const isComplete = input.inputmask.isComplete();
+          inputMask2.mask(input);  
+
+	  if (!isComplete) {
+    // Если ввод некорректен, добавляем классы и показываем сообщение
+	    input.classList.add('is-invalid');
+	    error.style.display = 'block';
+	  } else {
+	    // Убираем ошибку, если ввод корректен
+	    input.classList.remove('is-invalid');
+	    input.classList.add('is-valid');
+	    error.style.display = 'none';
+	   }
+      }
+
+
+</script>
+</body>
+</html>
