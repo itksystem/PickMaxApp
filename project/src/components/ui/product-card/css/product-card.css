@@ -149,29 +149,36 @@
 }
 
 /* Медиа-запросы для адаптивности */
-@media  (max-width: 22.49rem) { /* 360px */
+@media  (max-width: 20rem) and (max-width: 22.49rem){ /* 360px */
     :host {
         width: 100%;
     }
 }
 
-@media (min-width: 22.50rem) and (max-width: 48rem) { /* 361px - 768px */
+@media (min-width: 22.50rem) and (max-width: 47rem) { /* 361px - 768px */
     :host {
         width: 48%;
     }
 }
 
-@media (min-width: 48.06rem) and (max-width: 62rem) { /* 769px - 992px */
+@media (min-width: 47.01rem) and (max-width: 62rem) { /* 769px - 992px */
     :host {
         width: 31%;
     }
 }
 
-@media (min-width: 62.06rem) { /* 993px */
+@media (min-width: 62.06rem) and (max-width: 75rem)  { /* 993px */
     :host {
         width: 23%;
     }
 }
+
+@media (min-width: 75.01rem)   { /* 993px */
+    :host {
+        width: 12%;
+    }
+}
+
 
 /* Дополнительные стили для контейнера карточек */
 .product-card-container {

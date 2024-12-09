@@ -938,3 +938,81 @@ dd {
     color: #616261;
     text-align: center;
 }
+
+.card-container {
+    position: relative;
+    background: #fff;
+    padding: 1.875rem;
+    border-radius: 0.625rem;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+    width: 100%;
+    font-size: 0.9rem;
+    font-family: "Roboto Condensed", sans-serif;
+    height: max-content;
+}
+.basket-item img {
+    width: -webkit-fill-available;
+    display: block;
+    border-radius: var(--product-card-border-radius, 0.625rem);
+}
+
+.basket-card-quantity {
+    font-size: 0.9rem;
+}
+
+.basket-card-price {
+    font-size: 1.2rem;
+    padding: 0.5rem 0;
+}
+
+.basket-card-title{
+    font-size: 0.9rem;
+}
+
+.basket-card-heart-hotkey{
+    font-size: 1rem;
+}
+
+.basket-card-trash-hotkey{
+    font-size: 1rem;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 22.5rem) { /* 360px */
+    div.card-body div.row {
+        height: 8rem;
+    }
+    .basket-item img {
+	width : 8 rem;
+    }
+}
+
+@media (min-width: 22.56rem) and (max-width: 48rem) { /* 361px - 768px */
+    div.card-body div.row {
+        height: 8rem;
+    }
+    .basket-item img {
+	width : 8rem;
+    }
+}
+
+@media (min-width: 48.06rem) and (max-width: 62rem) { /* 769px - 992px */
+    div.card-body div.row {
+        height: 8rem;
+    }
+    .basket-item img {
+	width : 8rem;
+    }
+}
+
+@media (min-width: 62.06rem) { /* 993px */
+    div.card-body div.row {
+        height: 8rem;
+    }
+    .basket-item img {
+	width : 8rem;
+    }
+}
+
+
+

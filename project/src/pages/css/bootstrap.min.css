@@ -20,3 +20,7 @@ label:not(.form-check-label):not(.custom-file-label) {
     font-weight: 300;
     font-size: 0.87rem;
 }
+
+.card-header {
+   background-color: unset;
+}
