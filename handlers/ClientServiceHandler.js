@@ -65,7 +65,7 @@ class ClientServiceHandler {
      */
            async getSuggestAddress(req, res) {
             try {
-                const query = req.query.query;
+                const query = req.сquery.query;
                 const url = new URL(process.env.CLIENT_DADATA_SUGGEST_ADDRESS_URL);
                 url.searchParams.append('query', query); // Добавляем параметр 'query' в строку запроса
 

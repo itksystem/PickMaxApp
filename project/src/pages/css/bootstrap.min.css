@@ -24,3 +24,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 .card-header {
    background-color: unset;
 }
+
+.form-control {
+  height: 2.2rem;
+}
