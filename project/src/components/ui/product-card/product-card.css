@@ -171,9 +171,15 @@
     }
 }
 
-@media (min-width: 62.06rem) { /* 993px */
+@media (min-width: 62.06rem) and (max-width: 62rem) { /* 993px - 992px */
     :host {
         max-width: 23%;
+    }
+}
+
+@media (min-width: 62.06rem) { /* 993px */
+    :host {
+        max-width: 16%;
     }
 }
 

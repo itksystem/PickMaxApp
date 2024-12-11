@@ -6,6 +6,7 @@ class BasketButton extends HTMLElement {
     this.productId = this.getAttribute('product-id') || 1;
     console.log(this.getAttribute('basket-count'));
     this.count = parseInt(this.getAttribute('basket-count') || '0', 10); // Получаем значение count из атрибута
+    this.skin = this.getAttribute('basket-skin') || '';
 
     this.api = new WebAPI();
     this.addUrl = this.getAttribute('add-url') || this.api.addToBasketMethod();
@@ -55,11 +56,19 @@ class BasketButton extends HTMLElement {
         </button>
       `;
     } else {
+      let basketDecrement = (this.skin == '')
+	? "basket-decrement"
+	: "basket-decrement-"+this.skin;
+
+      let basketIncrement = (this.skin == '')
+	? "basket-increment"
+	: "basket-increment-"+this.skin;
+
       content.innerHTML = `
         <div class="basket-counter">
-          <button class="basket-decrement">-</button>
+          <button class="${basketDecrement}">-</button>
           <span class="basket-count">${this.count}</span>
-          <button class="basket-increment">+</button>
+          <button class="${basketIncrement}">+</button>
         </div>
       `;
     }

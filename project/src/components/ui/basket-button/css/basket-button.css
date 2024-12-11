@@ -47,3 +47,14 @@
 .basket-increment:focus {
   outline: none;
 }
+
+button.basket-decrement-white, 
+button.basket-increment-white {
+  background-color: #efefef;
+  color: #000000;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}

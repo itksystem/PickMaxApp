@@ -93,73 +93,31 @@ class MainApp {
     return this;
  }
 
- basketTitleOutput(totalAmount){
-  return `
-       <div class="card card-container"> 	
- 	   <div class="card-header"> 	
-		    <h3 class="card-title">Ваша корзина</h3>
-	    </div>
-	    <div class="card-body">
-		<div class="row">		
-		   <div class="col-5">		
-	 	      <div class="delivery-content-card-info">${totalAmount}</div>
-			     </br><center><small>сумма товаров</small></center>
-		       </div>  	   	    
-		       <div class="col-7">
-	                    <button class="btn btn-lg btn-success float-right create-order" >Оформить заказ</button>
- 	               </div>	
-                    </div>
- 	          </div>
-                </div>
-            </div>`;
-
- }
-
-
- basketEmptyOutput(){
-  return `
-	<section class="outside-city delivery-option page-padding block-space card">
-	    <h2 class="header-title">В корзине нет товаров </h2>
-	</section>`;
- }
-
-
 
 
  basketItemCardOutput(item){
+//card card-container
    return `
-       <div class="card card-container basket-item"> 	
-	  <div class="card-body">
-	  	     <div class="row">		
-   	        	    <div class="col-5 col-sm-3 col-md-2">		
-		  	      <img class="image" src="${item.mediaFiles[0].mediaKey}">
-	  	            </div>		
-	  	            <div class="col-7 col-sm-9 col-md-10">		
-				 <div class="row">
-				    <div class="col-12 col-sm-12 col-md-4">		
-			        	  <span class="basket-card-title">${item.productName}</span>
-				    </div>	
-		     	   	    <div class="col-8 col-xs-6 col-sm-4 col-md-2">		
-					<basket-button class="button-add-to-basket" basket-count="${item.quantity}"></basket-button>
-	        		    </div>
-	     		   	    <div class="col-4 col-xs-6 col-sm-1 col-md-1"></div>
-		     	   	    <div class="col-12 col-sm-2 col-md-2">		
-	             		       <div class="basket-card-price">${item.quantity * item.price} ₽</div>
-			            </div>
+          <div class="basket-item"> 	
+	       <div class="card-body">
+	  	         <div class="row">		
+   	        	    <div class="col-5 col-sm-3 col-md-2"><img class="image" src="${item.mediaFiles[0].mediaKey}"></div>		
+	  	                <div class="col-7 col-sm-9 col-md-10">		
+			 	   <div class="row">
+				    <div class="col-12 col-sm-12 col-md-4"><div class="basket-card-title">${item.productName}</div></div>	
+		     	   	    <div class="col-12 col-xs-6 col-sm-4 col-md-2"><basket-button class="button-add-to-basket" basket-skin="white" basket-count="${item.quantity}"></basket-button></div>
+	     		   	    <div class="col-12 col-xs-6 col-sm-1 col-md-1"></div>
+		     	   	    <div class="col-12 col-sm-2 col-md-2"><div class="basket-card-price">${item.quantity * item.price} ₽</div>
+			           </div>
 
-	     		   	    <div class="col-0 col-sm-1 col-md-1" ></div>
-		     	   	    <div class="col-2 col-sm-2 col-md-1">	
-					<i class="fa-regular fa-heart basket-card-heart-hotkey"></i>	
-			            </div>
-		     	   	    <div class="col-10 col-sm-1 col-md-1">	
-					<i class="fa-solid fa-trash-alt basket-card-trash-hotkey"></i>
-			            </div>
-				 </div>
-     		            </div>					   	
-			</div>		
-	
-         </div>
-      </div>
+	     		   	    <div class="col-12 col-sm-1 col-md-1" ></div>
+		     	   	    <div class="col-4 col-sm-2 col-md-1"><i class="fa-regular fa-heart basket-card-heart-hotkey"></i></div>
+		     	   	    <div class="col-8 col-sm-1 col-md-1"><i class="fa-solid fa-trash-alt basket-card-trash-hotkey"></i></div>
+			         </div>
+                            </div>					   	
+			</div>
+	          </div>		
+  	    </div>		
    `;
  }
   
@@ -182,19 +140,21 @@ class MainApp {
     });
  } 
 
-
+/* Вывод страницы профиля */
  showBasketPage() {
   let o = this;
   let webRequest = new WebRequest();
   let request = webRequest.get(o.api.getShopBasketMethod(),  {}, false )
      .then(function(data) {
-        console.log(data);
-        (data.basket?.length > 0)
-	 ?  $("div.basket-container").prepend(o.basketTitleOutput(data.totalAmount)).show()
-	 :  $("div.basket-container").prepend(o.basketEmptyOutput()).show();
+	   console.log(data);
+  	   const basketPage = new BasketSection("basket-container");
+ 	     basketPage.BasketCardContainer(
+		data?.basket?.length,
+		data?.totalAmount
+	     );
+  	    basketPage.render();
             data.basket.forEach(item => {
-              console.log(item);
-              $("div.basket-container").append(o.basketItemCardOutput(item)).show();
+		new BasketItem("basket-body-container", item);
            });
 	 o.dropSectionEventHadler(); // Инициализация обработчиков кликов	
 	 o.createOrderButtonEventHadler();
