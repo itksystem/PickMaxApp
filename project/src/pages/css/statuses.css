@@ -46,7 +46,7 @@
 .order_item_status_new{
     background-color: var(--order_new_status);
     border-color:  var(--order_new_status);
-    background: linear-gradient(var(--order_new_status), var(--order_new_status_end)) var(--order_new_status); 
+    background: linear-gradient(var(--order_new_status), #7580f2) var(--order_new_status);
     color: white;
     border-radius: 0.3rem;
     font-size: 0.6rem;

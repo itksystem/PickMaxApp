@@ -503,14 +503,6 @@ return `
 	  	 const profilePage = new ProfileSection("profile-card-container");
 	 	 profilePage.ProfileCardContainer();
 	  	 profilePage.render();
-/*
- 		 $("div.profile-container div.card-body").append(o.inputText(`Email`, `login`,  `Электронный адрес`, `readonly`, ``));
-		 $("div.profile-container div.card-body").append(o.inputText(`Фамилия`,`surname`, `Укажите вашу фамилию`, `requred`, ``));
- 		 $("div.profile-container div.card-body").append(o.inputText(`Имя`,`firstname`, `Укажите ваше имя `, `requred`, ``));
-		 $("div.profile-container div.card-body").append(o.inputText(`Отчество`,`patronymic`, `Укажите ваше отчество `, `requred`, ``));
- 		 $("div.profile-container div.card-body").append(o.inputText(`Телефон`,`phone`, `Укажите номер телефона `, `requred`, `Пожалуйста, введите номер в формате +7 (XXX) XXX-XXXX`));
-		 $("div.profile-container div.card-body").append(o. inputAutoComplete(`Адрес`,`address`,`Укажите адрес доставки`, `requred`, `Заполните данные для доставки товара`));
-*/
 
 	  	 o.setProfileValueElement('[id="login"]', data.profile?.login ?? '') 
 	  	 o.setProfileValueElement('[id="surname"]', data?.profile?.surname ?? '') 
@@ -518,9 +510,10 @@ return `
 	  	 o.setProfileValueElement('[id="patronymic"]', data?.profile?.patronymic ?? '') 
 	  	 o.setProfileValueElement('[id="phone"]', data?.profile?.phone ?? '') 
 	  	 o.setProfileValueElement('[id="address"]', data?.profile?.address ?? 'адрес') 
-              // Слушатели событий
 
+              // Слушатели событий
 		var validator = new InputMaskValidator({ id : 'phone', error : 'phone-error'});
+	      //	
 		const autocomplete = document.getElementById('address');
 		 autocomplete
 		        .setUrl('/api/bff/client/v1/suggest/address?query=') // Установите URL для поиска
@@ -536,18 +529,14 @@ return `
 		              (response?.data?.length == 0)
 			        ? autocomplete.hideItemsBlock()
 		                : response.data.forEach(item => {
-				   console.log(item)
-				   console.log(item.fiasId)
-				   console.log(item.value)
 		                   autocomplete.dropDownListItemDraw(item, item.fiasId, item.value);
 		           });
 			  }	
 		        })
 		        .onSelect((item) => {
-		            console.log('Выбран элемент', item);
-		        });
-                      
-       	  }
+	            console.log('Выбран элемент', item);
+	        });
+            }
         })                                
      .catch(function(error) {
        console.log('showProfilePage.Произошла ошибка =>', error);

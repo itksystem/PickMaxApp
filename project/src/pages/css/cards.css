@@ -1019,7 +1019,7 @@ dd {
     max-width :  62rem;
 }
 
-.basket-item {
+.basket-item  {
  padding: 1.2rem 0rem;
  border-bottom: 1px solid #eee;
 }                    
@@ -1041,3 +1041,32 @@ dd {
 .basket-itog-quantity-sum{
     font-size: 0.82rem;
 }
+
+
+.order-item  {
+/* padding: 1.2rem 0rem; */
+ border-bottom: 1px solid #eee;
+}                    
+
+.orders-itog-title{
+    font-size: 1.2rem;
+    padding: 0.5rem 0;
+}
+
+.orders-itog-sum{
+    font-size: 1.2rem;
+    padding: 0.5rem 0;
+}
+
+.orders-itog-quantity-title{
+    font-size: 0.82rem;
+}
+
+.orders-itog-quantity-sum{
+    font-size: 0.82rem;
+}
+
+.card-itog-body-container {
+ padding: 1rem 0;
+}
+

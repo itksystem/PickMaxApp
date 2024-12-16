@@ -388,3 +388,11 @@ main {
 .dropdown-open .footer__btn-open:before {
     transform: rotate(180deg);
 }
+
+
+h1.header-title { margin: 0;   font-size: 1.5rem; }
+h2.header-title { margin: 0;   font-size: 1.4rem; }
+h3.header-title { margin: 0;   font-size: 1.3rem; }
+h4.header-title { margin: 0;   font-size: 1.4rem; }
+h5.header-title { margin: 0;   font-size: 1.1rem; }
+

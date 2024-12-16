@@ -94,33 +94,6 @@ class MainApp {
  }
 
 
-
- basketItemCardOutput(item){
-//card card-container
-   return `
-          <div class="basket-item"> 	
-	       <div class="card-body">
-	  	         <div class="row">		
-   	        	    <div class="col-5 col-sm-3 col-md-2"><img class="image" src="${item.mediaFiles[0].mediaKey}"></div>		
-	  	                <div class="col-7 col-sm-9 col-md-10">		
-			 	   <div class="row">
-				    <div class="col-12 col-sm-12 col-md-4"><div class="basket-card-title">${item.productName}</div></div>	
-		     	   	    <div class="col-12 col-xs-6 col-sm-4 col-md-2"><basket-button class="button-add-to-basket" basket-skin="white" basket-count="${item.quantity}"></basket-button></div>
-	     		   	    <div class="col-12 col-xs-6 col-sm-1 col-md-1"></div>
-		     	   	    <div class="col-12 col-sm-2 col-md-2"><div class="basket-card-price">${item.quantity * item.price} ₽</div>
-			           </div>
-
-	     		   	    <div class="col-12 col-sm-1 col-md-1" ></div>
-		     	   	    <div class="col-4 col-sm-2 col-md-1"><i class="fa-regular fa-heart basket-card-heart-hotkey"></i></div>
-		     	   	    <div class="col-8 col-sm-1 col-md-1"><i class="fa-solid fa-trash-alt basket-card-trash-hotkey"></i></div>
-			         </div>
-                            </div>					   	
-			</div>
-	          </div>		
-  	    </div>		
-   `;
- }
-  
   dropSectionEventHadler(){
    let o = this;
    document.querySelectorAll('.basket-delete-button').forEach(button => {
@@ -153,7 +126,7 @@ class MainApp {
 		new BasketItem("basket-body-container", item);
            });
 	 o.dropSectionEventHadler(); // Инициализация обработчиков кликов	
-	 o.createOrderButtonEventHadler();
+//	 o.createOrderButtonEventHadler();
         })                                
      .catch(function(error) {
        console.log('showBasketOutput.Произошла ошибка =>', error);
@@ -161,7 +134,7 @@ class MainApp {
     return this;
  }
 
-  createOrderButtonEventHadler() {
+  _createOrderButtonEventHadler() {
     let o = this;
     console.log(o); //
     o.referenceId = o.common.uuid(); // создаем referenceId
@@ -363,14 +336,14 @@ class MainApp {
  OrdersPageTitle(){
  return `
 	<section class="outside-city delivery-option page-padding block-space card">
-	    <h2 class="header-title">Ваши заказы </h2>
+	    <h2 class="header-title text-center">Ваши заказы </h2>
 	</section>`;
   }
 
  OrdersEmptyPage(){
  return `
 	<section class="outside-city delivery-option page-padding block-space card">
-	    <h2 class="header-title">В корзине нет товаров </h2>
+	    <h2 class="header-title text-center">В корзине нет товаров </h2>
 	</section>`;
  }
 
@@ -383,12 +356,15 @@ class MainApp {
   let request = webRequest.get(o.api.getShopOrdersMethod(), o.api.getShopOrdersMethodPayload(), false )
      .then(function(data) {
 	console.log(data);
-        (data?.orders?.length == 0)
-	 ?  $("div.orders-container").prepend(o.OrdersEmptyPage()).show()
-	 :  data?.orders?.forEach(item => {
-              console.log(item);
-              $("div.orders-container").append(o.orderItemCardOutput(item)).show();
-           });
+  	   const ordersPage = new OrdersSection("orders-container");
+ 	   ordersPage.OrdersCardContainer(data.orders?.length);
+  	   ordersPage.render();
+
+            if(data?.orders?.length != 0) {
+              data?.orders?.forEach(item => {
+ 		new OrderItem("orders-body-container", item);
+             });
+          }
 	 o.dropSectionEventHadler(); // Инициализация обработчиков кликов	
 	 o.createOrderButtonEventHadler();
         })                                
@@ -398,91 +374,6 @@ class MainApp {
     return this;
  }
 
-
-
- inputText(label, id, placeholder, required, feedbackError){
-  return `
-        <div class="profile-input-group">
-	     <label for="${id}" class="form-label">${label}</label>
-	      <input type="text" class="form-control" id="${id}"  placeholder="${placeholder}" ${required}>
-	      <div id="${id}-error" class="invalid-feedback" style="display: none;">${feedbackError}</div>
-	 </div>`
- } 
-
- inputAutoComplete(label, id, placeholder, required, feedbackError){
-  return `
-        <div class="profile-input-group">
-	     <label for="${id}" class="form-label">${label}</label>
-        	  <x-autocomplete 
-			id="${id}"  
-			placeholder="${placeholder}" 
-			url = "/api/bff/client/v1/town"
-			${required}></x-autocomplete>
-  	         <div id="${id}-error" class="invalid-feedback" style="display: none;">${feedbackError}</div>
-	</div>`
- } 
-
-
-
-
- showProfilePageOutput(){
-return `
-        <!-- Поле для отражения email -->
-        <div class="profile-input-group">
-            <label for="login">Login</label>
-            <span type="text" id="login" 
-		style="font-size: 1rem; color: #7a7a7a;"
-		placeholder="Введите ваше имя" readonly disable ></span>
-        </div>
-
-
-        <div class="profile-input-group">
-	    <label for="firstname" class="form-label">Имя</label>
-	    <input type="text" class="form-control" id="firstname"  placeholder="Введите ваше имя" required>
-	    <div class="valid-feedback">
-	      Success!
-	    </div>
-	 </div>
-	
-        <div class="profile-input-group">
-	    <label for="patronymic" class="form-label">Отчество</label>
-	    <input type="text" class="form-control" id="patronymic"  placeholder="Введите ваше отчество" required>
-	    <div class="valid-feedback">
-	      Success!
-	    </div>
-	  </div>
-        <div class="profile-input-group">
-	    <label for="surname" class="form-label">Фамилия</label>
-	    <input type="text" class="form-control" id="surname" placeholder="Введите ваше отчество" required>
-	    <div class="valid-feedback">
-	      Success!
-	    </div>               
-	  </div>
-
-        <div class="profile-input-group">
-	      <label for="phone">Телефон</label>
-	      <input type="text" id="phone" class="form-control" placeholder="+7 (XXX) XXX-XXXX">
-	      <div id="phone-error" class="invalid-feedback" style="display: none;">Пожалуйста, введите номер в формате +7 (XXX) XXX-XXXX.</div>
-	 </div>
-        
-        <!-- Поле для ввода адреса доставки -->
-        <div class="profile-input-group">
-            <label for="address">Адрес доставки</label>
-            <input type="text" id="address" placeholder="Введите ваш адрес доставки" required>
-        </div>
-        
-        <!-- Кнопка сохранения -->
-        <div class="profile-button-container">
-            <button class="profile-button"  >Сохранить</button>
-        </div>
-        <div class="profile-button-container">
-            <a class="session-close">Выйти из магазина</a>
-        </div>
-`;
- }
-
-
- 
 
  setProfileValueElement(elementSelector, value) {
     const el = document.querySelector(elementSelector);
