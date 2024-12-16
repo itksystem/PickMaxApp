@@ -19,7 +19,7 @@ class OrderItem {
         let createdAt = new DatetimeValidator();
         // Заполнить содержимое карточки
         orderItemBody.innerHTML = `
-	<section class="page-padding block-space card">
+	<section class="page-padding block-space ">
 	      <div class="row">		
 	                <div class="col-6 float-start">		
 			   <span style="font-size: 1rem">Заказ № ${item.orderId}</span>		   

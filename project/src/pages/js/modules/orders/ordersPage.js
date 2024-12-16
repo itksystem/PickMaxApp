@@ -30,7 +30,7 @@ class OrdersSection extends PageBuilder {
 
         const OrdersContainerItog = document.createElement("div");
         OrdersContainerItog.className = "card-itog-body-container";
-        OrdersContainerItog.innerHTML = `
+/*
 		<div class="row">
 		  <div class="col-6 text-left">
 			<div class="orders-itog-quantity-title">Всего заказов</div>
@@ -39,19 +39,20 @@ class OrdersSection extends PageBuilder {
 			<div class="orders-itog-quantity-sum">${totalQuantity}</div>
 		  </div>
 		</div>
+
+
+        OrdersContainerItog.innerHTML = `
 		<div class="row">
-		  <div class="col-6 text-left">
-			<div class="orders-itog-title">На сумму</div>
-		  </div>
-		  <div class="col-6 text-right">
-			<div class="orders-itog-sum">${totalAmount}</div>
+		  <div class="col-12 text-left">
+			<div class="orders-itog-title">Всего покупок на <span class="orders-itog-sum">${totalAmount} ₽</span></div>
 		  </div>
 		</div>`;
-
+*/
 
         OrdersContainer.appendChild(OrdersContainerHeader);
-        OrdersContainer.appendChild(OrdersContainerContent);
         OrdersContainer.appendChild(OrdersContainerItog);
+        OrdersContainer.appendChild(OrdersContainerContent);
+
 
       }
         this.addModule("Orders", OrdersContainer);

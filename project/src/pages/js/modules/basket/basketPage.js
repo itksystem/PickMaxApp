@@ -14,7 +14,13 @@ class BasketSection extends PageBuilder {
 
         const BasketContainerHeader = document.createElement("div");
         BasketContainerHeader.className = "card-header";
-        BasketContainerHeader.innerHTML = `<h3 class="card-title">Ваша корзина</h3>`;
+        BasketContainerHeader.innerHTML = `<h3 class="card-title">
+	  ${
+		(totalQuantity !== 0)
+		  ? "Ваша корзина" 
+		  : "В корзине пока пусто"                  
+		}
+	</h3>`;
 
         const BasketContainerContent = document.createElement("div");
         BasketContainerContent.className = "card-body";
@@ -25,7 +31,11 @@ class BasketSection extends PageBuilder {
 
         if (totalQuantity === 0) {
             const BasketTotalAmountContainer = document.createElement("div");
-            BasketTotalAmountContainer.innerHTML = `<h2 class="header-title text-center">В корзине нет товаров</h2>`;
+            BasketTotalAmountContainer.innerHTML = `
+		<div class="basket-empty-text text-center" style="padding: 1rem 0; font-size: 0.9rem;"> Зайдите в каталог, чтобы выбрать товары или найти нужное в поискe</div> 
+		<div class="basket-button-container"> <a href="/products/page" class="btn btn-lg btn-success w-100 create-order-btn">Перейти в каталог</a></div> 
+`;
+
             BasketContainer.appendChild(BasketTotalAmountContainer);
         } else {
             const BasketContainerItog = document.createElement("div");
