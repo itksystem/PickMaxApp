@@ -375,6 +375,38 @@ class MainApp {
  }
 
 
+ showOrderInfoPage(){
+  let o = this;
+  const url = window.location.pathname; // Получаем путь, например, /delivery/12345
+  const match = url.match(/\/orders\/(\d+)\/page/);
+  o.orderId = match ? match[1] : null;
+  console.log(o.orderId);
+
+  let webRequest = new WebRequest();
+  $("div.order-container").prepend(o.OrdersPageTitle()).show();
+  let request = webRequest.get(o.api.getShopOrderDetailsMethod(o.orderId),{}, false )
+     .then(function(data) {
+	console.log(data);
+  	   const ordersPage = new OrderDetailsSection("order-container");
+ 	   ordersPage.OrderDetailsCardContainer(
+  	    o.orderId, data.items?.length, data.totalAmount);
+  	   ordersPage.render();
+            if(data?.items?.length != 0) {
+              data?.items?.forEach(item => {
+ 		new OrderDetailsItem("order-details-body-container", item);
+             });
+          }
+//	 o.dropSectionEventHadler(); // Инициализация обработчиков кликов	
+//	 o.createOrderButtonEventHadler();
+        })                                
+     .catch(function(error) {
+       console.log('showOrderInfoPage.Произошла ошибка =>', error);
+     });
+    return this;
+ }
+
+
+
  setProfileValueElement(elementSelector, value) {
     const el = document.querySelector(elementSelector);
     if (el) el.textContent = value;

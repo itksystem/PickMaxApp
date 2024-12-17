@@ -44,6 +44,7 @@ const protectedRoutes = [
     { method : 'GET', path: '/products/page', page: common.COMMON_PRODUCTS_PAGE, service : { service : "products"} },
     { method : 'GET', path: '/profile/page', page: common.COMMON_PROFILE_PAGE, service :{service : "profile"} },
     { method : 'GET', path: '/basket/page', page: common.COMMON_BASKET_PAGE, service :{service : "basket"} },
+    { method : 'GET', path: '/orders/:orderId/page', page: common.COMMON_ORDERS_PAGE, service :{service : "order"} },
     { method : 'GET', path: '/orders/page', page: common.COMMON_ORDERS_PAGE, service :{service : "orders"} },
     { method : 'GET', path: '/orders/create-error', page: common.COMMON_GET_ORDER_ERROR_PAGE, service :{service : "order-create-error"} },   
     { method : 'GET', path: '/orders/delivery-failed', page: common.COMMON_GET_ORDER_SUCCESS_PAGE, service :{service : 'order-delivery-error'} }, 

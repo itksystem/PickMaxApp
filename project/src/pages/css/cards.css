@@ -1070,3 +1070,56 @@ dd {
  padding: 1rem 0;
 }
 
+/* */
+
+.order-details-item  {
+ padding: 1.2rem 0rem;
+ border-bottom: 1px solid #eee;
+}                    
+
+.order-details-itog-title{
+    font-size: 1.2rem;
+    padding: 0.5rem 0;
+}
+
+.order-details-itog-sum{
+    font-size: 1.2rem;
+    padding: 0.5rem 0;
+}
+
+.order-details-itog-quantity-title{
+    font-size: 0.82rem;
+}
+
+.order-details-itog-quantity-sum{
+    font-size: 0.82rem;
+}
+
+
+.order-details-item img {
+    width: -webkit-fill-available;
+    display: block;
+    border-radius: var(--product-card-border-radius, 0.625rem);
+}
+
+.order-details-card-quantity {
+    font-size: 0.9rem;
+}
+
+.order-details-card-price {
+    font-size: 1.2rem;
+    padding: 0.5rem 0;
+}
+
+.order-details-card-title{
+    font-size: 0.9rem;
+}
+
+.order-details-card-heart-hotkey{
+    font-size: 1rem;
+}
+
+.order-details-card-trash-hotkey{
+    font-size: 1rem;
+}
+

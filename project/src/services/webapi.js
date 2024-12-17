@@ -269,10 +269,16 @@ class WebAPI {
 /* Список заказов */
    getShopOrdersMethod(){  return `/api/bff/orders/v1/orders` }
    getShopOrdersMethodPayload(){  return {} }
+/* Детали заказа */
+   getShopOrderDetailsMethod(orderId=null){
+     return `/api/bff/warehouse/v1/order/${orderId}/details` 
+}
+
 /* Профиль */
    getShopProfileMethod(){ return `/api/bff/client/v1/profile` }
    saveShopProfileMethod(){ return `/api/bff/client/v1/profile` }
    closeSessionMethod(){ return `/api/bff/client/v1/logout` }
+
 
    LOGON_URL(){ return `/logout` }
 

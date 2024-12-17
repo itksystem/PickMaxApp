@@ -131,6 +131,8 @@ body{
 <div class="main" service={{service}}>
     {{#ifEquals service "products"}}
            {{>products}}
+    {{else ifEquals service "order"}}
+           {{>order}}
     {{else ifEquals service "orders"}}
            {{>orders}}
     {{else ifEquals service "order-create-error"}}
