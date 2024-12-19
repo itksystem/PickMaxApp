@@ -9,6 +9,7 @@ class BasketSection extends PageBuilder {
      * Generates the Basket section module.
      */
     BasketCardContainer(totalQuantity = 0, totalAmount = 0) {
+        let o = this;
         const BasketContainer = document.createElement("div");
         BasketContainer.className = "card card-container";
 
@@ -33,8 +34,7 @@ class BasketSection extends PageBuilder {
             const BasketTotalAmountContainer = document.createElement("div");
             BasketTotalAmountContainer.innerHTML = `
 		<div class="basket-empty-text text-center" style="padding: 1rem 0; font-size: 0.9rem;"> Зайдите в каталог, чтобы выбрать товары или найти нужное в поискe</div> 
-		<div class="basket-button-container"> <a href="/products/page" class="btn btn-lg btn-success w-100 create-order-btn">Перейти в каталог</a></div> 
-`;
+		<div class="basket-button-container"> <a href="/products/page" class="btn btn-lg btn-success w-100 create-order-btn">Перейти в каталог</a></div> `;
 
             BasketContainer.appendChild(BasketTotalAmountContainer);
         } else {
@@ -72,38 +72,91 @@ class BasketSection extends PageBuilder {
 
             // Добавляем обработчик после добавления кнопки в DOM
             this.attachCreateOrderButtonHandler(createOrderButton);
+	    // Вешаем подписчика на событие изменения в корзине
+	    // Подписчик: реагирует на событие
+  	    eventBus.on("basketItemUpdated", (_message) => {
+		o.basketUpdate(_message);
+	   });	    
         }
-
         this.addModule("Basket", BasketContainer);
     }
 
-    /**
-     * Attaches a click handler to the "Create Order" button.
-     */
-    attachCreateOrderButtonHandler(button) {
-        const o = this;
 
-        button.addEventListener("click", function () {
-            console.log("Кнопка 'Создать заказ' нажата");
+/* Обновление данных корзины */
+ basketUpdate(message) {
+  let o = this;
+  let webRequest = new WebRequest();
+  let request = webRequest.get(o.api.getShopBasketMethod(),  {}, false )
+     .then(function(data) {
+           console.log(data)
+           o.totalQuantity = data?.basket?.reduce((quantity, item) => quantity + item.quantity, 0);
+           o.totalAmount = data?.totalAmount;
+      // Динамически обновляем значения в DOM
+           let quantityElement = document.querySelector(".basket-itog-quantity-sum");
+           let amountElement = document.querySelector(".basket-itog-sum");
+           if (quantityElement) quantityElement.textContent = o.totalQuantity;
+           if (amountElement) amountElement.textContent = `${o.totalAmount} ₽`;
 
-            // Блокируем кнопку
-            button.disabled = true;
-            button.textContent = "Создание...";
+   	// Находим все элементы с классом .basket-card-price
+   	    const priceElements = document.querySelectorAll('.basket-card-price');
 
-            const webRequest = new WebRequest();
-            o.referenceId = o.common.uuid();
+ 	 // Перебираем найденные элементы и выводим их содержимое
+	     priceElements.forEach((priceElement, index) => {
+               priceElement.textContent = ``;
+	    });
 
-            webRequest
-                .post(o.api.createOrderMethod(), { referenceId: o.referenceId }, false)
-                .then((data) => {
-                    console.log("Заказ успешно создан:", data);
+	  // обновляем записи
+ 	   data.basket.forEach(item => {
+            o.updateBasketPrice(item.productId, `${item.quantity*item.price} ₽`); 
+          });
 
-                    const order = new OrderDto(data.order);
-                    if (!order) throw new Error("Object order is null");
+        })                                
+     .catch(function(error) {
+       console.log('showBasketOutput.Произошла ошибка =>', error);
+     });
+    return this;
+ }
 
-                    order.saveToLocalStorage(o.referenceId);
+/**
+ * Обновляет значение цены в компоненте basket-button
+ * @param {string} productId - Идентификатор продукта (значение атрибута product-id).
+ * @param {string} amount - Новая сумма для отображения (например, "950 ₽").
+ */
+  updateBasketPrice(productId, amount) {
+    // Находим элемент с классом basket-card-price внутри компонента
+     const priceElement = document.querySelector(`.basket-card-price[for="${productId}"]`);
+     if (priceElement) {
+    // Обновляем значение внутри элемента
+       priceElement.textContent = amount;
+     } else {
+       console.error('Элемент .basket-card-price не найден внутри компонента basket-button');
+    }    
+ }
 
-                    window.location.href = `/orders/delivery/${o.referenceId}`;
+/**
+* Attaches a click handler to the "Create Order" button.
+*/
+  attachCreateOrderButtonHandler(button) {
+    const o = this;
+
+    button.addEventListener("click", function () {
+     console.log("Кнопка 'Создать заказ' нажата");
+
+     // Блокируем кнопку
+     button.disabled = true;
+     button.textContent = "Создание...";
+
+     const webRequest = new WebRequest();
+     o.referenceId = o.common.uuid();
+
+     webRequest
+       .post(o.api.createOrderMethod(), { referenceId: o.referenceId }, false)
+       .then((data) => {
+        console.log("Заказ успешно создан:", data);
+        const order = new OrderDto(data.order);
+        if (!order) throw new Error("Object order is null");
+          order.saveToLocalStorage(o.referenceId);
+              window.location.href = `/orders/delivery/${o.referenceId}`;
                 })
                 .catch((error) => {
                     console.error("Ошибка при создании заказа:", error);
@@ -121,4 +174,7 @@ class BasketSection extends PageBuilder {
                 });
         });
     }
+
+
+
 }

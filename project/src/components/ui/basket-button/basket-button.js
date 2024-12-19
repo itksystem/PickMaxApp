@@ -3,8 +3,7 @@ class BasketButton extends HTMLElement {
     super();
 
     // Свойства компонента
-    this.productId = this.getAttribute('product-id') || 1;
-    console.log(this.getAttribute('basket-count'));
+    this.productId = this.getAttribute('product-id') || null;
     this.count = parseInt(this.getAttribute('basket-count') || '0', 10); // Получаем значение count из атрибута
     this.skin = this.getAttribute('basket-skin') || '';
 
@@ -78,11 +77,16 @@ class BasketButton extends HTMLElement {
   // Метод для добавления слушателей событий
   addEventListeners() {
     this.shadowRoot.addEventListener('click', (event) => {
+     console.log(event.target.classList);
       if (event.target.classList.contains('add-to-basket')) {
         this.updateBasket('add');
       } else if (event.target.classList.contains('basket-increment')) {
         this.updateBasket('add');
       } else if (event.target.classList.contains('basket-decrement')) {
+        this.updateBasket('remove');
+      } else if (event.target.classList.contains('basket-increment-white')) {
+        this.updateBasket('add');
+      } else if (event.target.classList.contains('basket-decrement-white')) {
         this.updateBasket('remove');
       }
     });
@@ -108,6 +112,10 @@ class BasketButton extends HTMLElement {
       const result = await response.json();
       this.count = result.basket.quantity;
       this.render();
+      if(eventBus) {
+        console.log(eventBus)
+        eventBus.emit("basketItemUpdated", { productId: this.productId, quantity: 1 });
+       }
     } catch (error) {
       console.error(`Error during ${action} operation:`, error);
     }

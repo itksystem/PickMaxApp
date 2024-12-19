@@ -193,7 +193,7 @@ class WebAPI {
    }
 
    getShopApplicationMethod(shop_id = null, application_id = null){return `/telegram/shop/${shop_id}/orders/${application_id}` }
-   getShopOrderMethodPayload(){ return {} }
+//   getShopOrderMethodPayload(){ return {} }
 
    saveShopGalleryPhotoMethod(shopId){ return `/telegram/shop/${shopId}/gallery/photo`}
    saveShopGalleryPhotoMethodPayload(fd = null){ return fd;}
@@ -273,6 +273,10 @@ class WebAPI {
    getShopOrderDetailsMethod(orderId=null){
      return `/api/bff/warehouse/v1/order/${orderId}/details` 
 }
+   getShopOrderMethod(orderId=null){
+     return `/api/bff/orders/v1/order/${orderId}`
+}
+
 
 /* Профиль */
    getShopProfileMethod(){ return `/api/bff/client/v1/profile` }
@@ -288,7 +292,7 @@ class WebAPI {
    getShopProductMethod(shop_id=null, product_id = null){ return `/telegram/shop/${shop_id}/products/${product_id}/page`}
    getShopProductPayloadMethod(){ return {} }
 
-   getShopOrderMethod(shop_id=null, application_id = null){ return `/telegram/shop/${shop_id}/orders/${application_id}`; }
+//   getShopOrderMethod(shop_id=null, application_id = null){ return `/telegram/shop/${shop_id}/orders/${application_id}`; }
 
    setShopOrderActionMethod(shop_id=null, application_id = null){ return `/telegram/shop/${shop_id}/orders/${application_id}/execute`}
    setShopOrderActionPayload(props){ return {

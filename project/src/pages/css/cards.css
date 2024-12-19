@@ -1123,3 +1123,6 @@ dd {
     font-size: 1rem;
 }
 
+.order-empty-text {
+ padding: 1rem 0; font-size: 0.9rem;
+}

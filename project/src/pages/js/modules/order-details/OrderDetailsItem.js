@@ -26,11 +26,7 @@ class OrderDetailsItem {
                             <div class="order-details-card-title">${item?.productName || 'Product Name'}</div>
                         </div>
                         <div class="col-12 col-xs-6 col-sm-4 col-md-2">
-                            <order-details-button 
-                                class="button-add-to-OrderDetails" 
-                                order-details-skin="white" 
-                                order-details-count="${item?.quantity || 0}">
-                            </order-details-button>
+                            <div class="order-details-card-quantity">${item?.quantity || 0} шт.</div>
                         </div>
                         <div class="col-12 col-xs-6 col-sm-1 col-md-1"></div>
                         <div class="col-12 col-sm-2 col-md-2">
@@ -41,9 +37,6 @@ class OrderDetailsItem {
                         <div class="col-12 col-sm-1 col-md-1"></div>
                         <div class="col-4 col-sm-2 col-md-1">
                             <i class="fa-regular fa-heart order-details-card-heart-hotkey"></i>
-                        </div>
-                        <div class="col-8 col-sm-1 col-md-1">
-                            <i class="fa-solid fa-trash-alt order-details-card-trash-hotkey"></i>
                         </div>
                     </div>
                 </div>                                             

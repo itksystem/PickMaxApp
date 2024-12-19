@@ -8,7 +8,7 @@ class OrderDetailsSection extends PageBuilder {
     /**
      * Generates the OrderDetails section module.
      */
-    OrderDetailsCardContainer(orderId = null, totalQuantity = 0, totalAmount = 0) {
+    OrderDetailsCardContainer(order = null, totalQuantity = 0, totalAmount = 0) {
         const OrderDetailsContainer = document.createElement("div");
         OrderDetailsContainer.className = "card card-container";
 
@@ -17,8 +17,8 @@ class OrderDetailsSection extends PageBuilder {
         OrderDetailsContainerHeader.innerHTML = `<h3 class="card-title">
 	  ${
 		(totalQuantity !== 0)
-		  ? `Ваш заказ № ${orderId}` 
-		  : `Нет информации о заказе ${orderId}`                  
+		  ? `Ваш заказ № ${order.orderId}` 
+		  : `Нет информации о заказе ${order.orderId}`                  
 		}
 	</h3>`;
 
@@ -58,20 +58,28 @@ class OrderDetailsSection extends PageBuilder {
                 </div>
             </div>`;
 
-            const OrderDetailsContainerCreateOrderButton = document.createElement("div");
-            OrderDetailsContainerCreateOrderButton.className = "card-created-order-button-container";
-
+            const OrderDetailsContainerGotoOrdersButton = document.createElement("div");
+            OrderDetailsContainerGotoOrdersButton.className = "card-created-order-button-container";
+              const gotoOrderButton = document.createElement("button");
             // Создаем кнопку
-            const createOrderButton = document.createElement("button");
-            createOrderButton.className = "btn btn-lg btn-success w-100 create-order-btn";
-            createOrderButton.textContent = "Вернуться к заказам";
+	    if(order.status !== 'NEW') {
+	      gotoOrderButton.className = "btn btn-lg btn-success w-100 create-order-btn";
+	      gotoOrderButton.textContent = "Вернуться к заказам";
+            } else {
+	      gotoOrderButton.className = "btn btn-lg btn-success w-100 create-order-btn";
+	      gotoOrderButton.textContent = "Отправить заказ";
+	    }
 
-            OrderDetailsContainerCreateOrderButton.appendChild(createOrderButton);
+            OrderDetailsContainerGotoOrdersButton.appendChild(gotoOrderButton);
             OrderDetailsContainer.appendChild(OrderDetailsContainerItog);
-            OrderDetailsContainer.appendChild(OrderDetailsContainerCreateOrderButton);
+            OrderDetailsContainer.appendChild(OrderDetailsContainerGotoOrdersButton);
 
             // Добавляем обработчик после добавления кнопки в DOM
-            this.attachCreateOrderButtonHandler(createOrderButton);
+          if(order.status !== 'NEW') {
+              this.attachGotoOrdersButtonHandler(gotoOrderButton);
+	    } else {
+              this.attachGotoCreateOrderButtonHandler(gotoOrderButton);
+	    }
         }
 
         this.addModule("OrderDetails", OrderDetailsContainer);
@@ -80,11 +88,22 @@ class OrderDetailsSection extends PageBuilder {
     /**
      * Attaches a click handler to the "Create Order" button.
      */
-    attachCreateOrderButtonHandler(button) {
+    attachGotoCreateOrderButtonHandler(button) {
         const o = this;
         button.addEventListener("click", function () {
-            console.log("Кнопка 'Создать заказ' нажата");
+            console.log("Кнопка 'Отправить заказ' нажата");
+            window.location.href = `/orders/delivery/${o.referenceId}`; //перешли на доставку`;
+        });
+    }
+    /**
+     * Attaches a click handler to the "Goto Orders" button.
+     */
+    attachGotoOrdersButtonHandler(button) {
+        const o = this;
+        button.addEventListener("click", function () {
+            console.log("Кнопка 'Вернуться к заказам' нажата");
             window.location.href = `/orders/page`;
         });
     }
+
 }

@@ -16,51 +16,39 @@ class OrdersSection extends PageBuilder {
 
         const OrdersContainerHeader = document.createElement("div");
         OrdersContainerHeader.className = "card-header";
-        OrdersContainerHeader.innerHTML = `<h3 class="card-title">Ваши заказы</h3>`;
+        OrdersContainerHeader.innerHTML = `
+	      ${
+		(totalQuantity !== 0)
+		  ? "<h3 class=\"card-title\">Ваши заказы</h3>" 
+		  : "<h3 class=\"card-title\">У вас пока нет заказов</h3>"
+		}`;
 
         const OrdersContainerContent = document.createElement("div");
         OrdersContainerContent.className = "order-card-body";
         OrdersContainerContent.innerHTML = `<div class="orders-body-container"></div>`;
+        OrdersContainer.appendChild(OrdersContainerHeader);
+
 
         if(totalQuantity == 0 )  {
            const OrdersTotalAmountContainer = document.createElement("div");
-            OrdersTotalAmountContainer.innerHTML = `<h2 class="header-title text-center">В корзине нет товаров </h2>`;
+            OrdersTotalAmountContainer.innerHTML = `<div class="order-empty-text text-center">Зайдите в каталог, чтобы выбрать товары или найти нужное в поискe</div>`;
             OrdersContainer.appendChild(OrdersTotalAmountContainer);
+           const BackToShowCaseContainer = document.createElement("div");
+            BackToShowCaseContainer.innerHTML = `<div class="basket-button-container"> <a href="/products/page" class="btn btn-lg btn-success w-100 create-order-btn">Перейти в каталог</a></div> `;
+            OrdersContainer.appendChild(BackToShowCaseContainer);
           } else {
 
         const OrdersContainerItog = document.createElement("div");
         OrdersContainerItog.className = "card-itog-body-container";
-/*
-		<div class="row">
-		  <div class="col-6 text-left">
-			<div class="orders-itog-quantity-title">Всего заказов</div>
-		  </div>
-		  <div class="col-6 text-right">
-			<div class="orders-itog-quantity-sum">${totalQuantity}</div>
-		  </div>
-		</div>
 
-
-        OrdersContainerItog.innerHTML = `
-		<div class="row">
-		  <div class="col-12 text-left">
-			<div class="orders-itog-title">Всего покупок на <span class="orders-itog-sum">${totalAmount} ₽</span></div>
-		  </div>
-		</div>`;
-*/
-
-        OrdersContainer.appendChild(OrdersContainerHeader);
         OrdersContainer.appendChild(OrdersContainerItog);
         OrdersContainer.appendChild(OrdersContainerContent);
-
-
-      }
-        this.addModule("Orders", OrdersContainer);
+       }
+       this.addModule("Orders", OrdersContainer);
       }
 
       OrdersItem(containerClass, item){
-        const container = document.querySelector(`.${containerClass}`);
-
+        const container = document.querySelector(`.${containerClass}`); 
         const OrdersItemContainer = document.createElement("div");
         OrdersItemContainer.className = "orders-item";
         const OrdersItemBody = document.createElement("div");

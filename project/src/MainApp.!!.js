@@ -127,7 +127,7 @@ class MainApp {
             data.basket.forEach(item => {
 		new BasketItem("basket-body-container", item);
            });
-//	 o.dropSectionEventHadler(); // Инициализация обработчиков кликов	
+	 o.dropSectionEventHadler(); // Инициализация обработчиков кликов	
 //	 o.createOrderButtonEventHadler();
         })                                
      .catch(function(error) {
@@ -354,7 +354,7 @@ class MainApp {
  showOrdersPage(){
   let o = this;
   let webRequest = new WebRequest();
-//  $("div.orders-container").prepend(o.OrdersPageTitle()).show();
+  $("div.orders-container").prepend(o.OrdersPageTitle()).show();
   let request = webRequest.get(o.api.getShopOrdersMethod(), o.api.getShopOrdersMethodPayload(), false )
      .then(function(data) {
 	console.log(data);
@@ -395,7 +395,8 @@ class MainApp {
 		console.log(data);
 	           const totalQuantity = data.items.reduce((quantity, item) => quantity + item.quantity, 0);
 	  	   const ordersPage = new OrderDetailsSection("order-container");
-	 	   ordersPage.OrderDetailsCardContainer(_o.order, totalQuantity, data.totalAmount);
+	 	   ordersPage.OrderDetailsCardContainer(
+	  	   _o.order, totalQuantity, data.totalAmount);
 	  	   ordersPage.render();
 	            if(data?.items?.length != 0) {
 	              data?.items?.forEach(item => {

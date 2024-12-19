@@ -28,13 +28,14 @@ class BasketItem {
                         <div class="col-12 col-xs-6 col-sm-4 col-md-2">
                             <basket-button 
                                 class="button-add-to-basket" 
+			        product-id = "${item?.productId}"
                                 basket-skin="white" 
                                 basket-count="${item?.quantity || 0}">
                             </basket-button>
                         </div>
                         <div class="col-12 col-xs-6 col-sm-1 col-md-1"></div>
                         <div class="col-12 col-sm-2 col-md-2">
-                            <div class="basket-card-price">
+                            <div class="basket-card-price" for="${item?.productId}">
                                 ${(item?.quantity || 0) * (item?.price || 0)} ₽
                             </div>
                         </div>

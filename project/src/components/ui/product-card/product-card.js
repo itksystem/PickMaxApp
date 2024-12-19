@@ -116,7 +116,6 @@ class ProductCard extends HTMLElement {
         switch(name) {
 	    case 'basket-count':
             const _basketButton = this.shadowRoot.querySelector('.button-add-to-basket');
-		console.log(_basketButton)
             if (_basketButton) {
                 _basketButton.setAttribute('basket-count', newValue || '');
             }
@@ -125,7 +124,6 @@ class ProductCard extends HTMLElement {
 
 	    case 'product-id':
             const basketButton = this.shadowRoot.querySelector('.button-add-to-basket');
-		console.log(basketButton)
             if (basketButton) {
                 basketButton.setAttribute('product-id', newValue || '');
             }
