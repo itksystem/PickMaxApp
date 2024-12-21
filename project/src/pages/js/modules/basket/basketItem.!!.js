@@ -22,10 +22,10 @@ class BasketItem {
                 </div>        
                 <div class="col-7 col-sm-9 col-md-10">        
                     <div class="row">
-                        <div class="col-12 col-xs-12  col-sm-12 col-md-4">
+                        <div class="col-12 col-sm-12 col-md-4">
                             <div class="basket-card-title">${item?.productName || 'Product Name'}</div>
                         </div>
-                        <div class="col-12 col-xs-12 col-sm-6 col-md-2">
+                        <div class="col-12 col-xs-6 col-sm-4 col-md-2">
                             <basket-button 
                                 class="button-add-to-basket" 
                                 product-id="${item?.productId}"
@@ -33,25 +33,17 @@ class BasketItem {
                                 basket-count="${item?.quantity || 0}">
                             </basket-button>
                         </div>
-                        <div class="col-12 col-xs-12 col-sm-6 col-md-2">
+                        <div class="col-12 col-sm-2 col-md-2">
                             <div class="basket-card-price" for="${item?.productId}">
                                 ${(item?.quantity || 0) * (item?.price || 0)} ₽
                             </div>
                         </div>
-                        <div class="col-2 col-xs-6 col-sm-2 col-md-1">
+                        <div class="col-4 col-sm-2 col-md-1">
                             <i class="fa-regular fa-heart basket-card-heart-hotkey"></i>
                         </div>
-                        <div class="col-10 col-xs-6 col-sm-10 col-md-3">
-                                <i class="fa-solid fa-trash-alt basket-card-trash-hotkey"></i>
-	                        <div class="basket-delete-timer text-left" style="display: none;">
-                                <svg class="countdown-circle" width="20" height="20" viewBox="0 0 40 40">
-                                    <circle class="countdown-bg" cx="20" cy="20" r="10"></circle>
-                                    <circle class="countdown-progress" cx="20" cy="20" r="15"></circle>
-                                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="countdown-text">5</text>
-                                </svg>
-                              <a href="#" class="basket-cancel-delete">Отменить удаление</a>
-                       </div>
-
+                        <div class="col-8 col-sm-1 col-md-1">
+                            <i class="fa-solid fa-trash-alt basket-card-trash-hotkey"></i>
+                            <div class="basket-delete-timer" style="display: none; font-size: 0.9em; color: red;"></div>
                         </div>
                     </div>
                 </div>                                             
@@ -70,30 +62,18 @@ class BasketItem {
     setupDeleteHandler(basketItemContainer, item) {
         const trashIcon = basketItemContainer.querySelector('.basket-card-trash-hotkey');
         const deleteTimerEl = basketItemContainer.querySelector('.basket-delete-timer');
-        const countdownText = deleteTimerEl.querySelector('.countdown-text');
-        const countdownCircle = deleteTimerEl.querySelector('.countdown-progress');
-        const cancelLink = deleteTimerEl.querySelector('.basket-cancel-delete');
-
         let countdown = 5; // Таймер в секундах
         let countdownInterval;
 
-        const circumference = 2 * Math.PI * 15; // Длина окружности (r=45)
-        countdownCircle.style.strokeDasharray = circumference;
-        countdownCircle.style.strokeDashoffset = 0;
-
         trashIcon.addEventListener('click', () => {
             if (countdownInterval) return; // Предотвращаем повторное нажатие
-            trashIcon.style.display = 'none';
-            deleteTimerEl.style.display = 'block';
-            countdownText.textContent = countdown;
-            countdownCircle.style.strokeDashoffset = 0;
 
-            let elapsed = 0;
+            deleteTimerEl.style.display = 'block';
+            deleteTimerEl.innerHTML = `Удалится через ${countdown} <a href="#" class="basket-cancel-delete">Отменить</a>`;
+
             countdownInterval = setInterval(() => {
-                elapsed += 1;
                 countdown -= 1;
-                countdownText.textContent = countdown;
-                countdownCircle.style.strokeDashoffset = (elapsed / 5) * circumference;
+                deleteTimerEl.innerHTML = `Удалится через ${countdown} <a href="#" class="basket-cancel-delete">Отменить</a>`;
 
                 if (countdown <= 0) {
                     clearInterval(countdownInterval);
@@ -101,26 +81,23 @@ class BasketItem {
                         .then(() => {
                             basketItemContainer.remove();
 			    toastr.success('Товар удален из корзины', 'Товары', {timeOut: 3000});
+			    deleteTimerEl.remove();
                         })
                         .catch((error) => {
                             console.error('Ошибка при удалении товара:', error);
 			    toastr.error('Ошибка при удалении из корзины', 'Товары', {timeOut: 3000});
-			    trashIcon.style.display = 'block';	
-                        }).finally((error) => {
-		            deleteTimerEl.style.display = 'none';
+			    deleteTimerEl.remove();
                         });
                 }
             }, 1000);
 
             // Обработчик для отмены
-            cancelLink.addEventListener('click', (e) => {
+            deleteTimerEl.querySelector('.basket-cancel-delete').addEventListener('click', (e) => {
                 e.preventDefault();
                 clearInterval(countdownInterval);
                 countdownInterval = null;
-                countdown = 5;
+                countdown = 5; // Сбрасываем таймер
                 deleteTimerEl.style.display = 'none';
-                trashIcon.style.display = 'block';
-                countdownCircle.style.strokeDashoffset = 0;
             });
         });
     }

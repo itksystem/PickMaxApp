@@ -1,0 +1,30 @@
+.basket-delete-timer {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+.countdown-circle {
+/*    transform: rotate(-90deg); */
+    transform-origin: 50% 50%;
+}
+
+.countdown-bg {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+}
+
+.countdown-progress {
+    fill: none;
+    stroke: #000;
+    stroke-width: 2;
+    stroke-dasharray: 283; /* 2 * PI * r */
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+}
+
+.countdown-text {
+    font-size: 1rem;
+    fill: black;
+}

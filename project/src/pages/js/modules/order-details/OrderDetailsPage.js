@@ -78,7 +78,7 @@ class OrderDetailsSection extends PageBuilder {
           if(order.status !== 'NEW') {
               this.attachGotoOrdersButtonHandler(gotoOrderButton);
 	    } else {
-              this.attachGotoCreateOrderButtonHandler(gotoOrderButton);
+              this.attachGotoCreateOrderButtonHandler(gotoOrderButton, order.referenceId);
 	    }
         }
 
@@ -88,11 +88,11 @@ class OrderDetailsSection extends PageBuilder {
     /**
      * Attaches a click handler to the "Create Order" button.
      */
-    attachGotoCreateOrderButtonHandler(button) {
+    attachGotoCreateOrderButtonHandler(button, referenceId) {
         const o = this;
         button.addEventListener("click", function () {
             console.log("Кнопка 'Отправить заказ' нажата");
-            window.location.href = `/orders/delivery/${o.referenceId}`; //перешли на доставку`;
+            window.location.href = `/orders/delivery/${referenceId}`; //перешли на доставку`;
         });
     }
     /**
