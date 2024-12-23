@@ -17,8 +17,9 @@ class MainApp {
    let o = this;
    return `
         <product-card
-	    product-id ="${product.productId}"
-	    status = "active"                        
+	    product-id="${product.productId}"
+	    like="${product.like}"
+	    status= "active"                        
             href="${o.api.getShopProductMethod(null, product.productId)}"
             image-src="${product.mediaFiles[0].mediaKey}"
             image-alt="${product.productName}"
@@ -26,7 +27,7 @@ class MainApp {
             name="${product.productName}"
             current-price="${product.price}"
             old-price="${product.price*1.30}"
-            currency-type="руб."
+            currency-type="₽"
             aria-label="${product.productName}"
             basket-count="${product.basketCount}"
         </product-card>

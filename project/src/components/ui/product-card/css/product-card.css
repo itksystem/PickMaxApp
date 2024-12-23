@@ -193,3 +193,19 @@
    justify-content: flex-start;
   }
 }
+
+svg {
+    width: 1.2rem; /* Ширина иконки */
+    height: 1.2rem; /* Высота иконки */
+}
+
+.like-wrap {
+  position : absolute;
+  left : 0.3rem;
+  top : 0.3rem;
+  z-index: 100;
+}
+
+img {
+ border-radius: var(--product-card-border-radius, 0.625rem);
+}

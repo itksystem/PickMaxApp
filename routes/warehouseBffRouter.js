@@ -11,6 +11,8 @@ const WarehouseServiceClientHandler = require("openfsm-warehouse-service-client-
 const warehouseClient = new WarehouseServiceClientHandler();   // интерфейс для  связи с MC WarehouseService
 const CommonFunctionHelper = require("openfsm-common-functions")
 const commonFunction= new CommonFunctionHelper();
+const RecommendatuionServiceHandler = require("../handlers/RecommendatuionServiceHandler");
+const recoClient = new RecommendatuionServiceHandler();
 
 router.get('/v1/products/:id', 
     async (req, res) => {
@@ -32,13 +34,19 @@ router.get('/v1/products/:id',
           let {categoryId} = req.body; 
           if(!categoryId) categoryId = null;
           const response = await warehouseClient.getProducts(commonFunction.getJwtToken(req),categoryId);
+          for (const item of response.data) {
+            let _likes = await recoClient.getLikes(req, item.productId);
+               item.likes = (_likes?.data) ? _likes?.data?.likes : 0;     
+               item.like = (_likes?.data) ? _likes?.data?.status: 0;                                    
+            }               
           if (!response.success)  throw(response?.status || 500)
           res.status(200).json(response.data);            
       } catch (error) {
           logger.error(error || 'Неизвестная ошибка' );   
-          res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
+         res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
       }
-   });   
+   }
+);   
 
    router.post('/v1/basket/product-add', 	
 	async (req, res) => {
@@ -75,6 +83,19 @@ router.get('/v1/products/:id',
                 res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
         }              
    });
+
+   router.delete('/v1/basket/item/:productId', 	
+	async (req, res) => {  
+        try {            
+            const response = await warehouseClient.deletePositionFromBasket(commonFunction.getJwtToken(req), req.params.productId);
+            if (!response.success)  throw(response?.status || 500)
+                res.status(200).json(response.data);            
+        } catch (error) {
+                logger.error(error || 'Неизвестная ошибка' );   
+                res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
+        }              
+   });
+   
    
    router.get('/v1/order/:id/details', 	
 	async (req, res) => {          

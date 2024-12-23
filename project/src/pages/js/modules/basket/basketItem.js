@@ -38,9 +38,6 @@ class BasketItem {
                                 ${(item?.quantity || 0) * (item?.price || 0)} ₽
                             </div>
                         </div>
-                        <div class="col-2 col-xs-6 col-sm-2 col-md-1">
-                            <i class="fa-regular fa-heart basket-card-heart-hotkey"></i>
-                        </div>
                         <div class="col-10 col-xs-6 col-sm-10 col-md-3">
                                 <i class="fa-solid fa-trash-alt basket-card-trash-hotkey"></i>
 	                        <div class="basket-delete-timer text-left" style="display: none;">
@@ -127,17 +124,22 @@ class BasketItem {
 
     async declineItem(productId) {
         try {
-            const response = await fetch('/basket/item/decline', {
-                method: 'POST',
+	   this.api = new WebAPI();
+            const response = await fetch(this.api.removeItemBasketMethod()+`/${productId}`, {
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ productId })
+                }
             });
 
             if (!response.ok) {
                 throw new Error('Ошибка при удалении товара');
             }
+           if(eventBus) {
+             console.log(eventBus)
+             eventBus.emit("basketItemUpdated", { productId: this.productId, quantity: 1 });
+           }
+
 
             console.log('Товар успешно удалён');
         } catch (error) {

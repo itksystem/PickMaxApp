@@ -21,6 +21,11 @@
     box-shadow: var(--product-card-hover-box-shadow, 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2)); /* 0 4px 12px */
 }
 
+svg {
+    width: 50px; /* Ширина иконки */
+    height: 50px; /* Высота иконки */
+    z-index: 100;	
+}
 .wrapper {
     display: flex;
     flex-direction: column;

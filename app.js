@@ -14,6 +14,7 @@ const paymentRouter = require('./routes/paymentRouter');
 const warehouseBffRouter = require('./routes/warehouseBffRouter');
 const ordersBffRouter = require('./routes/ordersBffRouter');
 const clientRouter = require('./routes/clientRouter');
+const recoRouter = require('./routes/recoRouter');
 const promClient = require('prom-client'); //сбор метрик для Prometheus
 const PORT = process.env.PORT || 3000;
 
@@ -74,6 +75,7 @@ app.use('/api/bff/warehouse/', warehouseBffRouter);
 app.use('/api/bff/orders/',    ordersBffRouter); 
 app.use('/api/bff/payment/',   paymentRouter); 
 app.use('/api/bff/client/',    clientRouter); 
+app.use('/api/bff/reco/',    recoRouter); 
 
 
 // Middleware для обработки 404 ошибок

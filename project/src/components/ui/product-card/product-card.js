@@ -2,6 +2,8 @@ class ProductCard extends HTMLElement {
     constructor() {
         super();
         // Создаем Shadow DOM
+        let o = this;
+        this.api = new WebAPI();
         this.attachShadow({ mode: 'open' });
         const linkElem = document.createElement('link');
         linkElem.setAttribute('rel', 'stylesheet');
@@ -18,12 +20,22 @@ class ProductCard extends HTMLElement {
                  
         // Создаем шаблон
         const template = document.createElement('template');
+
         template.innerHTML = `
             <div class="wrapper">
                 <a class="link" href="#" aria-label="">
  	         <div class="ribbon-wrapper ribbon-lg">
 	           <div class="ribbon"></div>
 	         </div>
+                       <a class="like-link">
+			 <div class="like-wrap">
+     			    <svg width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				  <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" 
+				  class="like" stroke="black" stroke-width="2" fill="white"/>
+			    </svg>
+			</div>
+		      </a>	
+
                     <div class="media-wrap">
                         <img class="image" src="" alt="" loading="lazy">
                         <video class="video d-none" muted loop preload="metadata">
@@ -83,11 +95,38 @@ class ProductCard extends HTMLElement {
             e.preventDefault();
             this.pauseVideo();
         });
+
+        let likeWrap = this.shadowRoot.querySelector('.like-link');
+        let likePath = likeWrap.querySelector('path.like');
+        const productId = this.getAttribute('product-id');
+
+	likeWrap.addEventListener('click', (e) => {
+	    e.stopPropagation();
+	    likeWrap.classList.toggle('liked');
+	    const isLiked = likeWrap.classList.contains('liked');
+	    likePath.setAttribute('stroke', isLiked ? 'white' : 'black');
+	    likePath.setAttribute('fill', isLiked ? 'red' : 'white');
+	    o.setLike(productId, isLiked);
+	});
+
+        let CardWrap = this.shadowRoot.querySelector('.wrapper');
+        CardWrap.addEventListener('click', (e) => {
+          e.stopPropagation();
+	  if (CardWrap.classList.contains('clicked')) {
+	        CardWrap.classList.remove('clicked');
+	        console.log('clicked удален');
+	    } else {
+	        CardWrap.classList.add('clicked');
+	        console.log('clicked поставлен');
+	    }
+        });
+
     }
 
     // Наблюдаемые атрибуты
     static get observedAttributes() {
         return [
+            'like',
             'basket-count',
             'product-id',
             'href',
@@ -107,13 +146,21 @@ class ProductCard extends HTMLElement {
     }
 
     // Обработка изменений атрибутов
-    attributeChangedCallback(name, oldValue, newValue) {
-        const selector = this.getSelector(name);
+    attributeChangedCallback(name, oldValue, newValue) {        
+        const selector = this.getSelector(name);        
         if (!selector) return;
-        const element = this.shadowRoot.querySelector(selector);
-
+        const element = this.shadowRoot.querySelector(selector);        
         if (!element) return;
         switch(name) {
+	    case 'like':        
+                let likeWrap = this.shadowRoot.querySelector('.like-link');
+    	          if(newValue ==1) 
+			  likeWrap.classList.add('liked'); // Добавляем класс liked
+	        let likePath = likeWrap.querySelector('path.like');
+	  	  likePath.setAttribute('stroke', (newValue == 1) ? 'white' : 'black');
+          	  likePath.setAttribute('fill', (newValue == 1) ? 'red' : 'white');
+            break;
+
 	    case 'basket-count':
             const _basketButton = this.shadowRoot.querySelector('.button-add-to-basket');
             if (_basketButton) {
@@ -190,6 +237,7 @@ class ProductCard extends HTMLElement {
     // Определение селекторов для каждого атрибута
     getSelector(attr) {
         const selectors = {
+	    'like' : '.like-wrap',
             'basket-count': '.button-add-to-basket',
             'product-id': '.button-add-to-basket',
             'href': '.link',
@@ -306,6 +354,17 @@ class ProductCard extends HTMLElement {
     setHoverShadow(shadow) {
         this.style.setProperty('--product-card-hover-box-shadow', shadow);
     }
+
+    setLike(productId , status) {
+     let o = this; 
+     let webRequest = new WebRequest();
+     let request = webRequest.post(o.api.setProductLikeMethod(productId),  {productId , status}, false )
+     .then(function(data) {
+      })                                
+     .catch(function(error) {
+       console.log('setLike.Произошла ошибка =>', error);
+     });
+   }
 }
 
 customElements.define('product-card', ProductCard);

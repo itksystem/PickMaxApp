@@ -107,7 +107,8 @@ class BasketButton extends HTMLElement {
         body: JSON.stringify({ productId: this.productId, quantity: 1 }),
       });
 
-      if (!response.ok) throw new Error('Ошибка при обновлении корзины');
+      if (!response.ok)  // throw new Error('Ошибка при обновлении корзины');
+        toastr.error('Ошибка при обновлении корзины', 'Корзина', {timeOut: 1000});
 
       const result = await response.json();
       this.count = result.basket.quantity;
