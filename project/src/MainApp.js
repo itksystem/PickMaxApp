@@ -82,7 +82,6 @@ class MainApp {
         // Обработчик прокрутки страницы для догрузки товаров
         $(window).on('scroll', function() {
             if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
-                console.log(o.page);
                 o.page++; // Увеличиваем номер страницы
                 loadProducts(o.page); // Загружаем следующую порцию товаров
             }

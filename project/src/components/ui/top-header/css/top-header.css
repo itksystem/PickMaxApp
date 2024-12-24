@@ -83,7 +83,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 0.625rem; /* 10px на 16 = 0.625rem */
+    margin: 0.6rem 0 0.6rem 0;
 }
 
 .header__logo img {

@@ -24,6 +24,19 @@ body{
   font-family: "Roboto Condensed", sans-serif;
 }
 
+.main[service="product"] { 
+   padding: unset;
+   font-size: 0.9rem;
+   font-family: "Roboto Condensed", sans-serif;
+}
+
+.product-details-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    max-width: 30rem;
+}
+
 .page_title {
     width: max-content;
     font-weight: 600;
@@ -1127,3 +1140,18 @@ dd {
  padding: 1rem 0; font-size: 0.9rem;
 }
 
+
+.outer-container {
+  display: flex;        /* Включаем flexbox */
+  justify-content: center; /* Горизонтальное центрирование */
+  align-items: center;  /* Вертикальное центрирование (если нужно) */
+  height: 100vh;        /* Пример высоты для демонстрации */
+  border: 1px solid black;
+}
+
+.inner-container {
+  width: 200px;
+  height: 100px;
+  background-color: lightblue;
+  text-align: center;
+}

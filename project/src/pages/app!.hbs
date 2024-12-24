@@ -89,8 +89,6 @@ body{
 </style>
 <body class="{{service}}">
  <script src="/src/utils/redirect.js"></script>
- <script src="/src/pages/js/texteditor.js"></script>
-
  <link type="text/css" href="/src/pages/css/shop_card_red.css" rel="stylesheet" />
  <link type="text/css" href="/src/pages/css/sidebar.css" rel="stylesheet" />
  <link type="text/css" href="/src/pages/css/buttons.css" rel="stylesheet" />
@@ -104,6 +102,33 @@ body{
  <link type="text/css" href="/src/components/ui/product-card/css/product-card.css" rel="stylesheet" />
  <link rel="stylesheet" href="/src/components/ui/basket-button/css/basket-button.css">
  <link rel="stylesheet" href="/src/components/ui/dropdown-section/dropdown-section.css"  />
+
+<top-header></top-header>
+
+<script>
+    tinymce.init({
+      selector: '.editor-textarea',
+      plugins: 'textcolor emoticons link image table',
+      menubar: false, 
+      mobile: {
+        menubar: false
+       },
+      toolbar:[ 'forecolor backcolor bold italic underline strikethrough image emoticons  align lineheight table | blocks fontfamily fontsize | checklist numlist bullist indent outdent |'],
+  setup: function(editor) {
+   	  editor.on('init', function () {
+		      // Устанавливаем размер шрифта
+		      editor.getBody().style.fontSize = '0.8rem'; // Замените на нужный размер шрифта
+	    });
+          editor.on('PostRender', function() {
+            var footer = document.querySelector('.tox-statusbar');
+            if (footer) {
+              footer.style.display = 'none';
+            }
+          })
+	}
+    });
+
+</script>
 
 <div class="main" service={{service}}>
     {{#ifEquals service "products"}}

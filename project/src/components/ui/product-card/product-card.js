@@ -114,10 +114,9 @@ class ProductCard extends HTMLElement {
           e.stopPropagation();
 	  if (CardWrap.classList.contains('clicked')) {
 	        CardWrap.classList.remove('clicked');
-	        console.log('clicked удален');
 	    } else {
 	        CardWrap.classList.add('clicked');
-	        console.log('clicked поставлен');
+		window.location.href = `/products/${productId}/page`;
 	    }
         });
 

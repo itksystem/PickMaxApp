@@ -41,6 +41,7 @@ router.get('/health', health);
 // Набор защищенных маршрутов
 const protectedRoutes = [
     { method : 'GET', path: '/app', page: common.COMMON_APP_PAGE , service : {}},
+    { method : 'GET', path: '/products/:productId/page', page: common.COMMON_PRODUCTS_PAGE, service : { service : "product"} },
     { method : 'GET', path: '/products/page', page: common.COMMON_PRODUCTS_PAGE, service : { service : "products"} },
     { method : 'GET', path: '/profile/page', page: common.COMMON_PROFILE_PAGE, service :{service : "profile"} },
     { method : 'GET', path: '/basket/page', page: common.COMMON_BASKET_PAGE, service :{service : "basket"} },
