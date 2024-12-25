@@ -261,6 +261,9 @@ class WebAPI {
      return `/api/bff/reco/v1/like` 
 }
 
+/* Получить продукт */
+   getShopProductDetailsMethod(productId){  return `/api/bff/warehouse/v1/products/${productId}` }
+
 
 /* Список товаров в корзине пользователя */
    getShopBasketMethod(){  return `/api/bff/warehouse/v1/basket` }

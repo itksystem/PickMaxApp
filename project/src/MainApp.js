@@ -34,6 +34,7 @@ class MainApp {
 `
   }
 
+
  showCaseEmptyPageOutput(){
   return `
 	<section class="error-page error-page-option text-center page-padding block-space">
@@ -127,14 +128,36 @@ class MainApp {
             data.basket.forEach(item => {
 		new BasketItem("basket-body-container", item);
            });
-//	 o.dropSectionEventHadler(); // Инициализация обработчиков кликов	
-//	 o.createOrderButtonEventHadler();
         })                                
      .catch(function(error) {
        console.log('showBasketOutput.Произошла ошибка =>', error);
      });
     return this;
  }
+
+ showProductDetailsPage() {
+  let o = this;
+  const urlParams = new URLSearchParams(window.location.search); // Получаем текущий URL
+  const url = window.location.pathname; // Получаем путь 
+  const match = url.match(/\/products\/([^/]+)\/page/);
+  o.productId = match ? match[1] : null;
+  console.log(o.productId);
+
+  let webRequest = new WebRequest();
+  let request = webRequest.get(o.api.getShopProductDetailsMethod(o.productId),  {}, false )
+     .then(function(data) {
+           console.log(data)
+  	   const productDetailsPage = new ProductDetailsSection("product-details-card-container");
+ 	   productDetailsPage.ProductDetailsCardContainer(data);
+  	   productDetailsPage.render();
+        })                                
+     .catch(function(error) {
+       console.log('showBasketOutput.Произошла ошибка =>', error);
+     });
+    return this;
+
+ }
+
 
   _createOrderButtonEventHadler() {
     let o = this;
@@ -367,8 +390,6 @@ class MainApp {
  		new OrderItem("orders-body-container", item);
              });
           }
-//	 o.dropSectionEventHadler(); // Инициализация обработчиков кликов	
-//	 o.createOrderButtonEventHadler();
         })                                
      .catch(function(error) {
        console.log('showOrdersPage.Произошла ошибка =>', error);

@@ -1,0 +1,23 @@
+class ProductDetailsSection extends PageBuilder {
+    constructor(containerId) {
+        super(containerId);
+        this.api = new WebAPI();
+    }
+    /**
+     * Generates the ProductDetailsSection section module.
+     */
+   ProductDetailsCardContainer(data){
+        const ProductDetailsContainer = document.createElement("product-details");
+	ProductDetailsContainer.setAttribute("title", data.description)
+	ProductDetailsContainer.setAttribute("like", "1")
+	ProductDetailsContainer.setAttribute("product-id", data.productId)
+	ProductDetailsContainer.setAttribute("description", data.description)
+	ProductDetailsContainer.setAttribute("price", data.price)
+	const imageUrls = data.mediaFiles
+	    .map(file => file.mediaKey) // Извлекаем mediaKey из каждого объекта
+        .filter(Boolean);     
+      	 ProductDetailsContainer.setAttribute("images", imageUrls)
+        this.addModule("ProductDetails", ProductDetailsContainer);
+      }
+
+}

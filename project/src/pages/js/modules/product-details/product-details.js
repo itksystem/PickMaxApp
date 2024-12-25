@@ -47,7 +47,7 @@ class ProductDetails extends HTMLElement {
           <h3 class="product-details__title"></h3>
           <p class="product-details__description"></p>
           <div class="product-details__options">
-            <strong>Available Colors:</strong>
+            <strong>Подробнее о товаре:</strong>
             <div class="product-details__btn-group" id="color-options"></div>
           </div>
           <div class="product-details__price"></div>
@@ -82,11 +82,18 @@ class ProductDetails extends HTMLElement {
     this.shadowRoot.querySelector('.product-details__price').textContent = this.getAttribute('price') || '$0.00';
 
     // Добавление изображений
-    const imageUrls = (this.getAttribute('images') || '').split(',').map(url => url.trim()).filter(Boolean);
+    console.log(this.hasAttribute('images'));
+
+    const imageUrls = this.hasAttribute('images') && this.getAttribute('images')
+    ? this.getAttribute('images').split(',').map(url => url.trim()).filter(Boolean)
+    : ['/src/pages/images/card_no_photo_image.png'];
+
+    console.log(imageUrls);
     const swiperContainer = this.shadowRoot.querySelector('.product-details__swiper-container');
     const indicatorsContainer = this.shadowRoot.querySelector('.product-details__swiper-indicators');
 
-    imageUrls.forEach((url, index) => {
+    if(imageUrls)
+     imageUrls.forEach((url, index) => {
       const img = document.createElement('img');
       img.src = url || 'https://via.placeholder.com/300';
       img.alt = `Product Image ${index + 1}`;
