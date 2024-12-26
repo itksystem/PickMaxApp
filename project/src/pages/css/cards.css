@@ -13,8 +13,10 @@ body{
  flex-direction: column;
  overflow-x: hidden;
  font-family: "Roboto Condensed", sans-serif;
+}
 
-/* "Roboto Condensed", sans-serif;   */
+body.product{
+ background: #f7f6f6;
 }
 
 

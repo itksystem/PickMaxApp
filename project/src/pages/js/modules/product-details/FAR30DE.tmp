@@ -11,9 +11,9 @@ class ProductDetails extends HTMLElement {
       <link rel="stylesheet" href="/src/pages/css/bootstrap.min.css">
         <div class = "product-details-card-dialog">
          <div class = "product-details-card-box">
-             <div class="ribbon-wrapper ribbon-lg">
-                <div class="ribbon"></div>
-  	           </div>
+            <div class="ribbon-wrapper ribbon-lg">
+               <div class="ribbon"></div>
+	         </div>
                        <a class="pred-link">
 			 <div class="product-details-pred-wrap">
 				<svg width="45" height="35" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">                    
@@ -47,61 +47,33 @@ class ProductDetails extends HTMLElement {
         </div>
         <div class="product-details__content">
 	<div class="row">
-           <div class="col-6">
+           <div class="col-12">
               <p>
-               <span class="product-details__price"></span>     
-               <del class="price-block__old-price"></del>     
+               <span class="product-details__price">220 ₽</span>     
+               <del class="price-block__old-price">250 ₽</del>     
               </p>
 	    </div>
-            <div class="col-6">
+            <div class="col-12">
                <div class="product-details__btn-group">
-	 	 <div class="row">
-        	   <div class="col-12">
-		      <div class="rating"></div>
-                   </div>
-        	   <div class="col-12"></div>
-                 </div>		
-              </div>
+	   	  <basket-button class="button-add-to-basket"></basket-button>
+               </div>
             </div>
        </div>
-     </div>
-	    <div class="discont-box"></div>
+       </div>
    </div>
-	 <div class="product-details-card-title-box">
-		<div class="row">
-	  	 <div class="col-12">
-        	    <div class="product-details__seller-type"></div>
-	         </div>
-		 <div class="col-12">
-	            <div class="product-details__title"></div>
-	         </div>
-               </div>
+         <div class = "product-details-card-title-box">
+            <h3 class="product-details__title"></h3>
          </div>
-
-
          <div class = "product-details-description-box">
             <div class="product-details__options">
-              <h1 class="product-page__options_title">Описание</h1>
-	        <p class="product-details__description"></p>
+              <h1 class="product-page__options_title">Характеристики и описание</h1>
+	          <p class="product-details__description"></p>
              </div>
          </div>
-      </div>
 
-      <div class="product-details-add-basket-button-box">   	
-	<div class="row">
-           <div class="col-12">
-              <div>
-               <span class="product-details__price"></span>     
-               <del class="price-block__old-price"></del>     
-   	       <div class="product-details__short_title text-truncate" style="max-width: fit-content; padding: 0.4rem;"></div>
-              </div>
-	    </div>
-            <div class="col-12">
-                 <basket-button class="button-add-to-basket"></basket-button>
-            </div>
-       </div>
-      </div>
 
+
+      </div>
     `;
 
     // Добавление шаблона в shadow DOM
@@ -121,62 +93,12 @@ class ProductDetails extends HTMLElement {
     this._addEventListeners();
   }
 
-  _getRating(){   // Рейтинг
-   const stars = document.querySelectorAll('.star');
-   const ratingValue = this.getAttribute('stars');
-   const reviews = this.getAttribute('reviews');
-   console.log(ratingValue);
-   let html = '';
-   if(stars){
-    html=`<span>4.3 </span>`;
-    stars.forEach(s => s.classList.remove('active'));
-     for (let i = 0; i < 5; i++) {
-        let active = (i <= ratingValue) ? 'active' : '';
-	html+=`<span class="star ${active}" data-value="${i}"></span>`
-      }
-    if(reviews) 
-     html+=`<reviews>(${reviews} отзывов)</reviews>`;
-     html+=`</div>`;
-   }
-    return html;
-   }
-
-  _getDiscount(discount){
-   return (discount > 0 ) ? `Скидка ${discount}%` : ``;
-  }
-
-  _getSellerType(sellerType){
-    switch(sellerType) {
-    case `ORGANIZATION`:   return `Организация`;  
-    case `INDIVIDUAL_ENTREPRENEUR`:   return `Индивидуальный предприниматель`;  
-    default:
-     return `Физическое лицо`;  
-    }
-  }
-
-
   _render() {
     // Заполнение данных
+    this.shadowRoot.querySelector('.product-details__title').textContent = this.getAttribute('title') || 'Product Title';
     this.shadowRoot.querySelector('.product-details__description').textContent = this.getAttribute('description') || 'Product Description';
+    this.shadowRoot.querySelector('.product-details__price').textContent = this.getAttribute('price') || '$0.00';
 
-    this.shadowRoot.querySelectorAll('.product-details__price').forEach(el => {
-       el.textContent = this.getAttribute('price') || '$0.00';
-    });
-    this.shadowRoot.querySelectorAll('del').forEach(el => {
-        el.textContent = this.getAttribute('del-price') || '$0.00';
-    });
-    this.shadowRoot.querySelectorAll('.product-details__title').forEach(el => {
-        el.textContent = this.getAttribute('title') || '';
-    });
-    this.shadowRoot.querySelectorAll('.product-details__short_title').forEach(el => {
-        el.textContent = this.getAttribute('title') || '';
-    });
-
-
-
-    this.shadowRoot.querySelector('.rating').innerHTML = this._getRating() || '';
-    this.shadowRoot.querySelector('.discont-box').innerHTML = this._getDiscount(this.getAttribute('discount') || 0);
-    this.shadowRoot.querySelector('.product-details__seller-type').innerHTML = this._getSellerType(this.getAttribute('seller-type') || '');
     // Добавление изображений
     console.log(this.hasAttribute('images'));
 
