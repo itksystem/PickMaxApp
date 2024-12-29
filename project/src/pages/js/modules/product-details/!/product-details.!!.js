@@ -11,12 +11,11 @@ class ProductDetails extends HTMLElement {
       <link rel="stylesheet" href="/src/pages/css/bootstrap.min.css">
         <div class = "product-details-card-dialog">
          <div class = "product-details-card-box">
-            <div class="ribbon-wrapper ribbon-lg">
-               <div class="ribbon"></div>
-	         </div>
-                       <a class="pred-link">
-			 <div class="product-details-pred-wrap">
-				<svg width="45" height="35" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">                    
+             <div class="ribbon-wrapper ribbon-lg">
+                <div class="ribbon"></div>
+  	           </div>
+			<icon-button 
+			icon-passive='<svg width="45" height="35" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">                    
 				  <!-- Диагональные линии стрелки с белой окантовкой -->
 				  <path d="M18 8L12 14L18 20" class="back-arrow" stroke="white" stroke-width="4" fill="none"></path>
   
@@ -25,55 +24,111 @@ class ProductDetails extends HTMLElement {
 
 				  <!-- Черная внутренняя линия, чтобы скрыть лишние белые промежутки -->
 				  <path d="M18 8L12 14L18 20" class="back-arrow" stroke="black" stroke-width="2" fill="none"></path>
-				  <path d="M18 14H14 30" class="back-arrow" stroke="black" stroke-width="2" fill="none"></path>
-				</svg>
-			</div>
-		      </a>	
+				  <path d="M18 14H14 30" class="back-arrow" stroke="black" stroke-width="2" fill="white"></path>
+				</svg>'
+   	  	        icon-active= '
+			<svg width="45" height="35" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">                    
+				  <!-- Диагональные линии стрелки с белой окантовкой -->
+				  <path d="M18 8L12 14L18 20" class="back-arrow" stroke="white" stroke-width="4" fill="none"></path>
+  
+				  <!-- Горизонтальная линия стрелки с белой окантовкой -->
+				  <path d="M18 14H14 31" class="back-arrow" stroke="white" stroke-width="4" fill="none"></path>
 
-                       <a class="like-link">
-			 <div class="like-wrap">
-				<svg width="35" height="35" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-				  <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" 
-				  class="like" stroke="black" stroke-width="2" fill="white"/>
-			    </svg>
-			</div>
-		      </a>	
+				  <!-- Черная внутренняя линия, чтобы скрыть лишние белые промежутки -->
+				  <path d="M18 8L12 14L18 20" class="back-arrow" stroke="black" stroke-width="2" fill="none"></path>
+				  <path d="M18 14H14 30" class="back-arrow" stroke="white" stroke-width="2" fill="red"></path>
+				</svg>'   
+			    value="12345"   
+			    redirect1="https://ya.ru"
+			    action="/action"
+			    action-failed="/failed"
+			    action-success="/success"
+			    title="Toggle Lock"
+			    style="position: absolute; left: 2rem; top: 1rem;">
+			</icon-button>
+
+
+			<icon-button 
+			icon-passive='<svg width="35" height="35" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" 
+			class="like" stroke="black" stroke-width="2" fill="white"/>
+			</svg>'
+   	  	        icon-active= '
+			<svg width="35" height="35" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" 
+			class="like" stroke="white" stroke-width="2" fill="red"/>
+			</svg>'   
+			    value="12345"   
+			    redirect1="https://ya.ru"
+			    action="/action"
+			    action-failed="/failed"
+			    action-success="/success"
+			    title="Toggle Lock"
+			    style="position: absolute; right: 4rem; top: 1rem;">
+			</icon-button>
+
 
         <div class="product-details__swiper">
           <div class="product-details__swiper-container">
-            <!-- Изображения будут добавлены динамически -->
           </div>
           <div class="product-details__swiper-indicators"></div>
         </div>
         <div class="product-details__content">
-	<div class="row">
-           <div class="col-12">
+     	  <div class="row">
+           <div class="col-6">
               <p>
-               <span class="product-details__price">220 ₽</span>     
-               <del class="price-block__old-price">250 ₽</del>     
+               <span class="product-details__price"></span>     
+               <del class="price-block__old-price"></del>     
               </p>
 	    </div>
-            <div class="col-12">
+            <div class="col-6">
                <div class="product-details__btn-group">
-	   	  <basket-button class="button-add-to-basket"></basket-button>
-               </div>
+	 	 <div class="row">
+        	   <div class="col-12">
+                      <stars-rating stars="4.3"></stars-rating>
+                   </div>
+        	   <div class="col-12">
+                      <reviews></reviews>
+		   </div>
+                 </div>		
+              </div>
             </div>
        </div>
-       </div>
+     </div>
+	    <div class="discount-box"></div>
    </div>
-         <div class = "product-details-card-title-box">
-            <h3 class="product-details__title"></h3>
+	 <div class="product-details-card-title-box">
+		<div class="row">
+	  	 <div class="col-12">
+        	    <div class="product-details__seller-type"></div>
+	         </div>
+		 <div class="col-12">
+	            <div class="product-details__title"></div>
+	         </div>
+               </div>
          </div>
-         <div class = "product-details-description-box">
-            <div class="product-details__options">
-              <h1 class="product-page__options_title">Характеристики и описание</h1>
-	          <p class="product-details__description"></p>
-             </div>
-         </div>
 
-
-
+	<dropdown-section>
+		  <span slot="title">Описание товара</span>
+	  	  <p class="product-details__description"></p>
+        </dropdown-section>
       </div>
+
+      <div class="product-details-add-basket-button-box">   	
+	<div class="row">
+           <div class="col-12">
+              <div>
+               <span class="product-details__price"></span>     
+               <del class="price-block__old-price"></del>     
+   	       <div class="product-details__short_title text-truncate" style="max-width: fit-content; padding: 0.4rem;"></div>
+              </div>
+	    </div>
+            <div class="col-12">
+                 <basket-button class="button-add-to-basket"></basket-button>
+            </div>
+       </div>
+      </div>
+
     `;
 
     // Добавление шаблона в shadow DOM
@@ -93,12 +148,65 @@ class ProductDetails extends HTMLElement {
     this._addEventListeners();
   }
 
+  _getRating(){   // Рейтинг
+   const stars = document.querySelectorAll('.star');
+   const ratingValue = this.getAttribute('stars');
+   const reviews = this.getAttribute('reviews');
+   console.log(ratingValue);
+   let html = '';
+   if(stars){
+    html=`<span>4.3 </span>`;
+    stars.forEach(s => s.classList.remove('active'));
+     for (let i = 0; i < 5; i++) {
+        let active = (i <= ratingValue) ? 'active' : '';
+	html+=`<span class="star ${active}" data-value="${i}"></span>`
+      }
+    if(reviews) 
+     html+=`<reviews>(${reviews} отзывов)</reviews>`;
+     html+=`</div>`;
+   }
+    return html;
+   }
+
+  _getDiscount(discount){
+   return (discount > 0 ) ? `Скидка ${discount}%` : ``;
+  }
+
+  _getSellerType(sellerType){
+    switch(sellerType) {
+    case `ORGANIZATION`:   return `Организация`;  
+    case `INDIVIDUAL_ENTREPRENEUR`:   return `Индивидуальный предприниматель`;  
+    default:
+     return `Физическое лицо`;  
+    }
+  }
+
+
   _render() {
     // Заполнение данных
-    this.shadowRoot.querySelector('.product-details__title').textContent = this.getAttribute('title') || 'Product Title';
     this.shadowRoot.querySelector('.product-details__description').textContent = this.getAttribute('description') || 'Product Description';
-    this.shadowRoot.querySelector('.product-details__price').textContent = this.getAttribute('price') || '$0.00';
 
+    this.shadowRoot.querySelectorAll('.product-details__price').forEach(el => {
+       el.textContent = this.getAttribute('price') || '$0.00';
+    });
+    this.shadowRoot.querySelectorAll('del').forEach(el => {
+        el.textContent = this.getAttribute('del-price') || '$0.00';
+    });
+    this.shadowRoot.querySelectorAll('.product-details__title').forEach(el => {
+        el.textContent = this.getAttribute('title') || '';
+    });
+    this.shadowRoot.querySelectorAll('.product-details__short_title').forEach(el => {
+        el.textContent = this.getAttribute('title') || '';
+    });
+
+
+    let reviews = this.getAttribute('reviews');
+    if(reviews > 0 )
+      this.shadowRoot.querySelector('reviews').innerHTML = (reviews > 0 ) ? `Отзывов: ${reviews}` : 'Пока нет отзывов';
+
+//    this.shadowRoot.querySelector('.rating').innerHTML = this._getRating() || '';
+    this.shadowRoot.querySelector('.discount-box').innerHTML = this._getDiscount(this.getAttribute('discount') || 0);
+    this.shadowRoot.querySelector('.product-details__seller-type').innerHTML = this._getSellerType(this.getAttribute('seller-type') || '');
     // Добавление изображений
     console.log(this.hasAttribute('images'));
 
@@ -114,14 +222,14 @@ class ProductDetails extends HTMLElement {
      imageUrls.forEach((url, index) => {
       const img = document.createElement('img');
       img.src = url || 'https://via.placeholder.com/300';
-      img.alt = this.getAttribute('description');
+      img.alt = this.getAttribute('title');
       img.classList.add('product-details__swiper-image');
       swiperContainer.appendChild(img);
 
       const indicator = document.createElement('span');
-      indicator.classList.add('product-details__swiper-indicator');
-      if (index === 0) indicator.classList.add('active');
-      indicatorsContainer.appendChild(indicator);
+      indicator?.classList.add('product-details__swiper-indicator');
+      if (index === 0) indicator?.classList.add('active');
+      indicatorsContainer?.appendChild(indicator);
     });
 
     // Сохраняем контейнер в переменной, чтобы позже обновить его
@@ -132,36 +240,36 @@ class ProductDetails extends HTMLElement {
   _addEventListeners() {
     let o = this;
     const swiperContainer = this.shadowRoot.querySelector('.product-details__swiper-container');
-    swiperContainer.addEventListener('touchstart', this._onTouchStart.bind(this));
-    swiperContainer.addEventListener('touchmove', this._onTouchMove.bind(this));
-    swiperContainer.addEventListener('touchend', this._onTouchEnd.bind(this));
+    swiperContainer?.addEventListener('touchstart', this._onTouchStart.bind(this));
+    swiperContainer?.addEventListener('touchmove', this._onTouchMove.bind(this));
+    swiperContainer?.addEventListener('touchend', this._onTouchEnd.bind(this));
 
  // Добавляем обработчик для события прокрутки колесика мыши
-    swiperContainer.addEventListener('wheel', this._onWheel.bind(this));
+    swiperContainer?.addEventListener('wheel', this._onWheel.bind(this));
 
     const backButton = this.shadowRoot.querySelector('.product-details-pred-wrap');
-    backButton.addEventListener('click', (e) => {
+    backButton?.addEventListener('click', (e) => {
 	    e.stopPropagation();
 	    window.history.back();
 	});
 
      let likeWrap = this.shadowRoot.querySelector('.like-link');
-     let likePath = likeWrap.querySelector('path.like');
+     let likePath = likeWrap?.querySelector('path.like');
      const productId = this.getAttribute('product-id');
      let isLiked = this.getAttribute('like');
      console.log(isLiked);
-     likeWrap.classList.add('liked'); // Добавляем класс liked
-     likePath.setAttribute('stroke', (isLiked == 1) ? 'white' : 'black');
-     likePath.setAttribute('fill', (isLiked == 1) ? 'red' : 'white');
+     likeWrap?.classList.add('liked'); // Добавляем класс liked
+     likePath?.setAttribute('stroke', (isLiked == 1) ? 'white' : 'black');
+     likePath?.setAttribute('fill', (isLiked == 1) ? 'red' : 'white');
 
-    likeWrap.addEventListener('click', (e) => {
+    likeWrap?.addEventListener('click', (e) => {
 	console.log(e);
 	    e.stopPropagation();
-	    likeWrap.classList.toggle('liked');
-	    const isLiked = likeWrap.classList.contains('liked');
-	    likePath.setAttribute('stroke', isLiked ? 'white' : 'black');
-	    likePath.setAttribute('fill', isLiked ? 'red' : 'white');
-	    o.setLike(productId, isLiked);
+	    likeWrap?.classList.toggle('liked');
+	    const isLiked = likeWrap?.classList.contains('liked');
+	    likePath?.setAttribute('stroke', isLiked ? 'white' : 'black');
+	    likePath?.setAttribute('fill', isLiked ? 'red' : 'white');
+	    o?.setLike(productId, isLiked);
     });
   }
 

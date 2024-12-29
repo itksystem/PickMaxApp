@@ -13,9 +13,11 @@ class ProductDetailsSection extends PageBuilder {
 	ProductDetailsContainer.setAttribute("stars", "5")
 	ProductDetailsContainer.setAttribute("reviews", "15")
 	ProductDetailsContainer.setAttribute("discount", "15")
+	ProductDetailsContainer.setAttribute("seller-type", "ORGANIZATION")
 	ProductDetailsContainer.setAttribute("product-id", data.productId)
 	ProductDetailsContainer.setAttribute("description", data.description)
 	ProductDetailsContainer.setAttribute("price", `${data.price} ₽`)
+	ProductDetailsContainer.setAttribute("del-price", `${data.price} ₽`)
 	const imageUrls = data.mediaFiles
 	    .map(file => file.mediaKey) // Извлекаем mediaKey из каждого объекта
         .filter(Boolean);     

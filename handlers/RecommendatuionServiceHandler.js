@@ -15,7 +15,7 @@ class RecommendationServiceHandler {
      */
         async setLike(req) {
             try {
-                const response = await fetch(process.env.RECOMMENDATION_SERVICE_LIKE_URL, {
+                const response = await fetch(process.env.RECOMMENDATION_SERVICE_LIKE_URL+`/${req.params.productId}`, {
                     method: 'POST',
                     headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },
                     body: JSON.stringify(req.body)
@@ -23,20 +23,20 @@ class RecommendationServiceHandler {
     
                 const data = await response.json();
                 if (response.ok) {
-                    console.log(`POST setLike successfully.`);
+                    console.log(`setLike successfully.`);
                     return { success: true, data };
                 } else {
-                    console.log(`POST setLike failed.`);
+                    console.log(`setLike failed.`);
                     return { success: false, status: response.status, data };
                 }
             } catch (error) {
-                    console.log(`POST setLike failed.`);
+                    console.log(`setLike failed.`);
                 return { success: false, error: error.message };
             }
         }
 
 /**
-     * Метод для отправки лайка по продукту
+     * Метод для получения лайка по продукту
      * @returns {Object} - Объект с результатом
      */
 async getLikes(req, productId) {
@@ -48,17 +48,65 @@ async getLikes(req, productId) {
 
         const data = await response.json();
         if (response.ok) {
-            console.log(`POST setLike successfully.`);
+            console.log(`getLikes successfully.`);
             return { success: true, data };
         } else {
-            console.log(`POST setLike failed.`);
+            console.log(`getLikes failed.`);
             return { success: false, status: response.status, data };
         }
     } catch (error) {
-            console.log(`POST setLike failed.`);
+            console.log(`getLikes failed.`);
         return { success: false, error: error.message };
     }
 }
+
+/**
+     * Метод для получения лайка по продукту
+     * @returns {Object} - Объект с результатом
+     */
+async getReviewCount(req, productId) {
+    try {        
+        const response = await fetch(process.env.RECOMMENDATION_SERVICE_REVIEW_URL+`/${productId}/counter`, {
+            method: 'GET',
+            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+        });    
+
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`getReviewCount successfully.`);
+            return { success: true, data };
+        } else {
+            console.log(`getReviewCount failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+            console.log(`getReviewCount failed.`);
+        return { success: false, error: error.message };
+    }
+}
+
+
+async getRating(req, productId) {
+    try {        
+        const response = await fetch(process.env.RECOMMENDATION_SERVICE_RATING_URL+`/${productId}`, {
+            method: 'GET',
+            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+        });    
+
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`getReviewCount successfully.`);
+            return { success: true, data };
+        } else {
+            console.log(`getReviewCount failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+            console.log(`getReviewCount failed.`);
+        return { success: false, error: error.message };
+    }
+}
+
 
 }
 

@@ -20,7 +20,6 @@ class MainApp {
 	    product-id="${product.productId}"
 	    like="${product.like}"
 	    status= "active"                        
-            href="${o.api.getShopProductMethod(null, product.productId)}"
             image-src="${product.mediaFiles[0].mediaKey}"
             image-alt="${product.productName}"
             brand="Brand"
@@ -32,6 +31,7 @@ class MainApp {
             basket-count="${product.basketCount}"
         </product-card>
 `
+//            href="${o.api.getShopProductMethod(null, product.productId)}"
   }
 
 
@@ -65,7 +65,7 @@ class MainApp {
                     $("div.product-card-container").append(o.showCaseCardOutput(product)).show();
                 });
                 
-                $('.fotorama').fotorama(); // переинициализация картинок
+//                $('.fotorama').fotorama(); // переинициализация картинок
                 
                 o.loading = false; // Сбрасываем флаг загрузки
             })

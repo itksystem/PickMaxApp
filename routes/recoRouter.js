@@ -15,10 +15,11 @@ const _response = new ResponseHelper();
 const RecommendatuionServiceHandler = require("../handlers/RecommendatuionServiceHandler");
 const recoClient = new RecommendatuionServiceHandler();
 
-router.post('/v1/like', 	
+router.post('/v1/like/:productId', 	
 	async (req, res) => {        
       try {
-          let {productId, status} = req.body;           
+          let {status} = req.body;           
+          let productId = req.params.productId;                     
           if(!productId) return res.status(400).json({ code: 400, message:  commonFunction.getDescriptionByCode(400)});            
           const response = await recoClient.setLike(req);
           if (!response.success)  throw(response?.status || 500)

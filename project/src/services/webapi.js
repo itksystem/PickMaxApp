@@ -258,8 +258,8 @@ class WebAPI {
    removeItemBasketMethod(){  return `/api/bff/warehouse/v1/basket/item` }
 /* */
    setProductLikeMethod(productId=null){
-     return `/api/bff/reco/v1/like` 
-}
+     return `/api/bff/reco/v1/like/${(productId) ? productId : ''}` 
+ }
 
 /* Получить продукт */
    getShopProductDetailsMethod(productId){  return `/api/bff/warehouse/v1/products/${productId}` }

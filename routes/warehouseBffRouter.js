@@ -21,6 +21,13 @@ router.get('/v1/products/:id',
           if(!id) { throw(common.HTTP_CODES.BAD_REQUEST.code) }
           const response = await warehouseClient.getProductById(commonFunction.getJwtToken(req), id);
           if (!response.success)  throw(response?.status || 500)
+            let _likes = await recoClient.getLikes(req, id);
+            response.data.likes = (_likes?.data) ? _likes?.data?.likes : 0;     
+            response.data.like = (_likes?.data) ? _likes?.data?.status: 0;       
+            let _reviews = await recoClient.getReviewCount(req, id);
+            response.data.reviews = (_reviews?.data) ? _reviews?.data?.reviewCount: 0;                   
+            let _rating = await recoClient.getRating(req, id);
+            response.data.rating = (_rating?.data) ? _rating?.data?.rating: 0;                   
           res.status(200).json(response.data);             
         } catch (error) {
            logger.error(error || 'Неизвестная ошибка' );   
@@ -36,8 +43,8 @@ router.get('/v1/products/:id',
           const response = await warehouseClient.getProducts(commonFunction.getJwtToken(req),categoryId);
           for (const item of response.data) {
             let _likes = await recoClient.getLikes(req, item.productId);
-               item.likes = (_likes?.data) ? _likes?.data?.likes : 0;     
-               item.like = (_likes?.data) ? _likes?.data?.status: 0;                                    
+             item.likes = (_likes?.data) ? _likes?.data?.likes : 0;     
+             item.like = (_likes?.data) ? _likes?.data?.status: 0;                                    
             }               
           if (!response.success)  throw(response?.status || 500)
           res.status(200).json(response.data);            
@@ -88,7 +95,7 @@ router.get('/v1/products/:id',
 	async (req, res) => {  
         try {            
             const response = await warehouseClient.deletePositionFromBasket(commonFunction.getJwtToken(req), req.params.productId);
-            if (!response.success)  throw(response?.status || 500)
+            if (!response.success)  throw(response?.status || 500)                
                 res.status(200).json(response.data);            
         } catch (error) {
                 logger.error(error || 'Неизвестная ошибка' );   

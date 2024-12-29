@@ -1,22 +1,51 @@
-  document.querySelectorAll('.toggle-content').forEach(button => {
-    button.addEventListener('click', function() {
-        // Используем 'this' для ссылки на кнопку, по которой кликнули
-        const collapse = this.closest('.header').nextElementSibling.querySelector('.collapse');
-        const isExpanded = this.getAttribute('aria-expanded') === 'true';
-         console.log(isExpanded);
-        // Показать или скрыть контент
-        collapse.style.display = isExpanded ? 'none' : 'block';
-        this.setAttribute('aria-expanded', !isExpanded);
+class DropdownSection extends HTMLElement {
+    constructor() {
+        super();
 
-        // Найти родительский элемент <section> и добавить класс
-        let  section = this.closest('.faq-item');
-        if (!section)  section = this.closest('section');
-        if (section) {
+        // Создаем Shadow DOM
+        this.attachShadow({ mode: 'open' });
+
+        // Подключаем внешний CSS
+        const link = document.createElement('link');
+        link.setAttribute('rel', 'stylesheet');
+        link.setAttribute('href', '/src/components/ui/dropdown-section/css/dropdown-section.css');
+        this.shadowRoot.appendChild(link);
+        let expanded = this.getAttribute('aria-expanded') || false;
+        // Шаблон компонента
+        this.shadowRoot.innerHTML += `
+            <div class="dropdown-section">
+                <div class="dropdown-section__header">
+                    <h3><slot name="title">Dropdown Section</slot></h3>
+                    <button class="dropdown-section__toggle footer__btn-open" aria-expanded="${!expanded}"></button>
+                </div>
+                <div class="dropdown-section__content"><slot></slot></div>
+            </div>
+        `;
+    }
+
+    connectedCallback() {
+        this.toggleButton = this.shadowRoot.querySelector('.dropdown-section__toggle');
+        this.content = this.shadowRoot.querySelector('.dropdown-section__content');
+        this.section = this.shadowRoot.querySelector('.dropdown-section');
+        this.toggleButton.addEventListener('click', () => this.toggle());
+	this.toggle();
+    }
+
+    toggle() {
+        const isExpanded = this.toggleButton.getAttribute('aria-expanded') === 'true';
+        this.toggleButton.setAttribute('aria-expanded', !isExpanded);
             if (isExpanded) {
-                section.classList.remove('dropdown-open');
+                this.section.classList.remove('dropdown-open');
             } else {
-                section.classList.add('dropdown-open');
+                this.section.classList.add('dropdown-open');
             }
-        }
-    });
-  });
+
+    }
+
+    disconnectedCallback() {
+        this.toggleButton.removeEventListener('click', this.toggle);
+    }
+}
+
+// Регистрация кастомного элемента
+customElements.define('dropdown-section', DropdownSection);

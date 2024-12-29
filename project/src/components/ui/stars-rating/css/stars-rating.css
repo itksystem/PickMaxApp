@@ -1,0 +1,62 @@
+/* Основной контейнер для рейтинга */
+.rating-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+}
+
+/* Звезда (по умолчанию) */
+.rating-stars__star {
+  width: 0.9rem;
+  height: 0.9rem;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTQuMjA4IDQuMmwuMjk2LS4wMjcuMTE3LS4yNzNMNiAuNjk4IDcuMzggMy45bC4xMTYuMjczLjI5Ni4wMjcgMy40NzIuMzIyLTIuNjIgMi4zMDEtLjIyMy4xOTYuMDY2LjI5Ljc2NiAzLjQwMS0yLjk5OC0xLjc4TDYgOC43NzhsLS4yNTUuMTUyLTIuOTk4IDEuNzguNzY2LTMuNDAxLjA2Ni0uMjktLjIyMy0uMTk2LTIuNjItMi4zMDFMNC4yMDggNC4yeiIgc3Ryb2tlPSIjQjA4MjRBIi8+PC9zdmc+");
+  background-size: cover;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+/* Активная звезда */
+.rating-stars__star.active {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTQuMjA4IDQuMmwuMjk2LS4wMjcuMTE3LS4yNzNMNiAuNjk4IDcuMzggMy45bC4xMTYuMjczLjI5Ni4wMjcgMy40NzIuMzIyLTIuNjIgMi4zMDEtLjIyMy4xOTYuMDY2LjI5Ljc2NiAzLjQwMS0yLjk5OC0xLjc4TDYgOC43NzhsLS4yNTUuMTUyLTIuOTk4IDEuNzguNzY2LTMuNDAxLjA2Ni0uMjktLjIyMy0uMTk2LTIuNjItMi4zMDFMNC4yMDggNC4yeiIgZmlsbD0iI0Y4QzA1MiIgc3Ryb2tlPSIjRjhDMDUyIi8+PC9zdmc+");
+  transform: scale(1.1);
+}
+
+
+/* Полу-звезда */
+.rating-stars__star.half1 {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQiIHgyPSIwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMCUiPjwvbGluZWFyR3JhZGllbnQ+CiAgPHBhdGggZD0iTTYuMDAyIDAuMDAyTDAgNC4yTDEuMzggMTEuMTZMNiAxMS42MUw2IDAuMDAyWiIgZmlsbD0iI0Y4QzA1MiIvPgogIDxwYXRoIGQ9Ik02IDExLjYxTDkuODUgNy4zODRMMTIgNC4yMDdMNiAwLjAwMlYxMS42MVoiIGZpbGw9IiNmZmYiLz4KPC9zdmc+");
+}
+
+.rating-stars__star.half {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHN0eWxlPi5oYWxmIHtjbGlwLXBhdGg6IHVybCgjY2xpcC0xKTt9PC9zdHlsZT48Y2xpcFBhdGggaWQ9ImNsaXAtMSI+PHJlY3Qgd2lkdGg9IjYiIGhlaWdodD0iMTIiIGZpbGw9IiNmOGMwNTIiLz48L2NsaXBQYXRoPjxwYXRoIGNsYXNzPSJoYWxmIiBkPSJNNiAxTDEuNyA0LjdsMS42IDQuOUwzLjYgMTFsMi40LTEuMmwzLjIgMi4xLTEuNi00LjkgMi40LTEuOEg2eiIgZmlsbD0iI0Y4QzA1MiIgc3Ryb2tlPSIjRjhDMDUyIi8+PC9zdmc+")
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.fa-star {
+    color: #ffc700;
+    font-size: 0.7rem;
+}
+
+
+/* Значение рейтинга */
+.rating-stars__value {
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.rating-stars__stars{
+    display: flex;
+    gap: 4px;
+    cursor: pointer;
+}
+
+
+.rating-stars__counter {
+    font-size: 0.75rem;
+    gap: 5px;
+}
+
