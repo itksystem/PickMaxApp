@@ -108,6 +108,28 @@ async getRating(req, productId) {
 }
 
 
+async getReviews(req, productId) {
+    try {        
+        const response = await fetch(process.env.RECOMMENDATION_SERVICE_REVIEWS_URL+`/${productId}`, {
+            method: 'GET',
+            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+        });    
+
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`getReviewCount successfully.`);
+            return { success: true, data };
+        } else {
+            console.log(`getReviewCount failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+            console.log(`getReviewCount failed.`);
+        return { success: false, error: error.message };
+    }
+}
+
+
 }
 
 module.exports = RecommendationServiceHandler;

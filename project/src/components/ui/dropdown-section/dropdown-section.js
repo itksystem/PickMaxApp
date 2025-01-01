@@ -11,6 +11,7 @@ class DropdownSection extends HTMLElement {
         link.setAttribute('href', '/src/components/ui/dropdown-section/css/dropdown-section.css');
         this.shadowRoot.appendChild(link);
         let expanded = this.getAttribute('aria-expanded') || false;
+        this.link = this.getAttribute('link') || null;
         // Шаблон компонента
         this.shadowRoot.innerHTML += `
             <div class="dropdown-section">
@@ -27,16 +28,21 @@ class DropdownSection extends HTMLElement {
         this.toggleButton = this.shadowRoot.querySelector('.dropdown-section__toggle');
         this.content = this.shadowRoot.querySelector('.dropdown-section__content');
         this.section = this.shadowRoot.querySelector('.dropdown-section');
-        this.toggleButton.addEventListener('click', () => this.toggle());
-	this.toggle();
+        this.toggleButton.addEventListener('click', () => this.toggle(true));
+	this.toggle(false);
     }
 
-    toggle() {
+    toggle(click = false) {
+        if(this.link && click) document.location.href = this.link;
         const isExpanded = this.toggleButton.getAttribute('aria-expanded') === 'true';
         this.toggleButton.setAttribute('aria-expanded', !isExpanded);
+	    if(this.link) {
+                this.section.classList.add('dropdown-link');
+	    }
             if (isExpanded) {
                 this.section.classList.remove('dropdown-open');
             } else {
+	    if(!this.link) 
                 this.section.classList.add('dropdown-open');
             }
 

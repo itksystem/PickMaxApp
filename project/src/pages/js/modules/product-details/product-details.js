@@ -62,10 +62,23 @@ class ProductDetails extends HTMLElement {
 	  	  <p class="product-details__description"></p>
         </dropdown-section>
 
-	<dropdown-section class="reviews-box">
-		  <span slot="title">Отзывы от товаре</span>
-	  	  <p class="product-details__reviews"></p>
-        </dropdown-section>
+
+	 <div class="row">
+           <div class="col-6 pe-1">
+		<dropdown-section class="reviews-box" link="">
+		  <span slot="title">Отзывы о товаре</span>
+  		  <p class="product-details__reviews"></p>
+	        </dropdown-section>
+	   </div>
+           <div class="col-6 ps-1">
+		<dropdown-section class="product-my-mail-box" link="/products/mailbox/">
+		  <span slot="title">Ваша переписка</span>
+  		  <p class="product-details__reviews"></p>
+	        </dropdown-section>
+	    </div>
+        </div>
+
+
 
 	<dropdown-section class="see-also-box" aria-expanded="true">
 		  <span slot="title">Смотреть также</span>
@@ -258,6 +271,10 @@ class ProductDetails extends HTMLElement {
   }
 
   setReviewsBox(reviews = null){
+    let reviewsSection =this.shadowRoot.querySelector('dropdown-section.reviews-box');
+    if(reviewsSection) {
+      reviewsSection.setAttribute("link", `/reviews/${this.getAttribute("product-id")}/page`);
+    }
     let reviewsBox = this.shadowRoot.querySelector('.reviews-box');
     if(reviews == 0)    
 	reviewsBox?.classList.add('d-none');

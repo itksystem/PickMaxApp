@@ -1,4 +1,4 @@
-class ProductDetails extends HTMLElement {
+class ProductShortDetails extends HTMLElement {
   constructor() {
     super();
     let o = this;
@@ -13,95 +13,41 @@ class ProductDetails extends HTMLElement {
          <div class = "product-details-card-box">
              <div class="ribbon-wrapper ribbon-lg">
                 <div class="ribbon"></div>
-  	           </div>
-                       <a class="pred-link">
-			 <div class="product-details-pred-wrap">
-				<svg width="45" height="35" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">                    
-				  <!-- Диагональные линии стрелки с белой окантовкой -->
-				  <path d="M18 8L12 14L18 20" class="back-arrow" stroke="white" stroke-width="4" fill="none"></path>
-  
-				  <!-- Горизонтальная линия стрелки с белой окантовкой -->
-				  <path d="M18 14H14 31" class="back-arrow" stroke="white" stroke-width="4" fill="none"></path>
-
-				  <!-- Черная внутренняя линия, чтобы скрыть лишние белые промежутки -->
-				  <path d="M18 8L12 14L18 20" class="back-arrow" stroke="black" stroke-width="2" fill="none"></path>
-				  <path d="M18 14H14 30" class="back-arrow" stroke="black" stroke-width="2" fill="none"></path>
-				</svg>
-			</div>
-		      </a>	
-
-                       <a class="like-link">
-			 <div class="like-wrap">
-				<svg width="35" height="35" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-				  <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" 
-				  class="like" stroke="black" stroke-width="2" fill="white"/>
-			    </svg>
-			</div>
-		      </a>	
+             </div>
+   	      <icon-button template="product.details" style="position: absolute; left: 2rem; top: 1rem;"></icon-button>
 
         <div class="product-details__swiper">
           <div class="product-details__swiper-container">
-            <!-- Изображения будут добавлены динамически -->
           </div>
           <div class="product-details__swiper-indicators"></div>
         </div>
         <div class="product-details__content">
-	<div class="row">
+     	  <div class="row">
            <div class="col-6">
               <p>
                <span class="product-details__price"></span>     
                <del class="price-block__old-price"></del>     
               </p>
 	    </div>
-            <div class="col-6">
-               <div class="product-details__btn-group">
-	 	 <div class="row">
-        	   <div class="col-12">
-		      <div class="rating"></div>
-                   </div>
-        	   <div class="col-12"></div>
-                 </div>		
-              </div>
-            </div>
        </div>
      </div>
-	    <div class="discount-box"></div>
    </div>
-	 <div class="product-details-card-title-box">
-		<div class="row">
-	  	 <div class="col-12">
-        	    <div class="product-details__seller-type"></div>
-	         </div>
-		 <div class="col-12">
-	            <div class="product-details__title"></div>
-	         </div>
-               </div>
+  <div class="product-details-card-title-box">
+     <div class="row">
+   	 <div class="col-12">
+       	    <div class="product-details__seller-type"></div>
          </div>
-
-
-         <div class = "product-details-description-box">
-            <div class="product-details__options">
-              <h1 class="product-page__options_title">Описание</h1>
-	        <p class="product-details__description"></p>
-             </div>
+	 <div class="col-12">
+            <div class="product-details__title"></div>
          </div>
       </div>
+  </div>
 
-      <div class="product-details-add-basket-button-box">   	
-	<div class="row">
-           <div class="col-12">
-              <div>
-               <span class="product-details__price"></span>     
-               <del class="price-block__old-price"></del>     
-   	       <div class="product-details__short_title text-truncate" style="max-width: fit-content; padding: 0.4rem;"></div>
-              </div>
-	    </div>
-            <div class="col-12">
-                 <basket-button class="button-add-to-basket"></basket-button>
-            </div>
-       </div>
-      </div>
-
+  <dropdown-section>
+       <span slot="title">Описание товара</span>
+       <p class="product-details__description"></p>
+  </dropdown-section>
+ </div>
     `;
 
     // Добавление шаблона в shadow DOM
@@ -121,26 +67,7 @@ class ProductDetails extends HTMLElement {
     this._addEventListeners();
   }
 
-  _getRating(){   // Рейтинг
-   const stars = document.querySelectorAll('.star');
-   const ratingValue = this.getAttribute('stars');
-   const reviews = this.getAttribute('reviews');
-   console.log(ratingValue);
-   let html = '';
-   if(stars){
-    html=`<span>4.3 </span>`;
-    stars.forEach(s => s.classList.remove('active'));
-     for (let i = 0; i < 5; i++) {
-        let active = (i <= ratingValue) ? 'active' : '';
-	html+=`<span class="star ${active}" data-value="${i}"></span>`
-      }
-    if(reviews) 
-     html+=`<reviews>(${reviews} отзывов)</reviews>`;
-     html+=`</div>`;
-   }
-    return html;
-   }
-
+/*
   _getDiscount(discount){
    return (discount > 0 ) ? `Скидка ${discount}%` : ``;
   }
@@ -148,12 +75,13 @@ class ProductDetails extends HTMLElement {
   _getSellerType(sellerType){
     switch(sellerType) {
     case `ORGANIZATION`:   return `Организация`;  
-    case `INDIVIDUAL_ENTREPRENEUR`:   return `Индивидуальный предприниматель`;  
+    case `INDIVIDUAL_ENTREPRENEUR`:   return `ИП`;  
+    case `INDIVIDUAL`: 
     default:
      return `Физическое лицо`;  
     }
   }
-
+*/
 
   _render() {
     // Заполнение данных
@@ -172,17 +100,98 @@ class ProductDetails extends HTMLElement {
         el.textContent = this.getAttribute('title') || '';
     });
 
+   /* */
+//    this.setRating(this.shadowRoot.querySelector('stars-rating'), (this.getAttribute('reviews') || 0));
+//    this.setReviewsBox(this.getAttribute('reviews') || 0);
+    console.log(this.attributes);
+    console.log(this.getAttribute('product-id') || this.getAttribute('id'));
+    this.setGotoProductCardButton(this.getAttribute('product-id') || 0);
+//    this.setDiscountBox(this._getDiscount(this.getAttribute('discount') || 0));
+//    this.setSellerTypeBox(this._getSellerType(this.getAttribute('seller-type') || ''));
+    this.setMainImage();
+//    this.setSeeAlsoBox();
+  }
+
+  _addEventListeners() {
+    let o = this;
+    const swiperContainer = this.shadowRoot.querySelector('.product-details__swiper-container');
+    swiperContainer?.addEventListener('touchstart', this._onTouchStart.bind(this));
+    swiperContainer?.addEventListener('touchmove', this._onTouchMove.bind(this));
+    swiperContainer?.addEventListener('touchend', this._onTouchEnd.bind(this));
+
+ // Добавляем обработчик для события прокрутки колесика мыши
+    swiperContainer?.addEventListener('wheel', this._onWheel.bind(this));
+  }
+
+  setSeeAlsoBox(){
+    try {
+        let o = this;
+        o.page = 1;
+        let webRequest = new WebRequest();
+        const urlParams = new URLSearchParams(window.location.search); // Получаем текущий URL
+        const active = urlParams.get('active'); // Извлекаем значение параметра 'active'
+
+        
+        function loadProducts(page) { // Функция загрузки товаров с пагинацией
+            if (o.loading) return;    // Предотвращаем повторную загрузку
+            o.loading = true;
+            
+            let request = webRequest.post(o.api.getShopProductsMethod(o.page, o.limit), {}, false )
+            .then(function(data) {
+                data.forEach(product => {
+			const container = o.shadowRoot.querySelector("div.product-card-container");
+			console.log(container);
+
+			const productCard = document.createElement('product-short-card');
+		        productCard.setAttribute('product-id', product.productId);
+		        productCard.setAttribute('like', product.like);
+		        productCard.setAttribute('status', 'active');
+//		        productCard.setAttribute('href', o.api.getShopProductMethod(null, product.productId));
+		        productCard.setAttribute('image-src', product.mediaFiles[0]?.mediaKey || '');
+		        productCard.setAttribute('image-alt', product.productName);
+		        productCard.setAttribute('brand', 'Brand');
+		        productCard.setAttribute('name', product.productName);
+		        productCard.setAttribute('current-price', product.price);
+		        productCard.setAttribute('old-price', product.price * 1.3);
+		        productCard.setAttribute('currency-type', '₽');
+		        productCard.setAttribute('aria-label', product.productName);
+		        productCard.setAttribute('basket-count', product.basketCount);
+
+			container.appendChild(productCard);
+
+               });
+                o.loading = false; // Сбрасываем флаг загрузки
+            })
+            .catch(function(error) {
+                console.log('initializeProductCard.Произошла ошибка =>', error);
+		toastr.error('Ошибка при получении товаров', 'Товары', {timeOut: 3000});
+                o.loading = false; // Сбрасываем флаг загрузки при ошибке
+            });
+        }
+
+        // Изначально загружаем первую порцию товаров
+        loadProducts(o.page);
+
+        // Обработчик прокрутки страницы для догрузки товаров
+        $(window).on('scroll', function() {
+            if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+                o.page++; // Увеличиваем номер страницы
+                loadProducts(o.page); // Загружаем следующую порцию товаров
+            }
+        });
+
+    } catch (e) {
+        console.log('initializeProductCard.catch =>', e);
+    }
+    return this;
+ }
 
 
-    this.shadowRoot.querySelector('.rating').innerHTML = this._getRating() || '';
-    this.shadowRoot.querySelector('.discount-box').innerHTML = this._getDiscount(this.getAttribute('discount') || 0);
-    this.shadowRoot.querySelector('.product-details__seller-type').innerHTML = this._getSellerType(this.getAttribute('seller-type') || '');
+  setMainImage(){
     // Добавление изображений
-    console.log(this.hasAttribute('images'));
-
     const imageUrls = this.hasAttribute('images') && this.getAttribute('images')
-    ? this.getAttribute('images').split(',').map(url => url.trim()).filter(Boolean)
-    : ['/src/pages/images/card_no_photo_image.png'];
+	    ? this.getAttribute('images').split(',').map(url => url.trim()).filter(Boolean)
+	    : ['/src/pages/images/card_no_photo_image.png'];
 
     console.log(imageUrls);
     const swiperContainer = this.shadowRoot.querySelector('.product-details__swiper-container');
@@ -191,15 +200,15 @@ class ProductDetails extends HTMLElement {
     if(imageUrls)
      imageUrls.forEach((url, index) => {
       const img = document.createElement('img');
-      img.src = url || 'https://via.placeholder.com/300';
-      img.alt = this.getAttribute('title');
-      img.classList.add('product-details__swiper-image');
-      swiperContainer.appendChild(img);
+       img.src = url || '/src/pages/images/card_no_photo_image.png';
+       img.alt = this.getAttribute('title');
+       img.classList.add('product-details__swiper-image');
+       swiperContainer.appendChild(img);
 
       const indicator = document.createElement('span');
-      indicator.classList.add('product-details__swiper-indicator');
-      if (index === 0) indicator.classList.add('active');
-      indicatorsContainer.appendChild(indicator);
+       indicator?.classList.add('product-details__swiper-indicator');
+       if (index === 0) indicator?.classList.add('active');
+       indicatorsContainer?.appendChild(indicator);
     });
 
     // Сохраняем контейнер в переменной, чтобы позже обновить его
@@ -207,42 +216,42 @@ class ProductDetails extends HTMLElement {
     this._updateSwiper();
   }
 
-  _addEventListeners() {
-    let o = this;
-    const swiperContainer = this.shadowRoot.querySelector('.product-details__swiper-container');
-    swiperContainer.addEventListener('touchstart', this._onTouchStart.bind(this));
-    swiperContainer.addEventListener('touchmove', this._onTouchMove.bind(this));
-    swiperContainer.addEventListener('touchend', this._onTouchEnd.bind(this));
+  setRating(rating = null, reviews = null){
+    rating?.setAttribute('stars', this.getAttribute('stars') || 0); // Устанавливаем новое значение атрибута
+    rating?.setAttribute('reviews', reviews ); // Устанавливаем новое значение атрибут
+  }
+/*
 
- // Добавляем обработчик для события прокрутки колесика мыши
-    swiperContainer.addEventListener('wheel', this._onWheel.bind(this));
-
-    const backButton = this.shadowRoot.querySelector('.product-details-pred-wrap');
-    backButton.addEventListener('click', (e) => {
-	    e.stopPropagation();
-	    window.history.back();
-	});
-
-     let likeWrap = this.shadowRoot.querySelector('.like-link');
-     let likePath = likeWrap.querySelector('path.like');
-     const productId = this.getAttribute('product-id');
-     let isLiked = this.getAttribute('like');
-     console.log(isLiked);
-     likeWrap.classList.add('liked'); // Добавляем класс liked
-     likePath.setAttribute('stroke', (isLiked == 1) ? 'white' : 'black');
-     likePath.setAttribute('fill', (isLiked == 1) ? 'red' : 'white');
-
-    likeWrap.addEventListener('click', (e) => {
-	console.log(e);
-	    e.stopPropagation();
-	    likeWrap.classList.toggle('liked');
-	    const isLiked = likeWrap.classList.contains('liked');
-	    likePath.setAttribute('stroke', isLiked ? 'white' : 'black');
-	    likePath.setAttribute('fill', isLiked ? 'red' : 'white');
-	    o.setLike(productId, isLiked);
-    });
+  setReviewsBox(reviews = null){
+    let reviewsBox = this.shadowRoot.querySelector('.reviews-box');
+    if(reviews == 0)    
+	reviewsBox?.classList.add('d-none');
+    this.shadowRoot.querySelector('reviews').innerHTML = (reviews > 0 ) ? `` : 'Пока нет отзывов';
   }
 
+  setSellerTypeBox(sellerType = null){
+    this.shadowRoot.querySelector('.product-details__seller-type').innerHTML = sellerType;
+  }
+
+  setDiscountBox(discount = null){
+    this.shadowRoot.querySelector('.discount-box').innerHTML = discount;
+  }
+
+
+  setLikeButton(like = null, likes = null){
+    const likeButton = this.shadowRoot.querySelector('icon-button[template="like"]');
+    likeButton?.setAttribute('value', like); 
+    likeButton?.setAttribute('id', likes); 
+   }
+*/
+
+  setGotoProductCardButton(id = null){
+     const button = this.shadowRoot.querySelector('icon-button[template="product.details"]');
+     button?.setAttribute('product-id', id); 
+   }
+
+
+/*
  setLike(productId , status) {
      let o = this; 
      let webRequest = new WebRequest();
@@ -253,7 +262,7 @@ class ProductDetails extends HTMLElement {
        console.log('setLike.Произошла ошибка =>', error);
      });
    }
-
+*/
 
 _onWheel(event) {
   const images = this.shadowRoot.querySelectorAll('.product-details__swiper-image');
@@ -350,4 +359,4 @@ _onWheel(event) {
   }
 }
 
-customElements.define('product-details', ProductDetails);
+customElements.define('product-short-card', ProductShortDetails);

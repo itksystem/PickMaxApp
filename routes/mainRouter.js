@@ -55,8 +55,7 @@ const protectedRoutes = [
     { method : 'GET', path: '/orders/payment/success/:referenceId', page: common.COMMON_PAYMENT_PAGE, service :{service : 'payment-success'} },
     { method : 'GET', path: '/orders/payment/failed/:referenceId', page: common.COMMON_PAYMENT_PAGE, service :{service : 'payment-failed'} },    
     { method : 'GET', path: '/orders/:id', page: common.COMMON_GET_ORDER_PAGE, service :{} }, 
-    
-        
+    { method : 'GET', path: '/reviews/:id/page', page: common.COMMON_GET_REVIEWS_PAGE, service :{service : 'reviews'}},  
 ];
 
 // Регистрация защищенных маршрутов

@@ -226,3 +226,24 @@ reviews {
     flex-wrap: wrap;
     justify-content: left;
 }
+.reviews-box {
+ display: inline-table;
+ width: -webkit-fill-available;
+}
+
+.product-details-card-dialog{
+ margin: 0;
+}
+
+.review-card-container {
+    position: relative;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 0.625rem;
+    /* box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1); */
+    width: auto;
+    font-size: 0.9rem;
+    font-family: "Roboto Condensed", sans-serif;
+    height: max-content;
+    margin: 0.2rem;
+}

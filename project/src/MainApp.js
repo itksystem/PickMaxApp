@@ -135,6 +135,40 @@ class MainApp {
     return this;
  }
 
+
+/* Вывод страницы профиля */
+ showReviewsPage() {
+  let o = this;
+  let webRequest = new WebRequest();
+  const url = window.location.pathname; // Получаем путь 
+  const match = url.match(/\/reviews\/([^/]+)\/page/);
+  o.productId = match ? match[1] : null;
+  console.log(o.productId);
+
+  let request = webRequest.get(o.api.getShopProductDetailsMethod(o.productId),  {}, false )
+     .then(function(product) {
+       const reviewsPage = new ReviewsCardPage("reviews-card-container");
+       reviewsPage.ReviewsContainer(product);
+
+       webRequest.get(o.api.getReviewsMethod(o.productId),  {}, false )
+        .then(function(data) {
+            console.log(data)                        
+  	   reviewsPage.render();
+            data.reviews.forEach(item => {
+		new ReviewItem("review-items-box", item);
+           });
+        })                                
+     .catch(function(error) {
+       console.log('showReviewsPage.Произошла ошибка =>', error);
+     })
+    })                                
+    .catch(function(error) {
+       console.log('showReviewsPage.Произошла ошибка =>', error);
+     });       
+    return this;
+ }
+
+
  showProductDetailsPage() {
   let o = this;
   const urlParams = new URLSearchParams(window.location.search); // Получаем текущий URL

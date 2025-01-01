@@ -101,6 +101,12 @@
 .dropdown-open .footer__btn-open:before {
     transform: rotate(180deg);
 }
+
+.dropdown-link .footer__btn-open:before {
+    transform: rotate(-90deg);
+}
+
+
 dropdown-section ul {
     list-style-type: disc;
     padding-left: 1.25rem;

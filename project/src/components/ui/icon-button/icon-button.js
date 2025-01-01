@@ -12,7 +12,7 @@ class IconButton extends HTMLElement {
         const template = this.getAttribute('template');
         const templateData = this.getTemplateData(template);
 
-        this.id = this.getAttribute('id');
+        this.id = this.getAttribute('product-id');
         this.readonly = this.getAttribute('readonly') || this.getAttribute('readonly') || true ;
         this.iconPassive = this.getAttribute('icon-passive') || templateData?.iconPassive || '';
         this.iconActive = this.getAttribute('icon-active') || templateData?.iconActive || '';
@@ -65,6 +65,24 @@ class IconButton extends HTMLElement {
 				  <path d="M18 14H14 30" class="back-arrow" stroke="white" stroke-width="2" fill="red"></path>
 				</svg>`
 	     },
+            'product.details': {
+                templateName: 'product.details',
+                redirect: `/products/${o.id}`,
+		iconPassive :`<svg width="45" height="35" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">                    
+				  <path d="M18 8L12 14L18 20" class="back-arrow" stroke="white" stroke-width="4" fill="none"></path>
+				  <path d="M18 14H14 31" class="back-arrow" stroke="white" stroke-width="4" fill="none"></path>
+				  <path d="M18 8L12 14L18 20" class="back-arrow" stroke="black" stroke-width="2" fill="none"></path>
+				  <path d="M18 14H14 30" class="back-arrow" stroke="black" stroke-width="2" fill="white"></path>
+				</svg>`,
+  	        iconActive : `
+			<svg width="45" height="35" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">                    
+				  <path d="M18 8L12 14L18 20" class="back-arrow" stroke="white" stroke-width="4" fill="none"></path>
+				  <path d="M18 14H14 31" class="back-arrow" stroke="white" stroke-width="4" fill="none"></path>
+				  <path d="M18 8L12 14L18 20" class="back-arrow" stroke="black" stroke-width="2" fill="none"></path>
+				  <path d="M18 14H14 30" class="back-arrow" stroke="white" stroke-width="2" fill="red"></path>
+				</svg>`
+	     },
+
             'like': {
                 templateName: 'like',
                 action: `${o.api.setProductLikeMethod(o.id)}`,
@@ -103,6 +121,10 @@ class IconButton extends HTMLElement {
 	console.log(this.templateName);
         if(this.templateName == 'window.history.back') {
 	   window.history.back();
+	   return;
+	} else
+        if(this.templateName == 'product.details') {
+	   window.location.href = this.redirect+`${this.getAttribute("product-id")}/page`;
 	   return;
 	} else
         if (this.redirect) {

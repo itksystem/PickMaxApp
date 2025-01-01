@@ -126,6 +126,8 @@ body{
            {{>profile}}
     {{else ifEquals service "payment"}}
            {{>payment}}
+    {{else ifEquals service "reviews"}}
+           {{>reviews}}
     {{else ifEquals service "payment-success"}}
            {{>payment_success}}
     {{else ifEquals service "payment-failed"}}
