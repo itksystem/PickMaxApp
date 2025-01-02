@@ -67,22 +67,6 @@ class ProductShortDetails extends HTMLElement {
     this._addEventListeners();
   }
 
-/*
-  _getDiscount(discount){
-   return (discount > 0 ) ? `Скидка ${discount}%` : ``;
-  }
-
-  _getSellerType(sellerType){
-    switch(sellerType) {
-    case `ORGANIZATION`:   return `Организация`;  
-    case `INDIVIDUAL_ENTREPRENEUR`:   return `ИП`;  
-    case `INDIVIDUAL`: 
-    default:
-     return `Физическое лицо`;  
-    }
-  }
-*/
-
   _render() {
     // Заполнение данных
     this.shadowRoot.querySelector('.product-details__description').textContent = this.getAttribute('description') || 'Product Description';
@@ -100,16 +84,8 @@ class ProductShortDetails extends HTMLElement {
         el.textContent = this.getAttribute('title') || '';
     });
 
-   /* */
-//    this.setRating(this.shadowRoot.querySelector('stars-rating'), (this.getAttribute('reviews') || 0));
-//    this.setReviewsBox(this.getAttribute('reviews') || 0);
-    console.log(this.attributes);
-    console.log(this.getAttribute('product-id') || this.getAttribute('id'));
     this.setGotoProductCardButton(this.getAttribute('product-id') || 0);
-//    this.setDiscountBox(this._getDiscount(this.getAttribute('discount') || 0));
-//    this.setSellerTypeBox(this._getSellerType(this.getAttribute('seller-type') || ''));
     this.setMainImage();
-//    this.setSeeAlsoBox();
   }
 
   _addEventListeners() {
@@ -122,70 +98,6 @@ class ProductShortDetails extends HTMLElement {
  // Добавляем обработчик для события прокрутки колесика мыши
     swiperContainer?.addEventListener('wheel', this._onWheel.bind(this));
   }
-
-  setSeeAlsoBox(){
-    try {
-        let o = this;
-        o.page = 1;
-        let webRequest = new WebRequest();
-        const urlParams = new URLSearchParams(window.location.search); // Получаем текущий URL
-        const active = urlParams.get('active'); // Извлекаем значение параметра 'active'
-
-        
-        function loadProducts(page) { // Функция загрузки товаров с пагинацией
-            if (o.loading) return;    // Предотвращаем повторную загрузку
-            o.loading = true;
-            
-            let request = webRequest.post(o.api.getShopProductsMethod(o.page, o.limit), {}, false )
-            .then(function(data) {
-                data.forEach(product => {
-			const container = o.shadowRoot.querySelector("div.product-card-container");
-			console.log(container);
-
-			const productCard = document.createElement('product-short-card');
-		        productCard.setAttribute('product-id', product.productId);
-		        productCard.setAttribute('like', product.like);
-		        productCard.setAttribute('status', 'active');
-//		        productCard.setAttribute('href', o.api.getShopProductMethod(null, product.productId));
-		        productCard.setAttribute('image-src', product.mediaFiles[0]?.mediaKey || '');
-		        productCard.setAttribute('image-alt', product.productName);
-		        productCard.setAttribute('brand', 'Brand');
-		        productCard.setAttribute('name', product.productName);
-		        productCard.setAttribute('current-price', product.price);
-		        productCard.setAttribute('old-price', product.price * 1.3);
-		        productCard.setAttribute('currency-type', '₽');
-		        productCard.setAttribute('aria-label', product.productName);
-		        productCard.setAttribute('basket-count', product.basketCount);
-
-			container.appendChild(productCard);
-
-               });
-                o.loading = false; // Сбрасываем флаг загрузки
-            })
-            .catch(function(error) {
-                console.log('initializeProductCard.Произошла ошибка =>', error);
-		toastr.error('Ошибка при получении товаров', 'Товары', {timeOut: 3000});
-                o.loading = false; // Сбрасываем флаг загрузки при ошибке
-            });
-        }
-
-        // Изначально загружаем первую порцию товаров
-        loadProducts(o.page);
-
-        // Обработчик прокрутки страницы для догрузки товаров
-        $(window).on('scroll', function() {
-            if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
-                o.page++; // Увеличиваем номер страницы
-                loadProducts(o.page); // Загружаем следующую порцию товаров
-            }
-        });
-
-    } catch (e) {
-        console.log('initializeProductCard.catch =>', e);
-    }
-    return this;
- }
-
 
   setMainImage(){
     // Добавление изображений
@@ -216,53 +128,11 @@ class ProductShortDetails extends HTMLElement {
     this._updateSwiper();
   }
 
-  setRating(rating = null, reviews = null){
-    rating?.setAttribute('stars', this.getAttribute('stars') || 0); // Устанавливаем новое значение атрибута
-    rating?.setAttribute('reviews', reviews ); // Устанавливаем новое значение атрибут
-  }
-/*
-
-  setReviewsBox(reviews = null){
-    let reviewsBox = this.shadowRoot.querySelector('.reviews-box');
-    if(reviews == 0)    
-	reviewsBox?.classList.add('d-none');
-    this.shadowRoot.querySelector('reviews').innerHTML = (reviews > 0 ) ? `` : 'Пока нет отзывов';
-  }
-
-  setSellerTypeBox(sellerType = null){
-    this.shadowRoot.querySelector('.product-details__seller-type').innerHTML = sellerType;
-  }
-
-  setDiscountBox(discount = null){
-    this.shadowRoot.querySelector('.discount-box').innerHTML = discount;
-  }
-
-
-  setLikeButton(like = null, likes = null){
-    const likeButton = this.shadowRoot.querySelector('icon-button[template="like"]');
-    likeButton?.setAttribute('value', like); 
-    likeButton?.setAttribute('id', likes); 
-   }
-*/
-
   setGotoProductCardButton(id = null){
      const button = this.shadowRoot.querySelector('icon-button[template="product.details"]');
      button?.setAttribute('product-id', id); 
    }
 
-
-/*
- setLike(productId , status) {
-     let o = this; 
-     let webRequest = new WebRequest();
-     let request = webRequest.post(o.api.setProductLikeMethod(productId),  {productId , status}, false )
-     .then(function(data) {
-      })                                
-     .catch(function(error) {
-       console.log('setLike.Произошла ошибка =>', error);
-     });
-   }
-*/
 
 _onWheel(event) {
   const images = this.shadowRoot.querySelectorAll('.product-details__swiper-image');

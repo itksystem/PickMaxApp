@@ -294,6 +294,7 @@ class WebAPI {
    getShopProfileMethod(){ return `/api/bff/client/v1/profile` }
    saveShopProfileMethod(){ return `/api/bff/client/v1/profile` }
    closeSessionMethod(){ return `/api/bff/client/v1/logout` }
+   getProductDetailsCardMethod(productId) { return `/reviews/${productId}/page`; }
 
 /* Отзывы */
    getReviewsMethod(productId){ return `/api/bff/reco/v1/review/${productId}`}

@@ -192,7 +192,8 @@
 
 .review-box__thumbnail_image{
  width: 2rem;
- padding : 0.2rem;
+ padding : 0.1rem;
+ border-radius: 0px;
 }
 
 .review-box__user {

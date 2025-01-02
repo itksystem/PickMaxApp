@@ -1,6 +1,7 @@
 class ReviewsCardPage extends PageBuilder {
     constructor(containerId) {
         super(containerId);
+	this.containerId = containerId;
         this.api = new WebAPI();
     }
 /**
@@ -56,4 +57,20 @@ class ReviewsCardPage extends PageBuilder {
 
         this.addModule("Reviews", ReviewsContainer);
     }
+
+
+ ReviewsEmptyPage(){
+   const container = document.querySelector('.review-items-box');
+   if (!container) {
+     throw new Error(`Container with class .review-items-box not found.`);
+   }
+   const ReviewsEmptyContainer = document.createElement("div");
+   ReviewsEmptyContainer.className = "review-empty-container";
+   ReviewsEmptyContainer.innerHTML = `
+	<section class="text-center page-padding block-space">
+	    <span class="text-center">У данного товара пока нет отзывов :( </span>
+	</section>`;
+   container.appendChild(ReviewsEmptyContainer);
+ }
+
 }

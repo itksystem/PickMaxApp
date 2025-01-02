@@ -35,8 +35,14 @@ class ReviewItem extends PageBuilder {
               </div>
             </div>
             <div class="row">
+              <div class="col-3 down-avatar-header">		
+              </div>
               <div class="col-9">
-                ${(review.images || []).map(img => `<img src="${img.src}" class="review-box__thumbnail_image">`).join('')}
+		      ${(review.mediaFiles || []).map(img => `<img src="${img.url}" class="review-box__bottom-drawer-click review-box__thumbnail_image">`).join('')}
+		   <bottom-drawer reviews-id="${review.id}" >
+		      <h3 class="card-title">Фотографии</h3>
+                      ${(review.mediaFiles || []).map(img => `<img src="${img.url}" >`).join('')}
+		  </bottom-drawer>
               </div>
             </div>
           </div>
@@ -44,9 +50,30 @@ class ReviewItem extends PageBuilder {
       </section>
     `;
 
+        const link = document.createElement('link');
+        link.setAttribute('rel', 'stylesheet');
+        link.setAttribute('href', '/src/components/ui/bottom-drawer/css/bottom-drawer.css');
+        ReviewItemContainer.appendChild(link);
+
         // Вставить тело в контейнер товара
         ReviewItemContainer.appendChild(ReviewItemBody);
         // Добавить контейнер товара в основной контейнер
         container.appendChild(ReviewItemContainer);
+	const drawers = document.querySelectorAll('.review-box__bottom-drawer-click');
+	drawers.forEach(drawer => {
+	    drawer.addEventListener('click', () => this.openDrawer());
+	});
     }
+
+    attachEvents() {
+        this.drawer.addEventListener('click', () => this.openDrawer());
+    }
+ 
+    openDrawer() {
+      const drawer = document.querySelector(`bottom-drawer`);
+      if (drawer) drawer.open();
+    }
+
 }
+
+

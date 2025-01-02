@@ -84,7 +84,6 @@ class ProductCard extends HTMLElement {
 
         // Клонируем и добавляем шаблон в Shadow DOM
         this.shadowRoot.appendChild(template.content.cloneNode(true));
-
         // Добавляем обработчики событий для управления видео
         this.shadowRoot.querySelector('.play').addEventListener('click', (e) => {
             e.preventDefault();
@@ -98,7 +97,6 @@ class ProductCard extends HTMLElement {
 
         let likeWrap = this.shadowRoot.querySelector('.like-link');
         let likePath = likeWrap.querySelector('path.like');
-        const productId = this.getAttribute('product-id');
 
 	likeWrap.addEventListener('click', (e) => {
 	    e.stopPropagation();
@@ -106,7 +104,7 @@ class ProductCard extends HTMLElement {
 	    const isLiked = likeWrap.classList.contains('liked');
 	    likePath.setAttribute('stroke', isLiked ? 'white' : 'black');
 	    likePath.setAttribute('fill', isLiked ? 'red' : 'white');
-	    o.setLike(productId, isLiked);
+	    o.setLike(o.productId, isLiked);
 	});
 
         let CardWrap = this.shadowRoot.querySelector('.wrapper');
@@ -116,7 +114,7 @@ class ProductCard extends HTMLElement {
 	        CardWrap.classList.remove('clicked');
 	    } else {
 	        CardWrap.classList.add('clicked');
-		window.location.href = `/products/${productId}/page`;
+		window.location.href = `/products/${this.productId}/page`;
 	    }
         });
 
@@ -169,9 +167,11 @@ class ProductCard extends HTMLElement {
             break;
 
 	    case 'product-id':
+	    console.log(newValue);
+            this.productId = newValue;
             const basketButton = this.shadowRoot.querySelector('.button-add-to-basket');
             if (basketButton) {
-                basketButton.setAttribute('product-id', newValue || '');
+                basketButton.setAttribute('product-id', newValue);
             }
             break;
 

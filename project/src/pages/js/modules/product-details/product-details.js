@@ -93,10 +93,10 @@ class ProductDetails extends HTMLElement {
                <del class="price-block__old-price"></del>     
    	       <div class="product-details__short_title text-truncate" style="max-width: fit-content; padding: 0.4rem;"></div>
               </div>
-	    </div>
-            <div class="col-12">
+	   </div>
+           <div class="col-12">
                  <basket-button class="button-add-to-basket"></basket-button>
-            </div>
+           </div>
        </div>
       </div>
     </div>
@@ -104,7 +104,6 @@ class ProductDetails extends HTMLElement {
 
     // Добавление шаблона в shadow DOM
     this.shadowRoot.appendChild(template.content.cloneNode(true));
-
     // Переменные для свайпа
     this.currentIndex = 0;
     this.touchStartX = 0;
@@ -116,7 +115,7 @@ class ProductDetails extends HTMLElement {
 
   connectedCallback() {
     this._render();
-    this._addEventListeners();
+    this._addEventListeners();                          
   }
 
   _getDiscount(discount){
@@ -159,6 +158,7 @@ class ProductDetails extends HTMLElement {
     this.setSellerTypeBox(this._getSellerType(this.getAttribute('seller-type') || ''));
     this.setMainImage();
     this.setSeeAlsoBox();
+    this._slideUpFromBottom('.product-details-add-basket-button-box');
   }
 
   _addEventListeners() {
@@ -189,13 +189,12 @@ class ProductDetails extends HTMLElement {
             .then(function(data) {
                 data.forEach(product => {
 			const container = o.shadowRoot.querySelector("div.product-card-container");
-			console.log(container);
+			console.log(product);
 
 			const productCard = document.createElement('product-card');
 		        productCard.setAttribute('product-id', product.productId);
 		        productCard.setAttribute('like', product.like);
 		        productCard.setAttribute('status', 'active');
-//		        productCard.setAttribute('href', o.api.getShopProductMethod(null, product.productId));
 		        productCard.setAttribute('image-src', product.mediaFiles[0]?.mediaKey || '');
 		        productCard.setAttribute('image-alt', product.productName);
 		        productCard.setAttribute('brand', 'Brand');
@@ -273,11 +272,9 @@ class ProductDetails extends HTMLElement {
   setReviewsBox(reviews = null){
     let reviewsSection =this.shadowRoot.querySelector('dropdown-section.reviews-box');
     if(reviewsSection) {
-      reviewsSection.setAttribute("link", `/reviews/${this.getAttribute("product-id")}/page`);
+      reviewsSection.setAttribute("link", this.api.getProductDetailsCardMethod(this.getAttribute("product-id")));
     }
     let reviewsBox = this.shadowRoot.querySelector('.reviews-box');
-    if(reviews == 0)    
-	reviewsBox?.classList.add('d-none');
     this.shadowRoot.querySelector('reviews').innerHTML = (reviews > 0 ) ? `` : 'Пока нет отзывов';
   }
 
@@ -400,6 +397,29 @@ _onWheel(event) {
     indicators.forEach((indicator, index) => {
       indicator.classList.toggle('active', index === this.currentIndex);
     });
+  }
+
+/**
+ * Плавно открывает блок снизу вверх
+ * @param {string} selector - CSS-селектор блока
+ */
+ _slideUpFromBottom(selector) {
+    const element = this.shadowRoot.querySelector(selector);
+    if (!element) {
+        console.error(`Элемент с селектором "${selector}" не найден.`);
+        return;
+    }
+    // Начальные стили для анимации
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(100%)';
+    element.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+    element.style.display = 'block';
+
+    // Задержка для старта анимации
+    setTimeout(() => {
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+    }, 1000); // Скр
   }
 }
 

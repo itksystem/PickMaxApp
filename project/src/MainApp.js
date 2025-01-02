@@ -13,35 +13,12 @@ class MainApp {
       return this;
    }
 
- showCaseCardOutput(product){
-   let o = this;
-   return `
-        <product-card
-	    product-id="${product.productId}"
-	    like="${product.like}"
-	    status= "active"                        
-            image-src="${product.mediaFiles[0].mediaKey}"
-            image-alt="${product.productName}"
-            brand="Brand"
-            name="${product.productName}"
-            current-price="${product.price}"
-            old-price="${product.price*1.30}"
-            currency-type="₽"
-            aria-label="${product.productName}"
-            basket-count="${product.basketCount}"
-        </product-card>
-`
-//            href="${o.api.getShopProductMethod(null, product.productId)}"
-  }
-
-
  showCaseEmptyPageOutput(){
   return `
 	<section class="error-page error-page-option text-center page-padding block-space">
 	    <span class="error-page-title center-text">Сервис товаров временно недоступен</span>
 	</section>`;
  }
-
   
  showCasePage() {
     try {
@@ -62,11 +39,22 @@ class MainApp {
             )
             .then(function(data) {
                 data.forEach(product => {
-                    $("div.product-card-container").append(o.showCaseCardOutput(product)).show();
+  	       	    const container = document.querySelector("div.product-card-container");
+		     const productCard = document.createElement('product-card');
+		     productCard.setAttribute('product-id', product.productId);
+		     productCard.setAttribute('like', product.like);
+		     productCard.setAttribute('status', 'active');
+		     productCard.setAttribute('image-src', product.mediaFiles[0]?.mediaKey || '');
+		     productCard.setAttribute('image-alt', product.productName);
+		     productCard.setAttribute('brand', 'Brand');
+		     productCard.setAttribute('name', product.productName);
+		     productCard.setAttribute('current-price', product.price);
+		     productCard.setAttribute('old-price', product.price * 1.3);
+		     productCard.setAttribute('currency-type', '₽');
+		     productCard.setAttribute('aria-label', product.productName);
+		     productCard.setAttribute('basket-count', product.basketCount);
+		     container.appendChild(productCard);
                 });
-                
-//                $('.fotorama').fotorama(); // переинициализация картинок
-                
                 o.loading = false; // Сбрасываем флаг загрузки
             })
             .catch(function(error) {
@@ -154,9 +142,14 @@ class MainApp {
         .then(function(data) {
             console.log(data)                        
   	   reviewsPage.render();
+
+	 if(data.reviews.length) {
             data.reviews.forEach(item => {
 		new ReviewItem("review-items-box", item);
-           });
+            });
+	  } else {
+	    reviewsPage.ReviewsEmptyPage();
+	 }
         })                                
      .catch(function(error) {
        console.log('showReviewsPage.Произошла ошибка =>', error);

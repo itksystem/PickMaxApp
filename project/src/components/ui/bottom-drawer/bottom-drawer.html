@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BottomDrawer с HTML-контентом</title>
+    <script src="bottom-drawer.js" defer></script>
+    <link rel="stylesheet" href="bottom-drawer.css">
+    <style>
+        .open-drawer-button {
+            margin: 2rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .open-drawer-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>BottomDrawer с HTML-контентом</h1>
+    <button class="open-drawer-button" onclick="openDrawer()">Открыть BottomDrawer</button>
+
+    <bottom-drawer action-id="action123">
+        <h3>HTML-контент внутри BottomDrawer</h3>
+        <p>Это пример <strong>HTML-контента</strong> внутри компонента.</p>
+        <ul>
+            <li>Пункт 1</li>
+            <li>Пункт 2</li>
+            <li>Пункт 3</li>
+        </ul>
+	<img src="https://openfsm.ru/main/pages/telegram/jobs/images/shops/88aa0800-1343-11ec-aecd-0242ac140000/c12da366-9a80-4bc7-ae41-e98f3a91638b.jpg" class="review-box__thumbnail_image"><img src="https://openfsm.ru/main/pages/telegram/jobs/images/shops/88aa0800-1343-11ec-aecd-0242ac140000/c12da366-9a80-4bc7-ae41-e98f3a91638b.jpg" class="review-box__thumbnail_image"><img src="https://openfsm.ru/main/pages/telegram/jobs/images/shops/88aa0800-1343-11ec-aecd-0242ac140000/c12da366-9a80-4bc7-ae41-e98f3a91638b.jpg" class="review-box__thumbnail_image"><img src="https://openfsm.ru/main/pages/telegram/jobs/images/shops/88aa0800-1343-11ec-aecd-0242ac140000/c12da366-9a80-4bc7-ae41-e98f3a91638b.jpg" class="review-box__thumbnail_image"><img src="https://openfsm.ru/main/pages/telegram/jobs/images/shops/88aa0800-1343-11ec-aecd-0242ac140000/c12da366-9a80-4bc7-ae41-e98f3a91638b.jpg" class="review-box__thumbnail_image">
+
+    </bottom-drawer>
+
+    <script>
+        function openDrawer() {
+            const drawer = document.querySelector('bottom-drawer');
+            if (drawer) drawer.open();
+        }
+
+        document.addEventListener('bottom-drawer-action', (e) => {
+            console.log('Действие выполнено с action-id:', e.detail.actionId);
+            alert(`Действие выполнено с action-id: ${e.detail.actionId}`);
+        });
+    </script>
+
+</body>
+</html>
