@@ -1,0 +1,33 @@
+const express = require('express');
+const multer = require('multer');
+
+const app = express();
+const PORT = 3000;
+
+// Настройка multer
+const upload = multer({
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+    fileFilter: (req, file, cb) => {
+        const allowedTypes = ['image/png', 'image/jpeg'];
+        if (allowedTypes.includes(file.mimetype)) {
+            cb(null, true);
+        } else {
+            cb(new Error('Invalid file type'));
+        }
+    }
+});
+
+app.use(express.static('public'));
+
+app.post('/upload', upload.single('file'), (req, res) => {
+    res.status(200).json({ message: 'File uploaded successfully' });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+    res.status(400).json({ error: err.message });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});

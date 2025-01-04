@@ -5,13 +5,14 @@ const common = require("openfsm-common"); // Библиотека с общим�
 const AuthServiceClientHandler = require("openfsm-auth-service-client-handler");
 const authClient = new AuthServiceClientHandler();              // интерфейс для  связи с MC AuthService
 const axios = require('axios'); // Импорт библиотеки axios
+const multer = require('multer');
+
 
 const CommonFunctionHelper = require("openfsm-common-functions")
 const ResponseHelper = require("openfsm-response-helper")
 const commonFunction= new CommonFunctionHelper();
 
 const _response = new ResponseHelper();
-
 const RecommendatuionServiceHandler = require("../handlers/RecommendatuionServiceHandler");
 const recoClient = new RecommendatuionServiceHandler();
 
@@ -71,6 +72,66 @@ router.post('/v1/like/:productId',
           res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
       }
    });   
+
+
+   router.post('/v1/review/:productId/', 	
+	async (req, res) => {        
+      try {                   
+          let productId = req.params.productId;                     
+          if(!productId) return res.status(400).json({ code: 400, message:  commonFunction.getDescriptionByCode(400)});            
+          const response = await recoClient.setRating(req, productId);
+          if (!response.success)  throw(response?.status || 500)
+          res.status(200).json(response.data);            
+      } catch (error) {
+          logger.error(error || 'Неизвестная ошибка' );   
+          res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
+      }
+   });   
+
+
+// Настройка хранилища для файлов
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, common.COMMON_PATH_TO_SITE+'/uploads/'); // Папка для сохранения файлов
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`);
+    }
+});
+
+// Проверка типа файла
+const fileFilter = (req, file, cb) => {
+    if (['image/png', 'image/jpeg'].includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(new Error('Invalid file type'), false);
+    }
+};
+
+// Инициализация Multer
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter,
+    limits: { fileSize: 10 * 1024 * 1024 } // 10MB
+});
+
+   router.post('/v1/review/:productId/upload', 	upload.array('file', 5),
+	async (req, res) => {        
+      try {                   
+          let productId = req.params.productId;                     
+          if(!productId) return res.status(400).json({ code: 400, message:  commonFunction.getDescriptionByCode(400)});            
+          const fileUrls = req.files.map(file => `/uploads/${file.filename}`);
+          res.json({ productId,  message: 'Files uploaded successfully!',    files: fileUrls  });
+//          const response = await recoClient.setRating(req, productId);
+  //        if (!response.success)  throw(response?.status || 500)
+          res.status(200).json(productId);            
+      } catch (error) {
+          logger.error(error || 'Неизвестная ошибка' );   
+          res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
+      }
+   });   
+   
+   
    
 
    module.exports = router;

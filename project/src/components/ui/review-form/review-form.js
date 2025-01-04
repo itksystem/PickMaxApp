@@ -35,17 +35,11 @@ class ReviewForm extends HTMLElement {
 	  <li><button class="emoji review-form__add-emoji-button">😢</button></li>
 	  <li><button class="emoji review-form__add-emoji-button">👍</button></li>
 	  <li><button class="emoji review-form__add-emoji-button">👎</button></li>
-	  <li class="webkit-fill-available">
-		<div class="w-100 text-end padding-end">
-			<button class="btn btn-outline-primary btn-block review-form__add-photo-button">
-				<i class="fa-solid fa-paperclip"></i>
-			</button>
-		</div>
-	  </li>
         </ul>
         </div>
-	
+	<h3 class="review-form__title">Добавьте фотографии</h3>
         <div class="review-form__photos">
+ 	  <file-upload allowed-types="image/png,image/jpeg,image/jpg" max-size="10"></file-upload>
           <input type="file" id="photo-upload" class="review-form__photo-input" accept="image/*" multiple hidden>
                     <div class="review-form__thumbnails"></div>
         </div>
@@ -60,7 +54,6 @@ class ReviewForm extends HTMLElement {
     const textarea = this.shadowRoot.querySelector('.review-form__textarea');
     const emojiPanel = this.shadowRoot.querySelector('.review-form__emoji-panel');
     const photoInput = this.shadowRoot.querySelector('#photo-upload');
-    const addPhotoButton = this.shadowRoot.querySelector('.review-form__add-photo-button');
     const thumbnails = this.shadowRoot.querySelector('.review-form__thumbnails');
     const submitButton = this.shadowRoot.querySelector('.review-form__submit-button');
 
@@ -75,53 +68,6 @@ class ReviewForm extends HTMLElement {
       if (e.target.tagName === 'SPAN') {
         textarea.value += e.target.textContent;
         textarea.focus();
-      }
-    });
-
-    // Добавление фото
-    addPhotoButton.addEventListener('click', () => {
-      photoInput.click();
-    });
-
-    photoInput.addEventListener('change', async (e) => {
-      const files = Array.from(e.target.files);
-      for (const file of files) {
-        const formData = new FormData();
-        formData.append('file', file);
-
-        try {
-          const response = await fetch('/v1/review/photo/upload', {
-            method: 'POST',
-            body: formData,
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            this.uploadedFiles.push(data.url);
-
-            const thumbnailWrapper = document.createElement('div');
-            thumbnailWrapper.classList.add('review-form__thumbnail-wrapper');
-
-            const img = document.createElement('img');
-            img.src = data.url;
-            img.alt = 'Thumbnail';
-
-            const removeButton = document.createElement('button');
-            removeButton.classList.add('review-form__thumbnail-remove');
-            removeButton.textContent = '×';
-
-            removeButton.addEventListener('click', () => {
-              this.uploadedFiles = this.uploadedFiles.filter((url) => url !== data.url);
-              thumbnailWrapper.remove();
-            });
-
-            thumbnailWrapper.appendChild(img);
-            thumbnailWrapper.appendChild(removeButton);
-            thumbnails.appendChild(thumbnailWrapper);
-          }
-        } catch (error) {
-          console.error('Ошибка загрузки фото:', error);
-        }
       }
     });
 
