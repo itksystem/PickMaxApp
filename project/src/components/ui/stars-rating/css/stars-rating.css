@@ -60,3 +60,7 @@
     gap: 5px;
 }
 
+
+.review-form.card .fa-star {
+  font-size: 2rem;
+}

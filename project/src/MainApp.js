@@ -124,7 +124,7 @@ class MainApp {
  }
 
 
-/* Вывод страницы профиля */
+/* Вывод страницы отзывов */
  showReviewsPage() {
   let o = this;
   let webRequest = new WebRequest();
@@ -160,6 +160,44 @@ class MainApp {
      });       
     return this;
  }
+
+
+/* Вывод страницы отзыва пользователя */
+ showReviewsMyPage() {
+  let o = this;
+  let webRequest = new WebRequest();
+  const url = window.location.pathname; // Получаем путь 
+  const match = url.match(/\/reviews\/([^/]+)\/my\/review\/page/);
+  o.productId = match ? match[1] : null;
+  console.log(o.productId);
+
+  let request = webRequest.get(o.api.getShopProductDetailsMethod(o.productId),  {}, false )
+     .then(function(product) {
+       const reviewsPage = new ReviewsCardPage("reviews-card-container");
+       reviewsPage.ReviewsContainer(product);
+       webRequest.get(o.api?.getReviewUserMethod(o.productId),  {}, false ).then(function(data) {
+            console.log(data)                        
+      	    reviewsPage.render();
+
+	 if(data.reviews.length) {
+            data.reviews.forEach(item => {
+		new ReviewItem("review-items-box", item);
+            });
+	  } else {
+	    reviewsPage.ReviewsEmptyPage();
+	 }
+       }).catch(function(error) {
+       console.log('showReviewsPage.Произошла ошибка =>', error);
+      reviewsPage.ReviewsEmptyPage();
+     })
+    })                                
+    .catch(function(error) {
+       console.log('showReviewsPage.Произошла ошибка =>', error);
+      reviewsPage.ReviewsEmptyPage();
+     });       
+     return this;
+ }
+
 
 
  showProductDetailsPage() {

@@ -2,17 +2,23 @@ class StarsRating extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this.api = new WebAPI();
+    console.log(this);
+  }
+
+  connectedCallback() {
     this.rating = parseFloat(this.getAttribute('stars')) || 0; // Текущий рейтинг
     this.reviews = this.getAttribute('reviews') || 0; // Текущий рейтинг
+    this.productId = this.getAttribute('product-id') || null; // продукт
     this.maxStars = 5; // Максимальное количество звезд
     this.selectedRating = this.rating; // Рейтинг, выбранный пользователем
-    console.log(this);
     this.render();
-    this.readonly = this.getAttribute('readonly') || this.getAttribute('readonly') || true ;
+    this.readonly = this.getAttribute('readonly') || false ;
     console.log(`this.readonly ${this.readonly}`);
-    if(!this.readonly)
+    if(this.readonly == false )
       this.addEventListeners();
   }
+
 
   render() {
     // Подключаем внешние стили
@@ -54,17 +60,25 @@ class StarsRating extends HTMLElement {
 	star.classList.add('fa-star-half-stroke');
       }
       star.dataset.value = i;
+      if(this.getAttribute("star-size"))
+        star.style.fontSize = this.getAttribute("star-size");
       starsContainer.appendChild(star);
     }
       if(this.rating > 0) starsValueContainer.innerHTML = `${this.rating}`; // количество проголосовавших
-      starsCounterContainer.innerHTML = ` ( ${(this.reviews < 1000) ? this.reviews : (this.reviews / 1000).toFixed(0) + 'k'} )`; // количество проголосовавших
-
+      let method = this.api?.getProductDetailsCardMethod(this.productId);
+      if(method && this.productId) {
+         starsCounterContainer.innerHTML = 
+	`( <a href="${method}">${(this.reviews < 1000) ? this.reviews : (this.reviews / 1000).toFixed(0) + 'k'}</a> )`; // количество проголосовавших
+	} else 
+	if(this.reviews > 0)
+         starsCounterContainer.innerHTML = 
+	` ( ${(this.reviews < 1000) ? this.reviews : (this.reviews / 1000).toFixed(0) + 'k'} )`; // количество проголосовавших
   }
 
   addEventListeners() {
     const starsContainer = this.shadowRoot.querySelector('.rating-stars__stars');
     starsContainer.addEventListener('click', (event) => {
-      if (event.target.classList.contains('rating-stars__star')) {
+      if (event.target.classList.contains('fa-star')) {
         this.selectedRating = parseInt(event.target.dataset.value);
         this.rating = this.selectedRating;
         this.updateStars();
@@ -75,7 +89,7 @@ class StarsRating extends HTMLElement {
 
   async sendRating() {
     try {
-      const response = await fetch('/rating', {
+      const response = await fetch(this.api.setRatingMethod(this.productId), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

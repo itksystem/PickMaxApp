@@ -53,8 +53,9 @@ const protectedRoutes = [
     { method : 'GET', path: '/orders/payment/availability-error', page: common.COMMON_PAYMENT_PAGE, service :{service : 'availability-error'} },
     { method : 'GET', path: '/orders/payment/:referenceId', page: common.COMMON_PAYMENT_PAGE, service :{service : 'payment'} },
     { method : 'GET', path: '/orders/payment/success/:referenceId', page: common.COMMON_PAYMENT_PAGE, service :{service : 'payment-success'} },
-    { method : 'GET', path: '/orders/payment/failed/:referenceId', page: common.COMMON_PAYMENT_PAGE, service :{service : 'payment-failed'} },    
+    { method : 'GET', path: '/orders/payment/failed/:referenceId', page: common.COMMON_PAYMENT_PAGE, service :{service : 'payment-failed'} },        
     { method : 'GET', path: '/orders/:id', page: common.COMMON_GET_ORDER_PAGE, service :{} }, 
+    { method : 'GET', path: '/reviews/:id/my/review/page', page: common.COMMON_GET_REVIEWS_PAGE, service :{service : 'reviews-my-page'}},  
     { method : 'GET', path: '/reviews/:id/page', page: common.COMMON_GET_REVIEWS_PAGE, service :{service : 'reviews'}},  
 ];
 

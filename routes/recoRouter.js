@@ -44,6 +44,33 @@ router.post('/v1/like/:productId',
       }
    });   
 
+   router.get('/v1/review/:productId/my/review', 	
+	async (req, res) => {        
+      try {                   
+          let productId = req.params.productId;                     
+          if(!productId) return res.status(400).json({ code: 400, message:  commonFunction.getDescriptionByCode(400)});            
+          const response = await recoClient.getReviewUser(req, productId);
+          if (!response.success)  throw(response?.status || 500)
+          res.status(200).json(response.data);            
+      } catch (error) {
+          logger.error(error || 'Неизвестная ошибка' );   
+          res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
+      }
+   });   
+
+   router.post('/v1/rating/:productId/', 	
+	async (req, res) => {        
+      try {                   
+          let productId = req.params.productId;                     
+          if(!productId) return res.status(400).json({ code: 400, message:  commonFunction.getDescriptionByCode(400)});            
+          const response = await recoClient.setRating(req, productId);
+          if (!response.success)  throw(response?.status || 500)
+          res.status(200).json(response.data);            
+      } catch (error) {
+          logger.error(error || 'Неизвестная ошибка' );   
+          res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
+      }
+   });   
    
 
    module.exports = router;

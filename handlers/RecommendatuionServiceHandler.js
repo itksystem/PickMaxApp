@@ -129,6 +129,50 @@ async getReviews(req, productId) {
     }
 }
 
+async getReviewUser(req, productId) {
+    try {        
+        const response = await fetch(process.env.RECOMMENDATION_SERVICE_REVIEWS_URL+`/${productId}/my/review`, {
+            method: 'GET',
+            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+        });    
+
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`getReviewCount successfully.`);
+            return { success: true, data };
+        } else {
+            console.log(`getReviewCount failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+            console.log(`getReviewCount failed.`);
+        return { success: false, error: error.message };
+    }
+}
+
+async setRating(req, productId) {
+    try {        
+        const response = await fetch(process.env.RECOMMENDATION_SERVICE_RATING_URL+`/${productId}`, {
+            method: 'POST',
+            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+            body: JSON.stringify(req.body),
+        });    
+
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`getReviewCount successfully.`);
+            return { success: true, data };
+        } else {
+            console.log(`getReviewCount failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+            console.log(`getReviewCount failed.`);
+        return { success: false, error: error.message };
+    }
+}
+
+
 
 }
 

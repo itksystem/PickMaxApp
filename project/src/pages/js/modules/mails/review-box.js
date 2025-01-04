@@ -8,6 +8,10 @@ class ReviewsSection extends HTMLElement {
   }
 
   connectedCallback() {
+    const styleLink = document.createElement('link');
+    styleLink.setAttribute('rel', 'stylesheet');
+    styleLink.setAttribute('href', '/src/pages/js/modules/reviews/css/review-box.css');
+
     const styleLink2 = document.createElement('link');
     styleLink2.setAttribute('rel', 'stylesheet');
     styleLink2.setAttribute('href', '/src/pages/plugins/fontawesome-free/css/all.min.css');
@@ -15,11 +19,6 @@ class ReviewsSection extends HTMLElement {
     const styleLink3 = document.createElement('link');
     styleLink2.setAttribute('rel', 'stylesheet');
     styleLink2.setAttribute('href', '/src/pages/css/bootstrap.min.css');
-
-    const styleLink = document.createElement('link');
-    styleLink.setAttribute('rel', 'stylesheet');
-    styleLink.setAttribute('href', '/src/pages/js/modules/reviews/css/review-box.css');
-
     this.shadowRoot.appendChild(styleLink);
     this.shadowRoot.appendChild(styleLink2);
     this.shadowRoot.appendChild(styleLink3);

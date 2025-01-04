@@ -280,14 +280,10 @@ class WebAPI {
    getShopOrdersMethod(){  return `/api/bff/orders/v1/orders` }
    getShopOrdersMethodPayload(){  return {} }
 
-/* Установка like */
-   getShopOrderDetailsMethod(orderId=null){
-     return `/api/bff/warehouse/v1/order/${orderId}/details` 
-}
+/* Получиение детализации заказа */
+   getShopOrderDetailsMethod(orderId=null){  return `/api/bff/warehouse/v1/order/${orderId}/details` }
 
-   getShopOrderMethod(orderId=null){
-     return `/api/bff/orders/v1/order/${orderId}`
-}
+   getShopOrderMethod(orderId=null){  return `/api/bff/orders/v1/order/${orderId}`}
 
 
 /* Профиль */
@@ -298,6 +294,9 @@ class WebAPI {
 
 /* Отзывы */
    getReviewsMethod(productId){ return `/api/bff/reco/v1/review/${productId}`}
+   getReviewUserMethod(productId){ return `/api/bff/reco/v1/review/${productId}/my/review`}
+/* Установка rating */
+   setRatingMethod(productId=null){  return `/api/bff/reco/v1/rating/${productId}`}
 
 
    LOGON_URL(){ return `/logout` }

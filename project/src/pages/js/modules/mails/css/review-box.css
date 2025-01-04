@@ -196,11 +196,6 @@
  border-radius: 0px;
 }
 
-.review-form.card .fa-star {
-  font-size: 2rem;
-}
-
-
 .review-box__user {
     padding: 0.2rem;
     border-radius: 5px;
@@ -260,10 +255,4 @@
     border: 1px solid #ece8e8;
     width: 1.5rem;
     height: 1.5rem;
-}
-
-.review-item{
-    box-shadow: 0 0.125rem 0.3125rem rgba(0,0,0,0.1);
-    padding: 0.5rem;
-    margin-bottom: 0.3rem;
 }

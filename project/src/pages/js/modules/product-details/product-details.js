@@ -34,7 +34,7 @@ class ProductDetails extends HTMLElement {
                <div class="product-details__btn-group">
 	 	 <div class="row">
         	   <div class="col-12">
-                      <stars-rating stars="0"></stars-rating>
+                      <stars-rating stars="0" readonly=true ></stars-rating>
                    </div>
         	   <div class="col-12">
                       <reviews></reviews>
@@ -276,6 +276,8 @@ class ProductDetails extends HTMLElement {
     }
     let reviewsBox = this.shadowRoot.querySelector('.reviews-box');
     this.shadowRoot.querySelector('reviews').innerHTML = (reviews > 0 ) ? `` : 'Пока нет отзывов';
+    let _stars_rating = this.shadowRoot?.querySelector('stars-rating');
+    _stars_rating?.setAttribute("product-id", this.getAttribute("product-id"));
   }
 
   setSellerTypeBox(sellerType = null){
