@@ -80,7 +80,9 @@
 }
 
 .file-upload__file-progress {
-    height: 10px;
+    height: 4px;
+    width: 90%;
+    margin-left: 5%;
     background: #eee;
     border-radius: 4px;
     overflow: hidden;

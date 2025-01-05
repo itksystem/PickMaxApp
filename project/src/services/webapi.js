@@ -294,10 +294,15 @@ class WebAPI {
 
 /* Отзывы */
    getReviewsMethod(productId){ return `/api/bff/reco/v1/review/${productId}`}
-   getReviewUserMethod(productId){ return `/api/bff/reco/v1/review/${productId}/my/review`}
+   getReviewMethod(productId){ return `/api/bff/reco/v1/review/${productId}/my/review`}
+   setReviewMethod(productId=null){ return `/api/bff/reco/v1/review/${productId}`}
+   setReviewMethodPayload(review=null){ return {review}}
+
+
 /* Установка rating */
    setRatingMethod(productId=null){  return `/api/bff/reco/v1/rating/${productId}`}
-
+   reviewFilesUploadMethod(productId=null){  
+	return `/api/bff/reco/v1/review/${productId}/upload`}
 
    LOGON_URL(){ return `/logout` }
 

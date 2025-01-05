@@ -85,6 +85,18 @@
   cursor: pointer;
 }
 
+.review-form__submit-button[disabled] {
+  margin-top: 16px;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #e9eae9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
 .review-box__rating-title {
   margin: 0 0 0.3rem 0;
   font-size: 0.8rem;
@@ -125,4 +137,5 @@ ul.review-form__buttons li.webkit-fill-available{
     border: none;
     background: unset;
 }
+
 

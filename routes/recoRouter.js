@@ -6,6 +6,7 @@ const AuthServiceClientHandler = require("openfsm-auth-service-client-handler");
 const authClient = new AuthServiceClientHandler();              // интерфейс для  связи с MC AuthService
 const axios = require('axios'); // Импорт библиотеки axios
 const multer = require('multer');
+const path = require('path');
 
 
 const CommonFunctionHelper = require("openfsm-common-functions")
@@ -79,7 +80,7 @@ router.post('/v1/like/:productId',
       try {                   
           let productId = req.params.productId;                     
           if(!productId) return res.status(400).json({ code: 400, message:  commonFunction.getDescriptionByCode(400)});            
-          const response = await recoClient.setRating(req, productId);
+          const response = await recoClient.setReview(req, productId);
           if (!response.success)  throw(response?.status || 500)
           res.status(200).json(response.data);            
       } catch (error) {
@@ -92,10 +93,20 @@ router.post('/v1/like/:productId',
 // Настройка хранилища для файлов
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, common.COMMON_PATH_TO_SITE+'/uploads/'); // Папка для сохранения файлов
+        cb(null, common.COMMON_PATH_TO_SITE + '/uploads/'); // Папка для сохранения файлов
     },
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
+        // Получаем fileId из заголовков запроса
+        const fileId = req.headers['fileid'];
+        const fileExtension = path.extname(file.originalname); // Получаем расширение файла
+
+        if (fileId) {
+            // Если есть fileId, используем его с текущим расширением
+            cb(null, `${fileId}${fileExtension}`);
+        } else {
+            // Если fileId нет, используем текущее время и оригинальное имя файла
+            cb(null, `${Date.now()}-${file.originalname}`);
+        }
     }
 });
 
@@ -121,10 +132,7 @@ const upload = multer({
           let productId = req.params.productId;                     
           if(!productId) return res.status(400).json({ code: 400, message:  commonFunction.getDescriptionByCode(400)});            
           const fileUrls = req.files.map(file => `/uploads/${file.filename}`);
-          res.json({ productId,  message: 'Files uploaded successfully!',    files: fileUrls  });
-//          const response = await recoClient.setRating(req, productId);
-  //        if (!response.success)  throw(response?.status || 500)
-          res.status(200).json(productId);            
+          res.json({ productId,   files: fileUrls  });
       } catch (error) {
           logger.error(error || 'Неизвестная ошибка' );   
           res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });

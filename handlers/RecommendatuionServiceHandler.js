@@ -95,14 +95,14 @@ async getRating(req, productId) {
 
         const data = await response.json();
         if (response.ok) {
-            console.log(`getReviewCount successfully.`);
+            console.log(`getRating successfully.`);
             return { success: true, data };
         } else {
-            console.log(`getReviewCount failed.`);
+            console.log(`getRating failed.`);
             return { success: false, status: response.status, data };
         }
     } catch (error) {
-            console.log(`getReviewCount failed.`);
+            console.log(`getRating failed.`);
         return { success: false, error: error.message };
     }
 }
@@ -117,14 +117,14 @@ async getReviews(req, productId) {
 
         const data = await response.json();
         if (response.ok) {
-            console.log(`getReviewCount successfully.`);
+            console.log(`getReviews successfully.`);
             return { success: true, data };
         } else {
-            console.log(`getReviewCount failed.`);
+            console.log(`getReviews failed.`);
             return { success: false, status: response.status, data };
         }
     } catch (error) {
-            console.log(`getReviewCount failed.`);
+            console.log(`getReviews failed.`);
         return { success: false, error: error.message };
     }
 }
@@ -138,14 +138,14 @@ async getReviewUser(req, productId) {
 
         const data = await response.json();
         if (response.ok) {
-            console.log(`getReviewCount successfully.`);
+            console.log(`getReviewUser successfully.`);
             return { success: true, data };
         } else {
-            console.log(`getReviewCount failed.`);
+            console.log(`getReviewUser failed.`);
             return { success: false, status: response.status, data };
         }
     } catch (error) {
-            console.log(`getReviewCount failed.`);
+            console.log(`getReviewUser failed.`);
         return { success: false, error: error.message };
     }
 }
@@ -160,14 +160,36 @@ async setRating(req, productId) {
 
         const data = await response.json();
         if (response.ok) {
-            console.log(`getReviewCount successfully.`);
+            console.log(`setRating successfully.`);
             return { success: true, data };
         } else {
-            console.log(`getReviewCount failed.`);
+            console.log(`setRating failed.`);
             return { success: false, status: response.status, data };
         }
     } catch (error) {
-            console.log(`getReviewCount failed.`);
+            console.log(`setRating failed.`);
+        return { success: false, error: error.message };
+    }
+}
+
+async setReview(req, productId) {
+    try {        
+        const response = await fetch(process.env.RECOMMENDATION_SERVICE_REVIEW_URL+`/${productId}`, {
+            method: 'POST',
+            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+            body: JSON.stringify(req.body),
+        });    
+
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`setReview successfully.`);
+            return { success: true, data };
+        } else {
+            console.log(`setReview failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+            console.log(`setReview failed.`);
         return { success: false, error: error.message };
     }
 }

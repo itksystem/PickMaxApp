@@ -3,11 +3,13 @@ class FileUpload extends HTMLElement {
         super();
         this.allowedTypes = this.getAttribute('allowed-types')?.split(',') || ['image/png', 'image/jpeg'];
         this.maxSizeMB = parseInt(this.getAttribute('max-size')) || 10;
+        this.api = new WebAPI();
+        this.common = new CommonFunctions();
 
         this.innerHTML = `
-      <link rel="stylesheet" href="/src/pages/plugins/fontawesome-free/css/all.min.css">
-      <link rel="stylesheet" href="/src/components/ui/file-upload/css/file-upload.css">
-      <link rel="stylesheet" href="/src/pages/css/bootstrap.min.css">
+          <link rel="stylesheet" href="/src/pages/plugins/fontawesome-free/css/all.min.css">
+          <link rel="stylesheet" href="/src/components/ui/file-upload/css/file-upload.css">
+          <link rel="stylesheet" href="/src/pages/css/bootstrap.min.css">
             <div class="file-upload__container">
 		<div class="w-100 text-end padding-end">
 		</div>
@@ -28,8 +30,9 @@ class FileUpload extends HTMLElement {
            this.fileInput.click();
          });
 
-//        this.uploadButton.addEventListener('click', () => this.uploadFiles());
 	this.fileInput.addEventListener('change', () => this.showLocalPreviews());
+        this.fileId = this.getAttribute("file-upload-id");
+	this.fileInput.setAttribute("file-upload-id", this.getAttribute("file-upload-id") || "file-upload");
     }
 
     showLocalPreviews() {
@@ -39,10 +42,7 @@ class FileUpload extends HTMLElement {
             const listItem = document.createElement('div');
             listItem.className = 'file-upload__file-item';
             listItem.setAttribute('file-id',index);
-            listItem.innerHTML = `
-		<div class="file-upload__file-preview">
-		</div>
-            `;
+            listItem.innerHTML = `<div class="file-upload__file-preview"></div>`;
            this.fileList.appendChild(listItem);
            let previewContainer = this.querySelector(`.file-upload__file-item[file-id="${index}"]`) || document.createElement('div');
            let filePreviewContainer = previewContainer.querySelector(`.file-upload__file-preview`);
@@ -98,12 +98,19 @@ class FileUpload extends HTMLElement {
     }
 
     async uploadFiles() {
+        let o = this;
         const files = Array.from(this.fileInput.files);
 
         if (files.length === 0) {
             this.showMessage('No files selected', 'error');
             return;
         }
+        files.forEach((file, index) => {
+		file.fileId = o.common.uuid(); // создаем fileId		
+        });
+
+        console.log( { detail: { files } });
+        this.dispatchEvent(new CustomEvent('file-upload-start', { detail: { files } }));
 
         files.forEach((file, index) => {
             if (!this.validateFile(file)) return;
@@ -112,7 +119,8 @@ class FileUpload extends HTMLElement {
             formData.append('file', file);
 
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/api/bff/reco/v1/review/811e4882-476b-4ff7-9a91-20c058db769b/upload', true);
+            xhr.open('POST', o.api.reviewFilesUploadMethod(o.fileId), true);
+	    xhr.setRequestHeader('fileId', file.fileId);
 
             // Прогресс для каждого файла
             xhr.upload.onprogress = (event) => {
@@ -129,6 +137,8 @@ class FileUpload extends HTMLElement {
                 if (xhr.status === 200) {
                     console.log(file);
                     this.showMessage(`Файлы загружены успешно.`, 'success');
+		    console.log({ detail: { file, response: xhr.response } });
+		    this.dispatchEvent(new CustomEvent('review-file-upload-success', { detail: { file, response: xhr.response } }));
                 } else {
                     this.showMessage(`Файл ${file.name} ошибка загрузки!`, 'error');
                 }

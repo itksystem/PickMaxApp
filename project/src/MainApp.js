@@ -175,7 +175,7 @@ class MainApp {
      .then(function(product) {
        const reviewsPage = new ReviewsCardPage("reviews-card-container");
        reviewsPage.ReviewsContainer(product);
-       webRequest.get(o.api?.getReviewUserMethod(o.productId),  {}, false ).then(function(data) {
+       webRequest.get(o.api?.getReviewMethod(o.productId),  {}, false ).then(function(data) {
             console.log(data)                        
       	    reviewsPage.render();
 
