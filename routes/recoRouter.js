@@ -51,7 +51,7 @@ router.post('/v1/like/:productId',
       try {                   
           let productId = req.params.productId;                     
           if(!productId) return res.status(400).json({ code: 400, message:  commonFunction.getDescriptionByCode(400)});            
-          const response = await recoClient.getReviewUser(req, productId);
+          const response = await recoClient.getReview(req, productId);
           if (!response.success)  throw(response?.status || 500)
           res.status(200).json(response.data);            
       } catch (error) {

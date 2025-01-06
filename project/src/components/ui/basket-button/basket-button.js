@@ -1,7 +1,6 @@
 class BasketButton extends HTMLElement {
   constructor() {
     super();
-    console.log(this);
     // Свойства компонента
     this.productId = this.getAttribute('product-id') || null;
     this.count = parseInt(this.getAttribute('basket-count') || '0', 10); // Получаем значение count из атрибута

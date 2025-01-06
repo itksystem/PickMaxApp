@@ -129,7 +129,7 @@ async getReviews(req, productId) {
     }
 }
 
-async getReviewUser(req, productId) {
+async getReview(req, productId) {
     try {        
         const response = await fetch(process.env.RECOMMENDATION_SERVICE_REVIEWS_URL+`/${productId}/my/review`, {
             method: 'GET',
