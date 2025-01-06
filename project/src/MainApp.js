@@ -507,6 +507,7 @@ class MainApp {
     const el = document.querySelector(elementSelector);
     if (el) el.textContent = value;
     if (el) el.value = value;
+  return el;
  }
 
  showProfilePage(){
@@ -523,12 +524,13 @@ class MainApp {
 	 	 profilePage.ProfileCardContainer();
 	  	 profilePage.render();
 
-	  	 o.setProfileValueElement('[id="login"]', data.profile?.login ?? '') 
-	  	 o.setProfileValueElement('[id="surname"]', data?.profile?.surname ?? '') 
-	  	 o.setProfileValueElement('[id="firstname"]', data?.profile?.name ?? '') 
-	  	 o.setProfileValueElement('[id="patronymic"]', data?.profile?.patronymic ?? '') 
-	  	 o.setProfileValueElement('[id="phone"]', data?.profile?.phone ?? '') 
-	  	 o.setProfileValueElement('[id="address"]', data?.profile?.address ?? 'адрес') 
+	  	 let login = o.setProfileValueElement('[id="login"]', data.profile?.login ?? '') 
+	  	 let surname = o.setProfileValueElement('[id="surname"]', data?.profile?.surname ?? '') 
+	  	 let firstname = o.setProfileValueElement('[id="firstname"]', data?.profile?.name ?? '') 
+	  	 let patronymic = o.setProfileValueElement('[id="patronymic"]', data?.profile?.patronymic ?? '') 
+	  	 let phone = o.setProfileValueElement('[id="phone"]', data?.profile?.phone ?? '') 
+	  	 let address = document.querySelector('x-autocomplete');
+                 address.setValue(data?.profile?.address ?? '');
 
               // Слушатели событий
 		var validator = new InputMaskValidator({ id : 'phone', error : 'phone-error'});
@@ -571,9 +573,7 @@ class MainApp {
 	        }
 
 	    const saveProfileButton = document.querySelector('button.profile-button');
-		console.log('saveProfileButton=>',saveProfileButton);
 	    if (saveProfileButton) {
-		console.log(saveProfileButton);
 	        saveProfileButton.addEventListener('click', () => {
 		  let request = webRequest.post(o.api.saveShopProfileMethod(), 
 			{                                          
@@ -581,8 +581,11 @@ class MainApp {
 			  name : firstname.value,
 			  patronymic : patronymic.value,
 			  phone : phone.value,
-			  address : address.value
-			},  false )
+			  address : address.input.object.value,
+			  fiasId : address.input.object.fiasId
+
+			},  
+			false )
 		     .then(function(data) {
 		       toastr.success('Профиль сохранен', 'Профиль', {timeOut: 3000});
 	        }).catch(function(error) {

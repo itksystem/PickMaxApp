@@ -120,7 +120,7 @@ class ProfileSection extends PageBuilder {
     errorElement.textContent = feedbackError;
     container.appendChild(errorElement);
 
-    return container;
+    return container;                                    
   }
 
 }

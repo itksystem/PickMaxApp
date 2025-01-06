@@ -89,6 +89,8 @@ class BasketSection extends PageBuilder {
   let request = webRequest.get(o.api.getShopBasketMethod(),  {}, false )
      .then(function(data) {
            console.log(data)
+	   if(data.basket.length == 0) 
+	   window.location.href = window.location.pathname;
            o.totalQuantity = data?.basket?.reduce((quantity, item) => quantity + item.quantity, 0);
            o.totalAmount = data?.totalAmount;
       // Динамически обновляем значения в DOM
@@ -106,9 +108,11 @@ class BasketSection extends PageBuilder {
 	    });
 
 	  // обновляем записи
- 	   data.basket.forEach(item => {
-            o.updateBasketPrice(item.productId, `${item.quantity*item.price} ₽`); 
-          });
+
+   	     data.basket.forEach(item => {
+              o.updateBasketPrice(item.productId, `${item.quantity*item.price} ₽`); 
+            });
+
 
         })                                
      .catch(function(error) {

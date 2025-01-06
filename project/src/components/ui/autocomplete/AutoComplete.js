@@ -89,16 +89,25 @@ class Autocomplete extends HTMLElement {
 
   // Функция для обновления элементов автозаполнения
   async updateItems(value) {
-    // Очищаем список вариантов
-    // Загружаем данные через AJAX
-    const result = await this.fetchData(value);
-    console.log(result);
-    this.autocompleteItems.innerHTML = '';
-    this.autocompleteItems.classList.add('d-none');
-    // Добавляем отфильтрованные элементы в список
-    if(this.onLoadCallback)
-         this.onLoadCallback(result);
+    if (!value || value.length <= 3) {
+        this.hideItemsBlock();
+        return;
     }
+
+    const result = await this.fetchData(value);
+    this.autocompleteItems.innerHTML = '';
+    this.autocompleteItems.classList.remove('d-none');
+
+    if (this.onLoadCallback) {
+        this.onLoadCallback(result);
+    }
+   try {
+      result?.forEach(item => {
+        this.dropDownListItemDraw(item, item.id, item.name);
+       });
+     } catch(error){
+   }
+  }
 
   onLoad(callback = null) {
     console.log('onLoad');
@@ -131,7 +140,9 @@ class Autocomplete extends HTMLElement {
             headers: {"Content-Type": "application/json","Accept": "application/json"}
        }
       let api= new WebAPI();
-      this.onRequestCallback(this);
+	if (this.onRequestCallback) {
+ 	   this.onRequestCallback(this);
+	}
       const response = await fetch( this.url+value , options);
       const data = await response.json();
       return data;
@@ -163,8 +174,8 @@ class Autocomplete extends HTMLElement {
   handleBlur() {
     let o = this;
     setTimeout(() => {
-  //    this.autocompleteItems.innerHTML = '';
-    //  o.hideItemsBlock() 
+      this.autocompleteItems.innerHTML = '';
+      o.hideItemsBlock() 
     }, 200);
    
   }

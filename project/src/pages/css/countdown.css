@@ -17,8 +17,8 @@
 
 .countdown-progress {
     fill: none;
-    stroke: #000;
-    stroke-width: 2;
+    stroke: #797979;
+    stroke-width: 8;
     stroke-dasharray: 283; /* 2 * PI * r */
     stroke-dashoffset: 0;
     transition: stroke-dashoffset 1s linear;

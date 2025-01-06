@@ -979,6 +979,7 @@ dd {
 .basket-card-price {
     font-size: 1.2rem;
     padding: 0.5rem 0;
+    font-weight: 500;
 }
 
 .basket-card-title{
@@ -1156,4 +1157,8 @@ dd {
   height: 100px;
   background-color: lightblue;
   text-align: center;
+}
+
+.form-label {
+  margin: .5rem 0 0.3rem 0;
 }
