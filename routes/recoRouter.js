@@ -4,6 +4,8 @@ const logger = require("../controllers/LoggerHandler"); // Работа с ло�
 const common = require("openfsm-common"); // Библиотека с общими параметрами
 const AuthServiceClientHandler = require("openfsm-auth-service-client-handler");
 const authClient = new AuthServiceClientHandler();              // интерфейс для  связи с MC AuthService
+const ClientServiceHandler = require("../handlers/ClientServiceHandler");
+const clientService = new ClientServiceHandler();              // интерфейс для  связи с MC AuthService
 const axios = require('axios'); // Импорт библиотеки axios
 const multer = require('multer');
 const path = require('path');
@@ -39,7 +41,24 @@ router.post('/v1/like/:productId',
           if(!productId) return res.status(400).json({ code: 400, message:  commonFunction.getDescriptionByCode(400)});            
           const response = await recoClient.getReviews(req, productId);
           if (!response.success)  throw(response?.status || 500)
-          res.status(200).json(response.data);            
+            await Promise.all( // Асинхронно загружаем медиафайлы для каждого продукта
+                response.data.reviews.map(async (review) => {
+                    try { 
+                      console.log(review);
+                      let user = await clientService.client(req, review.user_id);    
+                      review.author = (user?.data?.profile?.name || user?.data?.profile?.surname)
+                        ? (user?.data?.profile?.name || '')
+                        +(' ')+(user?.data?.profile?.patronymic || '')
+                        +(' ')+(user?.data?.profile?.surname[0] || '')+(user?.data?.profile?.surname[0] ? '.' : '')
+                        : 'Аноним';                        
+                    } catch (mediaError) { // Логируем ошибку загрузки медиафайлов, но продолжаем обработку других продуктов          
+                      console.error(`Error fetching media : ${mediaError.message}`);                      
+                    }
+                    return review;
+                  })	
+                );             
+        
+        res.status(200).json(response.data);                       
       } catch (error) {
           logger.error(error || 'Неизвестная ошибка' );   
           res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
@@ -50,9 +69,15 @@ router.post('/v1/like/:productId',
 	async (req, res) => {        
       try {                   
           let productId = req.params.productId;                     
-          if(!productId) return res.status(400).json({ code: 400, message:  commonFunction.getDescriptionByCode(400)});            
+          if(!productId) return res.status(400).json({ code: 400, message:  commonFunction.getDescriptionByCode(400)});
           const response = await recoClient.getReview(req, productId);
-          if (!response.success)  throw(response?.status || 500)
+          const user = await clientService.profile(req, res);    
+          if (!response.success)  throw(response?.status || 500)          
+          response.data.reviews[0].author = (user?.data?.profile?.name || user?.data?.profile?.surname)
+            ? (user?.data?.profile?.name || '')
+                +(' ')+(user?.data?.profile?.patronymic || '')
+                +(' ')+(user?.data?.profile?.surname[0] || '')+(user?.data?.profile?.surname[0] ? '.' : '')
+            : 'Аноним';          
           res.status(200).json(response.data);            
       } catch (error) {
           logger.error(error || 'Неизвестная ошибка' );   
@@ -89,8 +114,23 @@ router.post('/v1/like/:productId',
       }
    });   
 
+   router.delete('/v1/review/media/:fileId', 
+	async (req, res) => {        
+      try {                   
+          let fileId = req.params.fileId;                     
+          if(!fileId) return res.status(400).json({ code: 400, message:  commonFunction.getDescriptionByCode(400)});            
+          const response = await recoClient.deleteReviewMedia(req, fileId);
+          res.status(200).json(response.data);            
+      } catch (error) {
+          logger.error(error || 'Неизвестная ошибка' );   
+          res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
+      }
+   });   
 
-// Настройка хранилища для файлов
+
+
+
+// ***********************  Настройка хранилища для файлов ***********************************************************************
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, common.COMMON_PATH_TO_SITE + '/uploads/'); // Папка для сохранения файлов

@@ -2,6 +2,7 @@ class ReviewItem extends PageBuilder {
     constructor(containerClass, review) {
         super(containerClass); // Передаём containerClass в родительский конструктор
         // Найти контейнер с указанным классом
+        this.api = new WebAPI();
 
         const container = document.querySelector(`.${containerClass}`);
         if (!container) {
@@ -32,7 +33,7 @@ class ReviewItem extends PageBuilder {
                                     <img src="${review.avatar || 'https://static-basket-01.wbbasket.ru/vol2/site/i/v3/user/avatar.png'}" alt="User avatar">
                                 </div>
                                 <div class="review-box__author">${review.author || 'Аноним'}</div>
-                                <div class="review-box__rating">${'<i class="fa-solid fa-star"></i>'.repeat(review.rating || 5)}</div>
+                                <div class="review-box__rating">${'<i class="fa-solid fa-star"></i>'.repeat(review.rating || 0)}</div>
                                 <div class="review-box__date">${createdAt}</div>
                             </div>
                             <div class="col-9">
@@ -83,9 +84,18 @@ class ReviewItem extends PageBuilder {
     attachEvents(reviewItemContainer) {
         let o = this;
 	document.addEventListener('my-review-image-delete', (event) => {
-         const img = reviewItemContainer.querySelector(`img[drawer-id="${event.detail.drawerId}"]`);
+         const fileId = event.detail.drawerId;
+         const img = reviewItemContainer.querySelector(`img[drawer-id="${fileId}"]`);
 	  if(img){
 	    console.log('Удаление картинки в ReviewItem:', img);
+	    let webRequest = new WebRequest();
+	     let request = webRequest.delete(o.api.deleteReviewMediaMethod(fileId), {fileId}, false )
+	     .then(function(data) {
+	       toastr.success('Картинка удалена', '' , 3000);
+	      })                                
+	     .catch(function(error) {
+	       toastr.error('Что-то пошло не так(', 'Упс!' , 3000);
+	     });
 	    img.remove();	
 	   }
 	});

@@ -555,51 +555,49 @@ class MainApp {
 		        .onSelect((item) => {
 	            console.log('Выбран элемент', item);
 	        });
-            }
+
+		const closeSessionButton = document.querySelector('[class="session-close"]');
+		    if (closeSessionButton) {
+		        closeSessionButton.addEventListener('click', () => {
+			  let request = webRequest.post(o.api.closeSessionMethod(), {}, false )
+			     .then(function(data) {
+				document.location.replace(o.api.LOGON_URL());
+		        })                                
+		     .catch(function(error) {
+		       console.log('showProfilePage.Произошла ошибка =>', error);
+		       toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
+	            });
+ 	         });
+	        }
+
+	    const saveProfileButton = document.querySelector('button.profile-button');
+		console.log('saveProfileButton=>',saveProfileButton);
+	    if (saveProfileButton) {
+		console.log(saveProfileButton);
+	        saveProfileButton.addEventListener('click', () => {
+		  let request = webRequest.post(o.api.saveShopProfileMethod(), 
+			{                                          
+			  surname : surname.value,
+			  name : firstname.value,
+			  patronymic : patronymic.value,
+			  phone : phone.value,
+			  address : address.value
+			},  false )
+		     .then(function(data) {
+		       toastr.success('Профиль сохранен', 'Профиль', {timeOut: 3000});
+	        }).catch(function(error) {
+		       console.log('showProfilePage.Произошла ошибка =>', error);
+		       toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
+	        });
+	      });
+	     }
+          }
         })                                
      .catch(function(error) {
        console.log('showProfilePage.Произошла ошибка =>', error);
        toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
      });
-
-    const closeSessionButton = document.querySelector('[class="session-close"]');
-    if (closeSessionButton) {
-        closeSessionButton.addEventListener('click', () => {
-	  let request = webRequest.post(o.api.closeSessionMethod(), {}, false )
-	     .then(function(data) {
-		document.location.replace(o.api.LOGON_URL());
-        })                                
-	     .catch(function(error) {
-	       console.log('showProfilePage.Произошла ошибка =>', error);
-	       toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
-        });
-      });
-     }
-
-    const saveProfileButton = document.querySelector('[class="profile-button"]');
-    if (saveProfileButton) {
-        saveProfileButton.addEventListener('click', () => {
-	  let request = webRequest.post(o.api.saveShopProfileMethod(), 
-		{                                          
-		  surname : surname.value,
-		  name : firstname.value,
-		  patronymic : patronymic.value,
-		  phone : phone.value,
-		  address : address.value
-		},
-	 	  false )
-	     .then(function(data) {
-	       toastr.success('Профиль сохранен', 'Профиль', {timeOut: 3000});
-        })                                
-	     .catch(function(error) {
-	       console.log('showProfilePage.Произошла ошибка =>', error);
-	       toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
-        });
-      });
-     }
-
-    return this;
-  
+   return this;
  }
 }
 

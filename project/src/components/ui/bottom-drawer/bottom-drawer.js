@@ -35,7 +35,6 @@ class BottomDrawer extends HTMLElement {
 
     connectedCallback() {
         this.drawerId = this.getAttribute("drawer-id") || 0;
-       console.log(this.drawerId);
         this.drawer = this.shadowRoot.querySelector('.bottom-drawer');
         this.closeButton = this.shadowRoot.querySelector('.bottom-drawer__button--close');
         this.actionButton = this.shadowRoot.querySelector('.bottom-drawer__button--action');

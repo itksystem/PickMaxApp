@@ -10,12 +10,38 @@ class ClientServiceHandler {
     }
 
     /**
-     * Метод для получения сервисных данных пользователя от AuthService
+     * Метод для получения профиля текущего пользователя от ClientService
      * @returns {Object} - Объект с результатом
      */
     async profile(req, res) {
         try {
             const response = await fetch(process.env.CLIENT_PROFILE_URL, {
+                method: 'GET',
+                headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+   	    });
+
+            const data = await response.json();
+            if (response.ok) {
+                console.log(`Get profile successfully.`);
+                return { success: true, data };
+            } else {
+                console.log(`Get profile failed.`);
+                return { success: false, status: response.status, data };
+            }
+        } catch (error) {
+                console.log(`Get profile failed.`);
+            return { success: false, error: error.message };
+        }
+    }
+
+    
+    /**
+     * Метод для получения данных пользователя от ClientService
+     * @returns {Object} - Объект с результатом
+     */
+    async client(req, clientId) {
+        try {
+            const response = await fetch(process.env.CLIENT_URL+`/${clientId}`, {
                 method: 'GET',
                 headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
    	    });
@@ -65,7 +91,7 @@ class ClientServiceHandler {
      */
            async getSuggestAddress(req, res) {
             try {
-                const query = req.сquery.query;
+                const query = req.query.query;
                 const url = new URL(process.env.CLIENT_DADATA_SUGGEST_ADDRESS_URL);
                 url.searchParams.append('query', query); // Добавляем параметр 'query' в строку запроса
 

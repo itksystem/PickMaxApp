@@ -301,8 +301,13 @@ class WebAPI {
 
 /* Установка rating */
    setRatingMethod(productId=null){  return `/api/bff/reco/v1/rating/${productId}`}
-   reviewFilesUploadMethod(productId=null){  
-	return `/api/bff/reco/v1/review/${productId}/upload`}
+   reviewFilesUploadMethod(productId=null){return `/api/bff/reco/v1/review/${productId}/upload`}
+/* Удалить фото из комментария */
+   deleteReviewMediaMethod(fileId=null){  
+	return `/api/bff/reco/v1/review/media/${fileId}`}
+
+
+/* станицы */
 
    LOGON_URL(){ return `/logout` }
 

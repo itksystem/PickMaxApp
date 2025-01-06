@@ -195,6 +195,27 @@ async setReview(req, productId) {
 }
 
 
+async deleteReviewMedia(req, fileId) {
+    try {        
+        const response = await fetch(process.env.RECOMMENDATION_SERVICE_REVIEW_MEDIA_DELETE_URL+`/${fileId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+            body: JSON.stringify(req.body),
+        });    
+
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`setReview successfully.`);
+            return { success: true, data };
+        } else {
+            console.log(`setReview failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+            console.log(`setReview failed.`);
+        return { success: false, error: error.message };
+    }
+}
 
 }
 
