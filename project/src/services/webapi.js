@@ -15,6 +15,9 @@ class WebAPI {
     this.NO_PHOTO_IMAGE_URL = `/main/images/banners/no_photo_image.png`;
     this.ErrorMessage500 = `Упс! Что то пошло не так...`;
     this.OrderErrorTitle = `Заказ`;
+    this._USER_REVIEW_FILE_UPLOAD_EVENT_ = 'review-file-upload';
+    this._USER_PRODUCT_MAIL_FILE_UPLOAD_EVENT_ = 'product-mail-file-upload';
+
     return this
   }
  
@@ -264,6 +267,9 @@ class WebAPI {
 /* Получить продукт */
    getShopProductDetailsMethod(productId){  return `/api/bff/warehouse/v1/products/${productId}` }
 
+/* Получить почту по продукту */
+   getShopProductMailsMethod(productId){  return `/api/bff/warehouse/v1/products/${productId}` }
+
 
 /* Список товаров в корзине пользователя */
    getShopBasketMethod(){  return `/api/bff/warehouse/v1/basket` }
@@ -290,7 +296,9 @@ class WebAPI {
    getShopProfileMethod(){ return `/api/bff/client/v1/profile` }
    saveShopProfileMethod(){ return `/api/bff/client/v1/profile` }
    closeSessionMethod(){ return `/api/bff/client/v1/logout` }
-   getProductDetailsCardMethod(productId) { return `/reviews/${productId}/page`; }
+
+   getProductReviewCardMethod(productId) { return `/reviews/${productId}/page`; }
+   getProductMailsCardMethod(productId) { return `/products/${productId}/mails/page`; }
 
 /* Отзывы */
    getReviewsMethod(productId){ return `/api/bff/reco/v1/review/${productId}`}
@@ -298,17 +306,23 @@ class WebAPI {
    setReviewMethod(productId=null){ return `/api/bff/reco/v1/review/${productId}`}
    setReviewMethodPayload(review=null){ return {review}}
 
+/* Почта */
+   getProductMailMethod(productId=null){ return `/api/bff/mail/v1/product/${productId}`}
+   getProductMailPersonalMethod(productId=null,userId=null){ return `/api/bff/mail/v1/product/${productId}?id=${userId}`}
+
+   sendProductMailMethod(productId=null){ return `/api/bff/mail/v1/product/${productId}`}
+   sendProductMailPayload(message=null){ return {message}}
 
 /* Установка rating */
    setRatingMethod(productId=null){  return `/api/bff/reco/v1/rating/${productId}`}
    reviewFilesUploadMethod(productId=null){return `/api/bff/reco/v1/review/${productId}/upload`}
+
 /* Удалить фото из комментария */
    deleteReviewMediaMethod(fileId=null){  
 	return `/api/bff/reco/v1/review/media/${fileId}`}
 
 
 /* станицы */
-
    LOGON_URL(){ return `/logout` }
 
 

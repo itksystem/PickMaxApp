@@ -9,7 +9,7 @@ class MainApp {
       this.limit = 10; // Количество товаров для загрузки за раз
       this.loading = false; // Флаг, чтобы предотвратить повторную загрузку данных   
       this.common = new CommonFunctions();
-      console.log(this);
+//      console.log(this);
       return this;
    }
 
@@ -137,10 +137,9 @@ class MainApp {
      .then(function(product) {
        const reviewsPage = new ReviewsCardPage("reviews-card-container");
        reviewsPage.ReviewsContainer(product);
-
-       webRequest.get(o.api.getReviewsMethod(o.productId),  {}, false )
+       let getReviewRequest = webRequest.get(o.api.getReviewsMethod(o.productId),  {}, false )
         .then(function(data) {
-            console.log(data)                        
+           console.log(data)                        
   	   reviewsPage.render();
 
 	 if(data.reviews.length) {
@@ -150,7 +149,7 @@ class MainApp {
 	  } else {
 	    reviewsPage.ReviewsEmptyPage();
 	 }
-        })                                
+        })                    
      .catch(function(error) {
        console.log('showReviewsPage.Произошла ошибка =>', error);
      })
@@ -160,6 +159,86 @@ class MainApp {
      });       
     return this;
  }
+
+/* Вывод страницы почтового обмена по продукту */
+ showProductMailPage() {
+  let o = this;
+  let webRequest = new WebRequest();
+  const url = window.location.pathname; // Получаем путь 
+  const match = url.match(/\/products\/([^/]+)\/mails\/page/);
+  o.productId = match ? match[1] : null;
+  console.log(o.productId);
+
+  let request = webRequest.get(o.api.getShopProductDetailsMethod(o.productId),  {}, false )
+     .then(function(product) {
+       const mailPage = new ProductMailPage("product-mail-card-container");
+       mailPage.ProductMailContainer(product);
+       mailPage.render();
+
+       let getProductMailRequest = webRequest.get(o.api.getProductMailMethod(o.productId),  {}, false )
+        .then(function(data) {
+         console.log(data)                        
+	 if(data?.mails?.length) {
+            data?.mails?.forEach(item => {
+	      new ProductMailItem("mail-items-box", item);
+            });
+	     } else {
+	      mailPage.ProductMailEmptyPage();
+	   }
+        })                                
+     .catch(function(error) {
+       console.log('showMailsPage.Произошла ошибка =>', error);
+	mailPage.ProductMailEmptyPage();
+     })
+    })                                
+    .catch(function(error) {
+       console.log('showMailsPage.Произошла ошибка =>', error);
+       mailPage.ProductMailEmptyPage();
+     });       
+    return this;
+ }
+
+
+/* Вывод страницы переписки с пользователем почтового обмена по продукту */
+ showProductMailReplyPage() {
+  let o = this;
+  let webRequest = new WebRequest();
+  const url = window.location.pathname; // Получаем путь 
+  const match = url.match(/\/products\/([^/]+)\/mail-reply\/([^/]+)\/page/);
+   
+  o.productId = match ? match[1] : null;
+  o.userId = match ? match[2] : null;
+  console.log(match, o.productId,o.userId);
+
+  let request = webRequest.get(o.api.getShopProductDetailsMethod(o.productId),  {}, false )
+     .then(function(product) {
+       const mailPage = new ProductMailPage("product-mail-card-container");
+       mailPage.ProductMailContainer(product);
+       mailPage.render();
+
+       let getProductMailRequest = webRequest.get(o.api.getProductMailPersonalMethod(o.productId, o.userId),  {}, false )
+        .then(function(data) {
+         console.log(data)                        
+	 if(data?.mails?.length) {
+            data?.mails?.forEach(item => {
+	      new ProductMailItem("mail-items-box", item);
+            });
+	     } else {
+	      mailPage.ProductMailEmptyPage();
+	   }
+        })                                
+     .catch(function(error) {
+       console.log('showMailsPage.Произошла ошибка =>', error);
+	mailPage.ProductMailEmptyPage();
+     })
+    })                                
+    .catch(function(error) {
+       console.log('showMailsPage.Произошла ошибка =>', error);
+       mailPage.ProductMailEmptyPage();
+     });       
+    return this;
+ }
+
 
 
 /* Вывод страницы отзыва пользователя */
@@ -179,8 +258,8 @@ class MainApp {
             console.log(data)                        
       	    reviewsPage.render();
 
-	 if(data.reviews.length) {
-            data.reviews.forEach(item => {
+	 if(data?.reviews?.length > 0) {
+            data?.reviews?.forEach(item => {
 		new ReviewItem("review-items-box", item);
             });
 	  } else {

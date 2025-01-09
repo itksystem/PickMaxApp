@@ -50,7 +50,7 @@ class BottomDrawer extends HTMLElement {
 	/* Обработка события удаления  картинки */
 	document.addEventListener(this.getAttribute('action-id'), (event) => {
 	  if(event.detail.drawerId == this.getAttribute('drawer-id')){
-	    console.log('Удаление картинки в bottom-drawer', event.detail);
+	    console.log('bottom-drawer', event.detail);
 	   }
 	});
 

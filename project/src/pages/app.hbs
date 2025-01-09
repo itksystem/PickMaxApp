@@ -128,6 +128,10 @@ body{
            {{>payment}}
     {{else ifEquals service "reviews"}}
            {{>reviews}}
+    {{else ifEquals service "product-mail"}}
+           {{>product_mail}}
+    {{else ifEquals service "product-mail-reply"}}
+           {{>product_mail_reply}}
     {{else ifEquals service "reviews-my-page"}}
            {{>reviews_my_page}}
     {{else ifEquals service "payment-success"}}

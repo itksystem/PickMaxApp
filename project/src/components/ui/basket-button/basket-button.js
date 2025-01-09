@@ -5,7 +5,7 @@ class BasketButton extends HTMLElement {
     this.productId = this.getAttribute('product-id') || null;
     this.count = parseInt(this.getAttribute('basket-count') || '0', 10); // Получаем значение count из атрибута
     this.skin = this.getAttribute('basket-skin') || '';
-    console.log(this.getAttribute('product-id'));
+//    console.log(this.getAttribute('product-id'));
     this.api = new WebAPI();
     this.addUrl = this.getAttribute('add-url') || this.api.addToBasketMethod();
     this.removeUrl = this.getAttribute('remove-url') || this.api.removeFromBasketMethod();
@@ -20,9 +20,10 @@ class BasketButton extends HTMLElement {
     const attributes = this.attributes;
 
 // Перебираем атрибуты и выводим их в консоль
-    for (let attr of attributes) {
+/*    for (let attr of attributes) {
      console.log(`${attr.name}: ${attr.value}`);
     }  
+*/
   }
 
   // Метод для подключения внешних стилей

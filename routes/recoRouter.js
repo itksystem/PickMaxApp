@@ -73,6 +73,7 @@ router.post('/v1/like/:productId',
           const response = await recoClient.getReview(req, productId);
           const user = await clientService.profile(req, res);    
           if (!response.success)  throw(response?.status || 500)          
+           if(response.data?.reviews?.length > 0 ) 
           response.data.reviews[0].author = (user?.data?.profile?.name || user?.data?.profile?.surname)
             ? (user?.data?.profile?.name || '')
                 +(' ')+(user?.data?.profile?.patronymic || '')

@@ -57,6 +57,8 @@ const protectedRoutes = [
     { method : 'GET', path: '/orders/:id', page: common.COMMON_GET_ORDER_PAGE, service :{} }, 
     { method : 'GET', path: '/reviews/:id/my/review/page', page: common.COMMON_GET_REVIEWS_PAGE, service :{service : 'reviews-my-page'}},  
     { method : 'GET', path: '/reviews/:id/page', page: common.COMMON_GET_REVIEWS_PAGE, service :{service : 'reviews'}},  
+    { method : 'GET', path: '/products/:id/mails/page', page: common.COMMON_GET_MAILS_PAGE, service :{service : 'product-mail'}},  
+    { method : 'GET', path: '/products/:id/mail-reply/:userId/page', page: common.COMMON_GET_MAILS_PAGE, service :{service : 'product-mail-reply'}},  
 ];
 
 // Регистрация защищенных маршрутов

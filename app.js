@@ -15,6 +15,7 @@ const warehouseBffRouter = require('./routes/warehouseBffRouter');
 const ordersBffRouter = require('./routes/ordersBffRouter');
 const clientRouter = require('./routes/clientRouter');
 const recoRouter = require('./routes/recoRouter');
+const mailRouter = require('./routes/MailRouter');
 const promClient = require('prom-client'); //сбор метрик для Prometheus
 const PORT = process.env.PORT || 3000;
 
@@ -56,6 +57,7 @@ app.get('/metrics', async (req, res) => {
     res.set('Content-Type', promClient.register.contentType);
     res.end(metrics);
   } catch (error) {
+    logger.error(error);
     res.status(500).end('Failed to load metrics');
   }
 });
@@ -74,8 +76,9 @@ app.use('/', mainRouter);      // вывод страниц
 app.use('/api/bff/warehouse/', warehouseBffRouter);     
 app.use('/api/bff/orders/',    ordersBffRouter); 
 app.use('/api/bff/payment/',   paymentRouter); 
-app.use('/api/bff/client/',    clientRouter); 
+app.use('/api/bff/client/',  clientRouter); 
 app.use('/api/bff/reco/',    recoRouter); 
+app.use('/api/bff/mail/',   mailRouter); 
 
 
 // Middleware для обработки 404 ошибок

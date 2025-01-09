@@ -22,27 +22,31 @@ class ReviewItem extends PageBuilder {
             ? this.formatDate(review.created)
             : this.getCurrentTime();
 
+	review.rating =  (!review.rating || review.rating == 0 )  ? 0 : review.rating;
         // Заполнить содержимое карточки
         reviewItemBody.innerHTML = `
             <section class="review-box__comment">
                 <div class="review-box__user">
                     <div class="review-box__info">
                         <div class="row">
-                            <div class="col-3 top-avatar-header">
+                            <div class="col-4 top-avatar-header">
                                 <div class="review-box__avatar">
                                     <img src="${review.avatar || 'https://static-basket-01.wbbasket.ru/vol2/site/i/v3/user/avatar.png'}" alt="User avatar">
                                 </div>
                                 <div class="review-box__author">${review.author || 'Аноним'}</div>
-                                <div class="review-box__rating">${'<i class="fa-solid fa-star"></i>'.repeat(review.rating || 0)}</div>
+                                <div class="review-box__rating">
+				  ${'<i class="fa-solid fa-star"></i>'.repeat(review.rating || 0)}
+				  ${'<i class="fa-regular fa-star"></i>'.repeat(5-review.rating || 0)}
+				</div>
                                 <div class="review-box__date">${createdAt}</div>
                             </div>
-                            <div class="col-9">
+                            <div class="col-8">
                                 <div class="review-box__text">${review.comment || 'Без комментария'}</div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-3 down-avatar-header"></div>
-                            <div class="col-9">
+                            <div class="col-4 down-avatar-header"></div>
+                            <div class="col-8">
                                 ${(review.mediaFiles || []).map((img, index) => `
                                     <img src="${img.url}" drawer-id="${img.file_id}" class="review-box__bottom-drawer-click review-box__thumbnail_image">
                                     <bottom-drawer 

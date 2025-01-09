@@ -10,6 +10,7 @@ class StarsRating extends HTMLElement {
     this.rating = parseFloat(this.getAttribute('stars')) || 0; // Текущий рейтинг
     this.reviews = this.getAttribute('reviews') || 0; // Текущий рейтинг
     this.productId = this.getAttribute('product-id') || null; // продукт
+    this.counterView = this.getAttribute('counter-view') || true; // продукт
     this.maxStars = 5; // Максимальное количество звезд
     this.selectedRating = this.rating; // Рейтинг, выбранный пользователем
     this.render();
@@ -33,7 +34,7 @@ class StarsRating extends HTMLElement {
       <div class="rating-stars">
         <span class="rating-stars__value"></span>
         <div class="rating-stars__stars"></div>
-        <div class="rating-stars__counter">${this.rating == 0 ? `Еще нет отзывов о товаре` : ``}</div>
+        <div class="rating-stars__counter">${(this.rating == 0) ? `Еще нет отзывов о товаре` : ``}</div>
       </div>
     `;
     this.shadowRoot.appendChild(styleLink);
@@ -65,10 +66,12 @@ class StarsRating extends HTMLElement {
       starsContainer.appendChild(star);
     }
       if(this.rating > 0) starsValueContainer.innerHTML = `${this.rating}`; // количество проголосовавших
-      let method = this.api?.getProductDetailsCardMethod(this.productId);
+      let method = this.api?.getProductReviewCardMethod(this.productId);
       if(method && this.productId) {
          starsCounterContainer.innerHTML = 
-	`( <a href="${method}">${(this.reviews < 1000) ? this.reviews : (this.reviews / 1000).toFixed(0) + 'k'}</a> )`; // количество проголосовавших
+	  ((this.counterView == true) 
+	    ? `( <a href="${method}">${(this.reviews < 1000) ? this.reviews : (this.reviews / 1000).toFixed(0) + 'k'}</a> )`
+	    : ``)
 	} else 
 	if(this.reviews > 0)
          starsCounterContainer.innerHTML = 

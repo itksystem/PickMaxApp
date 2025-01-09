@@ -167,7 +167,6 @@ class ProductCard extends HTMLElement {
             break;
 
 	    case 'product-id':
-	    console.log(newValue);
             this.productId = newValue;
             const basketButton = this.shadowRoot.querySelector('.button-add-to-basket');
             if (basketButton) {

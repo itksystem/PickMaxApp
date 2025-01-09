@@ -22,7 +22,7 @@ class ReviewForm extends HTMLElement {
         <div class="review-box__rating row">
           <div class="review-box__rating-title col-5 text-start">Установите рейтинг</div> 
           <div class="review-box__rating-stars col-7 text-start">
-            <stars-rating stars="${this?.rating || 0}" product-id="${this?.productId || null}" star-size="1.4rem"></stars-rating>
+            <stars-rating counter-view=false stars="${this?.rating || 0}" product-id="${this?.productId || null}" star-size="1.4rem"></stars-rating>
           </div> 		
         </div>
         <textarea class="review-form__textarea" rows="4" placeholder="Напишите ваш отзыв..."></textarea>
@@ -39,7 +39,7 @@ class ReviewForm extends HTMLElement {
         </div>
         <h3 class="review-form__title">Добавьте фотографии</h3>
         <div class="review-form__photos">
-          <file-upload file-upload-id="${this.productId}" allowed-types="image/png,image/jpeg,image/jpg" max-size="10"></file-upload>
+          <file-upload file-upload-id="${this.productId}" process-name="${this.api._USER_REVIEW_FILE_UPLOAD_EVENT_}" allowed-types="image/png,image/jpeg,image/jpg" max-size="10"></file-upload>
         </div>
         <div class="review-form__thumbnails"></div>
         <button class="review-form__submit-button" disabled >Оставить отзыв</button>

@@ -65,6 +65,23 @@ class IconButton extends HTMLElement {
 				  <path d="M18 14H14 30" class="back-arrow" stroke="white" stroke-width="2" fill="red"></path>
 				</svg>`
 	     },
+            'return': {
+                templateName: 'return',
+		iconPassive :`<svg width="45" height="35" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">                    
+				  <path d="M18 8L12 14L18 20" class="back-arrow" stroke="white" stroke-width="4" fill="none"></path>
+				  <path d="M18 14H14 31" class="back-arrow" stroke="white" stroke-width="4" fill="none"></path>
+				  <path d="M18 8L12 14L18 20" class="back-arrow" stroke="black" stroke-width="2" fill="none"></path>
+				  <path d="M18 14H14 30" class="back-arrow" stroke="black" stroke-width="2" fill="white"></path>
+				</svg>`,
+  	        iconActive : `
+			<svg width="45" height="35" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">                    
+				  <path d="M18 8L12 14L18 20" class="back-arrow" stroke="white" stroke-width="4" fill="none"></path>
+				  <path d="M18 14H14 31" class="back-arrow" stroke="white" stroke-width="4" fill="none"></path>
+				  <path d="M18 8L12 14L18 20" class="back-arrow" stroke="black" stroke-width="2" fill="none"></path>
+				  <path d="M18 14H14 30" class="back-arrow" stroke="white" stroke-width="2" fill="red"></path>
+				</svg>`
+	     },
+
             'product.details': {
                 templateName: 'product.details',
                 redirect: `/products/${o.id}`,
@@ -118,7 +135,6 @@ class IconButton extends HTMLElement {
     }
 
     async handleClick() {
-	console.log(this.templateName);
         if(this.templateName == 'window.history.back') {
 	   window.history.back();
 	   return;
@@ -129,6 +145,7 @@ class IconButton extends HTMLElement {
 	} else
         if (this.redirect) {
             window.location.href = this.redirect;
+	   return;
         } else {
             try {
                 const response = await fetch(this.action, {

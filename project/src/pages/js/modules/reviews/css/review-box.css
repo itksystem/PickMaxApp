@@ -73,6 +73,7 @@
 .review-box__author {
   font-size: 0.8rem;
   padding: 0.5rem;
+  overflow: hidden;
 }
 
 
@@ -266,4 +267,8 @@
     box-shadow: 0 0.125rem 0.3125rem rgba(0,0,0,0.1);
     padding: 0.5rem;
     margin-bottom: 0.3rem;
+}
+
+.top-avatar-header {
+   padding-bottom: 1rem;
 }

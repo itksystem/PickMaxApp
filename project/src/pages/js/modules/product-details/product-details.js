@@ -14,7 +14,7 @@ class ProductDetails extends HTMLElement {
              <div class="ribbon-wrapper ribbon-lg">
                 <div class="ribbon"></div>
              </div>
-	<icon-button  template="window.history.back" style="position: absolute; left: 2rem; top: 1rem;"></icon-button>
+	<icon-button  template="return" redirect="/products/page" style="position: absolute; left: 2rem; top: 1rem;"></icon-button>
 	<icon-button  template="like" style="position: absolute; right: 4rem; top: 1rem;"></icon-button>
 
         <div class="product-details__swiper">
@@ -71,7 +71,7 @@ class ProductDetails extends HTMLElement {
 	        </dropdown-section>
 	   </div>
            <div class="col-6 ps-1">
-		<dropdown-section class="product-my-mail-box" link="/products/mailbox/">
+		<dropdown-section class="mail-box" link="/products/mailbox/">
 		  <span slot="title">Ваша переписка</span>
   		  <p class="product-details__reviews"></p>
 	        </dropdown-section>
@@ -152,7 +152,9 @@ class ProductDetails extends HTMLElement {
 
    /* */
     this.setRating(this.shadowRoot.querySelector('stars-rating'), (this.getAttribute('reviews') || 0));
-    this.setReviewsBox(this.getAttribute('reviews') || 0);
+    this.setMailsBox(this.getAttribute("product-id") || null);
+    this.setStarsRatingProductId(this.getAttribute("product-id") || null);
+    this.setReviewsBox(this.getAttribute("product-id") || null);
     this.setLikeButton((this.getAttribute('like') || 0), (this.getAttribute('product-id') || null));
     this.setDiscountBox(this._getDiscount(this.getAttribute('discount') || 0));
     this.setSellerTypeBox(this._getSellerType(this.getAttribute('seller-type') || ''));
@@ -269,15 +271,23 @@ class ProductDetails extends HTMLElement {
     rating?.setAttribute('reviews', reviews ); // Устанавливаем новое значение атрибут
   }
 
-  setReviewsBox(reviews = null){
+  setReviewsBox(productId = null){
     let reviewsSection =this.shadowRoot.querySelector('dropdown-section.reviews-box');
     if(reviewsSection) {
-      reviewsSection.setAttribute("link", this.api.getProductDetailsCardMethod(this.getAttribute("product-id")));
+      reviewsSection.setAttribute("link", this.api.getProductReviewCardMethod(productId));
     }
-    let reviewsBox = this.shadowRoot.querySelector('.reviews-box');
-    this.shadowRoot.querySelector('reviews').innerHTML = (reviews > 0 ) ? `` : 'Пока нет отзывов';
+  }
+
+  setMailsBox(productId = null){
+    let mailsSection =this.shadowRoot.querySelector('dropdown-section.mail-box');
+    if(mailsSection) {
+      mailsSection.setAttribute("link", this.api.getProductMailsCardMethod(productId));
+    }
+  }
+
+  setStarsRatingProductId(productId = null){
     let _stars_rating = this.shadowRoot?.querySelector('stars-rating');
-    _stars_rating?.setAttribute("product-id", this.getAttribute("product-id"));
+    _stars_rating?.setAttribute("product-id", productId);
   }
 
   setSellerTypeBox(sellerType = null){

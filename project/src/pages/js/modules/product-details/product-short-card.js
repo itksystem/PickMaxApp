@@ -29,6 +29,18 @@ class ProductShortDetails extends HTMLElement {
                <del class="price-block__old-price"></del>     
               </p>
 	    </div>
+           <div class="col-6">
+               <div class="product-details__btn-group">
+	 	 <div class="row">
+        	   <div class="col-12">
+                      <stars-rating stars="0" readonly=true ></stars-rating>
+                   </div>
+        	    <div class="col-12"><reviews></reviews></div>                 
+		   </div>		
+              </div>
+            </div>
+          </div>
+
        </div>
      </div>
    </div>
@@ -84,6 +96,9 @@ class ProductShortDetails extends HTMLElement {
         el.textContent = this.getAttribute('title') || '';
     });
 
+    this.setRating(this.shadowRoot.querySelector('stars-rating'), (this.getAttribute('reviews') || 0));
+    this.setReviewsBox(this.getAttribute('reviews') || 0);
+
     this.setGotoProductCardButton(this.getAttribute('product-id') || 0);
     this.setMainImage();
   }
@@ -132,6 +147,21 @@ class ProductShortDetails extends HTMLElement {
      const button = this.shadowRoot.querySelector('icon-button[template="product.details"]');
      button?.setAttribute('product-id', id); 
    }
+
+  setRating(rating = null, reviews = null){
+    rating?.setAttribute('stars', this.getAttribute('stars') || 0); // Устанавливаем новое значение атрибута
+    rating?.setAttribute('reviews', reviews ); // Устанавливаем новое значение атрибут
+  }
+
+  setReviewsBox(reviews = null){
+    let reviewsSection =this.shadowRoot.querySelector('dropdown-section.reviews-box');
+    if(reviewsSection) {
+      reviewsSection.setAttribute("link", this.api.getProductDetailsCardMethod(this.getAttribute("product-id")));
+    }
+    let reviewsBox = this.shadowRoot.querySelector('.reviews-box');
+    let _stars_rating = this.shadowRoot?.querySelector('stars-rating');
+    _stars_rating?.setAttribute("product-id", this.getAttribute("product-id"));
+  }
 
 
 _onWheel(event) {
@@ -227,6 +257,25 @@ _onWheel(event) {
       indicator.classList.toggle('active', index === this.currentIndex);
     });
   }
+
+
+ isProductDetailsPage() {
+    return /^\/products\/[a-f0-9\-]+\/page$/.test(window.location.pathname);
+ }
+
+ isProductReviewsPage() {
+    return /^\/reviews\/[a-f0-9\-]+\/page$/.test(window.location.pathname);
+ }
+
+ isMyReviewPage() {
+    return /^\/reviews\/[a-f0-9\-]+\/my\/review\/page$/.test(window.location.pathname);
+ }
+
+ isProductMailPage() {
+    return /^\/products\/[a-f0-9\-]+\/mails\/page$/.test(window.location.pathname);
+ }
+
+
 }
 
 customElements.define('product-short-card', ProductShortDetails);

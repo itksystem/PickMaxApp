@@ -1,3 +1,13 @@
+/**
+ Компонент загрузки файлов от пользователя по разным процессам
+   параметры 
+  <file-upload 
+	file-upload-id="811e4882-476b-4ff7-9a91-20c058db769b"  -- идентификатор загружаемого файла
+        process-name="review-file-upload" -- наименования процесса для публикации события, брать из webapi.js
+	allowed-types="image/png,image/jpeg,image/jpg" -- разрешенные типы файлов
+	max-size="10"> -- разрешенный максимальный размер в МБ
+
+**/
 class FileUpload extends HTMLElement {
     constructor() {
         super();
@@ -33,6 +43,8 @@ class FileUpload extends HTMLElement {
 	this.fileInput.addEventListener('change', () => this.showLocalPreviews());
         this.fileId = this.getAttribute("file-upload-id");
 	this.fileInput.setAttribute("file-upload-id", this.getAttribute("file-upload-id") || "file-upload");
+        this.processName = this.getAttribute('process-name') || 'default';
+
     }
 
     showLocalPreviews() {
@@ -109,8 +121,9 @@ class FileUpload extends HTMLElement {
 		file.fileId = o.common.uuid(); // создаем fileId		
         });
 
-        console.log( { detail: { files } });
-        this.dispatchEvent(new CustomEvent('file-upload-start', { detail: { files } }));
+        console.log(this.processName+'-start', { detail: { files } });
+        this.dispatchEvent(new CustomEvent(this.processName+'-start',
+	{ detail: { files } }));
 
         files.forEach((file, index) => {
             if (!this.validateFile(file)) return;
@@ -137,8 +150,8 @@ class FileUpload extends HTMLElement {
                 if (xhr.status === 200) {
                     console.log(file);
                     this.showMessage(`Файлы загружены успешно.`, 'success');
-		    console.log({ detail: { file, response: xhr.response } });
-		    this.dispatchEvent(new CustomEvent('review-file-upload-success', { detail: { file, response: xhr.response } }));
+		    console.log(this.processName+'-success', { detail: { file, response: xhr.response } });
+		    this.dispatchEvent(new CustomEvent(this.processName+'-success', { detail: { file, response: xhr.response } }));
                 } else {
                     this.showMessage(`Файл ${file.name} ошибка загрузки!`, 'error');
                 }
