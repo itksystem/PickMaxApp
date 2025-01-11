@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loader Component</title>
+    <link rel="stylesheet" href="loader.css">
+</head>
+<body>
+    <custom-loader z-index="2000"></custom-loader>
+    <script>
+
+        class Loader extends HTMLElement {
+            constructor() {
+                super();
+                const shadow = this.attachShadow({ mode: 'open' });
+
+                // Create overlay
+                const overlay = document.createElement('div');
+                overlay.className = 'loader-overlay';
+
+                // Create loader
+                const loader = document.createElement('div');
+                loader.className = 'loader';
+                overlay.append(loader);
+                
+		const link = document.createElement('link');
+                link.setAttribute('rel', 'stylesheet');
+                link.setAttribute('href', `loader.css`);
+                overlay.append(link);
+
+                shadow.append(overlay);
+
+                this.overlay = overlay;
+                this.loader = loader;
+
+                // Set initial z-index
+                this.updateZIndex();
+            }
+
+            open() {
+                this.loader.style.display = 'block';
+                this.overlay.style.display = 'block';
+            }
+
+            close() {
+                this.loader.style.display = 'none';
+                this.overlay.style.display = 'none';
+            }
+
+            static get observedAttributes() {
+                return ['z-index'];
+            }
+
+            attributeChangedCallback(name, oldValue, newValue) {
+                if (name === 'z-index') {
+                    this.updateZIndex();
+                }
+            }
+
+            updateZIndex() {
+                const zIndex = this.getAttribute('z-index') || '1000';
+                this.style.setProperty('--z-index', zIndex);
+            }
+        }
+
+        // Register custom element
+        customElements.define('custom-loader', Loader);
+    </script>
+
+    <!-- Example usage -->
+
+
+    <button onclick="document.querySelector('custom-loader').open()">Show Loader</button>
+//    <button onclick="document.querySelector('custom-loader.product-mail-card-container').open()">Show Loader</button>
+//     <button onclick="document.querySelector('custom-loader.product-mail-card-container').close()">Hide Loader</button>
+
+
+</body>
+</html>

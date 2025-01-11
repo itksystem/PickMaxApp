@@ -778,3 +778,48 @@
 {"level":"error","message":"404","service":"pickapp-service","stack":"Error: 404\n    at WarehouseServiceClientHandler.getProductById (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-warehouse-service-client-handler\\WarehouseServiceClientHandler.js:26:38)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)\n    at async C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:22:28","timestamp":"2025-01-09T20:51:49.563Z"}
 {"level":"error","message":"404","service":"pickapp-service","stack":"Error: 404\n    at WarehouseServiceClientHandler.getProductById (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-warehouse-service-client-handler\\WarehouseServiceClientHandler.js:26:38)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)\n    at async C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:22:28","timestamp":"2025-01-09T20:56:12.151Z"}
 {"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-09T21:43:36.643Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-09T21:46:58.487Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-09T21:46:58.508Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-09T21:46:58.514Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-09T21:46:58.521Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-09T21:46:58.525Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:44:39\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-01-10T09:34:30.015Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-10T09:35:54.440Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-10T09:36:12.703Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-10T09:36:33.370Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-10T09:37:09.690Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-10T09:39:12.344Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-10T09:41:39.334Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-10T09:42:22.638Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-10T09:50:58.785Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-10T09:57:12.674Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-10T10:09:09.904Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T19:48:58.088Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T19:50:07.771Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T19:53:28.259Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T19:56:37.085Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T19:59:19.263Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T20:10:19.398Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T20:12:07.326Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T20:14:20.129Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T20:15:39.135Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T20:18:43.223Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T20:36:52.956Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T20:39:30.641Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T21:13:31.768Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T21:13:42.663Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T21:13:52.122Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T21:13:54.802Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T21:13:58.414Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T21:14:38.422Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T21:14:42.271Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-11T21:14:58.076Z"}
+{"level":"error","message":"invalid json response body at http://auth-service:3001/api/auth/v1/checkCode reason: Unexpected token U in JSON at position 0","service":"pickapp-service","timestamp":"2025-01-11T22:25:16.827Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-11T22:26:56.715Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-11T22:27:33.678Z"}
+{"level":"error","message":"request to http://auth-service:3001/api/auth/v1/login failed, reason: read ECONNRESET","service":"pickapp-service","timestamp":"2025-01-11T22:37:31.981Z"}
+{"level":"error","message":"request to http://auth-service:3001/api/auth/v1/login failed, reason: read ECONNRESET","service":"pickapp-service","timestamp":"2025-01-11T22:37:31.993Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:44:39\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-01-11T22:38:32.198Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-11T22:39:43.430Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-11T22:40:49.585Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-11T22:44:45.933Z"}

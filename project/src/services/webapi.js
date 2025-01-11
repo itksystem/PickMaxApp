@@ -320,6 +320,9 @@ class WebAPI {
 /* Удалить фото из комментария */
    deleteReviewMediaMethod(fileId=null){  
 	return `/api/bff/reco/v1/review/media/${fileId}`}
+/* Коды верификации */
+   checkVerificationCodeMethod(){
+	return `/api/bff/verification/v1/checkCode`}
 
 
 /* станицы */

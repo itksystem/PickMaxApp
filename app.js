@@ -79,7 +79,7 @@ app.use('/api/bff/payment/',   paymentRouter);
 app.use('/api/bff/client/',  clientRouter); 
 app.use('/api/bff/reco/',    recoRouter); 
 app.use('/api/bff/mail/',   mailRouter); 
-
+app.use('/api/bff/verification/',  mainRouter); 
 
 // Middleware для обработки 404 ошибок
 app.use((req, res, next) => {

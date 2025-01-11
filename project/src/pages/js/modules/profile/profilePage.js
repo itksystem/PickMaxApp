@@ -23,14 +23,21 @@ class ProfileSection extends PageBuilder {
         ProfileContainerSaveProfileButton.className = "profile-button-container";
         ProfileContainerSaveProfileButton.innerHTML = `
 	<button class="profile-button" style="margin-right: 2rem;" >Сохранить</button>
-        <a class="session-close">Выйти из магазина</a>
-`;
+        <a class="session-close">Выйти из магазина</a>`;
 
+	const ProfileConfirmedMessageContainer = document.createElement("div");
+        ProfileConfirmedMessageContainer.className = "registration-confirm-message";
+        ProfileConfirmedMessageContainer.innerHTML = ``;
+   
         ProfileContainer.appendChild(ProfileContainerHeader);
         ProfileContainer.appendChild(ProfileContainerContent);
 
+	const verificationCodeContainer = this.ProfileItemSectionButton(`Код подтверждения`, `verificationCode`,  ``, ``, ``);
+        ProfileContainer.appendChild(verificationCodeContainer);
+
 	const EmailContainer = this.ProfileItem(`Email`, `login`,  `Электронный адрес`, `readonly`, ``);
         ProfileContainer.appendChild(EmailContainer);
+        ProfileContainer.appendChild(ProfileConfirmedMessageContainer);
 
 	const FamilyContainer = this.ProfileItem(`Фамилия`,`surname`, `Укажите вашу фамилию`, `requred`, ``);
         ProfileContainer.appendChild(FamilyContainer);
@@ -75,9 +82,9 @@ class ProfileSection extends PageBuilder {
     inputElement.className = "form-control";
     inputElement.id = id;
     inputElement.placeholder = placeholder;
-    if (required) {
-        inputElement.setAttribute("required", "required");
-    }
+    if (required ) {
+        inputElement.setAttribute(required, required);
+    } 
     profileItemContainer.appendChild(inputElement);
 
     // Создаем и добавляем div для ошибки
@@ -123,5 +130,33 @@ class ProfileSection extends PageBuilder {
     return container;                                    
   }
 
-}
 
+
+  ProfileItemSectionButton( label, id, placeholder, required, feedbackError) {
+    const profileItemSectionContainer = document.createElement("dropdown-section");
+    profileItemSectionContainer.className = "registration-confirm-form";
+    profileItemSectionContainer.innerHTML = `
+        <span slot="title">Подтверждение регистрации</span>    
+        <div style="margin: 1rem 0.1rem; text-align: center;">Введите код отправленный на вашу электронную почту</div>
+	<div class="profile-item-container">	
+ 	 <div class="row">
+	    <div class="col-4"></div>
+	    <div class="col-4"><input type="text" class="form-control" id="${id}" placeholder="${placeholder}"></div>
+	    <div class="col-4"></div>
+        </div>
+	<div class="row">
+	    <div class="col-2"></div>
+	    <div class="col-8 text-center"><button type="button" class="confirm-code-button" id="${id}-button">Отправить код</button></div>
+	    <div class="col-2"></div>
+	    
+        </div>
+	<div class="row">
+            <div id="${id}-error" class="invalid-feedback" style="display: none;"></div>
+        </div>
+      </div>
+    `;
+    return profileItemSectionContainer;
+  }
+
+
+}

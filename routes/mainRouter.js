@@ -95,6 +95,19 @@ router.post('/logon', async (req, res) => {
     }
 });
 
+router.post('/v1/checkCode',  authMiddleware.authenticateToken, async (req, res) => {
+    const userId = await authMiddleware.getUserId(req, res);
+    if(!userId) throw(401)
+    const response = await authClient.checkCode(req);
+    if (response.success) {        
+        res.status(200).json(response.data);
+    } else {
+        logger.error(response.error || 'Неизвестная ошибка' );   
+        res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
+    }
+});
+
+
 router.post('/registration', async (req, res) => {
     const { email, password } = req.body;
     const response = await authClient.register(email, password);

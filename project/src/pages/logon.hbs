@@ -145,11 +145,10 @@
             .then(response => {
                 if (response.status === 200) {
                     // Успешная авторизация
-                    window.location.href = '/products/page';
-                } else {
-                    // Ошибка авторизации
+                      window.location.href = '/products/page';
+                      } else {
                     window.location.href = '/logon-failed';
-                }
+                   }
             })
             .catch(error => {
                 console.error('Ошибка при авторизации:', error);

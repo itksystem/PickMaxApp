@@ -160,6 +160,15 @@ class MainApp {
     return this;
  }
 
+ loader(show = false){
+  let _loader = document.querySelector('custom-loader.product-mail-card-container');
+  if(_loader) {
+    ((show )
+      ?  _loader.open()
+      :  _loader.close());
+    }
+ }
+
 /* Вывод страницы почтового обмена по продукту */
  showProductMailPage() {
   let o = this;
@@ -179,21 +188,25 @@ class MainApp {
         .then(function(data) {
          console.log(data)                        
 	 if(data?.mails?.length) {
+ 	    o.loader(true);
             data?.mails?.forEach(item => {
 	      new ProductMailItem("mail-items-box", item);
             });
-	     } else {
+ 	    o.loader(false);
+          } else {
 	      mailPage.ProductMailEmptyPage();
 	   }
         })                                
      .catch(function(error) {
        console.log('showMailsPage.Произошла ошибка =>', error);
 	mailPage.ProductMailEmptyPage();
+        o.loader(false);
      })
     })                                
     .catch(function(error) {
        console.log('showMailsPage.Произошла ошибка =>', error);
        mailPage.ProductMailEmptyPage();
+       o.loader(false);
      });       
     return this;
  }
@@ -589,6 +602,15 @@ class MainApp {
   return el;
  }
 
+ verificationCodeConfirmed(){
+   let confirmForm = document.querySelector('dropdown-section.registration-confirm-form');
+   if(confirmForm)	
+     confirmForm.remove();
+   let confirmMessage = document.querySelector('.registration-confirm-message');
+   if(confirmMessage)	
+     confirmMessage.innerHTML=`Электронный адрес подтвержден`;
+ }
+
  showProfilePage(){
   let o = this;
   let webRequest = new WebRequest();
@@ -610,6 +632,28 @@ class MainApp {
 	  	 let phone = o.setProfileValueElement('[id="phone"]', data?.profile?.phone ?? '') 
 	  	 let address = document.querySelector('x-autocomplete');
                  address.setValue(data?.profile?.address ?? '');
+		 if(data?.profile?.confirmed)
+			o.verificationCodeConfirmed()
+
+ 	  	 let confirmCodeButton = document.querySelector('button.confirm-code-button');
+		  if(confirmCodeButton){
+                     confirmCodeButton.addEventListener('click', () => {
+	               const verificationCode = document.querySelector('input[id="verificationCode"]');
+	                 if (verificationCode) {
+	                    let request = webRequest.post(o.api.checkVerificationCodeMethod(), {verificationCode : Number(verificationCode.value) }, false )
+          	             .then(function(result) {
+				o.verificationCodeConfirmed();
+				toastr.success('Регистрация подтверждена!', 'Профиль клиента', {timeOut: 3000});
+	                     })
+	                .catch(function(error) {
+	                  console.log('checkVerificationCodeMethod.Произошла ошибка =>', error);
+			  verificationCode.value='';
+  	 	          toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
+	              });
+	              } 
+	           });
+		  }
+
 
               // Слушатели событий
 		var validator = new InputMaskValidator({ id : 'phone', error : 'phone-error'});
