@@ -18,7 +18,7 @@
     font-size: var(--logistic-flex-container-font-size);
     color: var(--logistic-faq-container-font-color);
     font-family: system, -apple-system, BlinkMacSystemFont, "Segoe UI", "Segoe WP", Roboto, Ubuntu, Oxygen, Cantarell, "Fira Sans", "Helvetica Neue", Helvetica, "Lucida Grande", "Droid Sans", Tahoma, "Microsoft Sans Serif", sans-serif;
-
+    min-height: -webkit-fill-available;
 }
 
 .dropdown-section__header {
@@ -116,5 +116,4 @@ dropdown-section ul {
 .dropdown-section__content {
   font-size: 1rem;
 }
-
 

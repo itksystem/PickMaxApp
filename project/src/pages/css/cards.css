@@ -1171,6 +1171,7 @@ dd {
     font-size: 0.8rem;
     color: green;
     text-align: end;
+    margin-bottom : 1rem;
 }
 
 .confirm-code-button {
@@ -1179,6 +1180,39 @@ dd {
     font-size: 1rem;
     color: #fff;
     background-color: #007bff;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+img.profile-avatar-image {
+    border: 0.3rem solid #999999;
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 5rem;
+    cursor : pointer;
+}
+
+.shot-fio-container {
+    font-size: 1.5rem;
+}
+.telegram-account-container{
+    font-size: 1rem;
+}
+
+.telegram-account-status-container {
+    font-size: 1rem;
+}
+
+.custom-radio{
+  padding: 0.5rem 0rem 0.5rem 1.5rem;
+}
+
+.small-hot-button {
+    font-size: 1rem;
+    color: #212529;
+    background-color: #d9dee3;
     border: none;
     border-radius: 0.5rem;
     cursor: pointer;

@@ -44,7 +44,7 @@
     "node-fetch": "^2.7.0",
     "node-gyp": "^9.1.0",
     "node-sessionstorage": "^1.0.0",
-    "openfsm-auth-service-client-handler": "^1.0.3",
+    "openfsm-auth-service-client-handler": "^1.0.5",
     "openfsm-common": "^1.0.4",
     "openfsm-common-functions": "^1.0.0",
     "openfsm-jwt-token-handler": "^1.0.0",

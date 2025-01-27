@@ -1046,3 +1046,43 @@
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-11T22:39:43.430Z"}
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-11T22:40:49.585Z"}
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-11T22:44:45.933Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-11T23:11:53.567Z"}
+{"level":"error","message":"request to http://auth-service:3001/api/auth/v1/login failed, reason: connect ECONNREFUSED 127.0.0.1:3001","service":"pickapp-service","timestamp":"2025-01-18T09:15:26.431Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-18T19:15:19.101Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:44:39\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-01-18T19:15:56.542Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-18T19:16:04.989Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-18T19:16:11.495Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-19T13:29:06.060Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:44:39\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-01-19T13:29:16.612Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-19T13:29:27.145Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-19T13:29:58.037Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-25T21:12:14.653Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-25T21:12:49.329Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-25T21:19:49.588Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-25T22:11:23.120Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-25T22:15:41.701Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-25T22:17:22.053Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-25T22:17:33.454Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-25T22:17:43.320Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-25T22:21:16.993Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-25T22:28:36.012Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-26T07:22:32.982Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-26T07:25:08.964Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-26T07:25:37.490Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-26T07:36:33.979Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-26T07:39:58.516Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-26T07:46:41.735Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-26T10:01:22.110Z"}
+{"code":"ECONNREFUSED","errno":"ECONNREFUSED","level":"error","message":"request to http://order-service:3003/api/orders/v1/orders failed, reason: connect ECONNREFUSED 127.0.0.1:3003","service":"pickapp-service","stack":"FetchError: request to http://order-service:3003/api/orders/v1/orders failed, reason: connect ECONNREFUSED 127.0.0.1:3003\n    at ClientRequest.<anonymous> (c:\\Distrib\\TZ\\PickMaxApp\\node_modules\\node-fetch\\lib\\index.js:1501:11)\n    at ClientRequest.emit (events.js:315:20)\n    at Socket.socketErrorListener (_http_client.js:469:9)\n    at Socket.emit (events.js:315:20)\n    at emitErrorNT (internal/streams/destroy.js:106:8)\n    at emitErrorCloseNT (internal/streams/destroy.js:74:3)\n    at processTicksAndRejections (internal/process/task_queues.js:80:21)","timestamp":"2025-01-26T10:01:26.679Z","type":"system"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at c:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:44:39\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-01-26T18:19:30.996Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at c:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:44:39\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-01-26T18:21:39.863Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at c:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:44:39\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-01-26T18:22:55.756Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at c:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:44:39\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-01-26T18:24:16.756Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at c:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:44:39\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-01-26T18:27:04.967Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at c:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:44:39\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-01-26T18:28:12.856Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at c:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:44:39\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-01-26T18:29:39.716Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-01-27T17:01:33.585Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-27T17:44:40.813Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-27T18:19:10.907Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:44:39\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-01-27T18:19:15.211Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-27T18:22:22.399Z"}

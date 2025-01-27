@@ -44,7 +44,7 @@ class ReviewsCardPage extends PageBuilder {
 Выберите товар и нажмите «Оставить отзыв».</br>
 Опишите свой опыт и добавьте фотографии (если возможно).</br>
 Каждое ваше слово помогает нам становиться лучше. </br> Спасибо за доверие и обратную связь!</p>
-<div class="w-100 text-end"><button class="btn btn-sm"><a href="/reviews/${data?.productId}/my/review/page">Оставить отзыв</a></button></div>
+<div class="w-100 text-end"><button class="btn btn-review-default" style="border-color: #ddd;"><a href="/reviews/${data?.productId}/my/review/page">Оставить отзыв</a></button></div>
 `;
 	this.addModule("ReviewInfo",ReviewsInfoContainer);
 

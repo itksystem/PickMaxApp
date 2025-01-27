@@ -265,10 +265,20 @@
 
 .review-item{
     box-shadow: 0 0.125rem 0.3125rem rgba(0,0,0,0.1);
-    padding: 0.5rem;
+    padding: 0 0.5rem;
     margin-bottom: 0.3rem;
 }
 
 .top-avatar-header {
    padding-bottom: 1rem;
+}
+
+.btn-review-default {
+    background-color: #f8f9fa;
+    border-color: #ddd;
+    color: #444;
+}
+
+.btn-review-default a {
+ text-decoration: none;
 }

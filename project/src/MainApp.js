@@ -622,7 +622,7 @@ class MainApp {
 	  } else {
 
 	  	 const profilePage = new ProfileSection("profile-card-container");
-	 	 profilePage.ProfileCardContainer();
+	 	 profilePage.ProfileCardContainer(data);
 	  	 profilePage.render();
 
 	  	 let login = o.setProfileValueElement('[id="login"]', data.profile?.login ?? '') 
@@ -632,6 +632,8 @@ class MainApp {
 	  	 let phone = o.setProfileValueElement('[id="phone"]', data?.profile?.phone ?? '') 
 	  	 let address = document.querySelector('x-autocomplete');
                  address.setValue(data?.profile?.address ?? '');
+		 address.getValueId(data?.profile?.fiasId ?? null);
+
 		 if(data?.profile?.confirmed)
 			o.verificationCodeConfirmed()
 
@@ -640,7 +642,10 @@ class MainApp {
                      confirmCodeButton.addEventListener('click', () => {
 	               const verificationCode = document.querySelector('input[id="verificationCode"]');
 	                 if (verificationCode) {
-	                    let request = webRequest.post(o.api.checkVerificationCodeMethod(), {verificationCode : Number(verificationCode.value) }, false )
+	                    let request = webRequest.post(o.api.checkVerificationCodeMethod(), 
+				{
+				 verificationCode : verificationCode.value 
+				}, false )
           	             .then(function(result) {
 				o.verificationCodeConfirmed();
 				toastr.success('Регистрация подтверждена!', 'Профиль клиента', {timeOut: 3000});
@@ -695,18 +700,18 @@ class MainApp {
  	         });
 	        }
 
+
 	    const saveProfileButton = document.querySelector('button.profile-button');
 	    if (saveProfileButton) {
-	        saveProfileButton.addEventListener('click', () => {
+ 	          saveProfileButton.addEventListener('click', () => {
 		  let request = webRequest.post(o.api.saveShopProfileMethod(), 
 			{                                          
 			  surname : surname.value,
 			  name : firstname.value,
 			  patronymic : patronymic.value,
 			  phone : phone.value,
-			  address : address.input.object.value,
-			  fiasId : address.input.object.fiasId
-
+			  address : autocomplete.getValue(),
+			  fiasId : autocomplete.getValueId(),
 			},  
 			false )
 		     .then(function(data) {

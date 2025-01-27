@@ -33,7 +33,11 @@ publicRoutes.forEach(({ path, page, service = undefined}) => {
 });
 
 // Маршрут с middleware для выхода
-router.get('/logout', authMiddleware.logout, async (req, res) => renderPage(req, res, common.COMMON_LOGOUT_PAGE, {}));
+router.get('/logout', async (req, res) =>{
+    let result = await authClient.logout(req, res);  
+    renderPage(req, res, common.COMMON_LOGOUT_PAGE, {})
+  }
+);
 
 // Маршрут для проверки доступности сервиса
 router.get('/health', health);
@@ -62,20 +66,23 @@ const protectedRoutes = [
 ];
 
 // Регистрация защищенных маршрутов
-protectedRoutes.forEach(({ method, path, page, service }) => {
-    switch(method) {
-      case 'GET' : router.get(path, authMiddleware.authenticateToken, async (req, res) => renderPage(req, res, page, service));      
-    }
-    
+protectedRoutes.forEach( async ({ method, path, page, service }) => {
+        router.get(path,  async (req, res) => {
+            if(method == 'GET') {
+                let result = await authClient.checkToken(req, res);  
+                 if(result?.status == 401 || !result.success) return res.status(401).redirect("/logon");                   
+                 renderPage(req, res, page, service)
+            }            
+         });         
 });
 
 
 // Обработка POST-запросов
-router.post('/logout', 
-    authMiddleware.logout,
-    (req, res) => {
-    res.clearCookie('accessToken');
-    res.status(200).json({ message: 'Вы вышли из системы' });
+router.post('/logout',     
+    async (req, res) => {
+        let result = await authClient.logout(req, res);          
+        res.clearCookie('accessToken');
+        res.status(200).json({ message: 'Вы вышли из системы' });
 });
 
 router.post('/logon', async (req, res) => {
@@ -95,8 +102,8 @@ router.post('/logon', async (req, res) => {
     }
 });
 
-router.post('/v1/checkCode',  authMiddleware.authenticateToken, async (req, res) => {
-    const userId = await authMiddleware.getUserId(req, res);
+router.post('/v1/checkCode', async (req, res) => {    
+    const userId = await authClient.getUserId(req, res);                   
     if(!userId) throw(401)
     const response = await authClient.checkCode(req);
     if (response.success) {        

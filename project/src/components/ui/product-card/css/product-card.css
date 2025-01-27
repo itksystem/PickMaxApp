@@ -149,9 +149,9 @@
 }
 
 /* Медиа-запросы для адаптивности */
-@media  (max-width: 20rem) and (max-width: 22.49rem){ /* 360px */
+@media  (max-width: 22.49rem){ /* 360px */
     :host {
-        width: 100%;
+        width: 48%;
     }
 }
 
