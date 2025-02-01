@@ -863,3 +863,9 @@
 {"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-01-27T18:19:10.907Z"}
 {"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:44:39\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-01-27T18:19:15.211Z"}
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-27T18:22:22.399Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-01-27T20:07:21.516Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-01T10:18:44.795Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-01T12:42:03.887Z"}
+{"level":"error","message":"Не удалось сохранить профиль пользователя","service":"pickapp-service","timestamp":"2025-02-01T16:20:15.485Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2025-02-01T20:54:28.531Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2025-02-01T20:54:28.539Z"}

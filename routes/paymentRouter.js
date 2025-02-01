@@ -34,4 +34,30 @@ paymentRouter.post('/v1/decline',
         }       
 });
 
+/*  Работа с средствами платежа */
+paymentRouter.get('/v1/instruments', 	
+	async (req, res) => {        
+        try {            
+            const response = await paymentClient.instruments(commonFunction.getJwtToken(req));
+            if (!response.success)  throw(response.status)
+            res.status(200).json(response.data);            
+        } catch (error) {            
+            logger.error(error );   
+            res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  new CommonFunctionHelper().getDescriptionByCode((Number(error) || 500)) });
+        }       
+});
+
+paymentRouter.get('/v1/cards', 	
+	async (req, res) => {        
+        try {            
+            const response = await paymentClient.cards(commonFunction.getJwtToken(req));
+            if (!response.success)  throw(response.status)
+            res.status(200).json(response.data);            
+        } catch (error) {            
+            logger.error(error );   
+            res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  new CommonFunctionHelper().getDescriptionByCode((Number(error) || 500)) });
+        }       
+});
+
+
 module.exports = paymentRouter;

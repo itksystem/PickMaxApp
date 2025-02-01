@@ -593,6 +593,8 @@ class MainApp {
     return this;
  }
 
+
+
  setProfileValueElement(elementSelector, value) {
     const el = document.querySelector(elementSelector);
     if (el) el.textContent = value;
@@ -683,7 +685,7 @@ class MainApp {
 		        .onSelect((item) => {
 	            console.log('Выбран элемент', item);
 	        });
-/*
+
 		const closeSessionButton = document.querySelector('[class="session-close"]');
 		    if (closeSessionButton) {
 		        closeSessionButton.addEventListener('click', () => {
@@ -699,7 +701,7 @@ class MainApp {
 	        }
 
 
-	    const saveProfileButton = document.querySelector('button.profile-button');
+	    const saveProfileButton = document.querySelector('button1.profile-button1');
 	    if (saveProfileButton) {
  	          saveProfileButton.addEventListener('click', () => {
 		  let request = webRequest.post(o.api.saveShopProfileMethod(), 
@@ -720,7 +722,6 @@ class MainApp {
 	        });
 	      });
 	     }
-*/
           }
         })                                
      .catch(function(error) {

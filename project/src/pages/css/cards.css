@@ -1208,13 +1208,30 @@ img.profile-avatar-image {
 .custom-radio{
   padding: 0.5rem 0rem 0.5rem 1.5rem;
 }
-
+.custom-checkbox{
+   padding: 0.5rem 0rem 0.5rem 1.5rem;
+}
 .small-hot-button {
     font-size: 1rem;
+    padding: 0.3rem 0.5rem;
     color: #212529;
     background-color: #d9dee3;
     border: none;
     border-radius: 0.5rem;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+.registration-confirm-form-text {
+    margin: 1rem 0.1rem; 
+    text-align: center;
+    font-size: 0.8rem; 
+}
+
+.confirm-code-button{
+   font-size: 0.8rem; 
+}
+
+#verificationCode {
+   width: 5rem;
 }

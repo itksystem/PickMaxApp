@@ -324,9 +324,15 @@ class WebAPI {
    checkVerificationCodeMethod(){
 	return `/api/bff/verification/v1/checkCode`}
 
+/* Получение платежных инструментов */
+   getPaymentInstrumentsMethod(){
+	return `/api/bff/payment/v1/instruments`}
+   getPaymentCardsMethod(){
+	return `/api/bff/payment/v1/cards`}
+
 
 /* станицы */
-   LOGON_URL(){ return `/logout` }
+   LOGON_URL(){ return `/logon` }
 
 
 

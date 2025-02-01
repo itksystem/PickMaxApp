@@ -131,7 +131,7 @@ class ProfileSection extends PageBuilder {
 
 
     ProfileCardContainer(data = null) {
-      let api = new WebAPI();
+        let api = new WebAPI();
         let webRequest = new WebRequest();
 
         const profileContainer = this.createElement("div", "card card-container");
@@ -185,19 +185,25 @@ class ProfileSection extends PageBuilder {
             this.createCheckbox("customSubscribe3", "customSubscribe","Горячие вакансии"),
 	]));
 
-	let cards =  this.getPaymentCards();
-        if(cards)
-	 profileContainer
-          .appendChild(
-  		this.createDropdownSection("Мои средства платежа", cards));
-        profileContainer
-          .appendChild(
-		this.createDropdownSection("Выход из системы",[
-			this.createButton("Выход", "text-end", this.exitButtonOnClick)
-		]))
+
+      let data = await webRequest.get(api.getPaymentCardsMethod(),{},  
+	    false)
+	.then(function(data) {
+	 let cards = [];
+          data.cards.forEach((element, index) => {
+		cards.push(this.createRadio(`customPayment${index}`,"customPayment", `Карта ${element.MaskedCardName}`));
+	  });
+           profileContainer.appendChild(this.createDropdownSection("Мои средства платежа", cards));
+           profileContainer.appendChild(this.createButton("Выход", "text-start", this.exitButtonOnClick))
+           return data?.cards || null;
+         }).catch(function(error) {
+
+
 
         this.addModule("Profile", profileContainer);
 	this.getPaymentInstruments();
+	let cards =  this.getPaymentCards();
+	console.log(cards);
     }
 
     saveProfileButtonOnClick(){
@@ -259,18 +265,21 @@ class ProfileSection extends PageBuilder {
       });
      }
 
-     getPaymentCards(){     
+     async getPaymentCards(){     
       let o = this;
       let api = new WebAPI();
       let webRequest = new WebRequest();
-      let cardPlacement = [];
-      let _data = webRequest.get(api.getPaymentCardsMethod(),{},  true)
-        _data?.cards.forEach((element, index) => {
-	  cardPlacement.push(this.createRadio(`customPayment${index}`,`customPayment`, `Карта <b>${element.maskedCardNumber}</b>`));	
-	});
-
-      return cardPlacement || null;
-    }
+      let data = await webRequest.get(api.getPaymentCardsMethod(),{},  
+	    false)
+	.then(function(data) {
+  	      return data?.cards || null;
+           }).catch(function(error) {
+         console.log('getPaymentInstruments.Произошла ошибка =>', error);
+         toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
+         return null;
+      });
+         return data;
+     }
 
 
 
