@@ -59,5 +59,29 @@ paymentRouter.get('/v1/cards',
         }       
 });
 
+paymentRouter.post('/v1/cards/:cardId/default', 	
+	async (req, res) => {        
+        try {            
+            const response = await paymentClient.setDefaultCard(commonFunction.getJwtToken(req), req);
+            if (!response.success)  throw(response.status)
+            res.status(200).json(response.data);            
+        } catch (error) {            
+            logger.error(error );   
+            res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  new CommonFunctionHelper().getDescriptionByCode((Number(error) || 500)) });
+        }       
+});
+
+paymentRouter.delete('/v1/cards/:cardId', 	
+	async (req, res) => {        
+        try {            
+            const response = await paymentClient.deleteCard(commonFunction.getJwtToken(req), req);
+            if (!response.success)  throw(response.status)
+            res.status(200).json(response.data);            
+        } catch (error) {            
+            logger.error(error );   
+            res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  new CommonFunctionHelper().getDescriptionByCode((Number(error) || 500)) });
+        }       
+});
+
 
 module.exports = paymentRouter;
