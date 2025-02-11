@@ -26,7 +26,7 @@ class ProfileSection extends PageBuilder {
         return placement;
     }
 
-    createProfileItem(label, id, placeholder, required = false, feedbackError = '') {
+    createProfileItem(label, id, placeholder, required = false, feedbackError = '', value = null) {
         const container = this.createElement("div", "profile-item-container");
         const labelElement = this.createElement("label", "form-label", label);
         labelElement.setAttribute("for", id);
@@ -35,6 +35,8 @@ class ProfileSection extends PageBuilder {
         inputElement.type = "text";
         inputElement.id = id;
         inputElement.placeholder = placeholder;
+        if(value) inputElement.value = value;
+
         if (required) inputElement.setAttribute("required", "required");
         if (!required) inputElement.setAttribute("disabled", "disabled");
         
@@ -48,30 +50,147 @@ class ProfileSection extends PageBuilder {
 
     createDropdownSection(title, children = []) {
         const section = this.createElement("dropdown-section", '', `<span slot="title">${title}</span>`);
-        children.forEach(child => section.appendChild(child));
+         if (children.length === 0) {
+// Создаем контейнер для текста и иконки
+	     const noInfoContainer = document.createElement('div');
+	        noInfoContainer.style.display = 'flex';
+	        noInfoContainer.style.alignItems = 'center';
+	        noInfoContainer.style.justifyContent = 'center';
+	        noInfoContainer.style.gap = '8px'; // Расстояние между иконкой и текстом
+
+	        // Добавляем иконку предупреждения
+	        const warningIcon = document.createElement('span');
+	        warningIcon.innerHTML = '⚠️'; // Используем эмодзи или можно вставить SVG
+	        warningIcon.style.fontSize = '18px'; // Размер иконки
+
+	        // Добавляем текст
+	        const noInfoText = document.createElement('p');
+	        noInfoText.textContent = 'Нет информации';
+        	noInfoText.style.margin = '0'; // Убираем отступы у параграфа
+
+	        // Собираем контейнер
+	        noInfoContainer.appendChild(warningIcon);
+	        noInfoContainer.appendChild(noInfoText);
+	
+	        // Добавляем контейнер в секцию
+	        section.appendChild(noInfoContainer);
+           } else {
+          children.forEach(child => section.appendChild(child));
+        }
         return section;
     }
 
-    createRadio(id, name, label) {
-        return this.createElement("div", "custom-radio row", `
-            <div class="col-10">
-                <input class="custom-control-input" type="radio" id="${id}" name="${name}">
-                <label for="${id}" class="custom-control-label">${label}</label>
-            </div>
-            <div class="col-2">
-                <button class="btn small-hot-button"><i class="fa-solid fa-x" style="font-size: 0.8rem;"></i></button>
-            </div>
-        `);
-    }
+    createRadio(id, name, label, checked = false, onClick = null, onDelete = null) {
+       // Создание основного контейнера
+       const placement = document.createElement("div");
+       placement.className = "custom-radio row";
 
-    createCheckbox(id, name, label) {
-        return this.createElement("div", "custom-checkbox row", `
+       // Создание контейнера для радио-кнопки и label
+       const radioContainer = document.createElement("div");
+       radioContainer.className = "col-10";
+
+       // Создание радио-кнопки
+       const radioInput = document.createElement("input");
+       radioInput.className = "custom-control-input";
+       radioInput.type = "radio";
+       radioInput.id = `radio-${id}`;
+       radioInput.name = name;
+       radioInput.checked = checked;
+       radioInput.value = id;
+
+       // Создание label
+       const radioLabel = document.createElement("label");
+       radioLabel.className = "custom-control-label";
+       radioLabel.setAttribute("for", `radio-${id}`);
+       radioLabel.textContent = label;
+
+       // Добавление радио-кнопки и label в контейнер
+       radioContainer.appendChild(radioInput);
+       radioContainer.appendChild(radioLabel);
+
+       // Создание контейнера для кнопки удаления
+       const buttonContainer = document.createElement("div");
+       buttonContainer.className = "col-2";
+
+       // Создание кнопки удаления
+       const removeButton = document.createElement("button");
+       removeButton.className = "btn small-hot-button";
+       removeButton.type = "button";
+       removeButton.value = id;
+
+       // Создание иконки внутри кнопки
+       const removeIcon = document.createElement("i");
+       removeIcon.className = "fa-solid fa-x";
+       removeIcon.style.fontSize = "0.8rem";
+
+       // Добавление иконки в кнопку
+       removeButton.appendChild(removeIcon);
+       buttonContainer.appendChild(removeButton);
+
+       // Добавление элементов в основной контейнер
+       placement.appendChild(radioContainer);
+       placement.appendChild(buttonContainer);
+
+       // Добавление обработчиков событий
+       if (onClick) {
+           radioInput.addEventListener("click", onClick);
+       }
+       if (onDelete) {
+           removeButton.addEventListener("click", onDelete);
+       }
+       return placement;
+}
+
+    createCheckbox1(id, name, label, checked = false, onClick = null) {
+         let placement =  this.createElement("div", "custom-checkbox row", `
              <div class="col">
-                <input class="form-check-input" type="checkbox" id="${id}" name="${name}">
+                <input class="form-check-input" type="checkbox"  id="check-${id}" name="${name}" value="${id}">
                 <label for="${id}" class="custom-checkbox-label">${label}</label>
              </div>
         `);
+        if (onClick) placement.addEventListener("click", onClick);
+        return placement;
     }
+
+
+ createCheckbox(id, name, label, checked = false, onClick = null) {
+    // Создание основного контейнера
+    const placement = document.createElement("div");
+    placement.className = "custom-checkbox row";
+
+    // Создание контейнера для чекбокса и метки
+    const checkboxContainer = document.createElement("div");
+    checkboxContainer.className = "col";
+
+    // Создание чекбокса
+    const checkboxInput = document.createElement("input");
+    checkboxInput.className = "form-check-input";
+    checkboxInput.type = "checkbox";
+    checkboxInput.id = `check-${id}`;
+    checkboxInput.name = name;
+    checkboxInput.checked = checked;
+    checkboxInput.value = id;
+
+    // Создание метки
+    const checkboxLabel = document.createElement("label");
+    checkboxLabel.className = "custom-checkbox-label";
+    checkboxLabel.setAttribute("for", `check-${id}`);
+    checkboxLabel.textContent = label;
+
+    // Добавление чекбокса и метки в контейнер
+    checkboxContainer.appendChild(checkboxInput);
+    checkboxContainer.appendChild(checkboxLabel);
+
+    // Добавление контейнера в основной контейнер
+    placement.appendChild(checkboxContainer);
+
+    // Добавление обработчика события, если передан
+    if (onClick) {
+        placement.addEventListener("click", onClick);
+    }
+
+    return placement;
+}
 
 
   InputAutoComplete(label, id, placeholder, required, feedbackError) {
@@ -130,7 +249,7 @@ class ProfileSection extends PageBuilder {
     }
 
 
-    ProfileCardContainer(data = null) {
+    UserProfileCardContainer(data = null) {
       let api = new WebAPI();
         let webRequest = new WebRequest();
 
@@ -156,48 +275,60 @@ class ProfileSection extends PageBuilder {
         profileContainer.appendChild(this.createConfirmationLabel());
 	
         const fioSection = this.createDropdownSection("Мои данные", [
-            this.createProfileItem("Фамилия", "surname", "Укажите вашу фамилию", true),
-            this.createProfileItem("Имя", "firstname", "Укажите ваше имя", true),
-            this.createProfileItem("Отчество", "patronymic", "Укажите ваше отчество", true),
+            this.createProfileItem("Фамилия", "surname", "Укажите вашу фамилию", true, ``, `${data?.profile?.surname || ''}`),
+            this.createProfileItem("Имя", "firstname", "Укажите ваше имя", true, ``,`${data?.profile?.name || ''}`),
+            this.createProfileItem("Отчество", "patronymic", "Укажите ваше отчество", true,``, `${data?.profile?.patronymic || ''}`),
             this.createButton("Сохранить", "text-end", this.saveProfileButtonOnClick)
         ]);
         profileContainer.appendChild(fioSection);
 
         const phoneSection = this.createDropdownSection("Мой телефон", [
-            this.createProfileItem("Телефон", "phone", "Укажите номер телефона", true, "Введите номер в формате +7 (XXX) XXX-XXXX"),
+            this.createProfileItem("Телефон", "phone", "Укажите номер телефона", true, "Введите номер в формате +7 (XXX) XXX-XXXX",`${data?.profile?.phone || ''}`),
             this.createButton("Сохранить", "text-end", this.saveProfileButtonOnClick)
         ]);
         profileContainer.appendChild(phoneSection);
-
+/*
         const addressSection = this.createDropdownSection("Мои адреса доставки", [
-            this.createRadio("customAddress1", "customAddress", "Москва, ул. Борисовские пруды 71к2 кв.10254"),
-            this.createRadio("customAddress2", "customAddress", "Москва, ул. Борисовские пруды 71к2 кв.10254"),
-            this.createRadio("customAddress3", "customAddress", "Москва, ул. Борисовские пруды 71к2 кв.10254"),
-            this.createRadio("customAddress4", "customAddress", "Москва, ул. Борисовские пруды 71к2 кв.10254"),
-            this.InputAutoComplete("Добавить адрес", "address", "Укажите адрес доставки", true, "Заполните данные для доставки товара"),
+            this.createRadio("customAddress1", "customAddress", "Москва, ул. Борисовские пруды 71к2 кв.10254", false),
+            this.createRadio("customAddress2", "customAddress", "Москва, ул. Борисовские пруды 71к2 кв.10254", true),
+            this.createRadio("customAddress3", "customAddress", "Москва, ул. Борисовские пруды 71к2 кв.10254", false),
+            this.createRadio("customAddress4", "customAddress", "Москва, ул. Борисовские пруды 71к2 кв.10254", false),
+            this.InputAutoComplete("Добавить адрес", "address1", "Укажите адрес доставки", true, "Заполните данные для доставки товара"),
             this.createButton("Сохранить", "text-end")
         ]);
         profileContainer.appendChild(addressSection);
-
+*/
+/*
         profileContainer.appendChild(this.createDropdownSection("Мои подписки", [
             this.createCheckbox("customSubscribe1", "customSubscribe","Новости Москвы"),
             this.createCheckbox("customSubscribe2", "customSubscribe","Мульзона"),
             this.createCheckbox("customSubscribe3", "customSubscribe","Горячие вакансии"),
 	]));
+*/
+        // Секция для адресов
+   	 let SubscriptionsDialog = new ClientSubscriptionsDialog();
+	 profileContainer.appendChild(this.createDropdownSection("Мои подписки", SubscriptionsDialog.getElements() || []));
 
-	let cards =  this.getPaymentCards();
-        if(cards)
-	 profileContainer
-          .appendChild(
-  		this.createDropdownSection("Мои средства платежа", cards));
-        profileContainer
-          .appendChild(
-		this.createDropdownSection("Выход из системы",[
-			this.createButton("Выход", "text-end", this.exitButtonOnClick)
-		]))
+        // Секция для адресов
+   	 let AddressDialog = new ClientAddressDialog();
+   	 let AddressDialogElementsArray = AddressDialog.getElements() || [];
+	 AddressDialogElementsArray.push(AddressDialog.AddressAutoComplete("Добавить адрес", "address", "Укажите адрес доставки", true, "Заполните данные для доставки товара"))
+          AddressDialogElementsArray.push(
+            this.createButton("Сохранить", "text-end", (()=>{
+	      alert('OK');
+              })
+	     )
+	   )
+	  profileContainer.appendChild(
+	    this.createDropdownSection("Мои адреса доставки",  AddressDialogElementsArray ));
 
-        this.addModule("Profile", profileContainer);
-	this.getPaymentInstruments();
+        // Секция для карт
+   	 let CardDialog = new ClientCardsDialog();
+	 profileContainer.appendChild(this.createDropdownSection("Мои средства платежа", CardDialog.getElements() || []));
+
+         profileContainer.appendChild(this.createDropdownSection("Выход из системы",[this.createButton("Выход", "text-end", this.exitButtonOnClick)]))
+         this.addModule("Profile", profileContainer);
+// 	 this.getPaymentInstruments();
     }
 
     saveProfileButtonOnClick(){
@@ -258,20 +389,4 @@ class ProfileSection extends PageBuilder {
          toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
       });
      }
-
-     getPaymentCards(){     
-      let o = this;
-      let api = new WebAPI();
-      let webRequest = new WebRequest();
-      let cardPlacement = [];
-      let _data = webRequest.get(api.getPaymentCardsMethod(),{},  true)
-        _data?.cards.forEach((element, index) => {
-	  cardPlacement.push(this.createRadio(`customPayment${index}`,`customPayment`, `Карта <b>${element.maskedCardNumber}</b>`));	
-	});
-
-      return cardPlacement || null;
-    }
-
-
-
 }

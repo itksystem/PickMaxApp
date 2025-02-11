@@ -620,9 +620,9 @@ class MainApp {
 	  } else {
 
 	  	 const profilePage = new ProfileSection("profile-card-container");
-	 	 profilePage.UserProfileCardContainer(data);
+	 	 profilePage.ProfileCardContainer(data);
 	  	 profilePage.render();
-/*
+
 	  	 let login = o.setProfileValueElement('[id="login"]', data.profile?.login ?? '') 
 	  	 let surname = o.setProfileValueElement('[id="surname"]', data?.profile?.surname ?? '') 
 	  	 let firstname = o.setProfileValueElement('[id="firstname"]', data?.profile?.name ?? '') 
@@ -631,11 +631,11 @@ class MainApp {
 	  	 let address = document.querySelector('x-autocomplete');
                  address.setValue(data?.profile?.address ?? '');
 		 address.getValueId(data?.profile?.fiasId ?? null);
-*/
+
 		 if(data?.profile?.confirmed)
 			o.verificationCodeConfirmed()
 
-/* 	  	 let confirmCodeButton = document.querySelector('button.confirm-code-button');
+ 	  	 let confirmCodeButton = document.querySelector('button.confirm-code-button');
 		  if(confirmCodeButton){
                      confirmCodeButton.addEventListener('click', () => {
 	               const verificationCode = document.querySelector('input[id="verificationCode"]');
@@ -657,7 +657,7 @@ class MainApp {
 	           });
 		  }
 
-*/
+
               // Слушатели событий
 		var validator = new InputMaskValidator({ id : 'phone', error : 'phone-error'});
 	      //	
@@ -683,7 +683,6 @@ class MainApp {
 		        .onSelect((item) => {
 	            console.log('Выбран элемент', item);
 	        });
-
 /*
 		const closeSessionButton = document.querySelector('[class="session-close"]');
 		    if (closeSessionButton) {

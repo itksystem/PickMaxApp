@@ -30,7 +30,7 @@ class WebRequest {
 
     if (sync) {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', url, false); // false для синхронного вызова
+        xhr.open('DELETE', url, false); // false для синхронного вызова
         for (const [key, value] of Object.entries(headers)) {
             xhr.setRequestHeader(key, value);
         }
@@ -114,6 +114,65 @@ class WebRequest {
             }));
     }
 }
+
+
+
+ patch(url = '', params = {}, sync = false) {
+    const shopId = localStorage.getItem('shopId');
+    const traceId = generateUUID();
+    const dataToSend = typeof params === 'string' ? params : JSON.stringify(params);
+
+    const headers = {
+        'Content-Type': 'application/json',
+        'x-trace-id': traceId,
+        'x-tg-init-data': this.tgInitData
+    };
+
+    const options = {
+        method: 'PATCH',
+        headers: headers,
+        body: dataToSend
+    };
+
+    if (sync) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('PATCH', url, false); // false для синхронного вызова
+        for (const [key, value] of Object.entries(headers)) {
+            xhr.setRequestHeader(key, value);
+        }
+        xhr.send(dataToSend);
+
+        if (xhr.status === 401) {
+            location.replace('/logon');
+        } else if (xhr.status >= 200 && xhr.status < 300) {
+            return Promise.resolve(JSON.parse(xhr.responseText));
+        } else {
+            return Promise.reject({
+                status: xhr.status,
+                message: xhr.statusText || 'An error occurred'
+            });
+        }
+    } else {
+        return fetch(url, options)
+            .then(response => {
+                if (response.status === 401) {
+                    location.replace('/logon');
+                }
+                if (!response.ok) {
+                    return response.text().then(text => Promise.reject({
+                        status: response.status,
+                        message: text || 'An error occurred'
+                    }));
+                }
+                return response.json();
+            })
+            .catch(error => Promise.reject({
+                status: error.status || 'Unknown',
+                message: error.message || error
+            }));
+    }
+}
+
 
  get(url = '', params = {}, sync = false) {
     // Создаем строку параметров из объекта params

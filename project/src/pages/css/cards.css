@@ -1212,8 +1212,8 @@ img.profile-avatar-image {
    padding: 0.5rem 0rem 0.5rem 1.5rem;
 }
 .small-hot-button {
-    font-size: 1rem;
-    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+    padding: 0.1rem 0.5rem;
     color: #212529;
     background-color: #d9dee3;
     border: none;
@@ -1234,4 +1234,18 @@ img.profile-avatar-image {
 
 #verificationCode {
    width: 5rem;
+}
+
+textarea.autocomplete-input:focus {
+    box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+    border-color: rgb(0, 123, 255);
+    outline: none;
+    border-radius : 0.5rem 0.5rem  0 0;
+}
+
+.autocomplete-input {
+    box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+    border-color: rgb(0, 123, 255);
+    outline: none;
+    border-radius : 0.5rem 0.5rem  0 0;
 }

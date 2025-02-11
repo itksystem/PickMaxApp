@@ -327,9 +327,45 @@ class WebAPI {
 /* Получение платежных инструментов */
    getPaymentInstrumentsMethod(){
 	return `/api/bff/payment/v1/instruments`}
+
    getPaymentCardsMethod(){
 	return `/api/bff/payment/v1/cards`}
 
+   setDefaultPaymentCardsMethod(cardId){             // Изменение - установка по умолчанию
+	return `/api/bff/payment/v1/cards/${cardId}` // POST
+   }
+
+   setDefaultPaymentCardsMethod(cardId){              // Добавление карты
+	return `/api/bff/payment/v1/cards/${cardId}`  // PUT
+   }
+
+   deletePaymentCardsMethod(cardId){
+	return `/api/bff/payment/v1/cards/${cardId}`
+   }
+
+/* Адреса доставки  */
+   getDeliveryAddressesMethod(){
+    return `/api/bff/client/v1/delivery`;
+   }
+
+   setDefaultDeliveryAddressesMethod(addressId){
+    return `/api/bff/client/v1/delivery/${addressId}`;
+   }
+
+   deleteDefaultDeliveryAddressesMethod(addressId){
+    return `/api/bff/client/v1/delivery/${addressId}`;
+   }
+
+/* */
+   getSubscriptionsMethod(){
+     return `/api/bff/client/v1/subscriptions`;
+   }
+   updateSubscriptionMethod(){
+     return `/api/bff/client/v1/subscription`;
+   }
+   deleteSubscriptionMethod(SubscribeId){
+     return `/api/bff/client/v1/subscriptions/${SubscribeId}`;
+   }
 
 /* станицы */
    LOGON_URL(){ return `/logon` }

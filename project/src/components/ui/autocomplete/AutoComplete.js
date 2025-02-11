@@ -26,8 +26,16 @@ class Autocomplete extends HTMLElement {
         border: 0.0625rem solid #ccc;
         line-height: 1.1;
         padding: 0.3rem;
-	top: -0.5rem;
+/*	top: -0.5rem; */
 	padding-top: 1rem;
+
+        box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+        border-top-color: unset;
+        border-right-color: #007bff;
+        border-bottom-color: #007bff;
+        border-left-color: #007bff;
+        outline: none;
+
       }
 
       .d-none {
@@ -63,12 +71,13 @@ class Autocomplete extends HTMLElement {
         box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
         border-color: #007bff;
         outline: none;
-
+        border-radius : 0.5rem; 
       }
 
       .autocomplete-input:focus {
         box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
         border-color: rgb(0, 123, 255);
+        border-radius : 0.5rem 0.5rem  0 0; 
         outline: none;
       }
 

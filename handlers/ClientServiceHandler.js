@@ -60,7 +60,7 @@ class ClientServiceHandler {
         }
     }
 
-        /**
+     /**
      * Метод для получения сервисных данных пользователя от AuthService
      * @returns {Object} - Объект с результатом
      */
@@ -85,10 +85,10 @@ class ClientServiceHandler {
                 return { success: false, error: error.message };
             }
         }
-           /**
+   /**
      * Метод для получения сервисных данных пользователя от AuthService
      * @returns {Object} - Объект с результатом
-     */
+   */
            async getSuggestAddress(req, res) {
             try {
                 const query = req.query.query;
@@ -113,6 +113,61 @@ class ClientServiceHandler {
                 return { success: false, error: error.message };
             }
         }
+
+
+         /**
+     * Метод для получения подписки
+     * @returns {Object} - Объект с результатом
+   */
+         async getSubscriptions(req, res) {
+            try {
+                const query = req.query.query;
+                const url = new URL(process.env.CLIENT_GET_SUBSCRIPTIONS_URL);                
+
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, }
+                });    
+    
+                const data = await response.json();
+                if (response.ok) {
+                    console.log(`Get getSuggestAddress successfully.`);
+                    return { success: true, data };
+                } else {
+                    console.log(`Get getSuggestAddress failed.`);
+                    return { success: false, status: response.status, data };
+                }
+            } catch (error) {
+                    console.log(`Get getSuggestAddress failed.`);
+                return { success: false, error: error.message };
+            }
+        }
+
+        async setSubscription(req, res) {
+            try {                
+                const url = new URL(process.env.CLIENT_SET_SUBSCRIPTIONS_URL);                
+                const response = await fetch(url, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,                 
+                 },
+                 body: JSON.stringify(req.body)
+                });    
+    
+                const data = await response.json();
+                if (response.ok) {
+                    console.log(`SetSuggestAddress successfully.`);
+                    return { success: true, data };
+                } else {
+                    console.log(`SetSuggestAddress failed.`);
+                    return { success: false, status: response.status, data };
+                }
+            } catch (error) {
+                    console.log(`SetSuggestAddress failed.`);
+                return { success: false, error: error.message };
+            }
+        }
+
+    
 }
 
 module.exports = ClientServiceHandler;
