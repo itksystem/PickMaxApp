@@ -85,6 +85,11 @@ class ClientAddressDialog {
         try {
             const response = this.webRequest.delete(this.api.deleteDeliveryAddressMethod(), {addressId}, true);
             toastr.success('Aдрес успешно удален', 'Доставка', { timeOut: 3000 });
+            if(eventBus) {
+             console.log(eventBus)
+             eventBus.emit("ClientAddressDialogReload", {});
+           }
+
             return response;
         } catch (error) {
             console.error('Ошибка при удалении адреса:', error);

@@ -73,6 +73,27 @@ router.post('/v1/address',
         }
 });
 
+// Сохранение адреса 
+router.delete('/v1/address', 	
+	async (req, res) => {        
+        try {
+            const result = await deliveryService.deleteAddress(req, res);        
+            if (!result.success) throw({code : 422, message : "Delete address not executed" })
+                _response
+                    .setCode(200)                    
+                    .setData(result.data)
+                    .send(res);    
+        } catch (error) {            
+                _response
+                    .setCode(error.code)
+                    .setStatus(false)
+                    .setMessage(error.message)
+                    .send(res);                    
+        }
+});
+
+
+
 /* Сохранить профиль клиента */
 /*
 router.post('/v1/profile', 	

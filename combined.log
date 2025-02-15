@@ -1175,3 +1175,5 @@
 {"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-02-15T17:37:32.157Z"}
 {"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-02-15T17:37:32.678Z"}
 {"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-02-15T17:37:57.613Z"}
+{"level":"error","message":"Save new address not executed","service":"pickapp-service","timestamp":"2025-02-15T20:15:33.164Z"}
+{"level":"error","message":"Save new address not executed","service":"pickapp-service","timestamp":"2025-02-15T20:16:08.550Z"}

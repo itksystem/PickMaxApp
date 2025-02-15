@@ -308,7 +308,7 @@ class ProfileSection extends PageBuilder {
 	        let address = autocomplete.getObject();
                 const response = webRequest.post(api.addDeliveryAddressMethod(), address, true);
                 autocomplete.setValue(``);
-                toastr.success('Aдрес успешно удален', 'Доставка', { timeOut: 3000 });
+                toastr.success('Aдрес успешно сохранен', 'Доставка', { timeOut: 3000 });
 	        if(eventBus) {
 	          console.log(eventBus)
 	          eventBus.emit("ClientAddressDialogReload", {});
