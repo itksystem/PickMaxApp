@@ -16,6 +16,7 @@ const ordersBffRouter = require('./routes/ordersBffRouter');
 const clientRouter = require('./routes/clientRouter');
 const recoRouter = require('./routes/recoRouter');
 const mailRouter = require('./routes/MailRouter');
+const deliveryRouter= require('./routes/deliveryRouter');
 const promClient = require('prom-client'); //сбор метрик для Prometheus
 const PORT = process.env.PORT || 3000;
 
@@ -80,6 +81,7 @@ app.use('/api/bff/client/',  clientRouter);
 app.use('/api/bff/reco/',    recoRouter); 
 app.use('/api/bff/mail/',   mailRouter); 
 app.use('/api/bff/verification/',  mainRouter); 
+app.use('/api/bff/delivery/',  deliveryRouter); 
 
 // Middleware для обработки 404 ошибок
 app.use((req, res, next) => {

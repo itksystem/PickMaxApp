@@ -1165,3 +1165,13 @@
 {"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-02-08T11:34:30.338Z"}
 {"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-02-08T11:34:52.461Z"}
 {"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-02-08T13:36:06.897Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-02-15T11:06:50.493Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-02-15T17:07:05.716Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-02-15T17:09:16.760Z"}
+{"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-02-15T17:37:31.339Z"}
+{"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-02-15T17:37:31.533Z"}
+{"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-02-15T17:37:31.759Z"}
+{"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-02-15T17:37:32.048Z"}
+{"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-02-15T17:37:32.157Z"}
+{"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-02-15T17:37:32.678Z"}
+{"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-02-15T17:37:57.613Z"}

@@ -60,7 +60,7 @@ class ClientAddressDialog {
     getAddresses() {
         try {
             const response =  this.webRequest.get(this.api.getDeliveryAddressesMethod(), {}, true);
-            return response?.cards || [];
+            return response?.addresses || [];
         } catch (error) {
             console.error('Ошибка при получении адресов:', error);
             return [];
@@ -70,11 +70,12 @@ class ClientAddressDialog {
     // Установка адреса  по умолчанию
     setDefaultAddress(addressId) {
         try {
-            const response =  this.webRequest.post(this.api.setDefaultDeliveryAddressesMethod(addressId), {}, true);
+            const response =  this.webRequest.patch(this.api.setDefaultDeliveryAddressMethod(), {addressId}, true);
             toastr.success('Aдрес по умолчанию успешно изменен', 'Доставка', { timeOut: 3000 });
             return response;
         } catch (error) {
-            console.error('Ошибка при установке адресов по умолчанию:', error);
+            console.error('Ошибка при установке адреса по умолчанию:', error);
+            toastr.error('Ошибка при установке адреса по умолчанию', 'Доставка', { timeOut: 3000 });
             return null;
         }
     }
@@ -82,12 +83,12 @@ class ClientAddressDialog {
     // Удаление адресов
     deleteAddress(addressId) {
         try {
-            const response = this.webRequest.delete(this.api.deleteDeliveryAddressesMethod(addressId), {}, true);
+            const response = this.webRequest.delete(this.api.deleteDeliveryAddressMethod(), {addressId}, true);
             toastr.success('Aдрес успешно удален', 'Доставка', { timeOut: 3000 });
             return response;
         } catch (error) {
-            console.error('Ошибка при удалении адресов:', error);
-            toastr.error('Ошибка при удалении адресов', 'Доставка', { timeOut: 3000 });
+            console.error('Ошибка при удалении адреса:', error);
+            toastr.error('Ошибка при удалении адреса', 'Доставка', { timeOut: 3000 });
             return null;
         }
     }
@@ -124,11 +125,12 @@ class ClientAddressDialog {
     getElements() {
 	    try {
 	        const addresses = this.getAddresses();
+		console.log(addresses);
 	        const addressElements = addresses.map(element =>
 	            this.createAddressRadio(
-	                card.addressId,
+	                element.addressId,
 	                "customAddress",
-	                element.address,
+	                element.value,
 	                element.isDefault,
 	                this.setDefaultAddress.bind(this),
 	                this.deleteAddress.bind(this)

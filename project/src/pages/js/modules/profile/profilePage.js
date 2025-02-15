@@ -250,8 +250,9 @@ class ProfileSection extends PageBuilder {
 
 
     UserProfileCardContainer(data = null) {
-      let api = new WebAPI();
+        let api = new WebAPI();
         let webRequest = new WebRequest();
+	let o = this; 	
 
         const profileContainer = this.createElement("div", "card card-container");
         profileContainer.appendChild(this.createElement("div", "card-header", `<h3 class="card-title">Профиль</h3>`));
@@ -287,40 +288,36 @@ class ProfileSection extends PageBuilder {
             this.createButton("Сохранить", "text-end", this.saveProfileButtonOnClick)
         ]);
         profileContainer.appendChild(phoneSection);
-/*
-        const addressSection = this.createDropdownSection("Мои адреса доставки", [
-            this.createRadio("customAddress1", "customAddress", "Москва, ул. Борисовские пруды 71к2 кв.10254", false),
-            this.createRadio("customAddress2", "customAddress", "Москва, ул. Борисовские пруды 71к2 кв.10254", true),
-            this.createRadio("customAddress3", "customAddress", "Москва, ул. Борисовские пруды 71к2 кв.10254", false),
-            this.createRadio("customAddress4", "customAddress", "Москва, ул. Борисовские пруды 71к2 кв.10254", false),
-            this.InputAutoComplete("Добавить адрес", "address1", "Укажите адрес доставки", true, "Заполните данные для доставки товара"),
-            this.createButton("Сохранить", "text-end")
-        ]);
-        profileContainer.appendChild(addressSection);
-*/
-/*
-        profileContainer.appendChild(this.createDropdownSection("Мои подписки", [
-            this.createCheckbox("customSubscribe1", "customSubscribe","Новости Москвы"),
-            this.createCheckbox("customSubscribe2", "customSubscribe","Мульзона"),
-            this.createCheckbox("customSubscribe3", "customSubscribe","Горячие вакансии"),
-	]));
-*/
-        // Секция для адресов
+
+        // Секция для подписок
    	 let SubscriptionsDialog = new ClientSubscriptionsDialog();
 	 profileContainer.appendChild(this.createDropdownSection("Мои подписки", SubscriptionsDialog.getElements() || []));
 
         // Секция для адресов
-   	 let AddressDialog = new ClientAddressDialog();
-   	 let AddressDialogElementsArray = AddressDialog.getElements() || [];
-	 AddressDialogElementsArray.push(AddressDialog.AddressAutoComplete("Добавить адрес", "address", "Укажите адрес доставки", true, "Заполните данные для доставки товара"))
-          AddressDialogElementsArray.push(
-            this.createButton("Сохранить", "text-end", (()=>{
-	      alert('OK');
-              })
-	     )
-	   )
-	  profileContainer.appendChild(
-	    this.createDropdownSection("Мои адреса доставки",  AddressDialogElementsArray ));
+         let AddressDialogElementsArray = [];
+         this.AddressesContainer = this.createElement("div", "addresses-card-container");
+         let AddressDialog = new ClientAddressDialog();
+  	 AddressDialog.getElements().forEach((item, index) => {
+	     o.AddressesContainer.appendChild(item); 
+	 });
+         AddressDialogElementsArray.push(this.AddressesContainer);
+         AddressDialogElementsArray.push(AddressDialog.AddressAutoComplete("Добавить адрес", "address", "Укажите адрес доставки", true, "Заполните данные для доставки товара"))
+         AddressDialogElementsArray.push(
+         this.createButton("Сохранить", "text-end", (()=>{
+	        let autocomplete = document.getElementById('address');
+	        let address = autocomplete.getObject();
+                const response = webRequest.post(api.addDeliveryAddressMethod(), address, true);
+                autocomplete.setValue(``);
+                toastr.success('Aдрес успешно удален', 'Доставка', { timeOut: 3000 });
+	        if(eventBus) {
+	          console.log(eventBus)
+	          eventBus.emit("ClientAddressDialogReload", {});
+	       }
+             })
+           )
+         )
+         console.log(AddressDialogElementsArray);	
+         profileContainer.appendChild(this.createDropdownSection("Мои адреса доставки",  AddressDialogElementsArray));
 
         // Секция для карт
    	 let CardDialog = new ClientCardsDialog();
@@ -328,8 +325,28 @@ class ProfileSection extends PageBuilder {
 
          profileContainer.appendChild(this.createDropdownSection("Выход из системы",[this.createButton("Выход", "text-end", this.exitButtonOnClick)]))
          this.addModule("Profile", profileContainer);
-// 	 this.getPaymentInstruments();
+	 this.addEventListeners();
+         this.profileContainer = profileContainer; 
     }
+
+    ClientAddressDialogLoading(AddressesContainer){
+     let o = this;
+     let api = new WebAPI();
+     let webRequest = new WebRequest();
+    } 
+
+
+    addEventListeners() {                                                           
+      let o = this;
+      console.log(`Перезагрузка экрана`)
+      eventBus.on('ClientAddressDialogReload', () => {
+       let AddressDialog = new ClientAddressDialog();
+       o.AddressesContainer.innerHTML = ``;
+       AddressDialog.getElements().forEach((item, index) => {
+          o.AddressesContainer.appendChild(item); 
+       });
+      });
+     }
 
     saveProfileButtonOnClick(){
      let o = this;

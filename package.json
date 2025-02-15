@@ -47,6 +47,7 @@
     "openfsm-auth-service-client-handler": "^1.0.5",
     "openfsm-common": "^1.0.4",
     "openfsm-common-functions": "^1.0.0",
+    "openfsm-delivery-service-client-handler": "^1.0.4",
     "openfsm-jwt-token-handler": "^1.0.0",
     "openfsm-middlewares-auth-service": "^1.0.7",
     "openfsm-order-dto": "^1.0.2",

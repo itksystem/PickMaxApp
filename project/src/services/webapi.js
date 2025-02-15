@@ -345,16 +345,21 @@ class WebAPI {
 
 /* Адреса доставки  */
    getDeliveryAddressesMethod(){
-    return `/api/bff/client/v1/delivery`;
+    return `/api/bff/delivery/v1/addresses`;
    }
 
-   setDefaultDeliveryAddressesMethod(addressId){
-    return `/api/bff/client/v1/delivery/${addressId}`;
+   setDefaultDeliveryAddressMethod(){
+    return `/api/bff/delivery/v1/address`;
    }
 
-   deleteDefaultDeliveryAddressesMethod(addressId){
-    return `/api/bff/client/v1/delivery/${addressId}`;
+   deleteDeliveryAddressMethod(){
+    return `/api/bff/delivery/v1/address`;
    }
+
+   addDeliveryAddressMethod(){
+     return `/api/bff/delivery/v1/address`;
+  }
+
 
 /* */
    getSubscriptionsMethod(){
