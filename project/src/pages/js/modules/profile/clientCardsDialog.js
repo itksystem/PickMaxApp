@@ -25,7 +25,7 @@ class ClientCardsDialog {
         radioLabel.textContent = label;
 
         const radioImage = document.createElement("img");
-        radioImage.className = "custom-radio-card";
+        radioImage.className = (paySystem == 'new-card') ? "custom-radio-new-card" : "custom-radio-card";
         radioImage.setAttribute("for", `radio-${cardId}`);
         radioImage.src = `/public/images/cards/icon-${paySystem}-48.png`;
 
@@ -47,8 +47,10 @@ class ClientCardsDialog {
         removeIcon.className = "fa-solid fa-x";
         removeIcon.style.fontSize = "0.8rem";
 
-        removeButton.appendChild(removeIcon);
-        buttonContainer.appendChild(removeButton);
+        if (onDelete) {
+          removeButton.appendChild(removeIcon);
+          buttonContainer.appendChild(removeButton);
+         }
 
         placement.appendChild(radioContainer);
         placement.appendChild(buttonContainer);
@@ -67,6 +69,7 @@ class ClientCardsDialog {
     getPaymentCards() {
         try {
             const response =  this.webRequest.get(this.api.getPaymentCardsMethod(), {}, true);
+	    if(!response?.status) throw('Ошибка при получении карт');
             return response?.cards || [];
         } catch (error) {
             console.error('Ошибка при получении карт:', error);
@@ -78,7 +81,8 @@ class ClientCardsDialog {
     // Установка карты по умолчанию
     setDefaultCard(cardId) {
         try {
-            const response =  this.webRequest.post(this.api.setDefaultPaymentCardsMethod(cardId), {}, true);
+            const response =  this.webRequest.patch(this.api.setDefaultPaymentCardMethod(), {cardId}, true);
+	    if(!response?.status) throw('Ошибка при установке карты по умолчанию');
             toastr.success('Карта по умолчанию успешно изменена', 'Платежные карты', { timeOut: 3000 });
             return response;
         } catch (error) {
@@ -91,7 +95,8 @@ class ClientCardsDialog {
     // Удаление карты
     deleteCard(cardId) {
         try {
-            const response = this.webRequest.delete(this.api.deletePaymentCardsMethod(cardId), {}, true);
+            const response = this.webRequest.delete(this.api.deletePaymentCardMethod(), {cardId}, true);
+	    if(!response?.status) throw('Ошибка удалении карт');
             toastr.success('Карта успешно удалена', 'Платежные карты', { timeOut: 3000 });
             return response;
         } catch (error) {
@@ -101,11 +106,15 @@ class ClientCardsDialog {
         }
     }
 
+    checkDefaultCard(cards) {
+       return cards.some(card => card.isDefault === true);
+    }
+
     // Отображение карт в интерфейсе
     getElements() {
 	    try {
 	        const cards = this.getPaymentCards();
-	        const cardElements = cards.map(card =>
+	        const cardElements = cards.map(card => 
 	            this.createCardRadio(
 	                card.cardId,
 	                "customPayment",
@@ -116,6 +125,16 @@ class ClientCardsDialog {
 	                this.deleteCard.bind(this)
 	            )
 	        );
+		cardElements.push(
+	            this.createCardRadio(
+	                 -1,
+	                "customPayment",
+	                `Указать новую карту при оплате заказа`,
+	                 (!this.checkDefaultCard(cards) ? true : false),
+	                'new-card',
+	                this.setDefaultCard.bind(this)	            
+		      )
+	          );
 	        return cardElements;
 	    } catch (error) {
 	        console.error('Ошибка при получении карт:', error);

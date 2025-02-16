@@ -1263,3 +1263,10 @@ img.custom-radio-card{
     top: -0.5rem;
     padding-left: 0.5rem;
 }
+
+img.custom-radio-new-card{
+    height: 1rem;
+    position: absolute;
+    top: 0;
+    padding-left: 0.5rem;
+}

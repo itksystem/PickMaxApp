@@ -331,16 +331,16 @@ class WebAPI {
    getPaymentCardsMethod(){
 	return `/api/bff/payment/v1/cards`}
 
-   setDefaultPaymentCardsMethod(cardId){             // Изменение - установка по умолчанию
-	return `/api/bff/payment/v1/cards/${cardId}` // POST
+   setDefaultPaymentCardMethod(){             // Изменение - установка по умолчанию
+	return `/api/bff/payment/v1/card` // PATCH
    }
 
-   setDefaultPaymentCardsMethod(cardId){              // Добавление карты
-	return `/api/bff/payment/v1/cards/${cardId}`  // PUT
+   addPaymentCardMethod(){              // Добавление карты
+	return `/api/bff/payment/v1/card`  // POST
    }
 
-   deletePaymentCardsMethod(cardId){
-	return `/api/bff/payment/v1/cards/${cardId}`
+   deletePaymentCardMethod(cardId){    // удаление карты DELETE
+	return `/api/bff/payment/v1/card`
    }
 
 /* Адреса доставки  */

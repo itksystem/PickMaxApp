@@ -59,7 +59,7 @@ paymentRouter.get('/v1/cards',
         }       
 });
 
-paymentRouter.post('/v1/cards/:cardId/default', 	
+paymentRouter.patch('/v1/card', 	
 	async (req, res) => {        
         try {            
             const response = await paymentClient.setDefaultCard(commonFunction.getJwtToken(req), req);
@@ -71,7 +71,7 @@ paymentRouter.post('/v1/cards/:cardId/default',
         }       
 });
 
-paymentRouter.delete('/v1/cards/:cardId', 	
+paymentRouter.delete('/v1/card', 	
 	async (req, res) => {        
         try {            
             const response = await paymentClient.deleteCard(commonFunction.getJwtToken(req), req);
