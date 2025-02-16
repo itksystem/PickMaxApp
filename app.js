@@ -18,6 +18,11 @@ const recoRouter = require('./routes/recoRouter');
 const mailRouter = require('./routes/MailRouter');
 const deliveryRouter= require('./routes/deliveryRouter');
 const promClient = require('prom-client'); //сбор метрик для Prometheus
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swagger/swagger'); // Импортируйте конфигурацию Swagger
+
+
 const PORT = process.env.PORT || 3000;
 
 const app = express(); // Создаем приложение Express
@@ -50,6 +55,8 @@ app.use((req, res, next) => {
   });
   next();
 });
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Маршрут /metrics
 app.get('/metrics', async (req, res) => {

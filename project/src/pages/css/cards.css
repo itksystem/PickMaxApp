@@ -1249,3 +1249,17 @@ textarea.autocomplete-input:focus {
     outline: none;
     border-radius : 0.5rem 0.5rem  0 0;
 }
+
+.custom-radio {
+    display: grid;
+    grid-template-columns: 1fr auto; /* Первая колонка занимает всё доступное пространство, вторая — по содержимому */
+    align-items: center; /* Выравнивание по вертикали */
+    gap: 8px; /* Расстояние между элементами */
+}
+
+img.custom-radio-card{
+    height: 2rem;
+    position: absolute;
+    top: -0.5rem;
+    padding-left: 0.5rem;
+}

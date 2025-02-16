@@ -4,7 +4,7 @@ class ClientCardsDialog {
         this.webRequest = new WebRequest();    }
 
     // Создание элемента радио-кнопки для карты
-    createCardRadio(cardId, name, label, isDefault, onClick, onDelete) {
+    createCardRadio(cardId, name, label, isDefault, paySystem, onClick, onDelete) {
         const placement = document.createElement("div");
         placement.className = "custom-radio row";
 
@@ -24,8 +24,16 @@ class ClientCardsDialog {
         radioLabel.setAttribute("for", `radio-${cardId}`);
         radioLabel.textContent = label;
 
+        const radioImage = document.createElement("img");
+        radioImage.className = "custom-radio-card";
+        radioImage.setAttribute("for", `radio-${cardId}`);
+        radioImage.src = `/public/images/cards/icon-${paySystem}-48.png`;
+
+
         radioContainer.appendChild(radioInput);
         radioContainer.appendChild(radioLabel);
+        radioContainer.appendChild(radioImage);
+
 
         const buttonContainer = document.createElement("div");
         buttonContainer.className = "col-2";
@@ -103,6 +111,7 @@ class ClientCardsDialog {
 	                "customPayment",
 	                `Карта ${card.maskedCardNumber}`,
 	                card.isDefault,
+	                card.paySystem.toLowerCase(),
 	                this.setDefaultCard.bind(this),
 	                this.deleteCard.bind(this)
 	            )

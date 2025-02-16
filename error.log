@@ -954,3 +954,7 @@
 {"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-02-15T17:37:57.613Z"}
 {"level":"error","message":"Save new address not executed","service":"pickapp-service","timestamp":"2025-02-15T20:15:33.164Z"}
 {"level":"error","message":"Save new address not executed","service":"pickapp-service","timestamp":"2025-02-15T20:16:08.550Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:44:39\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-02-16T06:18:29.361Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-16T06:19:27.116Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-16T06:19:37.893Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-16T06:21:53.322Z"}
