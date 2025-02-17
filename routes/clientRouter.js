@@ -10,6 +10,8 @@ const clientService = new ClientServiceHandler();              // интерфе
 const AuthServiceClientHandler = require("openfsm-auth-service-client-handler");
 const authClient = new AuthServiceClientHandler();              // интерфейс для  связи с MC AuthService
 const axios = require('axios'); // Импорт библиотеки axios
+const multer = require('multer');
+const path = require('path');
 
 
 const CommonFunctionHelper = require("openfsm-common-functions")
@@ -122,7 +124,7 @@ router.get('/v1/subscriptions',
 	async (req, res) => {        
         try {
             const result = await clientService.getSubscriptions(req, res);        
-            if (!result.success)  throw({code : logout.status, message : "Ошибка при выполнении операции выхода из сессии" })
+            if (!result.success)  throw({code : result.status, message : "Ошибка при выполнении операции выхода из сессии" })
                 let subscriptions = result?.data || [];
                 _response
                     .setCode(200)                    
@@ -141,7 +143,7 @@ router.patch('/v1/subscription',
 	async (req, res) => {        
         try {
             const result = await clientService.setSubscription(req, res);        
-            if (!result.success)  throw({code : logout.status, message : "Ошибка при выполнении операции выхода из сессии" })
+            if (!result.success)  throw({code : result.status, message : "Ошибка при выполнении операции выхода из сессии" })
                 let subscriptions = result.data;
                 _response
                     .setCode(200)                    
@@ -156,4 +158,68 @@ router.patch('/v1/subscription',
         }
 });
   
+
+// ***********************  Настройка хранилища для файлов ***********************************************************************
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, common.COMMON_PATH_TO_SITE + '/uploads/'); // Папка для сохранения файлов
+    },
+    filename: (req, file, cb) => {
+        // Получаем fileId из заголовков запроса
+        const fileId = req.headers['fileid'];
+        const fileExtension = path.extname(file.originalname); // Получаем расширение файла
+
+        if (fileId) {
+            // Если есть fileId, используем его с текущим расширением
+            cb(null, `${fileId}${fileExtension}`);
+        } else {
+            // Если fileId нет, используем текущее время и оригинальное имя файла
+            cb(null, `${Date.now()}-${file.originalname}`);
+        }
+    }
+});
+
+// Проверка типа файла
+const fileFilter = (req, file, cb) => {
+    if (['image/png', 'image/jpeg'].includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(new Error('Invalid file type'), false);
+    }
+};
+
+// Инициализация Multer
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter,
+    limits: { fileSize: 10 * 1024 * 1024 } // 10MB
+});
+
+   
+  router.post('/v1/profile-image', upload.array('file', 1), 	
+    authMiddleware.authenticateToken,
+	async (req, res) => {        
+        try {
+            const fileUrls = req.files.map(file => `/uploads/${file.filename}`);            
+            const result = await clientService.setProfileImage(req, fileUrls);        
+            if (!result.success)  throw({code : result.status, message : "Ошибка при выполнении операции выхода из сессии" })
+                let subscriptions = result.data;
+                _response
+                    .setCode(200)                    
+                    .setData(subscriptions)
+                    .send(res);    
+        } catch (error) {
+            logger.error(error);
+            _response
+                    .setCode(error.code)
+                    .setStatus(false)
+                    .setMessage(error.message)
+                    .send(res);                    
+        }
+ });
+
+   
+   
+
+
 module.exports = router;

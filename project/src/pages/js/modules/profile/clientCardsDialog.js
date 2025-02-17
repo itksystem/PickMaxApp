@@ -9,7 +9,7 @@ class ClientCardsDialog {
         placement.className = "custom-radio row";
 
         const radioContainer = document.createElement("div");
-        radioContainer.className = "col-10";
+        radioContainer.className = "col-9";
 
         const radioInput = document.createElement("input");
         radioInput.className = "custom-control-input";
@@ -69,7 +69,7 @@ class ClientCardsDialog {
     getPaymentCards() {
         try {
             const response =  this.webRequest.get(this.api.getPaymentCardsMethod(), {}, true);
-	    if(!response?.status) throw('Ошибка при получении карт');
+	    if(response?.status != true) throw('Ошибка при получении карт');
             return response?.cards || [];
         } catch (error) {
             console.error('Ошибка при получении карт:', error);
@@ -79,10 +79,11 @@ class ClientCardsDialog {
     }
 
     // Установка карты по умолчанию
-    setDefaultCard(cardId) {
+    async setDefaultCard(cardId) {
         try {
-            const response =  this.webRequest.patch(this.api.setDefaultPaymentCardMethod(), {cardId}, true);
-	    if(!response?.status) throw('Ошибка при установке карты по умолчанию');
+            const response =  await this.webRequest.patch(this.api.setDefaultPaymentCardMethod(), {cardId}, true);
+	    console.log(response);	
+	    if(response?.status != true) throw('Ошибка при установке карты по умолчанию');
             toastr.success('Карта по умолчанию успешно изменена', 'Платежные карты', { timeOut: 3000 });
             return response;
         } catch (error) {
@@ -96,7 +97,7 @@ class ClientCardsDialog {
     deleteCard(cardId) {
         try {
             const response = this.webRequest.delete(this.api.deletePaymentCardMethod(), {cardId}, true);
-	    if(!response?.status) throw('Ошибка удалении карт');
+	    if(response?.status != true) throw('Ошибка удалении карт');
             toastr.success('Карта успешно удалена', 'Платежные карты', { timeOut: 3000 });
             return response;
         } catch (error) {

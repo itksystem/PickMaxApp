@@ -1,0 +1,127 @@
+.profile-picture__container {
+    display: flex;
+    flex-direction: column;
+/*    gap: 10px;*/
+    width: -webkit-fill-available;
+/*    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+*/
+}
+
+.profile-picture__input {
+    margin-bottom: 10px;
+}
+
+.profile-picture__button {
+    background-color: white;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.profile-picture__button:hover {
+    background-color: white;
+}
+
+
+.profile-picture__progress {
+    width: 100%;
+    height: 10px;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.profile-picture__progress-bar {
+    height: 100%;
+    width: 0;
+    background-color: #4caf50;
+    transition: width 0.3s ease;
+}
+
+
+.profile-picture__message {
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.profile-picture__message--success {
+    color: green;
+}
+
+.profile-picture__message--error {
+    color: red;
+}
+
+.profile-picture__file-item {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.profile-picture__file-list {
+    margin-top: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 5px;
+}
+
+.profile-picture__file-item {
+    margin-bottom: 10px;
+    display: ruby;
+}
+
+.profile-picture__file-name {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.profile-picture__file-progress {
+    height: 4px;
+    width: 90%;
+    margin-left: 5%;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.profile-picture__file-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #4caf50;
+    transition: width 0.3s ease-in-out;
+}
+
+img.profile-picture__file-preview-loading {
+    width: 1.25rem;
+}
+
+img.profile-picture__preview-image{
+    border-radius: 50%;
+    width: -webkit-fill-available;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    width: 5rem;
+    cursor: pointer;
+}
+
+img.profile-picture__preview-image.online{
+   border: 0.3rem solid #00ff03;
+}
+
+img.profile-picture__preview-image.offline{
+   border: 0.3rem solid #eee;
+}
+
+
+.profile-picture__previews{
+ display: flex;
+}
+
+.profile-picture__file-preview {
+    width: 25%;
+}

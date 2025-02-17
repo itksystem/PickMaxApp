@@ -10,7 +10,7 @@ class ClientAddressDialog {
         placement.className = "custom-radio row";
 
         const radioContainer = document.createElement("div");
-        radioContainer.className = "col-10";
+        radioContainer.className = "col-9";
 
         const radioInput = document.createElement("input");
         radioInput.className = "custom-control-input";

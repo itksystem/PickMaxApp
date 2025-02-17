@@ -1,7 +1,8 @@
 // Обработчик взаимодействия с AuthService
 const fetch = require('node-fetch');
 require('dotenv').config();
-const CommonFunctionHelper = require("openfsm-common-functions")
+const CommonFunctionHelper = require("openfsm-common-functions");
+const logger = require('../controllers/LoggerHandler');
 const commonFunction= new CommonFunctionHelper();
 
 class ClientServiceHandler {
@@ -167,6 +168,32 @@ class ClientServiceHandler {
             }
         }
 
+        
+        async setProfileImage(req, fileUrls) {
+            try {                              
+                const url = new URL(process.env.CLIENT_PROFILE_IMAGE_URL);                
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,                 
+                 },
+                 body: JSON.stringify({fileUrls})
+                });    
+    
+                const data = await response.json();
+                if (response.ok) {
+                    logger.info(`setProfileImage successfully.`);
+                    return { success: true, data };
+                } else {
+                    logger.error(`setProfileImage failed.`);
+                    return { success: false, status: response.status, data };
+                }
+            } catch (error) {
+                    logger.error(`setProfileImage failed.`);
+                return { success: false, error: error.message };
+            }
+        }
+
+ // Загрузка файлов картинки профиля доделать!
     
 }
 

@@ -293,6 +293,7 @@ class WebAPI {
 
 
 /* Профиль */
+   profilePictureMethod(){ return `/api/bff/client/v1/profile-image`}
    getShopProfileMethod(){ return `/api/bff/client/v1/profile` }
    saveShopProfileMethod(){ return `/api/bff/client/v1/profile` }
    closeSessionMethod(){ return `/api/bff/client/v1/logout` }

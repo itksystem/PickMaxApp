@@ -1181,3 +1181,21 @@
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-16T06:19:27.116Z"}
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-16T06:19:37.893Z"}
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-16T06:21:53.322Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-02-16T10:18:51.877Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-02-16T10:20:14.152Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-16T10:24:24.011Z"}
+{"level":"error","service":"pickapp-service","timestamp":"2025-02-17T06:16:27.664Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-02-17T19:06:55.237Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-02-17T19:06:57.541Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-02-17T19:07:00.934Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-02-17T19:07:14.447Z"}
+{"level":"error","message":"SetSuggestAddress failed.","service":"pickapp-service","timestamp":"2025-02-17T19:57:43.898Z"}
+{"level":"error","message":"setProfileImage failed.","service":"pickapp-service","timestamp":"2025-02-17T19:59:40.575Z"}
+{"level":"error","message":"logout is not defined","service":"pickapp-service","stack":"ReferenceError: logout is not defined\n    at C:\\Distrib\\TZ\\PickMaxApp\\routes\\clientRouter.js:205:49\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-02-17T19:59:40.581Z"}
+{"level":"error","message":"setProfileImage failed.","service":"pickapp-service","timestamp":"2025-02-17T20:01:29.956Z"}
+{"level":"info","message":"setProfileImage successfully.","service":"pickapp-service","timestamp":"2025-02-17T20:05:14.541Z"}
+{"level":"info","message":"setProfileImage successfully.","service":"pickapp-service","timestamp":"2025-02-17T20:06:04.914Z"}
+{"level":"info","message":"setProfileImage successfully.","service":"pickapp-service","timestamp":"2025-02-17T20:06:33.898Z"}
+{"level":"info","message":"setProfileImage successfully.","service":"pickapp-service","timestamp":"2025-02-17T21:04:15.014Z"}
+{"level":"error","message":"setProfileImage failed.","service":"pickapp-service","timestamp":"2025-02-17T21:12:20.045Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-17T21:12:20.051Z"}

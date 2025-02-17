@@ -259,6 +259,7 @@ class ProfileSection extends PageBuilder {
 
         const avatarName = `${data?.profile?.surname || ''} ${data?.profile?.name || ''}`.trim() || 'Аноним';
         const profileAvatar = this.createElement("div", "profile-avatar-container", `
+<!--
             <div class="row w-100">
                 <div class="col-4"><img src="/public/images/user-default.png" class="profile-avatar-image"></div>
                 <div class="col">
@@ -269,7 +270,21 @@ class ProfileSection extends PageBuilder {
                     </div>
                 </div>
             </div>
+-->
+	<div class="row w-100">
+                <div class="col-5">
+		   <profile-picture></profile-picture>
+		</div>
+                <div class="col">
+                    <div class="row w-100">
+                        <div class="col-12 shot-fio-container">${avatarName}</div>
+                        <div class="col-12 telegram-account-container">@telegramAccount</div>
+                        <div class="col-12 telegram-account-status-container"></div>
+                    </div>
+                </div>
+        </div>
         `);
+
         profileContainer.appendChild(profileAvatar);
 	profileContainer.appendChild(this.registrationConfirmCodeForm(`Код подтверждения`, `verificationCode`,  ``, ``, ``));
         profileContainer.appendChild(this.createProfileItem("Email", "login", "Электронный адрес", false));
