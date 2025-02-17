@@ -972,3 +972,12 @@
 {"level":"error","message":"setProfileImage failed.","service":"pickapp-service","timestamp":"2025-02-17T20:01:29.956Z"}
 {"level":"error","message":"setProfileImage failed.","service":"pickapp-service","timestamp":"2025-02-17T21:12:20.045Z"}
 {"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-17T21:12:20.051Z"}
+{"level":"error","message":"setProfileImage failed.","service":"pickapp-service","timestamp":"2025-02-17T21:15:43.005Z"}
+{"code":500,"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-17T21:15:43.011Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-17T21:15:43.013Z"}
+{"level":"error","message":"setProfileImage failed.","service":"pickapp-service","timestamp":"2025-02-17T21:17:13.145Z"}
+{"code":500,"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-17T21:17:13.147Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-17T21:17:13.149Z"}
+{"level":"error","message":"setProfileImage failed.","service":"pickapp-service","timestamp":"2025-02-17T21:20:06.425Z"}
+{"code":500,"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-17T21:20:06.426Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-17T21:20:06.427Z"}
