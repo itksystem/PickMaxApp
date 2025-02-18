@@ -1211,3 +1211,45 @@
 {"level":"info","message":"setProfileImage successfully.","service":"pickapp-service","timestamp":"2025-02-17T21:21:25.555Z"}
 {"level":"info","message":"setProfileImage successfully.","service":"pickapp-service","timestamp":"2025-02-17T21:22:12.804Z"}
 {"level":"info","message":"setProfileImage successfully.","service":"pickapp-service","timestamp":"2025-02-17T21:22:37.035Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-02-18T18:39:11.911Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-02-18T18:51:57.367Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-02-18T18:53:13.572Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-02-18T18:53:49.236Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-02-18T19:18:48.006Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-18T19:18:48.010Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-02-18T19:19:27.601Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-18T19:19:27.602Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-02-18T19:20:39.971Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:23:30.542Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-18T19:23:30.567Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:23:35.212Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-18T19:23:35.222Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:30:10.183Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:32:10.503Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:32:33.683Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:33:39.555Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:34:59.741Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:35:35.751Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:36:40.360Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:37:17.620Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:38:39.289Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:38:42.190Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:39:24.793Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-02-18T19:48:31.387Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-18T19:48:31.388Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:48:34.820Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:48:37.904Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:48:41.067Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:48:43.316Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:49:32.700Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:51:14.866Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:51:41.331Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:51:44.773Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:51:47.366Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:51:51.319Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:51:53.114Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:52:00.679Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:52:02.539Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:53:30.672Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:54:19.884Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-18T19:54:31.192Z"}

@@ -217,6 +217,33 @@ class ClientServiceHandler {
         }
     }
 
+    async getProfileImage(req, fileUrls) {
+        try {
+            const url = new URL(process.env.CLIENT_GET_PROFILE_IMAGE_URL);
+
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
+                },                
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                logger.info(`Set profile image successfully.`);
+                return { success: true, data };
+            } else {
+                logger.error(`Set profile image failed.`);
+                return { success: false, status: response.status, data };
+            }
+        } catch (error) {
+            logger.error(`Set profile image failed.`);
+            return { success: false, error: error.message };
+        }
+    }
+
+
     // Загрузка файлов картинки профиля доделать!
 }
 

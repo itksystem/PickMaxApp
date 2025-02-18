@@ -159,6 +159,25 @@ router.patch('/v1/subscription',
 });
   
 
+router.get('/v1/profile-image', 	
+	async (req, res) => {        
+        try {
+            const result = await clientService.getProfileImage(req, res);        
+            if (!result.success)  throw({code : result.status, message : "Ошибка при выполнении операции выхода из сессии" })
+                if(!result.data) throw('Get profile image load error!');
+                _response
+                    .setCode(200)                    
+                    .setData(result.data)
+                    .send(res);    
+        } catch (error) {
+            _response
+                    .setCode(error.code)
+                    .setStatus(false)
+                    .setMessage(error.message)
+                    .send(res);                    
+        }
+});
+
 // ***********************  Настройка хранилища для файлов ***********************************************************************
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -181,7 +200,7 @@ const storage = multer.diskStorage({
 
 // Проверка типа файла
 const fileFilter = (req, file, cb) => {
-    if (['image/png', 'image/jpeg'].includes(file.mimetype)) {
+    if (['image/png', 'image/jpeg', 'image/gif'].includes(file.mimetype)) {
         cb(null, true);
     } else {
         cb(new Error('Invalid file type'), false);

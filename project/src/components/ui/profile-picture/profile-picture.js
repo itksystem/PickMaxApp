@@ -1,22 +1,15 @@
-/**
- Компонент загрузки файлов от пользователя по разным процессам
-   параметры 
-  <profile-picture 
-	profile-picture-id="811e4882-476b-4ff7-9a91-20c058db769b"  -- идентификатор загружаемого файла
-        process-name="review-profile-picture" -- наименования процесса для публикации события, брать из webapi.js
-	allowed-types="image/png,image/jpeg,image/jpg" -- разрешенные типы файлов
-	max-size="10"> -- разрешенный максимальный размер в МБ
-
-**/
-
-
 class ProfilePicture extends HTMLElement {
     constructor() {
         super();
-        this.allowedTypes = this.getAttribute('allowed-types')?.split(',') || ['image/png', 'image/jpeg'];
+        this.allowedTypes = this.getAttribute('allowed-types')?.split(',') || ['image/png', 'image/jpeg','image/gif'];
         this.maxSizeMB = parseInt(this.getAttribute('max-size')) || 10;
         this.api = new WebAPI();
         this.common = new CommonFunctions();
+
+        let o = this; 
+        let webRequest = new WebRequest();
+        let request = webRequest.get(o.api.profilePictureMethod(), {}, true );
+       console.log(request);
 
         this.innerHTML = `
           <link rel="stylesheet" href="/src/pages/plugins/fontawesome-free/css/all.min.css">
@@ -25,9 +18,10 @@ class ProfilePicture extends HTMLElement {
             <div class="profile-picture__container">
 		<div class="w-100 text-end padding-end">
 		</div>
-                <input type="file" class="profile-picture__input" multiple hidden />
+                <input type="file" class="profile-picture__input" accept="image/png,image/jpeg,image/gif" hidden />
 			<button class="w-100 profile-picture__button w-25">
-				<img src="/public/images/user-default.png" class="profile-photo-image profile-avatar-image">
+			 <img src="${request?.url || "/public/images/user-default.png"}" 
+  	 		  class="${(request?.url) ? "profile-picture__preview-image online" : "profile-photo-image profile-avatar-image"}">
 			</button>
                 <div class="profile-picture__file-list"></div>
                 <div class="profile-picture__message"></div>
@@ -45,25 +39,9 @@ class ProfilePicture extends HTMLElement {
 	this.fileInput.addEventListener('change', () => this.showLocalPreviews());
         this.fileId = this.getAttribute("profile-picture-id");
 	this.fileInput.setAttribute("profile-picture-id", this.getAttribute("profile-picture-id") || "profile-picture");
-//        this.processName = 'profileImageProcessUpload';
-	this.addEventListeners();
-
     }
-/*
-    addEventListeners() {                                                           
-      let o = this;
-      eventBus.on(this.processName+'-success', (message) => {
-	const images = document.querySelectorAll('img.profile-photo-image');
-	console.log(message);
-	const newImageUrl = message.url;
-	images.forEach(image => {
-	    image.src = newImageUrl;
-  	    o.setOnline(image, true);
-	});
 
-      });
-     }
-*/
+
     showLocalPreviews() {
      const files = this.fileInput.files;
      this.fileList.innerHTML = '';
@@ -80,15 +58,9 @@ class ProfilePicture extends HTMLElement {
              const reader = new FileReader();
               reader.onload = (e) => {
 
-                const img = document.querySelector('img.profile-photo-image');
+                const img = document.querySelector('img.profile-photo-image') || document.querySelector('img.profile-picture__preview-image') ;
                 img.src = e.target.result;
                 img.className = 'profile-picture__preview-image online'; // подставляем картинку на аватарку
-
-
-                const progressContainer = document.createElement('div');
-                progressContainer.className = 'profile-picture__file-progress';
-                progressContainer.innerHTML = `<div class="profile-picture__file-progress-bar" id="progress-${index}"></div>`;
-                filePreviewContainer.appendChild(progressContainer);
             };
 
             reader.readAsDataURL(file); // Читаем файл как DataURL
@@ -97,30 +69,13 @@ class ProfilePicture extends HTMLElement {
     this.uploadFiles()
    }
 
-
-    displaySelectedFiles() {
-        this.fileList.innerHTML = '';
-        Array.from(this.fileInput.files).forEach((file, index) => {
-            const listItem = document.createElement('div');
-            listItem.className = 'profile-picture__file-item';
-            listItem.innerHTML = `
-		<div class="profile-picture__file-preview"><img src="/public/images/loaders/loading_v4.gif" class="profile-picture__file-preview-loading" ></div>
-	           <div class="profile-picture__file-name">${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</div>
-        	       <div class="profile-picture__file-progress">
-		       <div class="profile-picture__file-progress-bar" id="progress-${index}"></div>
-                </div>
-            `;
-            this.fileList.appendChild(listItem);
-        });
-    }
-
     validateFile(file) {
         if (!this.allowedTypes.includes(file.type)) {
-            this.showMessage(`Invalid file type: ${file.name}`, 'error');
+	    toastr.error(`Invalid file type: ${file.name}`, `Ошибка`, {timeOut: 3000});
             return false;
         }
         if (file.size > this.maxSizeMB * 1024 * 1024) {
-            this.showMessage(`File size exceeds ${this.maxSizeMB}MB: ${file.name}`, 'error');
+	    toastr.error(`File size exceeds ${this.maxSizeMB}MB: ${file.name}`, `Ошибка`, {timeOut: 3000});
             return false;
         }
         return true;
@@ -131,15 +86,12 @@ class ProfilePicture extends HTMLElement {
         const files = Array.from(this.fileInput.files);
 
         if (files.length === 0) {
-            this.showMessage('No files selected', 'error');
+	    toastr.error(`No files selected`, `Ошибка`, {timeOut: 3000});
             return;
         }
         files.forEach((file, index) => {
-		file.fileId = o.common.uuid(); // создаем fileId		
+	   file.fileId = o.common.uuid(); // создаем fileId		
         });
-
-          console.log(this.processName+'-start', { detail: { files } });
-//        this.dispatchEvent(new CustomEvent(this.processName+'-start',{ detail: { files } }));
 
         files.forEach((file, index) => {
             if (!this.validateFile(file)) return;
@@ -165,16 +117,14 @@ class ProfilePicture extends HTMLElement {
             xhr.onload = () => {
                 if (xhr.status === 200) {
                     console.log(file);
-                    this.showMessage(`Файлы загружены успешно.`, 'success');
-		    console.log(this.processName+'-success', { detail: { file, response: xhr.response } });
-//		    this.dispatchEvent(new CustomEvent(this.processName+'-success', { detail: { file, response: xhr.response } }));
+		    toastr.success(`Файлы загружены успешно.`, `Успешно`, {timeOut: 3000});
                 } else {
-                    this.showMessage(`Файл ${file.name} ошибка загрузки!`, 'error');
+		    toastr.error(`Файл ${file.name} ошибка загрузки!`, `Успешно`, {timeOut: 3000});
                 }
             };
 
             xhr.onerror = () => {
-                this.showMessage(`Ошибка загрузки!: ${file.name}`, 'error');
+ 	        toastr.error(`Ошибка загрузки!: ${file.name}`, `Успешно`, {timeOut: 3000});
             };
 
             xhr.send(formData);

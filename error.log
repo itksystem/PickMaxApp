@@ -981,3 +981,16 @@
 {"level":"error","message":"setProfileImage failed.","service":"pickapp-service","timestamp":"2025-02-17T21:20:06.425Z"}
 {"code":500,"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-17T21:20:06.426Z"}
 {"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-17T21:20:06.427Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-02-18T18:39:11.911Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-02-18T18:51:57.367Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-02-18T18:53:13.572Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-02-18T18:53:49.236Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-02-18T19:18:48.006Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-18T19:18:48.010Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-02-18T19:19:27.601Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-18T19:19:27.602Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-02-18T19:20:39.971Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-18T19:23:30.567Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-18T19:23:35.222Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-02-18T19:48:31.387Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-02-18T19:48:31.388Z"}
