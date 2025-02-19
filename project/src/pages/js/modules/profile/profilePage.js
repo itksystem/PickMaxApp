@@ -1,6 +1,11 @@
+
 class ProfileSection extends PageBuilder {
+
     constructor(containerId) {
         super(containerId);
+        this.telegramBot = 'https://t.me/pickmaxbot';
+        this.telegramVerificationLink = 'owjejehi919k2jj21k1k1j1k1k1konn1ggnk1k26383h';
+
         return this;
     }
 
@@ -141,18 +146,6 @@ class ProfileSection extends PageBuilder {
        return placement;
 }
 
-    createCheckbox1(id, name, label, checked = false, onClick = null) {
-         let placement =  this.createElement("div", "custom-checkbox row", `
-             <div class="col">
-                <input class="form-check-input" type="checkbox"  id="check-${id}" name="${name}" value="${id}">
-                <label for="${id}" class="custom-checkbox-label">${label}</label>
-             </div>
-        `);
-        if (onClick) placement.addEventListener("click", onClick);
-        return placement;
-    }
-
-
  createCheckbox(id, name, label, checked = false, onClick = null) {
     // Создание основного контейнера
     const placement = document.createElement("div");
@@ -222,7 +215,21 @@ class ProfileSection extends PageBuilder {
     return container;
 }
 
-    registrationConfirmCodeForm(label, id, placeholder, required, feedbackError) {
+    telegramConfirmForm(label, id, placeholder, required, feedbackError) {
+     const container = document.createElement("div");
+     container.className = "registration-confirm-form";
+     container.innerHTML = `
+ 	  <div class="w-100">
+	    <div class="text-center"><button type="button" class="btn btn-block btn-primary confirm-telegram-button w-100" 
+		id="${id}-button"
+		onclick="window.location.href = "${this.telegramBot}?start=${this.telegramVerificationLink}';">Подтвердить профиль в Telegram</button></div>
+         </div>
+    `;
+     return container;
+    }                  
+
+    
+  registrationConfirmCodeForm(label, id, placeholder, required, feedbackError) {
      const container = document.createElement("dropdown-section");
      container.className = "registration-confirm-form";
      container.innerHTML = `
@@ -249,6 +256,7 @@ class ProfileSection extends PageBuilder {
     }
 
 
+
     UserProfileCardContainer(data = null) {
         let api = new WebAPI();
         let webRequest = new WebRequest();
@@ -259,18 +267,6 @@ class ProfileSection extends PageBuilder {
 
         const avatarName = `${data?.profile?.surname || ''} ${data?.profile?.name || ''}`.trim() || 'Аноним';
         const profileAvatar = this.createElement("div", "profile-avatar-container", `
-<!--
-            <div class="row w-100">
-                <div class="col-4"><img src="/public/images/user-default.png" class="profile-avatar-image"></div>
-                <div class="col">
-                    <div class="row w-100">
-                        <div class="col-12 shot-fio-container">${avatarName}</div>
-                        <div class="col-12 telegram-account-container">@telegramAccount</div>
-                        <div class="col-12 telegram-account-status-container"></div>
-                    </div>
-                </div>
-            </div>
--->
 	<div class="row w-100">
                 <div class="col-5">
 		   <profile-picture></profile-picture>
@@ -286,8 +282,10 @@ class ProfileSection extends PageBuilder {
         `);
 
         profileContainer.appendChild(profileAvatar);
-	profileContainer.appendChild(this.registrationConfirmCodeForm(`Код подтверждения`, `verificationCode`,  ``, ``, ``));
-        profileContainer.appendChild(this.createProfileItem("Email", "login", "Электронный адрес", false));
+	profileContainer.appendChild(this.registrationConfirmCodeForm(`Код подтверждения Email`, `verificationCode`,  ``, ``, ``));
+	profileContainer.appendChild(this.telegramConfirmForm(`Код подтверждения Telegram`, `telegramVerification`,  ``, ``, ``));
+        profileContainer.appendChild(this.createProfileItem("Email", "login", "Электронный адрес", false, ``, `${data?.profile?.login || ''}`),);
+        profileContainer.appendChild(this.createProfileItem("Telegram", "telegram", "Профиль Telegram", false, ``, `${data?.profile?.telegram || ''}`),);
         profileContainer.appendChild(this.createConfirmationLabel());
 	
         const fioSection = this.createDropdownSection("Мои данные", [
@@ -340,8 +338,8 @@ class ProfileSection extends PageBuilder {
 
          profileContainer.appendChild(this.createDropdownSection("Выход из системы",[this.createButton("Выход", "text-end", this.exitButtonOnClick)]))
          this.addModule("Profile", profileContainer);
-	 this.addEventListeners();
          this.profileContainer = profileContainer; 
+	 this.addEventListeners();
     }
 
     ClientAddressDialogLoading(AddressesContainer){
@@ -356,11 +354,18 @@ class ProfileSection extends PageBuilder {
       console.log(`Перезагрузка экрана`)
       eventBus.on('ClientAddressDialogReload', () => {
        let AddressDialog = new ClientAddressDialog();
-       o.AddressesContainer.innerHTML = ``;
-       AddressDialog.getElements().forEach((item, index) => {
-          o.AddressesContainer.appendChild(item); 
-       });
+        o.AddressesContainer.innerHTML = ``;
+          AddressDialog.getElements().forEach((item, index) => {
+            o.AddressesContainer.appendChild(item); 
+         });
       });
+
+	let telegram = document.querySelector('[id="telegramVerification-button"]');
+	    console.log(telegram);
+	    telegram?.addEventListener("click", function() {
+		console.log('1');
+	        window.location.href = 'https://t.me/openfsmbot';
+	    });
      }
 
     saveProfileButtonOnClick(){
@@ -369,6 +374,7 @@ class ProfileSection extends PageBuilder {
      let webRequest = new WebRequest();
 
      let login =  document.querySelector('[id="login"]')
+     let telegram =  document.querySelector('[id="telegram"]')
      let surname = document.querySelector('[id="surname"]')
      let firstname = document.querySelector('[id="firstname"]')
      let patronymic = document.querySelector('[id="patronymic"]')
