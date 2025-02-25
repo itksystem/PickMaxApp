@@ -14,6 +14,7 @@ const axios = require('axios'); // Импорт библиотеки axios
 const CommonFunctionHelper = require("openfsm-common-functions")
 const ResponseHelper = require("openfsm-response-helper")
 const _response = new ResponseHelper();
+require('dotenv').config({ path: '.env-pickmax-service' });
 
 
 /* Получить список адресов клиента */

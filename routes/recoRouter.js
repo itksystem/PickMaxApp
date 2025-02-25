@@ -18,6 +18,7 @@ const commonFunction= new CommonFunctionHelper();
 const _response = new ResponseHelper();
 const RecommendatuionServiceHandler = require("../handlers/RecommendatuionServiceHandler");
 const recoClient = new RecommendatuionServiceHandler();
+require('dotenv').config({ path: '.env-pickmax-service' });
 
 router.post('/v1/like/:productId', 	
 	async (req, res) => {        

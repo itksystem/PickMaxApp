@@ -18,7 +18,7 @@ const NotificationClient = new NotificationServiceHandler();
 
 const ClientServiceHandler = require("../handlers/ClientServiceHandler");
 const clientService = new ClientServiceHandler();              // интерфейс для  связи с MC AuthService
-
+require('dotenv').config({ path: '.env-pickmax-service' });
 
 mailRouter.get( '/v1/product/:productId', authMiddleware.authenticateToken,async (req, res) => {        
     try {

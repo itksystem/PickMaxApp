@@ -7,6 +7,7 @@ const commonFunction= new CommonFunctionHelper();
 
 const PaymentServiceClientHandler = require("openfsm-payment-service-client-handler");
 const paymentClient = new PaymentServiceClientHandler();   // интерфейс для  связи с MC WarehouseService
+require('dotenv').config({ path: '.env-pickmax-service' });
 
 /* Сформировать оплату */
 paymentRouter.post('/v1/create', 	

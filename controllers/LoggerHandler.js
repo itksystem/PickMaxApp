@@ -1,5 +1,5 @@
 const { createLogger, format, transports } = require('winston');
-require('dotenv').config();
+require('dotenv').config({ path: '.env-pickmax-service' });
 
 const logger = createLogger({
     level: 'info',

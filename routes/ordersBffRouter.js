@@ -8,7 +8,7 @@ const orderClient = new OrderServiceClientHandler();   // интерфейс д�
 
 const CommonFunctionHelper = require("openfsm-common-functions")
 const commonFunction= new CommonFunctionHelper();
-
+require('dotenv').config({ path: '.env-pickmax-service' });
 
 /* Доступность сервиса заказов */
 router.post('/v1/health', 	

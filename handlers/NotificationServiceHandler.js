@@ -1,6 +1,6 @@
 // Обработчик взаимодействия с AuthService
 const fetch = require('node-fetch');
-require('dotenv').config();
+require('dotenv').config({ path: '.env-pickmax-service' });
 const CommonFunctionHelper = require("openfsm-common-functions")
 const commonFunction= new CommonFunctionHelper();
 

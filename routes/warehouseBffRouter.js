@@ -13,6 +13,7 @@ const CommonFunctionHelper = require("openfsm-common-functions")
 const commonFunction= new CommonFunctionHelper();
 const RecommendatuionServiceHandler = require("../handlers/RecommendatuionServiceHandler");
 const recoClient = new RecommendatuionServiceHandler();
+require('dotenv').config({ path: '.env-pickmax-service' });
 
 router.get('/v1/products/:id', 
     async (req, res) => {

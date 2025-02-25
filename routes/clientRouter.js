@@ -12,6 +12,7 @@ const authClient = new AuthServiceClientHandler();              // интерф�
 const axios = require('axios'); // Импорт библиотеки axios
 const multer = require('multer');
 const path = require('path');
+require('dotenv').config({ path: '.env-pickmax-service' });
 
 
 const CommonFunctionHelper = require("openfsm-common-functions")

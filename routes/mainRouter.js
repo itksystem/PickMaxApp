@@ -9,7 +9,7 @@ const AuthServiceClientHandler = require("openfsm-auth-service-client-handler");
 const authClient = new AuthServiceClientHandler();              // интерфейс для  связи с MC AuthService
 const WarehouseServiceClientHandler = require("openfsm-warehouse-service-client-handler");
 const warehouseClient = new WarehouseServiceClientHandler();   // интерфейс для  связи с MC WarehouseService
-
+require('dotenv').config({ path: '.env-pickmax-service' });
 
 // Набор незащищенных маршрутов
 const publicRoutes = [

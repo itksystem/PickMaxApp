@@ -15,13 +15,13 @@ const warehouseBffRouter = require('./routes/warehouseBffRouter');
 const ordersBffRouter = require('./routes/ordersBffRouter');
 const clientRouter = require('./routes/clientRouter');
 const recoRouter = require('./routes/recoRouter');
-const mailRouter = require('./routes/MailRouter');
+const mailRouter = require('./routes/mailRouter');
 const deliveryRouter= require('./routes/deliveryRouter');
 const promClient = require('prom-client'); //сбор метрик для Prometheus
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger/swagger'); // Импортируйте конфигурацию Swagger
-
+require('dotenv').config({ path: '.env-pickmax-service' });
 
 const PORT = process.env.PORT || 3000;
 

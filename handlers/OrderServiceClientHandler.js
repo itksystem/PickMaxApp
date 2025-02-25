@@ -1,6 +1,6 @@
 // Коннектор c микросервисом заказов
 const fetch = require('node-fetch');
-require('dotenv').config();
+require('dotenv').config({ path: '.env-pickmax-service' });
 const common = require("openfsm-common"); // Библиотека с общими параметрами
 const CommonFunctionHelper = require("openfsm-common-functions")
 

@@ -1,0 +1,15 @@
+FROM node:14
+RUN apk add --no-cache bash
+RUN apk add --no-cache mc
+
+MAINTAINER Dmitriy Sinyagin <itk_system@mail.ru>
+ENV TZ=Europe/Moscow
+RUN apt update
+RUN npm install 
+RUN mkdir /var/www
+COPY ./ /var/www
+RUN ls /var/www/*
+WORKDIR /var/www
+EXPOSE 3000
+EXPOSE 3999
+CMD [ "node", "app.js" ]
