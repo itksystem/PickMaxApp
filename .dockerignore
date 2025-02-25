@@ -1,1 +1,2 @@
-.env-pickmax-service
+.env*
+*.log
