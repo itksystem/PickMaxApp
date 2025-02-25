@@ -1286,3 +1286,5 @@
 {"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-19T19:30:00.927Z"}
 {"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-19T19:32:10.781Z"}
 {"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-19T19:37:19.658Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2025-02-25T11:50:16.743Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-25T11:57:19.867Z"}
