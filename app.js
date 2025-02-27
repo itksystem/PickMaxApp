@@ -77,6 +77,15 @@ app.use((req, res, next) => {
 });
 
 
+app.use(function (req, res, next) {    
+    // res.setHeader("Content-Security-Policy", "*");
+    // res.setHeader('X-Frame-Options', 'ALLOW-FROM https://web.telegram.org');
+    res.setHeader("Content-Security-Policy", "frame-ancestors 'self' https://web.telegram.org;");
+    res.setHeader('X-Frame-Options', 'SAMEORIGIN');   
+    next();
+});
+
+
 // Подключение маршрутов
 app.use('/', mainRouter);      // вывод страниц 
   

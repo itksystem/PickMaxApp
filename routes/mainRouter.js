@@ -21,6 +21,7 @@ const publicRoutes = [
     { path: '/registration-failure', page: common.COMMON_REGISTRATION_FAILURE_PAGE },
     { path: '/page-404', page: common.COMMON_404_PAGE },
     { path: '/logon', page: common.COMMON_LOGON_PAGE },
+    { path: '/products/page', page: common.COMMON_PRODUCTS_PAGE, service : { service : "products"} },
     { path: '/logon-failed', page: common.COMMON_LOGON_FAILED_PAGE},
     { path: '/forgot-password', page: common.COMMON_FORGOT_PASSWORD_PAGE},
     { path: '/out-service', page: common.COMMON_OUT_SERVICE_PAGE },
@@ -46,7 +47,6 @@ router.get('/health', health);
 const protectedRoutes = [
     { method : 'GET', path: '/app', page: common.COMMON_APP_PAGE , service : {}},
     { method : 'GET', path: '/products/:productId/page', page: common.COMMON_PRODUCTS_PAGE, service : { service : "product"} },
-    { method : 'GET', path: '/products/page', page: common.COMMON_PRODUCTS_PAGE, service : { service : "products"} },
     { method : 'GET', path: '/profile/page', page: common.COMMON_PROFILE_PAGE, service :{service : "profile"} },
     { method : 'GET', path: '/basket/page', page: common.COMMON_BASKET_PAGE, service :{service : "basket"} },
     { method : 'GET', path: '/orders/:orderId/page', page: common.COMMON_ORDERS_PAGE, service :{service : "order"} },
@@ -70,7 +70,11 @@ protectedRoutes.forEach( async ({ method, path, page, service }) => {
         router.get(path,  async (req, res) => {
             if(method == 'GET') {
                 let result = await authClient.checkToken(req, res);  
-                 if(result?.status == 401 || !result.success) return res.status(401).redirect("/logon");                   
+                  if(result?.status == 401 || result.success == false) {
+                    logger.error(page, result);
+                    return res.status(401).redirect("/logon");                   
+                  }
+                    
                  renderPage(req, res, page, service)
             }            
          });         
@@ -87,12 +91,13 @@ router.post('/logout',
 
 router.post('/logon', async (req, res) => {
     const { email, password } = req.body;
+    logger.info(email+' ' + password);   
     const response = await authClient.login(email, password);
     if (response.success) {
         res.cookie('accessToken', response.data.token, {
             httpOnly: true,
-            secure: false,
-            sameSite: 'Strict',
+            secure: true,
+            sameSite: 'none',
             maxAge: 10800000, // 3 часа
         });
         res.status(200).json(response.data);
@@ -123,6 +128,15 @@ router.post('/registration', async (req, res) => {
     } else {
         logger.error(response.error || 'Неизвестная ошибка' );   
         res.status(response.status || 500).json({ error: response.error || common.COMMON_HTTP_CODE_500});
+    }
+});
+
+router.get('/@me', async (req, res) => {    
+    const response = await authClient.me(req, res);
+    if (response.success) {
+        res.status(200).json(response.data);
+    } else {
+        res.status(200).json({ status : false});
     }
 });
 
