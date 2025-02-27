@@ -9,7 +9,9 @@ class MainApp {
       this.limit = 10; // Количество товаров для загрузки за раз
       this.loading = false; // Флаг, чтобы предотвратить повторную загрузку данных   
       this.common = new CommonFunctions();
-//      console.log(this);
+      this.common.saveAccessToken();
+      this.common.saveTelegramAccessToken();
+      this.common.saveTelegramWebAppObject();
       return this;
    }
 
@@ -622,42 +624,9 @@ class MainApp {
 	  	 const profilePage = new ProfileSection("profile-card-container");
 	 	 profilePage.UserProfileCardContainer(data);
 	  	 profilePage.render();
-/*
-	  	 let login = o.setProfileValueElement('[id="login"]', data.profile?.login ?? '') 
-	  	 let surname = o.setProfileValueElement('[id="surname"]', data?.profile?.surname ?? '') 
-	  	 let firstname = o.setProfileValueElement('[id="firstname"]', data?.profile?.name ?? '') 
-	  	 let patronymic = o.setProfileValueElement('[id="patronymic"]', data?.profile?.patronymic ?? '') 
-	  	 let phone = o.setProfileValueElement('[id="phone"]', data?.profile?.phone ?? '') 
-	  	 let address = document.querySelector('x-autocomplete');
-                 address.setValue(data?.profile?.address ?? '');
-		 address.getValueId(data?.profile?.fiasId ?? null);
-*/
 		 if(data?.profile?.confirmed)
 			o.verificationCodeConfirmed()
 
-/* 	  	 let confirmCodeButton = document.querySelector('button.confirm-code-button');
-		  if(confirmCodeButton){
-                     confirmCodeButton.addEventListener('click', () => {
-	               const verificationCode = document.querySelector('input[id="verificationCode"]');
-	                 if (verificationCode) {
-	                    let request = webRequest.post(o.api.checkVerificationCodeMethod(), 
-				{
-				 verificationCode : verificationCode.value 
-				}, false )
-          	             .then(function(result) {
-				o.verificationCodeConfirmed();
-				toastr.success('Регистрация подтверждена!', 'Профиль клиента', {timeOut: 3000});
-	                     })
-	                .catch(function(error) {
-	                  console.log('checkVerificationCodeMethod.Произошла ошибка =>', error);
-			  verificationCode.value='';
-  	 	          toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
-	              });
-	              } 
-	           });
-		  }
-
-*/
               // Слушатели событий
 		var validator = new InputMaskValidator({ id : 'phone', error : 'phone-error'});
 	      //	
@@ -680,48 +649,9 @@ class MainApp {
 		           });
 			  }	
 		        })
-		        .onSelect((item) => {
-	            console.log('Выбран элемент', item);
-	        });
-
-/*
-		const closeSessionButton = document.querySelector('[class="session-close"]');
-		    if (closeSessionButton) {
-		        closeSessionButton.addEventListener('click', () => {
-			  let request = webRequest.post(o.api.closeSessionMethod(), {}, false )
-			     .then(function(data) {
-				document.location.replace(o.api.LOGON_URL());
-		        })                                
-		     .catch(function(error) {
-		       console.log('showProfilePage.Произошла ошибка =>', error);
-		       toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
-	            });
- 	         });
-	        }
-
-
-	    const saveProfileButton = document.querySelector('button.profile-button');
-	    if (saveProfileButton) {
- 	          saveProfileButton.addEventListener('click', () => {
-		  let request = webRequest.post(o.api.saveShopProfileMethod(), 
-			{                                          
-			  surname : surname.value,
-			  name : firstname.value,
-			  patronymic : patronymic.value,
-			  phone : phone.value,
-			  address : autocomplete.getValue(),
-			  fiasId : autocomplete.getValueId(),
-			},  
-			false )
-		     .then(function(data) {
-		       toastr.success('Профиль сохранен', 'Профиль', {timeOut: 3000});
-	        }).catch(function(error) {
-		       console.log('showProfilePage.Произошла ошибка =>', error);
-		       toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
-	        });
-	      });
-	     }
-*/
+	        .onSelect((item) => {
+              console.log('Выбран элемент', item);
+            });
           }
         })                                
      .catch(function(error) {

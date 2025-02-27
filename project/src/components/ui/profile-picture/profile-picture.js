@@ -5,11 +5,14 @@ class ProfilePicture extends HTMLElement {
         this.maxSizeMB = parseInt(this.getAttribute('max-size')) || 10;
         this.api = new WebAPI();
         this.common = new CommonFunctions();
+        const tg = this.common.getTelegramWebAppObject();
+        let photo_url = (tg?.initDataUnsafe ? tg?.initDataUnsafe?.user?.photo_url : null)
 
         let o = this; 
         let webRequest = new WebRequest();
         let request = webRequest.get(o.api.profilePictureMethod(), {}, true );
-       console.log(request);
+        console.log(request);
+	photo_url = (!photo_url ? request?.url : photo_url)
 
         this.innerHTML = `
           <link rel="stylesheet" href="/src/pages/plugins/fontawesome-free/css/all.min.css">
@@ -20,8 +23,8 @@ class ProfilePicture extends HTMLElement {
 		</div>
                 <input type="file" class="profile-picture__input" accept="image/png,image/jpeg,image/gif" hidden />
 			<button class="w-100 profile-picture__button w-25">
-			 <img src="${request?.url || "/public/images/user-default.png"}" 
-  	 		  class="${(request?.url) ? "profile-picture__preview-image online" : "profile-photo-image profile-avatar-image"}">
+			 <img src="${photo_url || "/public/images/user-default.png"}" 
+  	 		  class="${(photo_url) ? "profile-picture__preview-image online" : "profile-photo-image profile-avatar-image"}">
 			</button>
                 <div class="profile-picture__file-list"></div>
                 <div class="profile-picture__message"></div>

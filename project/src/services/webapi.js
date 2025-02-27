@@ -138,9 +138,6 @@ class WebAPI {
    deleteShopBasketApplicationPayload(order_id){  return { order_id : order_id} }
    getCurrentShopBasketCountMethod(shop_id, user_id){ return `/telegram/shop/${shop_id}/basket/${user_id}/basket-counter`; }
 
-   getMeMethod() { return `/main/@me`;  }
-   getMeMethodPayload() { return {};  }
-
    saveShopUserProfileMethod() { return `/telegram/user/profile`;  }
    saveShopUserProfileMethodPayload(params = null) {
     if(!params) throw('Нет параметров в saveShopUserProfileMethodPayload');
@@ -373,6 +370,13 @@ class WebAPI {
    deleteSubscriptionMethod(SubscribeId){
      return `/api/bff/client/v1/subscriptions/${SubscribeId}`;
    }
+
+   getMeMethod() { return `/@me`; }
+   getMeMethodPayload() { return {};  }
+
+   getTelegramMeMethod() { return `/@telegram`; }
+   getTelegramMeMethodPayload() { return {};  }
+
 
 /* станицы */
    LOGON_URL(){ return `/logon` }

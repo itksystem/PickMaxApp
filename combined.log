@@ -1288,3 +1288,106 @@
 {"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-19T19:37:19.658Z"}
 {"level":"error","message":401,"service":"pickapp-service","timestamp":"2025-02-25T11:50:16.743Z"}
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-25T11:57:19.867Z"}
+{"level":"error","message":"Only absolute URLs are supported","service":"pickapp-service","timestamp":"2025-02-25T17:06:34.009Z"}
+{"level":"error","message":"Only absolute URLs are supported","service":"pickapp-service","timestamp":"2025-02-25T17:07:47.543Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/@me reason: Unexpected token U in JSON at position 0","service":"pickapp-service","timestamp":"2025-02-25T17:18:32.523Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/@me reason: Unexpected token U in JSON at position 0","service":"pickapp-service","timestamp":"2025-02-25T17:19:30.856Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/@me reason: Unexpected token U in JSON at position 0","service":"pickapp-service","timestamp":"2025-02-25T17:22:48.450Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-25T17:25:21.854Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-25T17:39:57.071Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-25T17:40:07.480Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-02-25T17:50:59.295Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-02-25T17:51:12.344Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-02-25T17:56:33.843Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-02-25T18:00:02.657Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-02-25T18:03:03.941Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-02-25T18:03:15.239Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-02-25T18:04:16.943Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-02-25T18:05:11.678Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:45:39\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-02-25T18:36:00.642Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:45:39\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-02-25T18:38:08.124Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-02-25T18:48:13.165Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-02-25T18:48:27.016Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-25T18:56:18.859Z"}
+{"level":"error","message":"500","service":"pickapp-service","stack":"Error: 500\n    at WarehouseServiceClientHandler.deletePositionFromBasket (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-warehouse-service-client-handler\\WarehouseServiceClientHandler.js:108:34)\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)\n    at async C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:98:30","timestamp":"2025-02-25T18:59:02.703Z"}
+{"level":"error","message":"500","service":"pickapp-service","stack":"Error: 500\n    at WarehouseServiceClientHandler.deletePositionFromBasket (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-warehouse-service-client-handler\\WarehouseServiceClientHandler.js:108:34)\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)\n    at async C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:98:30","timestamp":"2025-02-25T19:01:48.304Z"}
+{"level":"error","message":"500","service":"pickapp-service","stack":"Error: 500\n    at WarehouseServiceClientHandler.deletePositionFromBasket (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-warehouse-service-client-handler\\WarehouseServiceClientHandler.js:108:34)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)\n    at async C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:98:30","timestamp":"2025-02-25T19:12:59.095Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T17:47:09.118Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T18:02:42.251Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T18:09:40.127Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T18:23:53.902Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T18:24:02.189Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T18:37:02.753Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:04:38.816Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:05:33.540Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:06:23.324Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:06:58.255Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:11:52.919Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:13:07.462Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-27T19:13:14.277Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-27T19:13:25.938Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:15:30.463Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:30:22.165Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:30:24.335Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:34:05.020Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:34:56.301Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:37:12.594Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:37:28.789Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:37:46.652Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-27T19:37:52.545Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:39:22.512Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-27T19:39:28.004Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:45:09.185Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:55:14.564Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-27T19:55:18.451Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T19:55:45.985Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T21:21:30.289Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T21:24:43.271Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T21:28:37.490Z"}
+{"level":"info","message":"demo@demo.ru","service":"pickapp-service","timestamp":"2025-02-27T21:31:11.617Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T21:32:15.710Z"}
+{"0":"1","1":"2","2":"3","3":"4","4":"5","5":"6","level":"info","message":"demo@demo.ru","service":"pickapp-service","timestamp":"2025-02-27T21:32:20.930Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T21:32:48.995Z"}
+{"0":"1","1":"2","2":"3","3":"4","4":"5","5":"6","level":"info","message":"demo@demo.ru","service":"pickapp-service","timestamp":"2025-02-27T21:33:07.771Z"}
+{"0":"1","1":"2","2":"3","3":"4","4":"5","5":"6","level":"info","message":"demo@demo.ru","service":"pickapp-service","timestamp":"2025-02-27T21:33:09.835Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T21:34:38.506Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-02-27T21:34:47.039Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T21:40:40.367Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-02-27T21:41:06.889Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-02-27T21:41:06.905Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-02-27T21:41:06.913Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-02-27T21:54:24.282Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-02-27T21:54:28.231Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-02-28T05:30:25.412Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-02-28T05:30:27.110Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-02-28T11:19:27.043Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-02-28T11:19:28.717Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-03-01T12:26:37.237Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-03-01T12:26:41.548Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-01T12:26:48.145Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-01T12:27:38.178Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-01T12:31:11.362Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-01T12:45:34.492Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-01T12:46:05.233Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-01T12:52:39.527Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-01T13:08:20.623Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-03-05T08:15:29.384Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-03-05T08:15:30.733Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-05T08:15:41.878Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-03-05T08:16:30.665Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-03-05T08:16:48.777Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-05T08:17:38.798Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-05T08:17:39.032Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-05T08:17:39.314Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-05T08:17:39.505Z"}
+{"level":"error","message":"Save new address not executed","service":"pickapp-service","timestamp":"2025-03-05T08:19:43.961Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-03-05T15:17:09.447Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-03-05T15:17:10.898Z"}
+{"level":"info","message":"demo@demo.ru 12345678","service":"pickapp-service","timestamp":"2025-03-05T15:59:22.362Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-05T15:59:22.616Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-03-05T15:59:38.914Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-05T15:59:43.413Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-05T16:00:18.815Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-05T16:00:45.898Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-05T16:17:37.616Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-03-05T21:35:40.124Z"}
