@@ -1024,6 +1024,7 @@
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-27T19:37:52.545Z"}
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-27T19:39:28.004Z"}
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-02-27T19:55:18.451Z"}
+<<<<<<< HEAD
 {"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-02-28T05:30:25.412Z"}
 {"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-02-28T11:19:27.043Z"}
 {"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-03-01T12:26:37.237Z"}
@@ -1033,3 +1034,5 @@
 {"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-03-05T15:17:09.447Z"}
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-05T15:59:22.616Z"}
 {"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-03-05T21:35:40.124Z"}
+=======
+>>>>>>> ab1b8414d2cccb4d2f5b15012e1250334ad7a56d
