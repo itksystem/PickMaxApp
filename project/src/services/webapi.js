@@ -374,12 +374,9 @@ class WebAPI {
    getMeMethod() { return `/@me`; }
    getMeMethodPayload() { return {};  }
 
-<<<<<<< HEAD
+
    getTelegramMeMethod() { return `/@telegram`; }
    getTelegramMeMethodPayload() { return {};  }
-
-=======
->>>>>>> ab1b8414d2cccb4d2f5b15012e1250334ad7a56d
 
 /* станицы */
    LOGON_URL(){ return `/logon` }
