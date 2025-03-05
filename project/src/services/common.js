@@ -48,7 +48,6 @@ class CommonFunctions {
  }
 
 
-<<<<<<< HEAD
 /**
  * Сохраняет telegramToken в localStorage.
  * @param {string} token - Токен доступа (accessToken).
@@ -69,9 +68,6 @@ class CommonFunctions {
  }
 
 
-=======
->>>>>>> ab1b8414d2cccb4d2f5b15012e1250334ad7a56d
-
 /**
  * Сохраняет accessToken в localStorage.
  * @param {string} token - Токен доступа (accessToken).
@@ -84,12 +80,8 @@ class CommonFunctions {
         let request = webRequest.get(api.getMeMethod(), {}, true );
         console.log(request);
         const token = (!request.accessToken) ?  null : request.accessToken;
-<<<<<<< HEAD
         if(token)
           localStorage.setItem('accessToken', token);
-=======
-        localStorage.setItem('accessToken', token);
->>>>>>> ab1b8414d2cccb4d2f5b15012e1250334ad7a56d
     } catch (error) {
         console.error('Ошибка при сохранении токена в localStorage:', error);
     }

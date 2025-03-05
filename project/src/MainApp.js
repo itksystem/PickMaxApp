@@ -10,10 +10,7 @@ class MainApp {
       this.loading = false; // Флаг, чтобы предотвратить повторную загрузку данных   
       this.common = new CommonFunctions();
       this.common.saveAccessToken();
-<<<<<<< HEAD
       this.common.saveTelegramAccessToken();
-=======
->>>>>>> ab1b8414d2cccb4d2f5b15012e1250334ad7a56d
       this.common.saveTelegramWebAppObject();
       return this;
    }
