@@ -13,12 +13,14 @@ class OrderDetailsItem {
         // Создать тело элемента с содержимым
         const OrderDetailsItemBody = document.createElement("div");
         OrderDetailsItemBody.className = "card-body";
-
+	console.log(item);
         // Заполнить содержимое карточки
         OrderDetailsItemBody.innerHTML = `
             <div class="row">        
                 <div class="col-5 col-sm-3 col-md-2">
-                    <img class="image" src="${item?.mediaFiles[0]?.mediaKey || 'default-image.png'}" alt="${item?.productName}">
+                    <img class="image" src="${item?.mediaFiles.length > 0
+			? item?.mediaFiles[0]?.mediaKey 
+			: 'default-image.png'}" alt="${item?.productName}">
                 </div>        
                 <div class="col-7 col-sm-9 col-md-10">        
                     <div class="row">
