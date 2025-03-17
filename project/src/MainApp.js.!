@@ -84,6 +84,26 @@ class MainApp {
     return this;
  }
 
+
+  dropSectionEventHadler(){
+   let o = this;
+   document.querySelectorAll('.basket-delete-button').forEach(button => {
+    button.addEventListener('click', function() {
+        const productId = this.getAttribute('product-id');
+        const quantity = this.getAttribute('quantity');
+	let webRequest = new WebRequest();
+	let request = webRequest.post(o.api.removeFromBasketMethod(),  {productId : productId, quantity :  Number(quantity)}, false )
+	   .then(function(data) {
+	        console.log(data);
+		window.location.reload()
+	        })
+	     .catch(function(error) {
+	       console.log('showBasketOutput.Произошла ошибка =>', error);
+	     });
+        });
+    });
+ } 
+
 /* Вывод страницы профиля */
  showBasketPage() {
   let o = this;
@@ -297,6 +317,34 @@ class MainApp {
 
  }
 
+
+  _createOrderButtonEventHadler() {
+    let o = this;
+    console.log(o); //
+    o.referenceId = o.common.uuid(); // создаем referenceId
+                                        
+    document.querySelectorAll('.create-order').forEach(button => {
+      button.addEventListener('click', function() {
+        let webRequest = new WebRequest();
+          webRequest.post(o.api.createOrderMethod(), {referenceId : o.referenceId }, false)
+           .then(function(data) {
+	     console.log(data);
+   	      let order = new OrderDto(data.order);
+  	       console.log(data.order);
+	       order.saveToLocalStorage(o.referenceId);
+	       if(!order) throw('Object order is null ', order)
+	         window.location.href = `/orders/delivery/${o.referenceId}`; //перешли на доставку
+              }).catch(function(error) {
+             console.log('createOrderButtonEventHadler.Произошла ошибка =>', error);
+	     if(error.status == 409 ) {	
+       		 window.location.href = '/orders/payment/availability-error';
+ 	     } else
+            window.location.href = '/orders/create-error';
+          });
+        });
+      });
+    }
+
   showOrderDeliveryOutput(){
    let o = this;
    let webRequest = new WebRequest();
@@ -428,6 +476,8 @@ class MainApp {
   }
 
 
+
+
  orderItemCardOutput(item){
    return `
 	<section class="outside-city delivery-option page-padding block-space card">
@@ -466,9 +516,27 @@ class MainApp {
    `;
  }
 
+
+ OrdersPageTitle(){
+ return `
+	<section class="outside-city delivery-option page-padding block-space card">
+	    <h2 class="header-title text-center"></h2>
+	</section>`;
+  }
+
+ OrdersEmptyPage(){
+ return `
+	<section class="outside-city delivery-option page-padding block-space card">
+	    <h2 class="header-title text-center">В корзине нет товаров </h2>
+	</section>`;
+ }
+
+
+
  showOrdersPage(){
   let o = this;
   let webRequest = new WebRequest();
+//  $("div.orders-container").prepend(o.OrdersPageTitle()).show();
   let request = webRequest.get(o.api.getShopOrdersMethod(), o.api.getShopOrdersMethodPayload(), false )
      .then(function(data) {
 	console.log(data);
@@ -497,6 +565,7 @@ class MainApp {
   console.log(o.orderId);
 
   let webRequest = new WebRequest();
+//  $("div.order-container").prepend(o.OrdersPageTitle()).show();
   let request = webRequest.get(o.api.getShopOrderMethod(o.orderId), {}, false )
      .then(function(_o) {
 	console.log(_o);
@@ -526,7 +595,14 @@ class MainApp {
     return this;
  }
 
-  verificationCodeConfirmed(){
+ setProfileValueElement(elementSelector, value) {
+    const el = document.querySelector(elementSelector);
+    if (el) el.textContent = value;
+    if (el) el.value = value;
+  return el;
+ }
+
+ verificationCodeConfirmed(){
    let confirmForm = document.querySelector('dropdown-section.registration-confirm-form');
    if(confirmForm)	
      confirmForm.remove();

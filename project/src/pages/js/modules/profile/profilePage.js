@@ -18,7 +18,7 @@ class ProfileSection extends PageBuilder {
 
     createButton(label, extraClass = '', onClick = null) {
         const placement = this.createElement("div", `width-100 ${extraClass}`, ``);
-        const button = this.createElement("button", `profile-button ${extraClass}`, label);
+        const button = this.createElement("button", `profile-button btn btn-primary`, label);
 	placement.append(button);
         if (onClick) button.addEventListener("click", onClick);
         return placement;
@@ -215,25 +215,34 @@ class ProfileSection extends PageBuilder {
     return container;
 }
 
-    telegramConfirmForm(label, id, placeholder, required, feedbackError) {
-     const container = document.createElement("div");
-     container.className = "registration-confirm-form";
-     container.innerHTML = `
- 	  <div class="w-100">
-	    <div class="text-center"><button type="button" class="btn btn-block btn-primary confirm-telegram-button w-100" 
-		id="${id}-button"
-		onclick="window.location.href = "${this.telegramBot}?start=${this.telegramVerificationLink}';">Подтвердить профиль в Telegram</button></div>
-         </div>
+   telegramConfirmForm(label, id, placeholder, required, feedbackError) {
+    const container = document.createElement("div");
+    container.className = "registration-confirm-form";
+    container.innerHTML = `
+        <div class="w-100">
+            <div class="text-center">
+                <button type="button" class="btn btn-block btn-primary confirm-telegram-button w-100" 
+                    id="${id}-button">Подтвердить профиль в Telegram</button>
+            </div>
+        </div>
     `;
-     return container;
-    }                  
 
+    // Добавляем обработчик события
+    const telegramButton = container.querySelector(`#${id}-button`);
+    if (telegramButton) {
+        telegramButton.addEventListener("click", () => {
+            window.location.href = `${this.telegramBot}?start=${this.telegramVerificationLink}`;
+        });
+    }
+
+    return container;
+   }
     
   registrationConfirmCodeForm(label, id, placeholder, required, feedbackError) {
      const container = document.createElement("dropdown-section");
      container.className = "registration-confirm-form";
      container.innerHTML = `
-        <span slot="title">Подтверждение регистрации</spa>    
+        <span slot="title">Подтверждение регистрации</span>    
         <div class="registration-confirm-form-text">Введите код отправленный на вашу электронную почту</div>
 	<div class="profile-item-container">	
  	 <div class="row">
@@ -284,12 +293,9 @@ class ProfileSection extends PageBuilder {
         `);
 
         profileContainer.appendChild(profileAvatar);
-	profileContainer.appendChild(this.registrationConfirmCodeForm(`Код подтверждения Email`, `verificationCode`,  ``, ``, ``));
-	profileContainer.appendChild(this.telegramConfirmForm(`Код подтверждения Telegram`, `telegramVerification`,  ``, ``, ``));
-        profileContainer.appendChild(this.createProfileItem("Email", "login", "Электронный адрес", false, ``, `${data?.profile?.login || ''}`),);
-        profileContainer.appendChild(this.createConfirmationLabel());
-//        profileContainer.appendChild(this.createProfileItem("Telegram", "telegram", "Профиль Telegram", false, ``, `${data?.profile?.telegram || ''}`),);
-	
+//	profileContainer.appendChild(this.registrationConfirmCodeForm(`Код подтверждения Email`, `verificationCode`,  ``, ``, ``));
+//	profileContainer.appendChild(this.telegramConfirmForm(`Код подтверждения Telegram`, `telegramVerification`,  ``, ``, ``));
+
         const fioSection = this.createDropdownSection("Мои данные", [
             this.createProfileItem("Фамилия", "surname", "Укажите вашу фамилию", true, ``, `${data?.profile?.surname || ''}`),
             this.createProfileItem("Имя", "firstname", "Укажите ваше имя", true, ``,`${data?.profile?.name || ''}`),
@@ -298,9 +304,20 @@ class ProfileSection extends PageBuilder {
         ]);
         profileContainer.appendChild(fioSection);
 
+	const emailSection = this.createDropdownSection("Электронный адрес", [
+		this.createProfileItem("Email", "email", "Электронный адрес", true, ``, `${data?.profile?.email || ''}`),
+		this.createConfirmationLabel(),
+	        this.createButton((data?.profile?.confirmed ? "Сохранить" : "Подтвердить" ), 
+			"text-end", 
+			(data?.profile?.confirmed ? this.saveEmailButtonOnClick : this.saveEmailButtonOnClick ))
+        ]);
+        profileContainer.appendChild(emailSection);
+
         const phoneSection = this.createDropdownSection("Мой телефон", [
-            this.createProfileItem("Телефон", "phone", "Укажите номер телефона", true, "Введите номер в формате +7 (XXX) XXX-XXXX",`${data?.profile?.phone || ''}`),
-            this.createButton("Сохранить", "text-end", this.saveProfileButtonOnClick)
+            this.createProfileItem("Телефон", "phone", "Укажите номер телефона", true, 
+		"Введите номер в формате +7 (XXX) XXX-XXXX",
+		`${data?.profile?.phone || ''}`),
+            this.createButton("Сохранить", "text-end", this.savePhoneButtonOnClick)
         ]);
         profileContainer.appendChild(phoneSection);
 
@@ -332,17 +349,22 @@ class ProfileSection extends PageBuilder {
            )
          )
          console.log(AddressDialogElementsArray);	
-         profileContainer.appendChild(this.createDropdownSection("Мои адреса доставки",  AddressDialogElementsArray));
+         profileContainer.appendChild(this.createDropdownSection("Мои адреса доставки",  
+		AddressDialogElementsArray));
 
         // Секция для карт
    	 let CardDialog = new ClientCardsDialog();
-	 profileContainer.appendChild(this.createDropdownSection("Мои средства платежа", CardDialog.getElements() || []));
+	 profileContainer.appendChild(this.createDropdownSection("Мои средства платежа", 
+		CardDialog.getElements() || []));
 
-         profileContainer.appendChild(this.createDropdownSection("Выход из системы",[this.createButton("Выход", "text-end", this.exitButtonOnClick)]))
+         profileContainer.appendChild(this.createDropdownSection("Выход из системы",
+	[this.createButton("Выход", "w-100 text-center", this.exitButtonOnClick)]))
          this.addModule("Profile", profileContainer);
          this.profileContainer = profileContainer; 
 	 this.addEventListeners();
+
     }
+
 
     ClientAddressDialogLoading(AddressesContainer){
      let o = this;
@@ -361,13 +383,6 @@ class ProfileSection extends PageBuilder {
             o.AddressesContainer.appendChild(item); 
          });
       });
-
-	let telegram = document.querySelector('[id="telegramVerification-button"]');
-	    console.log(telegram);
-	    telegram?.addEventListener("click", function() {
-		console.log('1');
-	        window.location.href = 'https://t.me/openfsmbot';
-	    });
      }
 
     saveProfileButtonOnClick(){
@@ -375,7 +390,7 @@ class ProfileSection extends PageBuilder {
      let api = new WebAPI();
      let webRequest = new WebRequest();
 
-     let login =  document.querySelector('[id="login"]')
+     let email =  document.querySelector('[id="email"]')
      let telegram =  document.querySelector('[id="telegram"]')
      let surname = document.querySelector('[id="surname"]')
      let firstname = document.querySelector('[id="firstname"]')
@@ -388,9 +403,9 @@ class ProfileSection extends PageBuilder {
   	    surname : surname.value,
 	    name : firstname.value,
 	    patronymic : patronymic.value,
-	    phone : phone.value,
-	    address : autocomplete.getValue(),
-	    fiasId : autocomplete.getValueId(),
+//	    phone : phone.value,
+//	    address : autocomplete.getValue(),
+//	    fiasId : autocomplete.getValueId(),
 	   },  
 	    false ).then(function(data) {
              toastr.success('Профиль сохранен', 'Профиль', {timeOut: 3000});
@@ -398,10 +413,44 @@ class ProfileSection extends PageBuilder {
          console.log('showProfilePage.Произошла ошибка =>', error);
          toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
       });
-
    }
 
-    exitButtonOnClick(){
+    saveEmailButtonOnClick(){
+     let o = this;
+     let api = new WebAPI();
+     let webRequest = new WebRequest();
+
+     let email =  document.querySelector('[id="email"]')
+     let request = webRequest.post(api.saveEmailMethod(),{
+  	    email : email.value
+	   },  
+	    false ).then(function(data) {
+             toastr.success('Почта сохранена', 'Профиль', {timeOut: 3000});
+           }).catch(function(error) {
+         console.log('saveEmailButtonOnClick.Произошла ошибка =>', error);
+         toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
+      });
+   }
+
+    savePhoneButtonOnClick(){
+     let o = this;
+     let api = new WebAPI();
+     let webRequest = new WebRequest();
+
+     let phone =  document.querySelector('[id="phone"]')
+     let request = webRequest.post(api.savePhoneMethod(),{
+  	    phone : phone.value
+	   },  
+	    false ).then(function(data) {
+             toastr.success('Телефон сохранен', 'Профиль', {timeOut: 3000});
+           }).catch(function(error) {
+         console.log('saveEmailButtonOnClick.Произошла ошибка =>', error);
+         toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
+      });
+   }
+
+
+   exitButtonOnClick(){
       let o = this;
       let api = new WebAPI();
       let webRequest = new WebRequest();

@@ -93,6 +93,64 @@ class ClientServiceHandler {
         }
     }
 
+ /**
+     * Метод для сохранения телефона пользователя 
+     * @returns {Object} - Объект с результатом
+*/
+ async savePhone(req, res) {
+    try {
+        const response = await fetch(process.env.CLIENT_SAVE_PHONE_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
+            },
+            body: JSON.stringify(req.body),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`Save phone successfully.`);
+            return { success: true, data };
+        } else {
+            console.log(`Save phone failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+        console.log(`Save phone failed.`);
+        return { success: false, error: error.message };
+    }
+}   
+
+/**
+     * Метод для сохранения телефона пользователя 
+     * @returns {Object} - Объект с результатом
+*/
+async saveEmail(req, res) {
+    try {
+        const response = await fetch(process.env.CLIENT_SAVE_EMAIL_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
+            },
+            body: JSON.stringify(req.body),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`Save email successfully.`);
+            return { success: true, data };
+        } else {
+            console.log(`Save email failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+        console.log(`Save email failed.`);
+        return { success: false, error: error.message };
+    }
+}
+
     /**
      * Метод для получения подсказок адресов
      * @returns {Object} - Объект с результатом

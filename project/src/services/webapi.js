@@ -359,6 +359,23 @@ class WebAPI {
      return `/api/bff/delivery/v1/address`;
   }
 
+   checkPhoneMethod(){
+     return `/api/bff/client/v1/phone-check`;
+  }
+
+   savePhoneMethod(){
+     return `/api/bff/client/v1/phone`;
+  }
+
+   checkEmailMethod(){
+     return `/api/bff/client/v1/email-check`;
+  }
+
+   saveEmailMethod(){
+     return `/api/bff/client/v1/email`;
+  }
+
+
 
 /* */
    getSubscriptionsMethod(){

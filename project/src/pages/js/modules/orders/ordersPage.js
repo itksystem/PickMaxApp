@@ -19,7 +19,7 @@ class OrdersSection extends PageBuilder {
         OrdersContainerHeader.innerHTML = `
 	      ${
 		(totalQuantity !== 0)
-		  ? "<h3 class=\"card-title\">Ваши заказы</h3>" 
+		  ? "<h3 class=\"card-title\"></h3>" 
 		  : "<h3 class=\"card-title\">У вас пока нет заказов</h3>"
 		}`;
 

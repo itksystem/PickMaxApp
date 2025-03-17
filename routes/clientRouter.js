@@ -58,6 +58,44 @@ router.post('/v1/profile',
         }
 });
 
+/* Сохранить телефон клиента */
+router.post('/v1/phone', 	
+	async (req, res) => {        
+        try {
+            const profile = await clientService.savePhone(req, res);        
+            if (!profile.success)  throw({code : profile.status, message : "Не удалось сохранить профиль пользователя" })             
+                _response
+                    .setCode(200)                    
+                    .setData(profile.data)
+                    .send(res);    
+        } catch (error) {
+                _response
+                    .setCode(error.code)
+                    .setStatus(false)
+                    .setMessage(error.message)
+                    .send(res);                    
+        }
+});
+
+/* Сохранить телефон клиента */
+router.post('/v1/email', 	
+	async (req, res) => {        
+        try {
+            const profile = await clientService.saveEmail(req, res);        
+            if (!profile.success)  throw({code : profile.status, message : "Не удалось сохранить профиль пользователя" })             
+                _response
+                    .setCode(200)                    
+                    .setData(profile.data)
+                    .send(res);    
+        } catch (error) {
+                _response
+                    .setCode(error.code)
+                    .setStatus(false)
+                    .setMessage(error.message)
+                    .send(res);                    
+        }
+});
+
 /* Доступность сервиса заказов */
 router.post('/v1/logout', 	
 	async (req, res) => {        

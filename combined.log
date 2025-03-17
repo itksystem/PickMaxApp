@@ -1404,3 +1404,65 @@
 {"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-05T22:11:24.781Z"}
 {"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-05T22:11:47.163Z"}
 {"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-03-09T19:59:05.617Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-03-12T18:42:19.141Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-12T18:48:56.416Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-12T18:48:56.426Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-12T18:51:20.888Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-12T18:51:20.891Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-03-13T16:29:44.413Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-03-13T16:29:50.257Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-03-13T16:30:02.453Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-13T16:32:35.245Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-13T16:32:35.254Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-03-13T16:33:50.400Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-13T16:33:55.803Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-13T16:33:55.810Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-13T17:06:09.651Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-13T17:06:09.655Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-13T18:09:47.496Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-13T18:09:47.504Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-13T18:10:06.342Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-13T18:10:06.346Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-13T18:25:42.216Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-13T18:25:42.220Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-13T18:47:46.940Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-13T18:47:46.943Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-13T18:48:16.000Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-13T18:48:16.004Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-13T18:59:35.488Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-13T18:59:35.490Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-13T19:03:13.038Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-13T19:03:13.040Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-13T19:04:52.238Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-13T19:04:52.240Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-13T19:08:41.221Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-13T19:08:41.223Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-13T19:17:42.085Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-13T19:17:42.087Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-03-15T13:05:01.165Z"}
+{"level":"info","message":"demo@demo.ru 123456","service":"pickapp-service","timestamp":"2025-03-15T13:05:07.366Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-15T13:05:14.286Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-15T13:05:14.288Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-15T13:13:03.872Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-15T13:13:03.874Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-15T13:13:33.162Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-15T13:13:33.164Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-15T13:14:56.293Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-15T13:14:56.297Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-15T13:22:21.980Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-15T13:22:21.982Z"}
+{"level":"error","message":"Set profile image failed.","service":"pickapp-service","timestamp":"2025-03-15T13:23:40.113Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-03-15T13:23:40.115Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-15T13:24:17.240Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-15T13:24:55.981Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-15T13:26:30.669Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-15T13:32:39.510Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-15T13:36:46.709Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-15T13:38:04.208Z"}
+{"level":"error","message":"Не удалось сохранить профиль пользователя","service":"pickapp-service","timestamp":"2025-03-15T13:38:24.295Z"}
+{"level":"error","message":"Не удалось сохранить профиль пользователя","service":"pickapp-service","timestamp":"2025-03-15T13:38:47.902Z"}
+{"level":"error","message":"Не удалось сохранить профиль пользователя","service":"pickapp-service","timestamp":"2025-03-15T13:46:24.072Z"}
+{"level":"error","message":"Не удалось сохранить профиль пользователя","service":"pickapp-service","timestamp":"2025-03-15T13:46:48.040Z"}
+{"level":"error","message":"Не удалось сохранить профиль пользователя","service":"pickapp-service","timestamp":"2025-03-15T13:50:15.368Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-15T13:50:42.653Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-03-15T13:52:10.058Z"}

@@ -1270,3 +1270,6 @@ img.custom-radio-new-card{
     top: 0;
     padding-left: 0.5rem;
 }
+.card {
+    padding: 1rem 0.7rem;
+}
