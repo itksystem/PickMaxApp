@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ввод кода подтверждения</title>
+    <style>
+        .code-input {
+            display: flex;
+            justify-content: space-between;
+            width: 200px;
+            margin: 0 auto;
+        }
+        .code-input input {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .code-input input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="code-input">
+        <input type="text" maxlength="1" data-index="0">
+        <input type="text" maxlength="1" data-index="1">
+        <input type="text" maxlength="1" data-index="2">
+        <input type="text" maxlength="1" data-index="3">
+        <input type="text" maxlength="1" data-index="4">
+    </div>
+
+    <script>
+        const inputs = document.querySelectorAll('.code-input input');
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1) {
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '') {
+                    if (index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -7,7 +7,17 @@ class ProfileSection extends PageBuilder {
         this.telegramVerificationLink = 'owjejehi919k2jj21k1k1j1k1k1konn1ggnk1k26383h';
         this.common = new CommonFunctions();
         this.oldEmail = '';
-        return this;
+	this.EMAIL_NO_ACTION_NEED = 0;
+	this.EMAIL_SAVE_ACTION_NEED = 1;
+	this.EMAIL_CONFIRM_ACTION_NEED = 2;
+	this.emailActionNeed = this.EMAIL_NO_ACTION_NEED;
+// привязка контекста 
+	this.saveProfileButtonOnClick = this.saveProfileButtonOnClick.bind(this);
+	this.emailButtonClick = this.emailButtonClick.bind(this);
+	this.saveEmailButtonOnClick = this.saveEmailButtonOnClick.bind(this);
+	this.confirmEmailButtonOnClick = this.confirmEmailButtonOnClick.bind(this);
+	this.savePhoneButtonOnClick = this.savePhoneButtonOnClick.bind(this);
+	this.exitButtonOnClick = this.exitButtonOnClick.bind(this);
     }
 
     createElement(tag, className = '', innerHTML = '') {
@@ -76,28 +86,37 @@ class ProfileSection extends PageBuilder {
 
         // Если email валиден, скрываем сообщение об ошибке
         errorElement.style.display = "none";
-        let emailButton =  document.querySelector('.email-save-button')
+
+	let emailButton = document.querySelector('.email-save-button');
+	if (!emailButton) {
+	    console.error('Кнопка email-save-button не найдена');
+	    return;
+	}
+
         // Отправляем запрос на сервер
         this.checkEmailOnServer(email).then(response => {
             if (response.status) {
                 confirmMessageElement.textContent = response.message;
                 confirmMessageElement.style.color = "green";
 
-                emailButton.textContent = (this.oldEmail == email ? 'Подтвердить' : 'Сохранить');
      	        if(this.oldEmail == email) {
-  	         console.log(this.oldEmail == email);	
-  	         emailButton.classList.add('disabled');
-                 emailButton.setAttribute('disabled', 'disabled'); // Отключаем функциональность кнопки
+  	          console.log(this.oldEmail == email);	
+  	          emailButton.classList.add('disabled');
+                  emailButton.setAttribute('disabled', 'disabled'); // Отключаем функциональность кнопки
                 } else {
-	        emailButton.classList.remove('disabled');
-	        emailButton.removeAttribute('disabled'); // Включаем функциональность кнопки
+		  emailButton.textContent = 'Сохранить';
+	          emailButton.classList.remove('disabled');
+	          emailButton.removeAttribute('disabled'); // Включаем функциональность кнопки
+              	  this.emailActionNeed = this.EMAIL_SAVE_ACTION_NEED;
 		}
+
             } else {
                 confirmMessageElement.textContent = response.message;
                 confirmMessageElement.style.color = "red";
 	        emailButton.classList.add('disabled');
         	emailButton.setAttribute('disabled', 'disabled'); // Отключаем функциональность кнопки
             }
+
         }).catch(error => {
             confirmMessageElement.textContent = "Ошибка при проверке email";
             confirmMessageElement.style.color = "red";
@@ -342,7 +361,7 @@ class ProfileSection extends PageBuilder {
         const profileContainer = this.createElement("div", "card card-container");
         profileContainer.appendChild(this.createElement("div", "card-header", `<h3 class="card-title">Профиль</h3>`));
 
-        const avatarName = `${data?.profile?.surname || ''} ${data?.profile?.name || ''}`.trim() || 'Аноним';
+        const avatarName = data ? `${data.profile?.surname || ''} ${data.profile?.name || ''}`.trim() || 'Аноним' : 'Аноним';
         const tg = this.common.getTelegramWebAppObject();
         const tgUsername = (tg?.initDataUnsafe ? tg?.initDataUnsafe?.user?.username : null)
         const profileAvatar = this.createElement("div", "profile-avatar-container", `
@@ -383,9 +402,7 @@ class ProfileSection extends PageBuilder {
 			(data?.profile?.emailConfirmedAt ? `Email потвержден` : `Email необходимо подтвердить!` ),
 			(data?.profile?.emailConfirmedAt ? `confirmation-label-success` : `confirmation-label-error` )
 		),
-	        this.createButton(emailButtonName, 
-			"text-end email-save-button disabled", 
-			(data?.profile?.emailConfirmedAt ? this.saveEmailButtonOnClick : this.saveEmailButtonOnClick ))
+        this.createButton(emailButtonName, "text-end email-save-button disabled", this.emailButtonClick)
         ]);
         profileContainer.appendChild(emailSection);
 
@@ -452,13 +469,17 @@ class ProfileSection extends PageBuilder {
     addEventListeners() {                                                           
       let o = this;
       console.log(`Перезагрузка экрана`)
-      eventBus.on('ClientAddressDialogReload', () => {
-       let AddressDialog = new ClientAddressDialog();
-        o.AddressesContainer.innerHTML = ``;
-          AddressDialog.getElements().forEach((item, index) => {
-            o.AddressesContainer.appendChild(item); 
-         });
-      });
+	if (eventBus) {
+	    eventBus.on('ClientAddressDialogReload', () => {
+	        let AddressDialog = new ClientAddressDialog();
+	        o.AddressesContainer.innerHTML = ``;
+	        AddressDialog.getElements().forEach((item, index) => {
+	            o.AddressesContainer.appendChild(item);
+	        });
+	    });
+	} else {
+	    console.error('eventBus не определен');
+	}
      }
 
     saveProfileButtonOnClick(){
@@ -479,9 +500,6 @@ class ProfileSection extends PageBuilder {
   	    surname : surname.value,
 	    name : firstname.value,
 	    patronymic : patronymic.value,
-//	    phone : phone.value,
-//	    address : autocomplete.getValue(),
-//	    fiasId : autocomplete.getValueId(),
 	   },  
 	    false ).then(function(data) {
              toastr.success('Профиль сохранен', 'Профиль', {timeOut: 3000});
@@ -491,17 +509,33 @@ class ProfileSection extends PageBuilder {
       });
    }
 
+    emailButtonClick(){
+    console.log(this.emailActionNeed);	
+    console.log(this);	
+    if(this.emailActionNeed != this.EMAIL_NO_ACTION_NEED)						
+       if (this.emailActionNeed == this.EMAIL_CONFIRM_ACTION_NEED){
+		  this.confirmEmailButtonOnClick()
+         } else 
+		this.saveEmailButtonOnClick(); 
+    }
+
+    confirmEmailButtonOnClick(){
+      document.location.replace('/confirmation/email/page');
+    }
+
     saveEmailButtonOnClick(){
      let o = this;
      let api = new WebAPI();
      let webRequest = new WebRequest();
-
      let email =  document.querySelector('[id="email"]')
+     let emailButton =  document.querySelector('.email-save-button')
      let request = webRequest.post(api.saveEmailMethod(),{
   	    email : email.value
 	   },  
 	    false ).then(function(data) {
              toastr.success('Почта сохранена', 'Профиль', {timeOut: 3000});
+              emailButton.textContent = 'Подтвердить';
+	      o.emailActionNeed = o.EMAIL_CONFIRM_ACTION_NEED;	    	
            }).catch(function(error) {
          console.log('saveEmailButtonOnClick.Произошла ошибка =>', error);
          toastr.error('Ой! Что то пошло не так...', 'Профиль клиента', {timeOut: 3000});
@@ -526,7 +560,7 @@ class ProfileSection extends PageBuilder {
    }
 
 
-   exitButtonOnClick(){
+    exitButtonOnClick(){
       let o = this;
       let api = new WebAPI();
       let webRequest = new WebRequest();

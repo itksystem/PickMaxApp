@@ -584,6 +584,17 @@ class MainApp {
      });
    return this;
  }
+
+
+
+  ConfirmationEmailPage(){
+    let o = this;
+    const confirmationEmailPage = new ConfirmationEmailSection("confirmation-email-container");
+    confirmationEmailPage.ConfirmationEmailCardContainer();
+    confirmationEmailPage.render();
+    return this;
+  }
+
 }
 
 

@@ -140,6 +140,8 @@ body{
            {{>payment_failed}}
     {{else ifEquals service "availability-error"}}
            {{>order_availability_error}}
+    {{else ifEquals service "confirmation-email"}}
+           {{>confirmation_email}}
 
     {{/ifEquals}}              
  </div>

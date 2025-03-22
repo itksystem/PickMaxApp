@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ввод кода подтверждения</title>
+    <style>
+        .code-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .code-input {
+            width: 40px;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            transition: transform 0.2s ease-in-out;
+        }
+        .code-input.filled {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <confirmation-code></confirmation-code>
+    <script>
+        class ConfirmationCodeElement extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+                this.shadowRoot.innerHTML = `
+                    <div class="code-container">
+                        <input type="text" class="code-input" maxlength="1">
+                        <input type="text" class="code-input" maxlength="1">
+                        <input type="text" class="code-input" maxlength="1">
+                        <input type="text" class="code-input" maxlength="1">
+                        <input type="text" class="code-input" maxlength="1">
+                    </div>
+                    <style>
+                        .code-container {
+                            display: flex;
+                            justify-content: center;
+                            gap: 10px;
+                        }
+                        .code-input {
+                            width: 40px;
+                            height: 50px;
+                            text-align: center;
+                            font-size: 24px;
+                            border: 2px solid #ccc;
+                            border-radius: 5px;
+                            transition: transform 0.2s ease-in-out;
+                        }
+                        .code-input.filled {
+                            transform: scale(1.1);
+                        }
+                    </style>
+                `;
+            }
+
+            connectedCallback() {
+                this.inputs = this.shadowRoot.querySelectorAll(".code-input");
+                this.inputs.forEach((input, index) => {
+                    input.addEventListener("input", (e) => {
+                        if (!/\d/.test(e.data)) {
+                            input.value = "";
+                            return;
+                        }
+                        input.classList.add("filled");
+                        setTimeout(() => input.classList.remove("filled"), 200);
+                        if (index < this.inputs.length - 1) {
+                            this.inputs[index + 1].focus();
+                        }
+                        this.checkCompletion();
+                    });
+
+                    input.addEventListener("keydown", (e) => {
+                        if (e.key === "Backspace" && index > 0 && !input.value) {
+                            this.inputs[index - 1].focus();
+                        }
+                    });
+                });
+            }
+
+            checkCompletion() {
+                const code = Array.from(this.inputs).map(input => input.value).join("");
+                if (code.length === this.inputs.length) {
+                    console.log("Код подтверждения введён:", code);
+                }
+            }
+        }
+        
+        customElements.define('confirmation-code', ConfirmationCodeElement);
+    </script>
+</body>
+</html>
