@@ -29,7 +29,7 @@ router.post('/v1/order/create',
         try {
             const {referenceId} = req.body;
             if(!referenceId) { throw(common.HTTP_CODES.BAD_REQUEST.code) }
-            const response = await orderClient.create(commonFunction.getJwtToken(req), referenceId);
+            const response = await orderClient.create(req, referenceId);
             if (!response.success)  throw(response.status)
             res.status(200).json(response.data);            
         } catch (error) {            
@@ -43,7 +43,7 @@ router.post('/v1/order/create',
 router.post('/v1/order/decline', 	
 	async (req, res) => {        
         try {
-            const response = await orderClient.decline(commonFunction.getJwtToken(req),req.body);
+            const response = await orderClient.decline(req,req.body);
             if (!response.success)  throw(response.status)
             res.status(200).json(response.data);                
         } catch (error) {
@@ -57,7 +57,7 @@ router.post('/v1/order/decline',
 router.get('/v1/orders', 	
 	async (req, res) => {        
         try {
-          const response = await orderClient.getOrders(commonFunction.getJwtToken(req));
+          const response = await orderClient.getOrders(req);
           if (!response.success)  throw(response.status)
           res.status(200).json(response.data);                
         } catch (error) {
@@ -72,7 +72,7 @@ router.get('/v1/order/:id',
         try {
            const orderId = req.params.id;
            if(!orderId) { throw(common.HTTP_CODES.BAD_REQUEST.code) }
-           const response = await orderClient.getOrder(commonFunction.getJwtToken(req),orderId);    
+           const response = await orderClient.getOrder(req,orderId);    
            if (!response.success)  throw(response.status)
            res.status(200).json(response.data);
         } catch (error) {

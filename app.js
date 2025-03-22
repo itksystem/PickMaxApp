@@ -72,7 +72,7 @@ app.get('/metrics', async (req, res) => {
 
 // Логирование запросов
 app.use((req, res, next) => {
-  console.log(req);
+  // console.log(req);
   next();
 });
 

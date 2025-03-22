@@ -74,7 +74,17 @@ protectedRoutes.forEach( async ({ method, path, page, service }) => {
                     logger.error(page, result);
                     return res.status(401).redirect("/logon");                   
                   }
-                    
+
+                  const response = await authClient.me(req, res);                  
+                  if (response?.success && response.data.accessToken && response.data?.isTelegramAuth) {
+                      res.cookie('accessToken', response.data.accessToken, {
+                          httpOnly: true,
+                          secure: true,
+                          sameSite: 'none',
+                          maxAge: 10800000, // 3 часа
+                      });
+                      return res.status(200).redirect(req.headers['Referer'] ?? req.originalUrl);      
+                  } 
                  renderPage(req, res, page, service)
             }            
          });         
@@ -92,7 +102,7 @@ router.post('/logout',
 router.post('/logon', async (req, res) => {
     const { email, password } = req.body;
     logger.info(email+' ' + password);   
-    const response = await authClient.login(email, password);
+    const response = await authClient.login(req, email, password);
     if (response.success) {
         res.cookie('accessToken', response.data.token, {
             httpOnly: true,
@@ -122,7 +132,7 @@ router.post('/v1/checkCode', async (req, res) => {
 
 router.post('/registration', async (req, res) => {
     const { email, password } = req.body;
-    const response = await authClient.register(email, password);
+    const response = await authClient.register(req,email, password);
     if (response.success) {
         res.status(200).json(response.data);
     } else {

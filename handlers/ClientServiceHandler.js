@@ -11,15 +11,22 @@ class ClientServiceHandler {
     /**
      * Метод для получения профиля текущего пользователя от ClientService
      * @returns {Object} - Объект с результатом
+     * 
      */
+    headers(req){
+        return {
+            'Content-Type': 'application/json',
+            'x-tg-init-data': `${req.headers['x-tg-init-data']}`, 
+            'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
+        }
+    }
+    
+
     async profile(req, res) {
         try {
             const response = await fetch(process.env.CLIENT_PROFILE_URL, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
-                },
+                headers: this.headers(req),
             });
 
             const data = await response.json();
@@ -44,10 +51,7 @@ class ClientServiceHandler {
         try {
             const response = await fetch(`${process.env.CLIENT_URL}/${clientId}`, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
-                },
+                headers: this.headers(req),
             });
 
             const data = await response.json();
@@ -72,10 +76,7 @@ class ClientServiceHandler {
         try {
             const response = await fetch(process.env.CLIENT_PROFILE_URL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
-                },
+                headers: this.headers(req),
                 body: JSON.stringify(req.body),
             });
 
@@ -101,10 +102,7 @@ class ClientServiceHandler {
     try {
         const response = await fetch(process.env.CLIENT_SAVE_PHONE_URL, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
-            },
+            headers: this.headers(req),
             body: JSON.stringify(req.body),
         });
 
@@ -122,18 +120,42 @@ class ClientServiceHandler {
     }
 }   
 
+ /**
+     * Метод для проверки телефона пользователя 
+     * @returns {Object} - Объект с результатом
+*/
+async checkPhone(req, res) {
+    try {
+        const response = await fetch(process.env.CLIENT_CHECK_PHONE_URL, {
+            method: 'POST',
+            headers: this.headers(req),
+            body: JSON.stringify(req.body),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`Check phone successfully.`);
+            return { success: true, data };
+        } else {
+            console.log(`Check phone failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+        console.log(`Check phone failed.`);
+        return { success: false, error: error.message };
+    }
+}   
+
+
 /**
-     * Метод для сохранения телефона пользователя 
+     * Метод для сохранения email пользователя 
      * @returns {Object} - Объект с результатом
 */
 async saveEmail(req, res) {
     try {
         const response = await fetch(process.env.CLIENT_SAVE_EMAIL_URL, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
-            },
+            headers: this.headers(req),
             body: JSON.stringify(req.body),
         });
 
@@ -151,6 +173,34 @@ async saveEmail(req, res) {
     }
 }
 
+
+
+/**
+     * Метод для проверки email  пользователя 
+     * @returns {Object} - Объект с результатом
+*/
+async checkEmail(req, res) {
+    try {
+        const response = await fetch(process.env.CLIENT_CHECK_EMAIL_URL, {
+            method: 'POST',
+            headers: this.headers(req),
+            body: JSON.stringify(req.body),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`Check email successfully.`);
+            return { success: true, data };
+        } else {
+            console.log(`Check email failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+        console.log(`Check email failed.`);
+        return { success: false, error: error.message };
+    }
+}
+
     /**
      * Метод для получения подсказок адресов
      * @returns {Object} - Объект с результатом
@@ -163,10 +213,7 @@ async saveEmail(req, res) {
 
             const response = await fetch(url, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
-                },
+                headers: this.headers(req),
             });
 
             const data = await response.json();
@@ -193,10 +240,7 @@ async saveEmail(req, res) {
 
             const response = await fetch(url, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
-                },
+                headers: this.headers(req),
             });
 
             const data = await response.json();
@@ -223,10 +267,7 @@ async saveEmail(req, res) {
 
             const response = await fetch(url, {
                 method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
-                },
+                headers: this.headers(req),
                 body: JSON.stringify(req.body),
             });
 
@@ -254,10 +295,7 @@ async saveEmail(req, res) {
 
             const response = await fetch(url, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
-                },
+                headers: this.headers(req),
                 body: JSON.stringify({ fileUrls }),
             });
 
@@ -281,10 +319,7 @@ async saveEmail(req, res) {
 
             const response = await fetch(url, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
-                },                
+                headers: this.headers(req),               
             });
 
             const data = await response.json();

@@ -12,7 +12,7 @@ class ProfilePicture extends HTMLElement {
         let webRequest = new WebRequest();
         let request = webRequest.get(o.api.profilePictureMethod(), {}, true );
         console.log(request);
-	photo_url = (!photo_url ? request?.url : photo_url)
+	photo_url = (request?.url ? request?.url : photo_url)
 
         this.innerHTML = `
           <link rel="stylesheet" href="/src/pages/plugins/fontawesome-free/css/all.min.css">

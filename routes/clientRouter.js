@@ -25,7 +25,7 @@ router.get('/v1/profile',
 	async (req, res) => {        
         try {
             const profile = await clientService.profile(req, res);        
-            if (!profile.success) throw({code : 422, message : "Client profile not found" })
+            if (!profile.success) throw({code : 422, message : "Client profile not found" })                 
                 _response
                     .setCode(200)                    
                     .setData(profile.data)
@@ -77,11 +77,32 @@ router.post('/v1/phone',
         }
 });
 
+
+/* Проверить телефон клиента */
+router.post('/v1/phone-check', 	
+	async (req, res) => {        
+        try {
+            const profile = await clientService.checkPhone(req, res);        
+            if (!profile.success)  throw({code : profile.status,  message : "Не удалось проверить телефон пользователя" })             
+                _response
+                    .setCode(200)                    
+                    .setData(profile.data)
+                    .send(res);    
+        } catch (error) {
+                _response
+                    .setCode(error.code)
+                    .setStatus(false)
+                    .setMessage(error.message)
+                    .send(res);                    
+        }
+});
+
 /* Сохранить телефон клиента */
 router.post('/v1/email', 	
 	async (req, res) => {        
         try {
             const profile = await clientService.saveEmail(req, res);        
+            console.log('/v1/email', 	profile);
             if (!profile.success)  throw({code : profile.status, message : "Не удалось сохранить профиль пользователя" })             
                 _response
                     .setCode(200)                    
@@ -92,6 +113,27 @@ router.post('/v1/email',
                     .setCode(error.code)
                     .setStatus(false)
                     .setMessage(error.message)
+                    .send(res);                    
+        }
+});
+
+
+/* Проверить email клиента */
+router.post('/v1/email-check', 	
+	async (req, res) => {        
+        try {
+            const profile = await clientService.checkEmail(req, res);        
+            console.log('/v1/email-check', 	profile);
+            if (!profile.success)  throw({code : profile.status,  message : "Не удалось проверить email пользователя" })             
+                _response
+                    .setCode(200)                    
+                    .setData(profile.data)
+                    .send(res);    
+        } catch (error) {
+                _response
+                    .setCode(error.code)
+                    .setStatus(false)
+                    .setMessage(error.message|| null)
                     .send(res);                    
         }
 });

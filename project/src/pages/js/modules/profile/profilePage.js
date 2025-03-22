@@ -6,6 +6,7 @@ class ProfileSection extends PageBuilder {
         this.telegramBot = 'https://t.me/pickmaxbot';
         this.telegramVerificationLink = 'owjejehi919k2jj21k1k1j1k1k1konn1ggnk1k26383h';
         this.common = new CommonFunctions();
+        this.oldEmail = '';
         return this;
     }
 
@@ -17,17 +18,17 @@ class ProfileSection extends PageBuilder {
     }
 
     createButton(label, extraClass = '', onClick = null) {
-        const placement = this.createElement("div", `width-100 ${extraClass}`, ``);
-        const button = this.createElement("button", `profile-button btn btn-primary`, label);
+        const placement = this.createElement("div", `width-100 text-end`, ``);
+        const button = this.createElement("button", `profile-button btn btn-primary ${extraClass}`, label);
 	placement.append(button);
         if (onClick) button.addEventListener("click", onClick);
         return placement;
     }
 
-    createConfirmationLabel() {
-	const placement = this.createElement("div", `width-100 text-end`, ``);
-        placement.className = "registration-confirm-message";
-        placement.innerHTML = ``;
+    createConfirmationLabel(label = null, extraClass ='') {
+	const placement = this.createElement("div", `width-100 text-end `, ``);
+        placement.className = `registration-confirm-message ${extraClass}`;
+        placement.innerHTML = (label ? label : ``);
         return placement;
     }
 
@@ -48,11 +49,78 @@ class ProfileSection extends PageBuilder {
         const errorElement = this.createElement("div", "invalid-feedback", feedbackError);
         errorElement.id = `${id}-error`;
         errorElement.style.display = "none";
+
+  // Добавляем обработчик события input для проверки email
+        if (id === "email") {
+            inputElement.addEventListener("input", (event) => {
+                this.validateAndCheckEmail(event.target.value);
+            });
+        }
+
         
         container.append(labelElement, inputElement, errorElement);
         return container;
     }
 
+    validateAndCheckEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.ru$/;
+        const errorElement = document.getElementById("email-error");
+        const confirmMessageElement = document.querySelector(".registration-confirm-message");
+
+        if (!emailRegex.test(email)) {
+            errorElement.textContent = "Введите корректный email в зоне .ru";
+            errorElement.style.display = "block";
+            confirmMessageElement.textContent = "";
+            return;
+        }
+
+        // Если email валиден, скрываем сообщение об ошибке
+        errorElement.style.display = "none";
+        let emailButton =  document.querySelector('.email-save-button')
+        // Отправляем запрос на сервер
+        this.checkEmailOnServer(email).then(response => {
+            if (response.status) {
+                confirmMessageElement.textContent = response.message;
+                confirmMessageElement.style.color = "green";
+
+                emailButton.textContent = (this.oldEmail == email ? 'Подтвердить' : 'Сохранить');
+     	        if(this.oldEmail == email) {
+  	         console.log(this.oldEmail == email);	
+  	         emailButton.classList.add('disabled');
+                 emailButton.setAttribute('disabled', 'disabled'); // Отключаем функциональность кнопки
+                } else {
+	        emailButton.classList.remove('disabled');
+	        emailButton.removeAttribute('disabled'); // Включаем функциональность кнопки
+		}
+            } else {
+                confirmMessageElement.textContent = response.message;
+                confirmMessageElement.style.color = "red";
+	        emailButton.classList.add('disabled');
+        	emailButton.setAttribute('disabled', 'disabled'); // Отключаем функциональность кнопки
+            }
+        }).catch(error => {
+            confirmMessageElement.textContent = "Ошибка при проверке email";
+            confirmMessageElement.style.color = "red";
+	    emailButton.classList.add('disabled');
+            emailButton.setAttribute('disabled', 'disabled'); // Отключаем функциональность кнопки
+        });
+    }
+
+    async checkEmailOnServer(email) {
+        const api = new WebAPI();
+        const webRequest = new WebRequest();
+        try {
+            const response = await webRequest.post(api.checkEmailMethod(), { email }, true);
+	    console.log(this.oldEmail, email); 	
+            return response;
+        } catch (error) {
+            console.error("Ошибка при проверке email:", error);
+            throw error;
+        }
+    }
+
+
+//
     createDropdownSection(title, children = []) {
         const section = this.createElement("dropdown-section", '', `<span slot="title">${title}</span>`);
          if (children.length === 0) {
@@ -304,12 +372,20 @@ class ProfileSection extends PageBuilder {
         ]);
         profileContainer.appendChild(fioSection);
 
+        this.oldEmail = data?.profile?.email;
+        const emailButtonName = 
+		(data?.profile?.email) 
+			? (data?.profile?.emailConfirmedAt ? "Сохранить" : "Подтвердить")
+			: "Сохранить";
 	const emailSection = this.createDropdownSection("Электронный адрес", [
 		this.createProfileItem("Email", "email", "Электронный адрес", true, ``, `${data?.profile?.email || ''}`),
-		this.createConfirmationLabel(),
-	        this.createButton((data?.profile?.confirmed ? "Сохранить" : "Подтвердить" ), 
-			"text-end", 
-			(data?.profile?.confirmed ? this.saveEmailButtonOnClick : this.saveEmailButtonOnClick ))
+		this.createConfirmationLabel(
+			(data?.profile?.emailConfirmedAt ? `Email потвержден` : `Email необходимо подтвердить!` ),
+			(data?.profile?.emailConfirmedAt ? `confirmation-label-success` : `confirmation-label-error` )
+		),
+	        this.createButton(emailButtonName, 
+			"text-end email-save-button disabled", 
+			(data?.profile?.emailConfirmedAt ? this.saveEmailButtonOnClick : this.saveEmailButtonOnClick ))
         ]);
         profileContainer.appendChild(emailSection);
 

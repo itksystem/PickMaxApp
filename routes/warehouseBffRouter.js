@@ -20,7 +20,7 @@ router.get('/v1/products/:id',
         try {
           const id = req.params.id;
           if(!id) { throw(common.HTTP_CODES.BAD_REQUEST.code) }
-          const response = await warehouseClient.getProductById(commonFunction.getJwtToken(req), id);
+          const response = await warehouseClient.getProductById(req, id);
           if (!response.success)  throw(response?.status || 500)
             let _likes = await recoClient.getLikes(req, id);
             response.data.likes = (_likes?.data) ? _likes?.data?.likes : 0;     
@@ -41,7 +41,7 @@ router.get('/v1/products/:id',
       try {
           let {categoryId} = req.body; 
           if(!categoryId) categoryId = null;
-          const response = await warehouseClient.getProducts(commonFunction.getJwtToken(req),categoryId);
+          const response = await warehouseClient.getProducts(req,categoryId);
           for (const item of response.data) {
             let _likes = await recoClient.getLikes(req, item.productId);
              item.likes = (_likes?.data) ? _likes?.data?.likes : 0;     
@@ -59,7 +59,7 @@ router.get('/v1/products/:id',
    router.post('/v1/basket/product-add', 	
 	async (req, res) => {
         try {
-            const response = await warehouseClient.addItemToBasket(commonFunction.getJwtToken(req),req.body);
+            const response = await warehouseClient.addItemToBasket(req);
             if (!response.success)  throw(response?.status || 500)
             res.status(200).json(response.data);            
         } catch (error) {
@@ -71,7 +71,7 @@ router.get('/v1/products/:id',
    router.post('/v1/basket/product-remove', 	
 	async (req, res) => {  
         try {
-            const response = await warehouseClient.removeItemFromBasket(commonFunction.getJwtToken(req),req.body);
+            const response = await warehouseClient.removeItemFromBasket(req);
             if (!response.success)  throw(response?.status || 500)
             res.status(200).json(response.data);            
         } catch (error) {
@@ -83,7 +83,7 @@ router.get('/v1/products/:id',
    router.get('/v1/basket', 	
 	async (req, res) => {  
         try {            
-            const response = await warehouseClient.getBasket(commonFunction.getJwtToken(req));
+            const response = await warehouseClient.getBasket(req);
             if (!response.success)  throw(response?.status || 500)
                 res.status(200).json(response.data);            
         } catch (error) {
@@ -95,7 +95,7 @@ router.get('/v1/products/:id',
    router.delete('/v1/basket/item/:productId', 	
 	async (req, res) => {  
         try {            
-            const response = await warehouseClient.deletePositionFromBasket(commonFunction.getJwtToken(req), req.params.productId);
+            const response = await warehouseClient.deletePositionFromBasket(req, req.params.productId);
             if (!response.success)  throw(response?.status || 500)                
                 res.status(200).json(response.data);            
         } catch (error) {
@@ -110,7 +110,7 @@ router.get('/v1/products/:id',
         try {            
             const orderId = req.params.id;
             if(!orderId) { throw(common.HTTP_CODES.BAD_REQUEST.code) }
-            const response = await warehouseClient.getOrderDetails(commonFunction.getJwtToken(req), orderId) ;
+            const response = await warehouseClient.getOrderDetails(req, orderId) ;
             if (!response.success)  throw(response?.status || 500)
                 res.status(200).json(response.data);            
         } catch (error) {

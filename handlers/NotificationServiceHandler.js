@@ -8,7 +8,13 @@ class NotificationServiceHandler {
     constructor() {
 
     }
-
+    headers(req){
+        return {
+            'Content-Type': 'application/json',
+            'x-tg-init-data': `${req.headers['x-tg-init-data']}`, 
+            'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
+        }
+    }
     /**
      * Метод для получения переписки по товару текущего пользователя от NotificationService
      * @returns {Object} - Объект с результатом
@@ -21,7 +27,7 @@ class NotificationServiceHandler {
 
             const response = await fetch( url, {
                 method: 'GET',
-                headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+                headers: this.headers(req),
    	    });
 
             const data = await response.json();
@@ -47,7 +53,7 @@ class NotificationServiceHandler {
         try {
             const response = await fetch(process.env.NOTIFICATION_PRODUCT_MAIL_REQUEST_URL+`/${productId}`, {
                 method: 'POST',
-                headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+                headers: this.headers(req),
                 body: JSON.stringify(req.body)
    	    });
 

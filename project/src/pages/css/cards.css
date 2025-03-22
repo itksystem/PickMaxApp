@@ -1273,3 +1273,11 @@ img.custom-radio-new-card{
 .card {
     padding: 1rem 0.7rem;
 }
+
+.confirmation-label-success  {
+ color : green;
+}
+
+.confirmation-label-error {
+ color : red;
+}

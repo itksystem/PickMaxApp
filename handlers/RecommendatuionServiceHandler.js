@@ -8,7 +8,13 @@ class RecommendationServiceHandler {
     constructor() {
 
     }
-
+    headers(req){
+        return {
+            'Content-Type': 'application/json',
+            'x-tg-init-data': `${req.headers['x-tg-init-data']}`, 
+            'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
+        }
+    }
       /**
      * Метод для отправки лайка по продукту
      * @returns {Object} - Объект с результатом
@@ -17,7 +23,7 @@ class RecommendationServiceHandler {
             try {
                 const response = await fetch(process.env.RECOMMENDATION_SERVICE_LIKE_URL+`/${req.params.productId}`, {
                     method: 'POST',
-                    headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },
+                    headers: this.headers(req),
                     body: JSON.stringify(req.body)
                 });    
     
@@ -43,7 +49,7 @@ async getLikes(req, productId) {
     try {        
         const response = await fetch(process.env.RECOMMENDATION_SERVICE_LIKE_URL+`/${productId}`, {
             method: 'GET',
-            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+            headers: this.headers(req),
         });    
 
         const data = await response.json();
@@ -68,7 +74,7 @@ async getReviewCount(req, productId) {
     try {        
         const response = await fetch(process.env.RECOMMENDATION_SERVICE_REVIEW_URL+`/${productId}/counter`, {
             method: 'GET',
-            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+            headers: this.headers(req),
         });    
 
         const data = await response.json();
@@ -90,7 +96,7 @@ async getRating(req, productId) {
     try {        
         const response = await fetch(process.env.RECOMMENDATION_SERVICE_RATING_URL+`/${productId}`, {
             method: 'GET',
-            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+            headers: this.headers(req),
         });    
 
         const data = await response.json();
@@ -112,7 +118,7 @@ async getReviews(req, productId) {
     try {        
         const response = await fetch(process.env.RECOMMENDATION_SERVICE_REVIEWS_URL+`/${productId}`, {
             method: 'GET',
-            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+            headers: this.headers(req),
         });    
 
         const data = await response.json();
@@ -133,7 +139,7 @@ async getReview(req, productId) {
     try {        
         const response = await fetch(process.env.RECOMMENDATION_SERVICE_REVIEWS_URL+`/${productId}/my/review`, {
             method: 'GET',
-            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+            headers: this.headers(req),
         });    
 
         const data = await response.json();
@@ -154,7 +160,7 @@ async setRating(req, productId) {
     try {        
         const response = await fetch(process.env.RECOMMENDATION_SERVICE_RATING_URL+`/${productId}`, {
             method: 'POST',
-            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+            headers: this.headers(req),
             body: JSON.stringify(req.body),
         });    
 
@@ -176,7 +182,7 @@ async setReview(req, productId) {
     try {        
         const response = await fetch(process.env.RECOMMENDATION_SERVICE_REVIEW_URL+`/${productId}`, {
             method: 'POST',
-            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+            headers: this.headers(req),
             body: JSON.stringify(req.body),
         });    
 
@@ -199,7 +205,7 @@ async deleteReviewMedia(req, fileId) {
     try {        
         const response = await fetch(process.env.RECOMMENDATION_SERVICE_REVIEW_MEDIA_DELETE_URL+`/${fileId}`, {
             method: 'DELETE',
-            headers: { 'Content-Type' : 'application/json', 'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`, },            
+            headers: this.headers(req),
             body: JSON.stringify(req.body),
         });    
 

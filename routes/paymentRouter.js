@@ -13,7 +13,7 @@ require('dotenv').config({ path: '.env-pickmax-service' });
 paymentRouter.post('/v1/create', 	
 	async (req, res) => {        
         try {
-            const response = await paymentClient.create(commonFunction.getJwtToken(req), req.body);
+            const response = await paymentClient.create(req);
             if (!response.success)  throw(response.status)
             res.status(200).json(response.data);            
         } catch (error) {            
@@ -26,7 +26,7 @@ paymentRouter.post('/v1/create',
 paymentRouter.post('/v1/decline', 	
 	async (req, res) => {        
         try {            
-            const response = await paymentClient.decline(commonFunction.getJwtToken(req), req.body);
+            const response = await paymentClient.decline(req);
             if (!response.success)  throw(response.status)
             res.status(200).json(response.data);            
         } catch (error) {            
@@ -39,7 +39,7 @@ paymentRouter.post('/v1/decline',
 paymentRouter.get('/v1/instruments', 	
 	async (req, res) => {        
         try {            
-            const response = await paymentClient.instruments(commonFunction.getJwtToken(req));
+            const response = await paymentClient.instruments(req);
             if (!response.success)  throw(response.status)
             res.status(200).json(response.data);            
         } catch (error) {            
@@ -51,7 +51,7 @@ paymentRouter.get('/v1/instruments',
 paymentRouter.get('/v1/cards', 	
 	async (req, res) => {        
         try {            
-            const response = await paymentClient.cards(commonFunction.getJwtToken(req));
+            const response = await paymentClient.cards(req);
             if (!response.success)  throw(response.status)
             res.status(200).json(response.data);            
         } catch (error) {            
@@ -63,7 +63,7 @@ paymentRouter.get('/v1/cards',
 paymentRouter.patch('/v1/card', 	
 	async (req, res) => {        
         try {            
-            const response = await paymentClient.setDefaultCard(commonFunction.getJwtToken(req), req);
+            const response = await paymentClient.setDefaultCard(req);
             if (!response.success)  throw(response.status)
             res.status(200).json(response.data);            
         } catch (error) {            
@@ -75,7 +75,7 @@ paymentRouter.patch('/v1/card',
 paymentRouter.delete('/v1/card', 	
 	async (req, res) => {        
         try {            
-            const response = await paymentClient.deleteCard(commonFunction.getJwtToken(req), req);
+            const response = await paymentClient.deleteCard(req);
             if (!response.success)  throw(response.status)
             res.status(200).json(response.data);            
         } catch (error) {            

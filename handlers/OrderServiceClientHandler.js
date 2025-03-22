@@ -3,24 +3,29 @@ const fetch = require('node-fetch');
 require('dotenv').config({ path: '.env-pickmax-service' });
 const common = require("openfsm-common"); // Библиотека с общими параметрами
 const CommonFunctionHelper = require("openfsm-common-functions")
+const commonFunction= new CommonFunctionHelper();
+
 
 class OrderServiceClientHandler {
     constructor() {
     }
-
+    headers(req){
+      return {
+          'Content-Type': 'application/json',
+          'x-tg-init-data': `${req.headers['x-tg-init-data']}`, 
+          'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
+      }
+  }
     /**
      * Метод для создания заказа на все товары и корзины пользователя
      * @returns {Object} - Объект с параметрами заказа
      */
 
-    async create(token, referenceId) {
+    async create(req, referenceId) {
         try {
             const response = await fetch(process.env.ORDER_SERVICE_CREATE_URL, {
                 method: 'POST',                
-                headers: {
-                    'Content-Type' : 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                  },
+                headers: this.headers(req),
                 body: JSON.stringify({referenceId})
             }); 
             if (!response.ok)  throw(response.status);       
@@ -45,14 +50,11 @@ class OrderServiceClientHandler {
      * @returns {Object} - Объект с параметрами заказа
      */
 
-    async decline(token, body) {
+    async decline(req, body) {
         try {
             const response = await fetch(process.env.ORDER_SERVICE_DECLINE_URL, {
                 method: 'POST',                
-                headers: {
-                    'Content-Type' : 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                  },
+                headers: this.headers(req),
                 body: JSON.stringify(body)
             });              
             if (!response.ok)  throw(response.status);       
@@ -76,14 +78,11 @@ class OrderServiceClientHandler {
      * @params {body} - ьтело запроса
      * @returns {Object} - Объект с параметрами заказа
      */
-    async getOrders(token) {
+    async getOrders(req) {
         try {
             const response = await fetch(process.env.ORDER_SERVICE_ORDERS_URL, {
                 method: 'GET',                
-                headers: {
-                    'Content-Type' : 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                  }                
+                headers: this.headers(req),         
             });  
             if (!response.ok)  throw(response.status);       
             let data;
@@ -107,14 +106,11 @@ class OrderServiceClientHandler {
      * @returns {Object} - Объект с параметрами заказа
      */
 
-   async getOrder(token, orderId) {
+   async getOrder(req, orderId) {
     try {
         const response = await fetch(process.env.ORDER_SERVICE_ORDER_URL+`/${orderId}`, {
             method: 'GET',
-            headers: {
-                'Content-Type' : 'application/json',
-                'Authorization': `Bearer ${token}`,
-              }                
+            headers: this.headers(req),         
         });          
         if (!response.ok)  throw(response.status);       
         let data;
