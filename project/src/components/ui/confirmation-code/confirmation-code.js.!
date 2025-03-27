@@ -4,11 +4,11 @@ class ConfirmationCodeElement extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <div class="code-container">
-                <input type="text" class="code-input" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                <input type="text" class="code-input" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                <input type="text" class="code-input" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                <input type="text" class="code-input" maxlength="1" inputmode="numeric" pattern="[0-9]*">
-                <input type="text" class="code-input" maxlength="1" inputmode="numeric" pattern="[0-9]*">
+                <input type="text" class="code-input" maxlength="1">
+                <input type="text" class="code-input" maxlength="1">
+                <input type="text" class="code-input" maxlength="1">
+                <input type="text" class="code-input" maxlength="1">
+                <input type="text" class="code-input" maxlength="1">
             </div>
             <style>
                 .code-container {
@@ -23,15 +23,16 @@ class ConfirmationCodeElement extends HTMLElement {
                     font-size: 24px;
                     border: 2px solid #ccc;
                     border-radius: 5px;
-                    transition: all 0.2s ease-in-out;
+                    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
                 }
                 .code-input:focus {
-                    outline: none;
-                    border-color: #007bff;
-                    transform: scale(1.1);
-                    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+                    outline: none !important;
+                    border-color: #007bff !important;
+                    transform: scale(1.1) !important;
+                    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5) !important;
                 }
                 .code-input.filled {
+                    transform: scale(1.1);
                     border-color: #28a745;
                 }
                 .code-input:disabled {
@@ -42,74 +43,34 @@ class ConfirmationCodeElement extends HTMLElement {
                 }
             </style>
         `;
-
-        // Callback по умолчанию
-        this.onComplete = null;
     }
 
     connectedCallback() {
         this.inputs = this.shadowRoot.querySelectorAll(".code-input");
-        this.setupEventListeners();
-        
-        if (this.disabled) {
-            this.setDisabledState(true);
-        }
-    }
-
-    setupEventListeners() {
         this.inputs.forEach((input, index) => {
             input.addEventListener("input", () => {
                 input.value = input.value.replace(/\D/g, "");
-                
                 if (input.value) {
                     input.classList.add("filled");
                     setTimeout(() => input.classList.remove("filled"), 200);
-                    
                     if (index < this.inputs.length - 1) {
                         this.inputs[index + 1].focus();
                     }
                 }
-                
                 this.checkCompletion();
             });
 
             input.addEventListener("keydown", (e) => {
-                if (e.key === "Backspace" && !input.value && index > 0) {
+                if (e.key === "Backspace" && index > 0 && !input.value) {
                     this.inputs[index - 1].focus();
                 }
             });
         });
-    }
 
-    // Метод для установки callback
-    setOnCompleteCallback(callback) {
-        if (typeof callback === 'function') {
-            this.onComplete = callback;
-        } else {
-            console.warn('Callback must be a function');
+        // Инициализация состояния disabled
+        if (this.disabled) {
+            this.setDisabledState(true);
         }
-    }
-
-    checkCompletion() {
-        const code = this.getCode();
-        if (code.length === this.inputs.length) {
-//            console.log("Код подтверждения введён:", code);
-            
-            // Вызываем callback если он установлен
-            if (this.onComplete) {
-                this.onComplete(code);
-            }
-            
-            // Также диспатчим событие для внешних подписчиков
-            this.dispatchEvent(new CustomEvent('complete', {
-                detail: { code }
-            }));
-        }
-    }
-
-    // Метод для получения полного кода
-    getCode() {
-        return Array.from(this.inputs).map(input => input.value).join("");
     }
 
     // Геттер для свойства disabled
@@ -127,12 +88,25 @@ class ConfirmationCodeElement extends HTMLElement {
         this.setDisabledState(value);
     }
 
-    // Метод для обновления состояния disabled
+    // Метод для обновления состояния элементов input
     setDisabledState(isDisabled) {
         this.inputs.forEach(input => {
             input.disabled = isDisabled;
         });
     }
+
+    checkCompletion() {
+        const code = Array.from(this.inputs).map(input => input.value).join("");
+        if (code.length === this.inputs.length) {
+            console.log("Код подтверждения введён:", code);
+        }
+    }
+
+// Метод для получения полного кода
+    getCode() {
+        return Array.from(this.inputs).map(input => input.value).join("");
+    }
+
 }
 
 customElements.define('confirmation-code', ConfirmationCodeElement);

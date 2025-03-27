@@ -11,6 +11,10 @@ class ProfileSection extends PageBuilder {
 	this.EMAIL_SAVE_ACTION_NEED = 1;
 	this.EMAIL_CONFIRM_ACTION_NEED = 2;
 	this.emailActionNeed = this.EMAIL_NO_ACTION_NEED;
+	this.EMAIL_SAVE_ACTION_DESCRIPTION = 'Сохранить';
+	this.EMAIL_CONFIRM_ACTION_DESCRIPTION = 'Подтвердить';
+
+
 // привязка контекста 
 	this.saveProfileButtonOnClick = this.saveProfileButtonOnClick.bind(this);
 	this.emailButtonClick = this.emailButtonClick.bind(this);
@@ -104,7 +108,7 @@ class ProfileSection extends PageBuilder {
   	          emailButton.classList.add('disabled');
                   emailButton.setAttribute('disabled', 'disabled'); // Отключаем функциональность кнопки
                 } else {
-		  emailButton.textContent = 'Сохранить';
+		  emailButton.textContent = this.this.EMAIL_SAVE_ACTION_DESCRIPTION;
 	          emailButton.classList.remove('disabled');
 	          emailButton.removeAttribute('disabled'); // Включаем функциональность кнопки
               	  this.emailActionNeed = this.EMAIL_SAVE_ACTION_NEED;
@@ -392,17 +396,27 @@ class ProfileSection extends PageBuilder {
         profileContainer.appendChild(fioSection);
 
         this.oldEmail = data?.profile?.email;
+        if(data?.profile?.email && !data?.profile?.emailConfirmedAt) {
+		this.emailActionNeed = this.EMAIL_CONFIRM_ACTION_NEED;
+   	   } else 
+		this.emailActionNeed = this.EMAIL_SAVE_ACTION_NEED;
+
         const emailButtonName = 
-		(data?.profile?.email) 
-			? (data?.profile?.emailConfirmedAt ? "Сохранить" : "Подтвердить")
-			: "Сохранить";
+		(this.emailActionNeed == this.EMAIL_SAVE_ACTION_NEED) 
+			? this.EMAIL_SAVE_ACTION_DESCRIPTION
+			: this.EMAIL_CONFIRM_ACTION_DESCRIPTION;
+        const emailButtonDisable = 
+		(this.emailActionNeed == this.EMAIL_SAVE_ACTION_NEED) 
+			? 'disable'
+			: '';
+
 	const emailSection = this.createDropdownSection("Электронный адрес", [
 		this.createProfileItem("Email", "email", "Электронный адрес", true, ``, `${data?.profile?.email || ''}`),
 		this.createConfirmationLabel(
 			(data?.profile?.emailConfirmedAt ? `Email потвержден` : `Email необходимо подтвердить!` ),
 			(data?.profile?.emailConfirmedAt ? `confirmation-label-success` : `confirmation-label-error` )
 		),
-        this.createButton(emailButtonName, "text-end email-save-button disabled", this.emailButtonClick)
+	        this.createButton(emailButtonName, `text-end email-save-button ${emailButtonDisable}`, this.emailButtonClick)
         ]);
         profileContainer.appendChild(emailSection);
 
@@ -472,8 +486,8 @@ class ProfileSection extends PageBuilder {
 	if (eventBus) {
 	    eventBus.on('ClientAddressDialogReload', () => {
 	        let AddressDialog = new ClientAddressDialog();
-	        o.AddressesContainer.innerHTML = ``;
-	        AddressDialog.getElements().forEach((item, index) => {
+	          o.AddressesContainer.innerHTML = ``;
+ 	          AddressDialog.getElements().forEach((item, index) => {
 	            o.AddressesContainer.appendChild(item);
 	        });
 	    });
@@ -534,7 +548,7 @@ class ProfileSection extends PageBuilder {
 	   },  
 	    false ).then(function(data) {
              toastr.success('Почта сохранена', 'Профиль', {timeOut: 3000});
-              emailButton.textContent = 'Подтвердить';
+              emailButton.textContent = o.EMAIL_CONFIRM_ACTION_DESCRIPTION;
 	      o.emailActionNeed = o.EMAIL_CONFIRM_ACTION_NEED;	    	
            }).catch(function(error) {
          console.log('saveEmailButtonOnClick.Произошла ошибка =>', error);

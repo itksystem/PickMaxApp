@@ -1098,3 +1098,25 @@
 {"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-03-22T18:22:53.846Z"}
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-22T18:22:56.672Z"}
 {"code":"ERR_INVALID_ARG_TYPE","level":"error","message":"The \"path\" argument must be of type string. Received undefined","service":"pickapp-service","stack":"TypeError [ERR_INVALID_ARG_TYPE]: The \"path\" argument must be of type string. Received undefined\n    at validateString (internal/validators.js:124:11)\n    at extname (path.js:752:5)\n    at new View (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\view.js:56:14)\n    at Function.render (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\application.js:587:12)\n    at ServerResponse.render (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\express\\lib\\response.js:1049:7)\n    at exports.renderPage (C:\\Distrib\\TZ\\PickMaxApp\\controllers\\mainController.js:42:18)\n    at C:\\Distrib\\TZ\\PickMaxApp\\routes\\mainRouter.js:90:18\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-03-22T18:25:31.148Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-03-23T05:55:36.573Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-23T05:55:39.408Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-03-27T16:30:28.855Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-27T16:30:52.046Z"}
+{"level":"error","message":"Cannot read property 'x-tg-init-data' of undefined","service":"pickapp-service","timestamp":"2025-03-27T18:54:44.017Z"}
+{"level":"error","message":"Cannot read property 'x-tg-init-data' of undefined","service":"pickapp-service","timestamp":"2025-03-27T18:55:45.190Z"}
+{"level":"error","message":"Cannot read property 'x-tg-init-data' of undefined","service":"pickapp-service","timestamp":"2025-03-27T18:59:55.398Z"}
+{"level":"error","message":"Cannot read property 'x-tg-init-data' of undefined","service":"pickapp-service","timestamp":"2025-03-27T19:02:39.315Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-27T19:16:44.462Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3009/logon reason: Unexpected token < in JSON at position 0","service":"pickapp-service","timestamp":"2025-03-27T19:34:15.564Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-03-27T19:35:40.041Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-27T19:35:42.774Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-27T19:53:57.619Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-27T19:58:50.738Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-27T20:00:00.117Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-27T20:01:04.211Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-27T20:05:12.449Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-27T20:06:36.433Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-27T20:09:17.879Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-27T20:24:39.538Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-27T20:29:39.297Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-03-27T20:42:04.135Z"}

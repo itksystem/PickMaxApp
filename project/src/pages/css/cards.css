@@ -1281,3 +1281,16 @@ img.custom-radio-new-card{
 .confirmation-label-error {
  color : red;
 }
+
+.confirmation-information-label-container {
+    padding-bottom: 1rem;
+    font-size: 0.8rem;  
+    text-align: center;	
+}
+
+.success{
+  color: #1e7e34;
+}
+.failed{
+  color: #ff0000;
+}

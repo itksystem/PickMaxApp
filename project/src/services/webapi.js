@@ -395,6 +395,13 @@ class WebAPI {
    getTelegramMeMethod() { return `/@telegram`; }
    getTelegramMeMethodPayload() { return {};  }
 
+// Сервис подтверждения
+   sendConfirmationCodeMethod() { return `/api/bff/confirmation/v1/code`; }
+   sendConfirmationCodeMethodPayload( code, requestId ) { return { code, requestId } }
+
+   getConfirmationRequestMethod() { return `/api/bff/confirmation/v1/request`; }
+   getConfirmationRequestMethodPayload( confirmationType ) { return { confirmationType } }
+
 /* станицы */
    LOGON_URL(){ return `/logon` }
 

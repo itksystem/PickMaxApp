@@ -17,13 +17,14 @@ const clientRouter = require('./routes/clientRouter');
 const recoRouter = require('./routes/recoRouter');
 const mailRouter = require('./routes/mailRouter');
 const deliveryRouter= require('./routes/deliveryRouter');
+const confirmationRouter= require('./routes/confirmationRouter');
 const promClient = require('prom-client'); //сбор метрик для Prometheus
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger/swagger'); // Импортируйте конфигурацию Swagger
 require('dotenv').config({ path: '.env-pickmax-service' });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3999;
 
 const app = express(); // Создаем приложение Express
 
@@ -78,8 +79,6 @@ app.use((req, res, next) => {
 
 
 app.use(function (req, res, next) {    
-    // res.setHeader("Content-Security-Policy", "*");
-    // res.setHeader('X-Frame-Options', 'ALLOW-FROM https://web.telegram.org');
     res.setHeader("Content-Security-Policy", "frame-ancestors 'self' https://web.telegram.org;");
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');   
     next();
@@ -97,6 +96,7 @@ app.use('/api/bff/client/',  clientRouter);
 app.use('/api/bff/reco/',    recoRouter); 
 app.use('/api/bff/mail/',   mailRouter); 
 app.use('/api/bff/verification/',  mainRouter); 
+app.use('/api/bff/confirmation/',  confirmationRouter); 
 app.use('/api/bff/delivery/',  deliveryRouter); 
 
 // Middleware для обработки 404 ошибок
@@ -106,9 +106,9 @@ app.use((req, res, next) => {
 
 
 // Запуск сервера   
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
   console.log(`
     ******************************************
-    * PickMax Service running on port ${process.env.PORT}   *
+    * PickMax Service running on port ${PORT}   *
     ******************************************`);
 });

@@ -1,0 +1,79 @@
+// Обработчик взаимодействия с AuthService
+const fetch = require('node-fetch');
+require('dotenv').config({ path: '.env-pickmax-service' });
+const CommonFunctionHelper = require("openfsm-common-functions");
+const logger = require('../controllers/LoggerHandler');
+const commonFunction = new CommonFunctionHelper();
+
+class ConfirmationServiceHandler {
+    constructor() {}
+
+    /**
+     * Метод для получения профиля текущего пользователя от ClientService
+     * @returns {Object} - Объект с результатом
+     * 
+     */
+    headers(req){
+        return {
+            'Content-Type': 'application/json',
+            'x-tg-init-data': `${req?.headers['x-tg-init-data'] || '' }`, 
+            'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
+        }
+    }
+    
+
+    /**
+     * Метод для отправки запроса на смс-код 
+     * @returns {Object} - Объект с результатом
+     */
+    async sendRequest(req, res) {
+        try {
+            const response = await fetch(process.env.GET_CONFIRMATION_REQUEST_URL, {
+                method: 'POST',
+                headers: this.headers(req),
+                body: JSON.stringify(req.body),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                console.log(`sendRequest successfully.`);
+                return { success: true, data };
+            } else {
+                console.log(`sendRequest failed.`);
+                return { success: false, status: response.status, data };
+            }
+        } catch (error) {
+            console.log(`sendRequest failed.`);
+            return { success: false, error: error.message };
+        }
+    }
+    /**
+     * Метод для отправки смс-кода на проверку 
+     * @returns {Object} - Объект с результатом
+     */
+    async sendCode(req, res) {
+        try {
+            const response = await fetch(process.env.SEND_CONFIRMATION_CODE_URL, {
+                method: 'POST',
+                headers: this.headers(req),
+                body: JSON.stringify(req.body),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                console.log(`sendCode successfully.`);
+                return { success: true, data };
+            } else {
+                console.log(`sendCode failed.`);
+                return { success: false, status: response.status, data };
+            }
+        } catch (error) {
+            console.log(`sendCode failed.`);
+            return { success: false, error: error.message };
+        }
+    }
+
+
+}
+
+module.exports = ConfirmationServiceHandler;
