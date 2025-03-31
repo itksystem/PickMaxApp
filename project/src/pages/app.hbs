@@ -52,6 +52,7 @@
    <script src="/src/components/widgets/ShopCardMediaGallery.js"></script> 
    <script src="/src/components/widgets/CustomElementFactory.js"></script>    
    <script src="/src/services/EventEmitter.js"></script>    
+
    <script src="/src/MainApp.js"></script> 
 
    <script src="/src/pages/js/jquery.iframe-transport.js"></script>
@@ -142,7 +143,12 @@ body{
            {{>order_availability_error}}
     {{else ifEquals service "confirmation-email"}}
            {{>confirmation_email}}
-
+    {{else ifEquals service "confirmation-phone"}}
+           {{>confirmation_phone}}
+    {{else ifEquals service "balance-history"}}
+           {{>balance_history}}
+    {{else ifEquals service "balance-deposit"}}
+           {{>balance_deposit}}
     {{/ifEquals}}              
  </div>
 
@@ -171,7 +177,7 @@ body{
  <div class="footer fixed-bottom"></div> 
 </body>
 
-
+ <script src="/src/services/DOMHelper.js"></script>
  <script src="/src/components/ui/mobile-navbar/mobile-navbar.js"></script>
  <script src="/src/components/ui/product-card/product-card.js"></script>
  <link rel="stylesheet" href="/src/components/ui/basket-button/css/basket-button.css">                           

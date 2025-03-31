@@ -1294,3 +1294,14 @@ img.custom-radio-new-card{
 .failed{
   color: #ff0000;
 }
+
+.account-balance{
+    color: black;
+    font-size: 1.4rem;
+}
+
+
+.account-history-button {
+    font-size: 0.8rem;
+    text-decoration: underline;
+}

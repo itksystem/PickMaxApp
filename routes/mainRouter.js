@@ -52,6 +52,10 @@ const protectedRoutes = [
     { method : 'GET', path: '/orders/:orderId/page', page: common.COMMON_ORDERS_PAGE, service :{service : "order"} },
     { method : 'GET', path: '/orders/page', page: common.COMMON_ORDERS_PAGE, service :{service : "orders"} },
     { method : 'GET', path: '/confirmation/email/page', page: common.COMMON_CONNFIRMATION_EMAIL_PAGE, service :{service : "confirmation-email"} },
+    { method : 'GET', path: '/confirmation/phone/page', page: common.COMMON_CONNFIRMATION_PHONE_PAGE, service :{service : "confirmation-phone"} },
+    
+    { method : 'GET', path: '/balance/deposit/page', page: common.COMMON_BALANCE_DEPOSIT_PAGE, service :{service : "balance-deposit"} },
+    { method : 'GET', path: '/balance/history/page', page: common.COMMON_BALANCE_HISTORY_PAGE, service :{service : "balance-history"} },
 
     { method : 'GET', path: '/orders/create-error', page: common.COMMON_GET_ORDER_ERROR_PAGE, service :{service : "order-create-error"} },   
     { method : 'GET', path: '/orders/delivery-failed', page: common.COMMON_GET_ORDER_SUCCESS_PAGE, service :{service : 'order-delivery-error'} }, 

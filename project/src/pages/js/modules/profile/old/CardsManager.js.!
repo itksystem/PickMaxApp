@@ -1,7 +1,8 @@
-class ClientCardsDialog {
+class CardsManager {
     constructor() {
         this.api = new WebAPI();
-        this.webRequest = new WebRequest();    }
+        this.webRequest = new WebRequest();   
+ }
 
     // Создание элемента радио-кнопки для карты
     createCardRadio(cardId, name, label, isDefault, paySystem, onClick, onDelete) {

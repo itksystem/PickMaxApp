@@ -552,8 +552,6 @@ class MainApp {
 			o.verificationCodeConfirmed()
 
               // Слушатели событий
-		var validator = new InputMaskValidator({ id : 'phone', error : 'phone-error'});
-	      //	
 		const autocomplete = document.getElementById('address');
 		 autocomplete
 		        .setUrl('/api/bff/client/v1/suggest/address?query=') // Установите URL для поиска
@@ -585,8 +583,6 @@ class MainApp {
    return this;
  }
 
-
-
   ConfirmationEmailPage(){
     let o = this;
     const confirmationEmailPage = new ConfirmationEmailSection("confirmation-email-container");
@@ -594,6 +590,24 @@ class MainApp {
     confirmationEmailPage.render();
     return this;
   }
+
+  ConfirmationPhonePage(){
+    let o = this;
+    const confirmationPhonePage = new ConfirmationPhoneSection("confirmation-phone-container");
+    confirmationPhonePage.ConfirmationPhoneCardContainer();
+    confirmationPhonePage.render();
+    return this;
+  }
+
+
+  BalanceHistoryPage(){
+    let o = this;
+    const balanceHistoryPage = new BalanceHistorySection("balance-history-card-container");
+    balanceHistoryPage.BalanceHistoryCardContainer();
+    balanceHistoryPage.render();
+    return this;
+  }
+
 
 }
 

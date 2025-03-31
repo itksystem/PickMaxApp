@@ -1,4 +1,4 @@
-class CommonFunctions {
+export class CommonFunctions {
    constructor() {
    console.log(`CommonFunctions loading...`);
    return this;
@@ -185,61 +185,5 @@ ORDER_STATUS = {
   COURIER_SEARCH: { class: 'order_item_status_confirmed', description: "Поиск курьера" },
 }
 
-/**
- * Маскирует номер телефона, оставляя только последние `visibleDigits` цифр видимыми.
- * 
- * @param {string} phoneNumber Исходный номер телефона (может содержать любые символы)
- * @param {string} maskSymbol Символ для маскирования (по умолчанию '*')
- * @param {number} visibleDigits Количество оставляемых видимыми цифр в конце (по умолчанию 4)
- * @returns {string} Замаскированный номер телефона
- */
- maskPhoneNumber(phoneNumber, maskSymbol = '*', visibleDigits = 4) {
-    // Оставляем только цифры из исходной строки
-    const digits = phoneNumber.replace(/\D/g, '');
-
-    if (digits.length <= visibleDigits) {
-        return phoneNumber; // Не маскируем, если цифр меньше или равно visibleDigits
-    }
-
-    const maskedPart = maskSymbol.repeat(digits.length - visibleDigits);
-    const visiblePart = digits.slice(-visibleDigits);
-
-    return maskedPart + visiblePart;
- }
-
- maskEmailCustom(email, maskSymbol = '*', visibleStart = 1, visibleEnd = 1) {
-    if (!email || !email.includes('@')) return email;
-
-    const [localPart, domain] = email.split('@');
-    const visibleLength = visibleStart + visibleEnd;
-
-    if (localPart.length <= visibleLength) {
-        return `${localPart}@${domain}`;
-    }
-
-    const start = localPart.slice(0, visibleStart);
-    const end = localPart.slice(-visibleEnd);
-    const masked = maskSymbol.repeat(localPart.length - visibleLength);
-
-    return `${start}${masked}${end}@${domain}`;
-}
-
-/**
- * Возвращает разницу между двумя датами в формате HH:mm:ss.
- * 
- * @param {Date} startDate Начальная дата
- * @param {Date} endDate Конечная дата
- * @returns {string} Разница во времени в формате HH:mm:ss
- */
- getTimeDifference(startDate, endDate) {
-    const diffInMs = Math.abs(endDate - startDate); // Разница в миллисекундах
-    // Преобразуем миллисекунды в часы, минуты и секунды
-    const hours = Math.floor(diffInMs / (1000 * 60 * 60));
-    const minutes = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diffInMs % (1000 * 60)) / 1000);
-    // Форматируем в двузначные строки (добавляем ведущий ноль, если нужно)
-    const pad = (num) => num.toString().padStart(2, '0');
-    return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
- }
 
 }

@@ -1,12 +1,14 @@
 class InputMaskValidator {
-  constructor(el = null) {
+  constructor(el = null, target = null, successCallback = null, errorCallback = null) {
    if(!el) throw('InputMaskValidator.constructor error initialize...') 
 // Подключение Inputmask
-	this._Input = document.getElementById(el.id);
-	this._Error = document.getElementById(el.error);
+	this._Input = target == null ? document.getElementById(el.id) : target.querySelector(`[id="${el.id}"]`) ;
+	this._Error = target == null ? document.getElementById(el.error): target.querySelector(`[id="${el.error}"]`) ;
 	this._inputMask = new Inputmask("+7 (999) 999-9999");
 // Применяем маску
 	this._inputMask.mask(this._Input);
+	this.successCallback = successCallback;
+	this.errorCallback = errorCallback;
 
    let o = this;	
    this._Input.addEventListener('blur', () => {
@@ -23,13 +25,16 @@ class InputMaskValidator {
     
     if (!isComplete) {
       // Если ввод некорректен, добавляем классы и показываем сообщение
-      _Input.classList.add('is-invalid');
-      _Error.style.display = 'block';
+       this._Input.classList.add('is-invalid');
+       this._Input.classList.remove('is-valid');
+       this._Error.style.display = 'block';
+       if (this.errorCallback) this.errorCallback();
     } else {
       // Убираем ошибку, если ввод корректен
-      _Input.classList.remove('is-invalid');
-      _Input.classList.add('is-valid');
-      _Error.style.display = 'none';
+       this._Input.classList.remove('is-invalid');
+       this._Input.classList.add('is-valid');
+       this._Error.style.display = 'none';
+       if (this.successCallback) this.successCallback();
     }
   }
 }

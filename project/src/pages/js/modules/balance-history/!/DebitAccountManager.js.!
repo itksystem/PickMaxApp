@@ -1,0 +1,235 @@
+class DebitAccountManager {
+    constructor() {
+        this.api = new WebAPI();
+        this.webRequest = new WebRequest();
+    }
+
+    // Создание элемента радио-кнопки для карты
+    createCardRadio(cardId, name, label, isDefault, paySystem, onClick, onDelete) {
+        const placement = document.createElement("div");
+        placement.className = "custom-radio row";
+
+        const radioContainer = document.createElement("div");
+        radioContainer.className = "col-9";
+
+        const radioInput = document.createElement("input");
+        radioInput.className = "custom-control-input";
+        radioInput.type = "radio";
+        radioInput.id = `radio-${cardId}`;
+        radioInput.name = name;
+        radioInput.checked = isDefault;
+        radioInput.value = cardId;
+
+        const radioLabel = document.createElement("label");
+        radioLabel.className = "custom-control-label";
+        radioLabel.setAttribute("for", `radio-${cardId}`);
+        radioLabel.textContent = label;
+
+        const radioImage = document.createElement("img");
+        radioImage.className = (paySystem == 'new-card') ? "custom-radio-new-card" : "custom-radio-card";
+        radioImage.setAttribute("for", `radio-${cardId}`);
+        radioImage.src = `/public/images/cards/icon-${paySystem}-48.png`;
+
+        radioContainer.appendChild(radioInput);
+        radioContainer.appendChild(radioLabel);
+        radioContainer.appendChild(radioImage);
+
+        const buttonContainer = document.createElement("div");
+        buttonContainer.className = "col-2";
+
+        if (onDelete) {
+            const removeButton = document.createElement("button");
+            removeButton.className = "btn small-hot-button";
+            removeButton.type = "button";
+            removeButton.value = cardId;
+
+            const removeIcon = document.createElement("i");
+            removeIcon.className = "fa-solid fa-x";
+            removeIcon.style.fontSize = "0.8rem";
+
+            removeButton.appendChild(removeIcon);
+            buttonContainer.appendChild(removeButton);
+            removeButton.addEventListener("click", () => onDelete(cardId));
+        }
+
+        placement.appendChild(radioContainer);
+        placement.appendChild(buttonContainer);
+
+        if (onClick) {
+            radioInput.addEventListener("click", () => onClick(cardId));
+        }
+
+        return placement;
+    }
+
+    // Создание секции дебетовых операций
+    createDebitSection(data) {
+        const elements = this.getElements();
+        console.log(elements);
+        return DOMHelper.createDropdownSection("Списание средств", elements || []);
+    }
+
+    // Получение списка операций с сервера
+    getPaymentDebitBalanceOperations() {
+        try {
+            const response = this.webRequest.get(
+                this.api.getPaymentDebitBalanceOperationsMethod(), 
+                {}, 
+                true
+            );
+            
+            if (!response || response.status !== true) {
+                throw new Error('Ошибка при получении информации о балансе');
+            }
+            return response.operations || [];
+        } catch (error) {
+            console.error('Ошибка при получении информации о балансе:', error);
+            toastr.error('Ошибка при получении информации о балансе', 'Баланс', { 
+                timeOut: 3000 
+            });
+            return [];
+        }
+    }
+
+    // Получение элементов операций для отображения
+    getElements() {
+        try {
+            const operations = this.getPaymentDebitBalanceOperations();
+            const transactions = operations.length > 0 ? operations : this.getDemoTransactions();
+            
+            return transactions.map(operation => 
+                this.createTransactionItem(operation, (op) => {
+                    console.log('Выбрана операция:', op.transactionId);
+                    // Здесь можно добавить обработчик клика по операции
+                })
+            );
+        } catch (error) {
+            console.error('Ошибка при формировании списка операций:', error);
+            toastr.error('Ошибка при формировании списка операций', 'Операции', {
+                timeOut: 3000
+            });
+            return [];
+        }
+    }
+
+    // Создание элемента списка для операции
+    createTransactionItem(operation, onClick) {
+        if (!operation || !operation.transactionId) {
+            console.error('Некорректные данные операции');
+            return document.createElement('div');
+        }
+
+        const item = document.createElement('div');
+        item.className = 'transaction-item';
+        item.dataset.transactionId = operation.transactionId;
+
+        // Иконка типа операции
+        const icon = document.createElement('div');
+        icon.className = `transaction-icon ${this.getTransactionIconClass(operation.transactionType)}`;
+        item.appendChild(icon);
+
+        // Основное содержание
+        const content = document.createElement('div');
+        content.className = 'transaction-content';
+
+        // Первая строка (описание и сумма)
+        const row1 = document.createElement('div');
+        row1.className = 'transaction-row';
+
+        const description = document.createElement('span');
+        description.className = 'transaction-description';
+        description.textContent = operation.description || 'Без описания';
+        row1.appendChild(description);
+
+        const amount = document.createElement('span');
+        amount.className = `transaction-amount ${operation.amount >= 0 ? 'income' : 'expense'}`;
+        amount.textContent = this.formatAmount(operation.amount);
+        row1.appendChild(amount);
+
+        content.appendChild(row1);
+
+        // Вторая строка (дата и статус)
+        const row2 = document.createElement('div');
+        row2.className = 'transaction-row';
+
+        const date = document.createElement('span');
+        date.className = 'transaction-date';
+        date.textContent = this.formatDate(operation.createdAt);
+        row2.appendChild(date);
+
+        const status = document.createElement('span');
+        status.className = `transaction-status ${operation.status.toLowerCase()}`;
+        status.textContent = operation.status;
+        row2.appendChild(status);
+
+        content.appendChild(row2);
+        item.appendChild(content);
+
+        // Обработчик клика
+        if (onClick) {
+            item.addEventListener('click', () => onClick(operation));
+            item.style.cursor = 'pointer';
+        }
+
+        return item;
+    }
+
+    // Генерация демо-транзакций
+    getDemoTransactions() {
+        return [
+            {
+                transactionId: "TXN10001",
+                transactionType: "Покупка",
+                amount: -1250.50,
+                status: "Завершено",
+                description: "Оплата в магазине 'Пятёрочка'",
+                createdAt: "2023-05-15T14:30:22Z"
+            },
+            {
+                transactionId: "TXN10002",
+                transactionType: "Пополнение",
+                amount: 5000.00,
+                status: "Завершено",
+                description: "Перевод от Иван Иванов",
+                createdAt: "2023-05-14T09:15:47Z"
+            },
+            {
+                transactionId: "TXN10003",
+                transactionType: "Комиссия",
+                amount: -30.00,
+                status: "Завершено",
+                description: "Комиссия за обслуживание",
+                createdAt: "2023-05-13T00:01:00Z"
+            }
+        ];
+    }
+
+    // Вспомогательный метод для определения класса иконки
+    getTransactionIconClass(type) {
+        const types = {
+            'Покупка': 'shopping',
+            'Перевод': 'transfer',
+            'Пополнение': 'deposit',
+            'Комиссия': 'fee',
+            'Отмена': 'cancel'
+        };
+        return types[type] || 'default';
+    }
+
+    // Форматирование суммы
+    formatAmount(amount) {
+        return `${amount >= 0 ? '+' : ''}${amount.toFixed(2)} ₽`;
+    }
+
+    // Форматирование даты
+    formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('ru-RU', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+}

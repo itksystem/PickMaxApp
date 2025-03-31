@@ -1,0 +1,131 @@
+.transaction-group {
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.group-header {
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+}
+
+.group-title {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.group-totals-title div {
+    font-size: 0.8rem;
+    color: #333;
+}
+
+.group-totals {
+    display: flex;
+    margin-top: 8px;
+    font-size: 0.7rem;
+}
+
+.group-totals .income { color: #28a745; }
+.group-totals .expense { color: #dc3545; }
+.group-totals .balance { font-weight: 500; }
+
+.transaction-list {
+    background: #fff;
+}
+
+.transaction-item {
+    display: flex;
+    padding: 12px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    align-items: center;
+}
+.transaction-item div {
+    padding: 0.2rem 0.2rem;
+}
+
+.transaction-item.clickable {
+    cursor: pointer;
+}
+
+.transaction-item.clickable:hover {
+    background: #f8f9fa;
+}
+.transaction-icon i.fa-plus-circle, i.fa-cart-shopping {
+   font-size: 0.9rem;
+}
+
+.transaction-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.transaction-icon.shopping { background: #ff6b6b; }
+.transaction-icon.transfer { background: #4ecdc4; }
+.transaction-icon.deposit { background: #1dd1a1; }
+.transaction-icon.fee { background: #8395a7; }
+.transaction-icon.cancel { background: #576574; }
+.transaction-icon.default { background: #54a0ff; }
+
+.transaction-content {
+    flex: 1;
+}
+
+.transaction-main {
+    display: flex;
+    justify-content: space-between;
+}
+
+.transaction-main span {
+  font-size: 0.8rem;
+}
+
+.transaction-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    font-size: 0.8rem !impotent;
+    color: #666;
+}
+
+.amount.income { color: #28a745; }
+.amount.expense { color: #dc3545; }
+
+.status {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+
+.status.завершено { background: #e6f7ee; color: #28a745; }
+.status.в_обработке { background: #fff8e6; color: #ffc107; }
+.status.отменено { background: #fee; color: #dc3545; }
+
+.empty-state, .error-state {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.empty-state i, .error-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #adb5bd;
+}
+
+.retry-button {
+    margin-top: 1rem;
+    padding: 8px 16px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
