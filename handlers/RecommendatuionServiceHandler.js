@@ -11,7 +11,7 @@ class RecommendationServiceHandler {
     headers(req){
         return {
             'Content-Type': 'application/json',
-            'x-tg-init-data': `${req.headers['x-tg-init-data']}`, 
+            'x-tg-init-data': `${req?.headers['x-tg-init-data'] || '' }`, 
             'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
         }
     }
