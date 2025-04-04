@@ -53,8 +53,6 @@ class ConfirmationCodeElement extends HTMLElement {
         
         if (this.disabled) {
             this.setDisabledState(true);
-        } else {
-            this.focusFirstInput();
         }
     }
 
@@ -83,22 +81,6 @@ class ConfirmationCodeElement extends HTMLElement {
         });
     }
 
-    // Метод для очистки всех полей ввода
-    clear() {
-        this.inputs.forEach(input => {
-            input.value = "";
-            input.classList.remove("filled");
-        });
-        this.focusFirstInput();
-    }
-
-    // Метод для установки фокуса на первый input
-    focusFirstInput() {
-        if (this.inputs && this.inputs.length > 0) {
-            this.inputs[0].focus();
-        }
-    }
-
     // Метод для установки callback
     setOnCompleteCallback(callback) {
         if (typeof callback === 'function') {
@@ -111,6 +93,8 @@ class ConfirmationCodeElement extends HTMLElement {
     checkCompletion() {
         const code = this.getCode();
         if (code.length === this.inputs.length) {
+//            console.log("Код подтверждения введён:", code);
+            
             // Вызываем callback если он установлен
             if (this.onComplete) {
                 this.onComplete(code);
@@ -141,9 +125,6 @@ class ConfirmationCodeElement extends HTMLElement {
             this.removeAttribute("disabled");
         }
         this.setDisabledState(value);
-        if (!value) {
-            this.focusFirstInput();
-        }
     }
 
     // Метод для обновления состояния disabled

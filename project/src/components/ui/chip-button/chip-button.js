@@ -1,0 +1,49 @@
+class ChipButton extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.render();
+    }
+
+    connectedCallback() {
+        this.shadowRoot.querySelector('.close-btn')
+            .addEventListener('click', () => this.remove());
+    }
+
+    disconnectedCallback() {
+        this.shadowRoot.querySelector('.close-btn')
+            .removeEventListener('click', () => this.remove());
+    }
+
+    render() {
+
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host {
+		    display: inline-flex;
+		    align-items: center;
+		    padding: 0.3rem 0.8rem;
+		    border-radius: 1rem;
+		    font-size: 0.8rem;
+		    cursor: pointer;
+		    margin: 0.3rem;
+		    background-color: #3498db;
+		    color: white;
+/*		    box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem rgb(0 0 0 / 18%);*/
+                }
+                .close-btn {
+                    background: none;
+                    border: none;
+                    font-size: 1rem;
+                    cursor: pointer;
+		    color : white;		
+                }
+            </style>
+            <span class="label">${this.getAttribute('label') || 'Chip'}</span>
+            <button class="close-btn" value="${this.getAttribute('value')}">&times;</button>
+        `;
+    }
+}
+
+customElements.define('chip-button', ChipButton);
+

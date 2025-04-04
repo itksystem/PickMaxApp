@@ -126,9 +126,9 @@ class ConfirmationEmailSection extends PageBuilder {
 
                 // Update UI
                 confirmationCodeElement.disabled = false;
-                infoLabel.innerHTML = `Введите полученный код, отправленный на телефон ${this.common.maskPhoneNumber(this.profile?.phone || '', '*', 4)}`;
+                infoLabel.innerHTML = `Введите полученный код, отправленный на новую почту `;
                 infoLabel.classList.add('success');
-                
+		confirmationCodeElement.clear()                
                 getConfirmationCodeButton.classList.add('d-none');
                 sendConfirmationCodeButton.classList.add('d-none');
             } catch (error) {
@@ -136,9 +136,8 @@ class ConfirmationEmailSection extends PageBuilder {
                 infoLabel.classList.add('failed');
                 infoLabel.innerHTML = error.message || 'Произошла непредвиденная ошибка';
                 toastr.error('Ошибка при запросе кода', 'Подтверждение', { timeOut: 3000 });
-            } finally {
-                getConfirmationCodeButton.disabled = false;
-            }
+		confirmationCodeElement.disabled = true;
+            } 
         });
 
         // Handle send code button click
@@ -173,6 +172,8 @@ class ConfirmationEmailSection extends PageBuilder {
                 infoLabel.classList.add('failed');
                 infoLabel.innerHTML = error.message || 'Ошибка при проверке кода';
                 toastr.error('Ошибка при проверке кода', 'Подтверждение', { timeOut: 3000 });
+		confirmationCodeElement.disabled = true;
+		confirmationCodeElement.clear()  
             } finally {
                 sendConfirmationCodeButton.disabled = false;
             }

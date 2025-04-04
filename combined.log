@@ -1894,3 +1894,17 @@
 {"level":"info","message":"demo3@demo.ru 123456","service":"pickapp-service","timestamp":"2025-04-02T20:54:22.315Z"}
 {"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-02T20:54:42.817Z"}
 {"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-02T20:55:44.188Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-02T21:55:13.696Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-02T21:55:29.860Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-02T21:56:04.784Z"}
+{"level":"error","message":"400","service":"pickapp-service","stack":"Error: 400\n    at WarehouseServiceClientHandler.addItemToBasket (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-warehouse-service-client-handler\\WarehouseServiceClientHandler.js:68:38)\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)\n    at async C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:62:30","timestamp":"2025-04-02T22:16:27.971Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-03T06:02:17.208Z"}
+{"level":"info","message":"demo3@demo.ru 123456","service":"pickapp-service","timestamp":"2025-04-03T19:33:39.769Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-03T19:33:45.206Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-04T14:20:38.713Z"}
+{"level":"info","message":"demo3@demo.ru 123456","service":"pickapp-service","timestamp":"2025-04-04T14:20:44.773Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-04T14:20:51.217Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-04T14:30:39.679Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-04-04T14:47:13.971Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-04-04T14:49:51.814Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-04-04T14:50:04.982Z"}
