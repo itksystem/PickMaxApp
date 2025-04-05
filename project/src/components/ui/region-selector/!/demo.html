@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Городской селектор с кнопкой</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .demo-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            gap: 5px;
+        }
+    </style>
+    <script src="chip-button-demo.js" defer></script>
+    <script src="region-selector-demo.js" defer></script>
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const regionSelector = document.getElementById('myTownSelector');
+            const output = document.getElementById('output');
+
+            regionSelector.addEventListener('town-selected', (e) => {
+                output.innerHTML = `<strong>Выбран регион:</strong> ${e.detail.suggestion?.data?.region}<br>
+                                  <strong>Тип:</strong> ${e.detail.suggestion?.data?.region_type_full}<br>
+                                  <strong>ФИАС ID:</strong> ${e.detail.suggestion?.data?.region_fias_id}<br>
+                                  <strong>Полные данные:</strong> <pre>${JSON.stringify(e.detail.suggestion.data, null, 2)}</pre>`;
+            });
+
+            regionSelector.setOnSelectCallback((suggestion) => {
+                console.log('Callback вызван:', suggestion.data.region);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="demo-container">
+        <h2>Выбор региона</h2>
+        <region-selector id="myTownSelector"></region-selector>
+        <div id="output" style="margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 4px;"></div>
+    </div>
+</body>
+</html>

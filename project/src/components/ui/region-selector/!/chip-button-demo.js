@@ -3,17 +3,6 @@
                 super();
                 this.attachShadow({ mode: 'open' });
                 this.render();
-
-		 this.observer = new MutationObserver(mutations => {
-	            mutations.forEach(mutation => {
-	                if (mutation.attributeName === 'label') {
-	                    const label = this.getAttribute('label') || 'Chip';
-	                    const labelElement = this.shadowRoot.querySelector('.label');
-        	            if (labelElement) labelElement.textContent = label;
-	                }
-        	    });
-	        });
-
             }
 
             static get observedAttributes() {
@@ -21,7 +10,6 @@
             }
 
             connectedCallback() {
-		this.observer.observe(this, { attributes: true });
                 this.shadowRoot.querySelector('.close-btn')
                     .addEventListener('click', () => {
                         this.dispatchEvent(new CustomEvent('chip-removed', {
@@ -33,10 +21,6 @@
                     });
             }
 
-	    disconnectedCallback() {
-        	this.observer.disconnect();
-	    }
-
             attributeChangedCallback(name, oldValue, newValue) {
                 if (name === 'label' && this.shadowRoot) {
                     const labelElement = this.shadowRoot.querySelector('.label');
@@ -47,9 +31,6 @@
             }
 
             render() {
-	        const label = this.getAttribute('label') || 'Chip';
-	        const value = this.getAttribute('value') || '';
-
                 this.shadowRoot.innerHTML = `
                     <style>
                         :host {
@@ -71,8 +52,8 @@
                             margin-left: 5px;
                         }
                     </style>
-                    <span class="label">${label}</span>
-                    <button class="close-btn" value="${value}">&times;</button>
+                    <span class="label">${this.getAttribute('label') || 'Chip'}</span>
+                    <button class="close-btn" value="${this.getAttribute('value')}">&times;</button>
                 `;
             }
         }

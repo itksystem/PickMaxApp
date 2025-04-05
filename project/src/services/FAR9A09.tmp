@@ -114,7 +114,10 @@ class DOMHelper {
         const selector = this.createElement("region-selector", ``, label);
         selector.id = id;
         placement.append(selector);
-        return selector;
+        return placement;
     }
 
+
+
 }
+2

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Городской селектор с кнопкой</title>
+    <style>
+        /* Стили для демонстрации работы из светлого DOM */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .demo-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h2>Выбор города</h2>
+        <town-select id="myTownSelector"></town-select>
+        <div id="output" style="margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 4px;"></div>
+    </div>
+
+    <script>
+        class TownSelector extends HTMLElement {
+            constructor() {
+                super();
+                this.token = "bc9d9254dea2089592ccee5328f19ce9d004a43c";
+                this.timeoutId = null;
+                this.selectedSuggestion = null;
+                this.onSelectCallback = null;
+                this.attachShadow({ mode: 'open' });
+            }
+
+            connectedCallback() {
+                this.render();
+                this.initEventListeners();
+            }
+
+            // Публичный метод для установки callback
+            setOnSelectCallback(callback) {
+                if (typeof callback === 'function') {
+                    this.onSelectCallback = callback;
+                }
+            }
+
+            render() {
+                this.shadowRoot.innerHTML = `
+                    <div class="town-select">
+                        <div class="input-container">
+                            <input type="text" placeholder="Введите название города" id="town-input">
+                            <button id="select-button" disabled>Выбрать</button>
+                        </div>
+                        <div class="suggestions-container" id="suggestions-container"></div>
+                    </div>
+                    ${this.getStyles()}
+                `;
+            }
+
+            getStyles() {
+                return `
+                    <style>
+                        .town-select {
+                            position: relative;
+                            width: 100%;
+                            font-family: Arial, sans-serif;
+                        }
+                        
+                        .input-container {
+                            display: flex;
+                            gap: 10px;
+                        }
+                        
+                        .town-select input {
+                            flex: 1;
+                            padding: 10px;
+                            border: 1px solid #ddd;
+                            border-radius: 4px;
+                            box-sizing: border-box;
+                            font-size: 16px;
+                        }
+                        
+                        .town-select button {
+                            padding: 10px 15px;
+                            background-color: #4CAF50;
+                            color: white;
+                            border: none;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            font-size: 16px;
+                            transition: background-color 0.3s;
+                        }
+                        
+                        .town-select button:disabled {
+                            background-color: #cccccc;
+                            cursor: not-allowed;
+                        }
+                        
+                        .town-select button:not(:disabled):hover {
+                            background-color: #45a049;
+                        }
+                        
+                        .suggestions-container {
+                            position: absolute;
+                            top: 100%;
+                            left: 0;
+                            right: 0;
+                            background: white;
+                            border: 1px solid #ddd;
+                            border-top: none;
+                            border-radius: 0 0 4px 4px;
+                            max-height: 300px;
+                            overflow-y: auto;
+                            z-index: 1000;
+                            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                            display: none;
+                        }
+                        
+                        .suggestion-item {
+                            padding: 10px;
+                            cursor: pointer;
+                            border-bottom: 1px solid #eee;
+                        }
+                        
+                        .suggestion-item:last-child {
+                            border-bottom: none;
+                        }
+                        
+                        .suggestion-item:hover, .suggestion-item.highlighted {
+                            background-color: #f5f5f5;
+                        }
+                        
+                        .loading {
+                            padding: 10px;
+                            color: #666;
+                            text-align: center;
+                            font-style: italic;
+                        }
+                    </style>
+                `;
+            }
+
+            initEventListeners() {
+                const input = this.shadowRoot.getElementById('town-input');
+                const button = this.shadowRoot.getElementById('select-button');
+                const container = this.shadowRoot.getElementById('suggestions-container');
+
+                input.addEventListener('input', this.handleInput.bind(this));
+                input.addEventListener('focus', this.showSuggestionsIfData.bind(this));
+                input.addEventListener('keydown', this.handleKeyDown.bind(this));
+                button.addEventListener('click', this.handleButtonClick.bind(this));
+
+                document.addEventListener('click', (e) => {
+                    if (!this.shadowRoot.contains(e.target)) {
+                        container.style.display = 'none';
+                    }
+                });
+            }
+
+            showSuggestionsIfData() {
+                const container = this.shadowRoot.getElementById('suggestions-container');
+                if (container.children.length > 0) {
+                    container.style.display = 'block';
+                }
+            }
+
+            async handleInput(e) {
+                const query = e.target.value.trim();
+                clearTimeout(this.timeoutId);
+
+                const button = this.shadowRoot.getElementById('select-button');
+                button.disabled = true;
+
+                if (query.length === 0) {
+                    this.hideSuggestions();
+                    return;
+                }
+
+                this.timeoutId = setTimeout(async () => {
+                    await this.fetchAndShowSuggestions(query);
+                }, 300);
+            }
+
+            async fetchAndShowSuggestions(query) {
+                const input = this.shadowRoot.getElementById('town-input');
+                const container = this.shadowRoot.getElementById('suggestions-container');
+                
+                container.innerHTML = '<div class="loading">Загрузка...</div>';
+                container.style.display = 'block';
+
+                try {
+                    const suggestions = await this.fetchSuggestions(query);
+                    this.showSuggestions(suggestions, input.value);
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    container.innerHTML = '<div class="loading">Ошибка загрузки данных</div>';
+                }
+            }
+
+            async fetchSuggestions(query) {
+                const response = await fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "Authorization": "Token " + this.token
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        locations: [{ city_type_full: "город" },{ settlement_type_full: "рабочий поселок"},],
+                        restrict_value: true
+                    })
+                });
+
+                if (!response.ok) throw new Error("Ошибка запроса");
+                const data = await response.json();
+                return data.suggestions || [];
+            }
+
+            showSuggestions(suggestions, currentValue) {
+                const container = this.shadowRoot.getElementById('suggestions-container');
+                container.innerHTML = '';
+                console.log(currentValue)
+                if (suggestions.length === 0) {
+                    container.innerHTML = '<div class="loading">Ничего не найдено</div>';
+                    return;
+                }
+
+		suggestions.forEach(suggestion => {
+		    // Проверяем, является ли населенный пункт городом или рабочим поселком
+		    const isCity = suggestion.data.city_type_full === "город" 
+				&& suggestion.data.city.includes(currentValue);;
+		    const isWorkSettlement = suggestion.data.settlement_type_full === "рабочий поселок" 
+				&& suggestion.data.settlement.includes(currentValue);
+    
+		    if (isCity || isWorkSettlement) {
+		        const item = document.createElement('div');
+		        item.className = 'suggestion-item';
+
+		        item.textContent = 
+			(suggestion?.data?.city)
+			   ? `${suggestion?.data?.city}` 
+			   : `${suggestion?.data?.settlement}`;
+		        item.dataset.value = JSON.stringify(suggestion);
+        
+		        item.addEventListener('click', () => {
+		            this.selectSuggestion(suggestion);
+		        });
+        
+		        container.appendChild(item);
+		    }
+		});
+
+                container.style.display = 'block';
+            }
+
+            hideSuggestions() {
+                const container = this.shadowRoot.getElementById('suggestions-container');
+                container.style.display = 'none';
+            }
+
+            selectSuggestion(suggestion) {
+                const input = this.shadowRoot.getElementById('town-input');
+                const button = this.shadowRoot.getElementById('select-button');
+                
+                input.value = suggestion.data.city ?? suggestion.data.settlement;
+                this.selectedSuggestion = suggestion;
+                this.hideSuggestions();
+                button.disabled = false;
+
+                // Вызываем callback если он установлен
+                if (this.onSelectCallback) {
+                    this.onSelectCallback(suggestion);
+                }
+
+                // Отправляем кастомное событие
+                this.dispatchEvent(new CustomEvent('town-selected', {
+                    detail: { suggestion },
+                    bubbles: true,
+                    composed: true
+                }));
+            }
+
+            handleButtonClick() {
+                if (this.selectedSuggestion) {
+                    const input = this.shadowRoot.getElementById('town-input');
+                    this.selectSuggestion(this.selectedSuggestion);
+                    input.blur(); // Убираем фокус с input после выбора
+                }
+            }
+
+            handleKeyDown(e) {
+                const container = this.shadowRoot.getElementById('suggestions-container');
+                const items = container.querySelectorAll('.suggestion-item');
+                let currentIndex = -1;
+
+                if (container.style.display !== 'block') return;
+
+                items.forEach((item, index) => {
+                    if (item.classList.contains('highlighted')) {
+                        item.classList.remove('highlighted');
+                        currentIndex = index;
+                    }
+                });
+
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    const nextIndex = (currentIndex + 1) % items.length;
+                    items[nextIndex].classList.add('highlighted');
+                    items[nextIndex].scrollIntoView({ block: 'nearest' });
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    const prevIndex = (currentIndex - 1 + items.length) % items.length;
+                    items[prevIndex].classList.add('highlighted');
+                    items[prevIndex].scrollIntoView({ block: 'nearest' });
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const highlighted = container.querySelector('.suggestion-item.highlighted');
+                    if (highlighted) {
+                        const suggestion = JSON.parse(highlighted.dataset.value);
+                        this.selectSuggestion(suggestion);
+                    } else if (items.length > 0) {
+                        const suggestion = JSON.parse(items[0].dataset.value);
+                        this.selectSuggestion(suggestion);
+                    }
+                } else if (e.key === 'Escape') {
+                    this.hideSuggestions();
+                }
+            }
+
+            get value() {
+                return this.selectedSuggestion ? this.selectedSuggestion.data.city : '';
+            }
+
+            get selectedTown() {
+                return this.selectedSuggestion ? this.selectedSuggestion.data : null;
+            }
+        }
+
+        customElements.define('town-select', TownSelector);
+
+        // Демонстрация использования
+        document.addEventListener('DOMContentLoaded', () => {
+            const townSelector = document.getElementById('myTownSelector');
+            const output = document.getElementById('output');
+
+            // Способ 1: Через addEventListener
+            townSelector.addEventListener('town-selected', (e) => {
+                output.innerHTML = `<strong>Выбран город (через событие):</strong> ${e.detail.suggestion.data.city}<br>
+                                  <strong>Полные данные:</strong> <pre>${JSON.stringify(e.detail.suggestion.data, null, 2)}</pre>`;
+            });
+
+            // Способ 2: Через callback
+            townSelector.setOnSelectCallback((suggestion) => {
+                console.log('Callback вызван:', suggestion.data.city);
+            });
+        });
+    </script>
+</body>
+</html>

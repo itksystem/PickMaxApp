@@ -35,6 +35,7 @@ class ProfileSection extends PageBuilder {
 	    subscriptions: new SubscriptionsManager(this),
 	    address: new AddressManager(this),
 	    balance: new AccountBalanceManager(),
+	    location: new LocationManager(),
         };
     }
 
@@ -102,6 +103,7 @@ class ProfileSection extends PageBuilder {
             { manager: 'profile', method: 'createProfileSection' },
             { manager: 'email',   method: 'createEmailSection' },
             { manager: 'phone',   method: 'createPhoneSection' },
+            { manager: 'location',  method: 'createLocationSection' },
             { manager: 'cards',   method: 'createCardsSection' },
             { manager: 'subscriptions',   method: 'createSubscriptionsSection' },
             { manager: 'balance',   method: 'createAccountBalanceSection' },
