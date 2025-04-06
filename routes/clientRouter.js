@@ -319,6 +319,62 @@ const upload = multer({
  });
 
    
+/* Получить регионы клиента */
+router.get('/v1/regions', 	
+	async (req, res) => {        
+        try {
+            const regions = await clientService.getRegions(req, res);        
+            if (!regions.success) throw({code : 422, message : "Client profile not found" })                 
+                _response
+                    .setCode(200)                    
+                    .setData(regions.data)
+                    .send(res);    
+        } catch (error) {            
+                _response
+                    .setCode(error.code)
+                    .setStatus(false)
+                    .setMessage(error.message)
+                    .send(res);                    
+        }
+});
+
+/* Сохранить регион клиента */
+router.post('/v1/region', 	
+	async (req, res) => {        
+        try {
+            const region = await clientService.saveRegion(req, res);        
+            if (!region.success)  throw({code : region.status, message : "Не удалось сохранить профиль пользователя" })             
+                _response
+                    .setCode(200)                    
+                    .setData(region.data)
+                    .send(res);    
+        } catch (error) {
+                _response
+                    .setCode(error.code)
+                    .setStatus(false)
+                    .setMessage(error.message)
+                    .send(res);                    
+        }
+});
+
+/* Удалить регион клиента */
+router.delete('/v1/region', 	
+	async (req, res) => {        
+        try {
+            const region = await clientService.deleteRegion(req, res);        
+            if (!region.success)  throw({code : region.status, message : "Не удалось сохранить профиль пользователя" })             
+                _response
+                    .setCode(200)                    
+                    .setData(region.data)
+                    .send(res);    
+        } catch (error) {
+                _response
+                    .setCode(error.code)
+                    .setStatus(false)
+                    .setMessage(error.message)
+                    .send(res);                    
+        }
+});
    
 
 

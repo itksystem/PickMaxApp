@@ -14,11 +14,12 @@ class ClientServiceHandler {
      * 
      */
     headers(req){
-        return {
+        let h = {
             'Content-Type': 'application/json',
             'x-tg-init-data': `${req?.headers['x-tg-init-data'] || '' }`, 
             'Authorization': `Bearer ${commonFunction.getJwtToken(req)}`,
         }
+        return h;
     }
     
 
@@ -338,6 +339,73 @@ async checkEmail(req, res) {
 
 
     // Загрузка файлов картинки профиля доделать!
+
+
+    async getRegions(req) {
+        try {
+            const url = new URL(process.env.CLIENT_GET_CLIENT_REGIONS_URL);
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: this.headers(req),               
+            });
+            const data = await response.json();
+            if (response.ok) {
+                logger.info(`getRegions successfully.`);
+                return { success: true, data };
+            } else {
+                logger.error(`getRegions failed.`);
+                return { success: false, status: response.status, data };
+            }
+        } catch (error) {
+            logger.error(`getRegions failed.`);
+            return { success: false, error: error.message };
+        }
+    }
+
+    async saveRegion(req) {
+        try {
+            const url = new URL(process.env.CLIENT_SAVE_CLIENT_REGION_URL);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: this.headers(req),               
+                body: JSON.stringify(req.body),
+            });
+            const data = await response.json();
+            if (response.ok) {
+                logger.info(`saveRegion successfully.`);
+                return { success: true, data };
+            } else {
+                logger.error(`saveRegion failed.`);
+                return { success: false, status: response.status, data };
+            }
+        } catch (error) {
+            logger.error(`saveRegion failed.`);
+            return { success: false, error: error.message };
+        }
+    }
+
+    async deleteRegion(req) {
+        try {
+            const url = new URL(process.env.CLIENT_DELETE_CLIENT_REGION_URL);
+            const response = await fetch(url, {
+                method: 'DELETE',
+                headers: this.headers(req),               
+                body: JSON.stringify(req.body),
+            });
+            const data = await response.json();
+            if (response.ok) {
+                logger.info(`deleteRegion successfully.`);
+                return { success: true, data };
+            } else {
+                logger.error(`deleteRegion failed.`);
+                return { success: false, status: response.status, data };
+            }
+        } catch (error) {
+            logger.error(`deleteRegion failed.`);
+            return { success: false, error: error.message };
+        }
+    }
+
 }
 
 module.exports = ClientServiceHandler;

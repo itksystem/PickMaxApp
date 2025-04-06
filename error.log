@@ -1198,3 +1198,18 @@
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-04-04T18:37:13.856Z"}
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-04-04T18:38:07.944Z"}
 {"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-05T17:19:23.673Z"}
+{"level":"error","message":"Не удалось проверить email пользователя","service":"pickapp-service","timestamp":"2025-04-06T06:01:33.896Z"}
+{"level":"error","message":"Не удалось проверить email пользователя","service":"pickapp-service","timestamp":"2025-04-06T06:01:34.016Z"}
+{"level":"error","message":"Не удалось проверить email пользователя","service":"pickapp-service","timestamp":"2025-04-06T06:01:41.616Z"}
+{"level":"error","message":"Не удалось проверить email пользователя","service":"pickapp-service","timestamp":"2025-04-06T06:01:43.353Z"}
+{"level":"error","message":"Не удалось проверить email пользователя","service":"pickapp-service","timestamp":"2025-04-06T06:03:56.355Z"}
+{"level":"error","message":"Не удалось проверить email пользователя","service":"pickapp-service","timestamp":"2025-04-06T06:42:37.789Z"}
+{"level":"error","message":"Не удалось проверить email пользователя","service":"pickapp-service","timestamp":"2025-04-06T06:42:49.192Z"}
+{"level":"error","message":"Не удалось проверить email пользователя","service":"pickapp-service","timestamp":"2025-04-06T06:47:10.247Z"}
+{"level":"error","message":"Не удалось проверить email пользователя","service":"pickapp-service","timestamp":"2025-04-06T06:50:26.189Z"}
+{"level":"error","message":"Не удалось проверить email пользователя","service":"pickapp-service","timestamp":"2025-04-06T06:54:13.055Z"}
+{"level":"error","message":"Не удалось проверить email пользователя","service":"pickapp-service","timestamp":"2025-04-06T06:54:13.257Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-06T06:54:16.070Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-04-06T06:56:11.303Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-04-06T06:58:41.648Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-04-06T06:59:23.842Z"}

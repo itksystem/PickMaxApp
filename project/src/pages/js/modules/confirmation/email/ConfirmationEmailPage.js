@@ -134,7 +134,7 @@ class ConfirmationEmailSection extends PageBuilder {
             } catch (error) {
                 console.error('Confirmation code error:', error);
                 infoLabel.classList.add('failed');
-                infoLabel.innerHTML = error.message || 'Произошла непредвиденная ошибка';
+                infoLabel.innerHTML = `${error.message} - попробуйте повторить позже...` || 'Произошла непредвиденная ошибка';
                 toastr.error('Ошибка при запросе кода', 'Подтверждение', { timeOut: 3000 });
 		confirmationCodeElement.disabled = true;
             } 
@@ -170,7 +170,7 @@ class ConfirmationEmailSection extends PageBuilder {
             } catch (error) {
                 console.error('Code verification error:', error);
                 infoLabel.classList.add('failed');
-                infoLabel.innerHTML = error.message || 'Ошибка при проверке кода';
+                infoLabel.innerHTML = `${error.message} - попробуйте повторить позже...` || 'Ошибка при проверке кода';
                 toastr.error('Ошибка при проверке кода', 'Подтверждение', { timeOut: 3000 });
 		confirmationCodeElement.disabled = true;
 		confirmationCodeElement.clear()  
