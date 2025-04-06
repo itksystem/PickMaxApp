@@ -322,12 +322,6 @@
                     this.onSelectCallback(suggestion);
                 }
 
-                this.dispatchEvent(new CustomEvent('town-selected', {
-                    detail: { suggestion },
-                    bubbles: true,
-                    composed: true
-                }));
-
                 // Отключаем кнопку если выбрано максимальное количество городов
                 if (this.selectedRegions.length === this.maxSelection) {
                     const button = this.shadowRoot.getElementById('select-button');
@@ -351,11 +345,24 @@
             }
 
             handleButtonClick() {
+		let o = this;
                 if (this.selectedSuggestion) {
                     this.selectSuggestion(this.selectedSuggestion, true); // Добавляем чип при нажатии кнопки
                     const input = this.shadowRoot.getElementById('region-input');
                     input.value = '';
                     input.focus();
+                const button = this.shadowRoot.getElementById('select-button');
+		button.disabled = true;
+
+		let selectedSuggestion = this.selectedSuggestion;
+                selectedSuggestion.regionName = `${this.selectedSuggestion.data.region} ${this.getRegionTitle(this.selectedSuggestion)}`;
+                this.dispatchEvent(new CustomEvent('region-selected', {
+                    detail: { selectedSuggestion },
+                    bubbles: true,
+                    composed: true
+                }));
+
+
                 }
             }
 

@@ -402,6 +402,12 @@ class WebAPI {
    getConfirmationRequestMethod() { return `/api/bff/confirmation/v1/request`; }
    getConfirmationRequestMethodPayload( confirmationType ) { return { confirmationType } }
 
+// регионы пользователя
+   getClientRegionsMethod() { return `/api/bff/client/v1/regions`; }
+   sendClientRegionMethod() { return `/api/bff/client/v1/region`; }
+   deleteClientRegionMethod() { return `/api/bff/client/v1/region`; }
+
+
 /* станицы */
    LOGON_URL(){ return `/logon` }
 

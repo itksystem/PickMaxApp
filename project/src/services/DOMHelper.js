@@ -109,11 +109,12 @@ class DOMHelper {
         return container;
     }
 
-    static regionSelector(label, id) {
+    static regionSelector(label, id, onChoiceRegion = null) {
         const placement = this.createElement("div", "width-100 text-end", "");
         const selector = this.createElement("region-selector", ``, label);
         selector.id = id;
         placement.append(selector);
+	if(onChoiceRegion) document.addEventListener('region-selected', onChoiceRegion);
         return selector;
     }
 
