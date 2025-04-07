@@ -1,0 +1,63 @@
+class LocationManager {
+    constructor(profileSection) {
+        this.profileSection = profileSection;
+        this.common = new CommonFunctions();
+        this.api = new WebAPI();
+        this.webRequest = new WebRequest();
+        this.onChoiceRegion = this.onChoiceRegion.bind(this);
+        this.outputClientRegionChips = this.outputClientRegionChips.bind(this);
+	this.regions = this.getClientRegions();
+	console.log(this.regions);
+	this.outputClientRegionChips()
+
+    }
+
+    createLocationSection(data) {
+        const LocationSection = DOMHelper.createDropdownSection("Мои регионы", [
+            DOMHelper.regionSelector(
+                `Укажите регион`,
+		`myTownSelector`, this.onChoiceRegion               
+            ),
+        ]);
+        return LocationSection;
+    }
+
+   onChoiceRegion(e){
+     try {
+	 console.log(e);	
+	 const fiasId = e?.detail?.selectedSuggestion?.data?.fias_id || null;
+	 const regionName = `${e?.detail?.selectedSuggestion?.regionName}`;
+         const response =  this.webRequest.post(this.api.sendClientRegionMethod(), { fiasId, regionName}, true);
+         return response;
+       } catch(error) {
+         console.error('Ошибка при получении регионов:', error);
+        return null;
+     }
+  }
+
+   getClientRegions(){
+     try {
+	 console.log();	
+         const response =  this.webRequest.get(this.api.getClientRegionsMethod(), {}, true);
+         return response?.regions || [];
+       } catch(error) {
+         console.error('Ошибка при получении регионов:', error);
+        return null;
+     }
+  }
+
+   outputClientRegionChips(){
+       this.regions.forEach(region => {
+	  let selectedSuggestion = {};
+          selectedSuggestion.regionName = region.regionName;
+          selectedSuggestion.value = region.fiasId;
+          this.dispatchEvent(new CustomEvent('region-selected', {
+             detail: { selectedSuggestion },
+             bubbles: true,
+            composed: true
+          }));
+       });
+   }
+
+
+}                             

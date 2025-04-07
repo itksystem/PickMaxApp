@@ -35,7 +35,7 @@ class ProfileSection extends PageBuilder {
 	    subscriptions: new SubscriptionsManager(this),
 	    address: new AddressManager(this),
 	    balance: new AccountBalanceManager(),
-	    location: new LocationManager(),
+	    location: new LocationManager(),	    	
         };
     }
 

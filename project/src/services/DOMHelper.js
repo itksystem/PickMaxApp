@@ -109,12 +109,13 @@ class DOMHelper {
         return container;
     }
 
-    static regionSelector(label, id, onChoiceRegion = null) {
+    static regionSelector(label, id, onChoiceRegion = null, onRemoveRegion = null) {
         const placement = this.createElement("div", "width-100 text-end", "");
         const selector = this.createElement("region-selector", ``, label);
         selector.id = id;
         placement.append(selector);
 	if(onChoiceRegion) document.addEventListener('region-selected', onChoiceRegion);
+       	if(onRemoveRegion) document.addEventListener('chip-removed', onRemoveRegion);
         return selector;
     }
 
