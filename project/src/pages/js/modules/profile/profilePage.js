@@ -36,6 +36,7 @@ class ProfileSection extends PageBuilder {
 	    address: new AddressManager(this),
 	    balance: new AccountBalanceManager(),
 	    location: new LocationManager(),	    	
+	    security: new SecurityManager(),	    	
         };
     }
 
@@ -103,6 +104,7 @@ class ProfileSection extends PageBuilder {
             { manager: 'profile', method: 'createProfileSection' },
             { manager: 'email',   method: 'createEmailSection' },
             { manager: 'phone',   method: 'createPhoneSection' },
+            { manager: 'security',   method: 'createSecuritySection' },
             { manager: 'location',  method: 'createLocationSection' },
             { manager: 'cards',   method: 'createCardsSection' },
             { manager: 'subscriptions',   method: 'createSubscriptionsSection' },

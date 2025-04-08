@@ -56,3 +56,35 @@
 bottom-drawer img {
   width: -webkit-fill-available;
 }
+
+/* Медиа-запросы для адаптивности */
+@media  (max-width: 22.49rem){ /* 360px */
+.bottom-drawer.open {
+      min-height: 16vh;
+   }
+}
+
+@media (min-width: 22.50rem) and (max-width: 47rem) { /* 361px - 768px */
+.bottom-drawer.open {
+      min-height: 16vh;
+   }
+}
+
+@media (min-width: 47.01rem) and (max-width: 62rem) { /* 769px - 992px */
+.bottom-drawer.open {
+      min-height: 12vh;
+   }
+}
+
+@media (min-width: 62.06rem) and (max-width: 75rem)  { /* 993px */
+.bottom-drawer.open {
+      min-height: 12vh;
+   }
+}
+
+@media (min-width: 75.01rem)   { /* 993px */
+.bottom-drawer.open {
+      min-height: 12vh;
+   }
+}
+

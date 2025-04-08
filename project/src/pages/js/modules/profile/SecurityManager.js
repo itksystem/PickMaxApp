@@ -16,21 +16,47 @@ class SecurityManager extends EventTarget {
      * Создает секцию выбора локации
      */
     createSecuritySection() {
-        let container =  DOMHelper.createDropdownSection("Безопасность", 
+        this.container =  DOMHelper.createDropdownSection("Безопасность", 
  	   [
-            DOMHelper.regionSelector(
-                "Укажите регион",
-                "myTownSelector",
-                this.onChoiceRegion,
-		this.onRemoveRegion
-            ),
+            DOMHelper.createButton("Установить код", "text-end", this.setCodeFactor.bind(this)),
+  	    DOMHelper.bottomDrawer(`about-security-code-drawer`, `about-security-code-help`),
+            DOMHelper.createLinkButton(
+                `О коде безопасности`,
+                `text-end security-code-button`, 
+                this.onAboutCodeClick.bind(this)
+            )
+
         ]);
-	return container;
+	return this.container;
+    }
+
+	onAboutCodeClick() {
+	    this.aboutCodeLink = this.container.querySelector('[drawer-id="about-security-code-drawer"]');
+	    console.log(this.aboutCodeLink);
+    
+	    if (!this.aboutCodeLink) {
+	        console.error('Element with drawer-id="about-security-code-drawer" not found');
+	        return this;
+	    }
+
+            if(eventBus) {
+                console.log(eventBus)
+                eventBus.emit("ContentBottomDrawerOpen", { // Убрать двойную вложенность
+		        contentId: this.aboutCodeLink.getAttribute('action-id'),
+		        drawerId: this.aboutCodeLink.getAttribute('drawer-id')		    
+               });
+   	    }	
+	    return this;
+	}
+
+
+    setCodeFactor(){
+	return this;
     }
 
     /**
      * Обработчик установки кода
-     */
+    */
     async onSetCodeFactor(event) {
         console.log('onSetCodeFactor');
         try {

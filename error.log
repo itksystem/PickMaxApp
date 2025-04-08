@@ -1229,3 +1229,5 @@
 {"level":"error","message":"saveRegion failed.","service":"pickapp-service","timestamp":"2025-04-07T15:04:33.638Z"}
 {"level":"error","message":"Не удалось сохранить профиль пользователя","service":"pickapp-service","timestamp":"2025-04-07T15:04:33.640Z"}
 {"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-08T04:37:54.127Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-04-08T05:49:31.483Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-08T07:41:31.353Z"}

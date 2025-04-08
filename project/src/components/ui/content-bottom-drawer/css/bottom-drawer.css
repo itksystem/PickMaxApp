@@ -14,9 +14,10 @@
 }
 
 .bottom-drawer.open {
-  bottom: 0rem;
-  max-height: -webkit-fill-available;
+   bottom: 0rem;
+   max-height: -webkit-fill-available;
 }
+
 
 .bottom-drawer__content {
     margin-bottom: 0.4rem;
@@ -69,59 +70,34 @@ bottom-drawer h3.card-title {
 }
 
 
-/* РњРµРґРёР°-Р·Р°РїСЂРѕСЃС‹ РґР»СЏ Р°РґР°РїС‚РёРІРЅРѕСЃС‚Рё */
+/* Медиа-запросы для адаптивности */
 @media  (max-width: 22.49rem){ /* 360px */
 .bottom-drawer.open {
-      bottom: 0;
       min-height: 16vh;
    }
-
-.bottom-drawer__actions {
-      min-height: 12vh;
- }
 }
 
 @media (min-width: 22.50rem) and (max-width: 47rem) { /* 361px - 768px */
 .bottom-drawer.open {
-      bottom: 0;
       min-height: 16vh;
    }
-.bottom-drawer__actions {
-      min-height: 12vh;
- }
-
 }
 
 @media (min-width: 47.01rem) and (max-width: 62rem) { /* 769px - 992px */
 .bottom-drawer.open {
-      bottom: 0;
       min-height: 12vh;
    }
-.bottom-drawer__actions {
-      min-height: 12vh;
- }
-
 }
 
 @media (min-width: 62.06rem) and (max-width: 75rem)  { /* 993px */
 .bottom-drawer.open {
-      bottom: 0;
       min-height: 12vh;
    }
-.bottom-drawer__actions {
-      min-height: 12vh;
- }
-
 }
 
 @media (min-width: 75.01rem)   { /* 993px */
 .bottom-drawer.open {
-      bottom: 0;
       min-height: 12vh;
    }
-.bottom-drawer__actions {
-      min-height: 12vh;
- }
-
 }
 

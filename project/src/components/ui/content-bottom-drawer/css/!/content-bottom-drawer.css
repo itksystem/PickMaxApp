@@ -1,0 +1,141 @@
+.mail-form {
+/*  border: 1px solid #ddd; */
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  padding: 1rem;
+/*  margin: 2rem 0 4rem 0; */
+  box-shadow: 0 0.125rem 0.3125rem rgba(0,0,0,0.1); 
+}
+
+.mail-form__title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.mail-form__textarea {
+  width: 100%;
+  min-height: 80px;
+  resize: none;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.mail-form__emoji-panel {
+  margin: 8px 0;
+  cursor: pointer;
+}
+
+.mail-form__emoji-panel span {
+  margin-right: 5px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.mail-form__photos {
+  margin-top: 12px;
+}
+
+.mail-form__add-photo-button {
+  margin-bottom: 8px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.mail-form__thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mail-form__thumbnail-wrapper {
+  position: relative;
+}
+
+.mail-form__thumbnail-wrapper img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.mail-form__thumbnail-remove {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: red;
+  color: white;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.mail-form__submit-button {
+  margin-top: 16px;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.mail-form__submit-button[disabled] {
+  margin-top: 16px;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #e9eae9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.review-box__rating-title {
+  margin: 0 0 0.3rem 0;
+  font-size: 0.8rem;
+}
+
+.review-box__rating {
+  padding: 0 0 1rem 0;
+}
+
+.fa-star-rating {
+  font-size: 1.8rem;
+}
+
+.mail-form__add-photo-button{
+    color: #000000;
+    border: none;
+    border-radius: 4px;
+}
+
+ul.mail-form__buttons {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    list-style: none;
+    list-style-position: inside;
+    display: inline-flex;
+    padding: 0;
+    width: -webkit-fill-available;
+}
+
+ul.mail-form__buttons li.webkit-fill-available{
+    width: -webkit-fill-available;
+}
+
+.emoji {
+    font-size: 1.1rem;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: unset;
+}
+
+

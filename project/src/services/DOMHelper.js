@@ -119,4 +119,14 @@ class DOMHelper {
         return selector;
     }
 
+    static bottomDrawer(drawerId, actionId) {
+        const placement = this.createElement("div", "width-100 text-end", ``);
+        const selector = this.createElement("content-bottom-drawer", ``, ``);
+        if (drawerId) selector.setAttribute("drawer-id", drawerId);
+        if (actionId) selector.setAttribute("action-id", actionId);
+        placement.append(selector);
+        return selector;
+    }
+
+
 }

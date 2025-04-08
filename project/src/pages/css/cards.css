@@ -1301,7 +1301,13 @@ img.custom-radio-new-card{
 }
 
 
-.account-history-button {
+.account-history-button, .security-code-button {
     font-size: 0.8rem;
     text-decoration: underline;
+}
+
+.help-content-not-found {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.8rem;
 }
