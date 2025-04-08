@@ -5,6 +5,10 @@ class Autocomplete extends HTMLElement {
     // Создаем shadow DOM
     this.shadow = this.attachShadow({ mode: 'open' });
 
+    this.autocomplete = document.createElement('div');
+    this.autocomplete.classList.add('autocomplete');
+
+
     // Создаем input элемент
     this.input = document.createElement('textarea');
     this.input.setAttribute('type', 'text');
@@ -20,22 +24,18 @@ class Autocomplete extends HTMLElement {
     style.textContent = `              
 
       .autocomplete-items {
-        position: relative;
-        left: 0;
-        font-size: 0.9rem;
-        border: 0.0625rem solid #ccc;
-        line-height: 1.1;
-        padding: 0.3rem;
-/*	top: -0.5rem; */
-	padding-top: 1rem;
-
-        box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
-        border-top-color: unset;
-        border-right-color: #007bff;
-        border-bottom-color: #007bff;
-        border-left-color: #007bff;
-        outline: none;
-
+	    position: absolute;
+	    left: 0;
+	    right: 0;
+	    background: white;
+	    border: 1px solid #ddd;
+	    border-top: none;
+	    border-radius: 0 0 4px 4px;
+	    max-height: 300px;
+	    overflow-y: auto;
+	    z-index: 1000;
+	    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+	    display: none;
       }
 
       .d-none {
@@ -47,9 +47,10 @@ class Autocomplete extends HTMLElement {
       }
 
       .autocomplete-item {
-        cursor: pointer;
-        background-color: #fff;
-	padding: 0.4rem;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    font-size: 0.87rem;
       }
 
       .autocomplete-input {
@@ -75,18 +76,27 @@ class Autocomplete extends HTMLElement {
       }
 
       .autocomplete-input:focus {
-        box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
-        border-color: rgb(0, 123, 255);
         border-radius : 0.5rem 0.5rem  0 0; 
+        border-color: var(--bs-form-valid-border-color);
         outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+
       }
+
+	.autocomplete {
+           position: relative;
+	    width: 100%;
+	    font-family: Arial, sans-serif;
+	}
+
 
     `;
     this.shadow.appendChild(style);
 
     // Добавляем элементы в shadow DOM
-    this.shadow.appendChild(this.input);
-    this.shadow.appendChild(this.autocompleteItems);
+    this.autocomplete.appendChild(this.input);
+    this.autocomplete.appendChild(this.autocompleteItems);
+    this.shadow.appendChild(this.autocomplete);
 
     // Обработчики событий
     this.input.addEventListener('input', () => this.handleInput());

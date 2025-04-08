@@ -1213,3 +1213,19 @@
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-04-06T06:56:11.303Z"}
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-04-06T06:58:41.648Z"}
 {"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-04-06T06:59:23.842Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-06T10:29:19.371Z"}
+{"level":"error","message":"Неизвестная ошибка","service":"pickapp-service","timestamp":"2025-04-06T10:29:26.151Z"}
+{"level":"error","message":"saveRegion failed.","service":"pickapp-service","timestamp":"2025-04-07T06:34:49.350Z"}
+{"level":"error","message":"Не удалось сохранить профиль пользователя","service":"pickapp-service","timestamp":"2025-04-07T06:34:49.375Z"}
+{"level":"error","message":"saveRegion failed.","service":"pickapp-service","timestamp":"2025-04-07T06:34:59.890Z"}
+{"level":"error","message":"Не удалось сохранить профиль пользователя","service":"pickapp-service","timestamp":"2025-04-07T06:34:59.895Z"}
+{"level":"error","message":"saveRegion failed.","service":"pickapp-service","timestamp":"2025-04-07T11:18:47.636Z"}
+{"level":"error","message":"Не удалось сохранить профиль пользователя","service":"pickapp-service","timestamp":"2025-04-07T11:18:47.658Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-07T14:20:22.536Z"}
+{"level":"error","message":"deleteRegion failed.","service":"pickapp-service","timestamp":"2025-04-07T14:22:03.598Z"}
+{"level":"error","message":"Не удалось сохранить профиль пользователя","service":"pickapp-service","timestamp":"2025-04-07T14:22:03.601Z"}
+{"level":"error","message":"getRegions failed.","service":"pickapp-service","timestamp":"2025-04-07T14:40:05.322Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-04-07T14:40:05.326Z"}
+{"level":"error","message":"saveRegion failed.","service":"pickapp-service","timestamp":"2025-04-07T15:04:33.638Z"}
+{"level":"error","message":"Не удалось сохранить профиль пользователя","service":"pickapp-service","timestamp":"2025-04-07T15:04:33.640Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-08T04:37:54.127Z"}
