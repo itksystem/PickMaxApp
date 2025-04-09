@@ -15,6 +15,10 @@ class BottomDrawer extends HTMLElement {
         // Разметка
         this.shadowRoot.innerHTML += `
             <div class="bottom-drawer">
+		<div class="bottom-drawer__content_slide_header">
+			<div class="bottom-drawer__content_slide_header_line"></div>
+			<span class="bottom-drawer__content_header_close_button">X</span>
+		</div>
                 <div class="bottom-drawer__content">
                     <slot></slot>
                 </div>

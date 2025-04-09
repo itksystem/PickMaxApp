@@ -15,13 +15,19 @@ class ContentBottomDrawer extends HTMLElement {
         // Разметка
         this.shadowRoot.innerHTML += `
             <div class="bottom-drawer">
+		<div class="bottom-drawer__content_slide_header">
+			<div class="bottom-drawer__content_slide_header_line"></div>
+			<span class="bottom-drawer__content_header_close_button">X</span>
+		</div>
                 <div class="bottom-drawer__content">
                     <slot></slot>
                 </div>
                 <div class="bottom-drawer__actions">
                     <div class="row w-100">	
                         <div class="col text-center">
+<!--
                             <button class="w-100 bottom-drawer__button bottom-drawer__button--close">Закрыть</button>
+-->
                         </div>
                         ${!this.getAttribute('action-id') ? '' : `
                             <div class="col text-center">
@@ -36,6 +42,7 @@ class ContentBottomDrawer extends HTMLElement {
     connectedCallback() {
         this.drawerId = this.getAttribute("drawer-id") || 0;
         this.drawer = this.shadowRoot.querySelector('.bottom-drawer');
+        this.closeCrossButton = this.shadowRoot.querySelector('.bottom-drawer__content_header_close_button');
         this.closeButton = this.shadowRoot.querySelector('.bottom-drawer__button--close');
         this.actionButton = this.shadowRoot.querySelector('.bottom-drawer__button--action');
         this.contentContainer = this.shadowRoot.querySelector('.bottom-drawer__content');
@@ -45,7 +52,8 @@ class ContentBottomDrawer extends HTMLElement {
     }
 
     attachEvents() {
-        this.closeButton.addEventListener('click', () => this.close());
+	this.closeCrossButton?.addEventListener('click', () => this.close());
+        this.closeButton?.addEventListener('click', () => this.close());
         this.actionButton?.addEventListener('click', () => this.triggerAction());
 	/* Обработка события удаления  картинки */
 	let actionId = this.getAttribute('action-id');
