@@ -608,6 +608,30 @@ class MainApp {
     return this;
   }
 
+  ChangeDigitalCodePage(){
+    let o = this;
+    const digitalCodePage = new ChangeDigitalCodePageSection("digital-code-card-container");
+    digitalCodePage.ChangeDigitalCodeCardContainer();
+    digitalCodePage.render();
+    return this;
+  }
+
+  ChangeSecurityQuestionPage(){
+    let o = this;
+    const securityQuestionPage = new ChangeSecurityQuestionPageSection("security-question-card-container");
+    securityQuestionPage.ChangeSecurityQuestionCardContainer();
+    securityQuestionPage.render();
+    return this;
+  }
+
+  DisableSecurityQuestionPage(){
+    let o = this;
+    const securityQuestionPage = new DisableSecurityQuestionPageSection("security-question-card-container");
+    securityQuestionPage.DisableSecurityQuestionCardContainer();
+    securityQuestionPage.render();
+    return this;
+  }
+
 
 }
 

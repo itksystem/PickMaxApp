@@ -1,0 +1,137 @@
+class SetLoginCodeManager {
+    constructor() {
+        this.api = new WebAPI();
+        this.webRequest = new WebRequest();    
+        this.addEventListeners();
+    }
+
+    addEventListeners(data) {
+     // Обработка события проверки кода
+     // Handle interaction between the two login code components
+     let o = this;	
+     window.addEventListener('DOMContentLoaded', () => {
+      o.firstLogin = document.querySelector('.login-code');
+      o.secondLogin = document.querySelector('.login-code-repeat');
+      o.nextActionButton = o.secondLogin.querySelector('.next-action-button');
+      o.nextActionRedirectURL = null;
+      console.log(o.firstLogin, o.secondLogin, o.secondLogin.nextActionButton);
+      o.secondLogin.nextActionButton.addEventListener('click', (e) => {
+	document.location.replace(o.nextActionRedirectURL);
+      });
+
+     o.firstLogin.addEventListener('code-submitted', (e) => {
+         o.firstLogin.visible = false;
+         o.secondLogin.visible = true;
+         setTimeout(() => {
+           const digits = o.secondLogin.shadowRoot.querySelectorAll('.code-digit');
+           if (digits.length > 0) {
+             digits[0].focus();
+           }
+         }, 100);
+       });
+      
+      o.secondLogin.addEventListener('code-submitted', (e) => {
+        const firstCode  = o.firstLogin.codeValues.join('');
+        const secondCode = o.secondLogin.codeValues.join('');
+	console.log(firstCode, secondCode)
+        o.firstLogin.visible = false;
+        o.secondLogin.visible = true;
+       let response ={};
+       if (firstCode === secondCode) {		
+            response =  this.webRequest.get(o.api.setDigitalCodeMethod(), { code : firstCode}, true);
+	    response.status = true;	
+	} 
+       let actionResult = o.changeCodeActionResult(firstCode, secondCode, response?.status);
+	   o.nextActionRedirectURL = o.nextActionRedirect(actionResult);
+           o.nextActionButtonCaption(o.secondLogin.nextActionButton, actionResult);
+           o.setFinalProcessElementVisible();
+           o.displayFinalMessage(o.finalMessage(actionResult))
+        });
+      });
+   }
+
+   changeCodeActionResult(firstCode = null, secondCode = null, status = null){
+      return (firstCode != secondCode || !status ) ? false : true; 
+   }
+    
+    nextActionButtonCaption(el, isSuccess){
+       el.classList.remove('btn-success');
+       el.classList.remove('btn-failed');
+       el.classList.add((isSuccess ? 'btn-success' : 'btn-failed' ));
+       el.innerText = (isSuccess ? 'Завершить' : 'Повторить' );
+       return this;
+   }
+
+    nextActionRedirect(isSuccess){
+       return (isSuccess ? this.api?.PROFILE ?? ``: this.api?.PROFILE_CHANGE_DIGITAL_CODE ?? ``)
+    }
+
+    finalMessage(isSuccess){
+       return (!isSuccess)
+	   ?  `Возникла ошибка при установке кода! Повторите попытку.`
+           :  'Код установлен!';
+    }
+
+    setFinalProcessElementVisible(){
+       this.secondLogin.virtualKeyboardContainer.classList.add('d-none');
+       this.secondLogin.nextActionButton.classList.remove('d-none');
+       this.secondLogin.nextActionButton.classList.add('d-block');
+       this.secondLogin.timerEl.classList.add('d-none');
+    }
+
+    displayFinalMessage(text, isSuccess){
+      if(isSuccess) {
+   	  this.secondLogin.showPublicMessage(text, true);
+         } else 	{
+   	  this.secondLogin.showPublicMessage(text, false);
+	}
+     }	
+
+    createDigitalCodeSection(data) {
+      // Секция для карт
+        const content = `
+	  <login-code class="login-code"  visible app-name="Введите код" code-length="5" timeout="100"></login-code>
+	  <login-code class="login-code-repeat" app-name="Повторите код" code-length="5" timeout="100"></login-code>`;
+
+        this.container =  DOMHelper.createDropdownSection("", 
+ 	   [
+            DOMHelper.createElement("div", "profile-change-code-container", `
+    	      <login-code class="login-code"  visible app-name="Введите код" code-length="5" timeout="300"></login-code>
+	      <login-code class="login-code-repeat" app-name="Повторите код" code-length="5" timeout="300"></login-code>`
+  	     ),
+  	    DOMHelper.bottomDrawer(`content-drawer`, ``),
+	    DOMHelper.createBR(),
+            DOMHelper.createLinkButton(
+                `О pin-коде`,
+                `text-end security-code-button question-button`, 
+                this.onAboutCodeClick.bind(this)
+            ),
+
+        ]);
+
+	return this.container;
+
+    }
+
+	onAboutCodeClick() {
+	    this.drawer = this.container.querySelector('[drawer-id="content-drawer"]');
+	    console.log(this.drawer);
+    
+	    if (!this.drawer) {
+	        console.error('Element with drawer-id="content-drawer" not found');
+	        return this;
+	    }
+
+            if(eventBus) {
+                console.log(eventBus)
+                eventBus.emit("ContentBottomDrawerOpen", { // Убрать двойную вложенность
+		        contentId: `about-security-code-help`,
+		        drawerId: this.drawer.getAttribute('drawer-id')		    
+               });
+   	    }	
+	    return this;
+	}
+
+
+}
+

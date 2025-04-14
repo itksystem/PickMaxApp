@@ -17,7 +17,8 @@ class WebAPI {
     this.OrderErrorTitle = `Заказ`;
     this._USER_REVIEW_FILE_UPLOAD_EVENT_ = 'review-file-upload';
     this._USER_PRODUCT_MAIL_FILE_UPLOAD_EVENT_ = 'product-mail-file-upload';
-
+    this.PROFILE_CHANGE_DIGITAL_CODE = `/profile/change-digital-code/page`;
+    this.PROFILE = `/profile/page`;
     return this
   }
  
@@ -401,18 +402,40 @@ class WebAPI {
 
    getConfirmationRequestMethod() { return `/api/bff/confirmation/v1/request`; }
    getConfirmationRequestMethodPayload( confirmationType ) { return { confirmationType } }
+   
+   getDigitalCodeVerificationMethod(){ return `/api/bff/confirmation/v1/digital-code-verification`; }
+   getDigitalCodeRequestMethod(){ return `/api/bff/confirmation/v1/digital-code-request`; }
+   setDigitalCodeMethod(){ return `/api/bff/confirmation/v1/digital-code`; }
+   removeDigitalCodeMethod(){ return `/api/bff/confirmation/v1/digital-code`; }
 
 // регионы пользователя
    getClientRegionsMethod() { return `/api/bff/client/v1/regions`; }
    sendClientRegionMethod() { return `/api/bff/client/v1/region`; }
    deleteClientRegionMethod() { return `/api/bff/client/v1/region`; }
 
+// Второй фактор
+    getSecurityQuestionsMethod() { return `/api/bff/auth/v1/two-factors`; }
+    getSecurityQuestionCheckMethod() { return `/api/bff/auth/v1/two-factor-check`; }
+    setSecurityQuestionMethod() { return `/api/bff/auth/v1/two-factor`; }
+
+//  Получить признак что установлен параметр
+    getIsSecurityQuestionActiveMethod() { return `/api/bff/auth/v1/two-factor-status`; }
+    getIsPINCodeActiveMethod() { return `/api/bff/auth/v1/pin-code-status`; }
+
+// Получить от сервиса подтверждения id запроса на смену второго фактора
+    getSecurityQuestionRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request/2pa-question`; }
+    getPINCodeRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request/pin-code`; }
+
+//  создание запроса на смену фторого фактора
+    createSecurityRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request`; }
+    getSecurityQuestionRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request/2pa-question`; }
+    getPINCodeRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request/pin-code`; }
+//
+    getSecurityQuestionMethod() { return `/api/bff/auth/v1/security-question`; }
+    sendSecurityAnswerMethod() { return `/api/bff/auth/v1/security-question-answer`; }
 
 /* станицы */
    LOGON_URL(){ return `/logon` }
-
-
-
   
    getShopProductMethod(shop_id=null, product_id = null){ return `/telegram/shop/${shop_id}/products/${product_id}/page`}
    getShopProductPayloadMethod(){ return {} }

@@ -75,7 +75,7 @@
 
 
 
-.footer__btn-open {
+.footer__btn-open1 {
     background-color: initial;
     border: none;
     flex-shrink: 0;
@@ -86,14 +86,27 @@
     width: 1.75rem; /* 28px */
 }
 
+.footer__btn-open {
+    border-radius: 50%;
+    border: none;
+    flex-shrink: 0;
+    font-size: 0;
+    margin-left: 1.875rem;
+    position: relative;
+    background: #f7f5f5;
+    height: 1.7rem;
+    width: 1.7rem;
+    text-align: center;
+}
+
 .footer__btn-open:before {
     background: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%228%22%20viewBox%3D%220%200%2012%208%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M6.66989%207.51224C6.29992%207.89566%205.70008%207.89566%205.33011%207.51224L0.277477%202.27587C-0.0924931%201.89245%20-0.0924931%201.2708%200.277477%200.887372C0.647447%200.503949%201.24729%200.503949%201.61726%200.887372L6%205.42949L10.3827%200.887372C10.7527%200.503949%2011.3526%200.503949%2011.7225%200.887372C12.0925%201.2708%2012.0925%201.89245%2011.7225%202.27587L6.66989%207.51224Z%22%20fill%3D%22%23A9A8B0%22%2F%3E%0A%3C%2Fsvg%3E%0A") 50% no-repeat;
     content: "";
     display: block;
     height: 0.625rem; /* 10px */
     position: absolute;
-    right: 0;
-    top: 0.3125rem; /* 5px */
+    right: 0.3rem;
+    top: 0.525rem; /* 5px */
     transition: transform 0.3s ease 0s;
     width: 1rem; /* 16px */
 }

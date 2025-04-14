@@ -9,16 +9,17 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const hbs = require('hbs');
 const logger = require('./controllers/LoggerHandler');
-const mainRouter = require('./routes/mainRouter');
-const paymentRouter = require('./routes/paymentRouter');
-const warehouseBffRouter = require('./routes/warehouseBffRouter');
-const ordersBffRouter = require('./routes/ordersBffRouter');
-const clientRouter = require('./routes/clientRouter');
-const recoRouter = require('./routes/recoRouter');
-const mailRouter = require('./routes/mailRouter');
-const deliveryRouter= require('./routes/deliveryRouter');
+const mainRouter        = require('./routes/mainRouter');
+const authRouter        = require('./routes/authRouter');
+const paymentRouter     = require('./routes/paymentRouter');
+const warehouseBffRouter= require('./routes/warehouseBffRouter');
+const ordersBffRouter   = require('./routes/ordersBffRouter');
+const clientRouter      = require('./routes/clientRouter');
+const recoRouter        = require('./routes/recoRouter');
+const mailRouter        = require('./routes/mailRouter');
+const deliveryRouter    = require('./routes/deliveryRouter');
 const confirmationRouter= require('./routes/confirmationRouter');
-const promClient = require('prom-client'); //сбор метрик для Prometheus
+const promClient        = require('prom-client'); //сбор метрик для Prometheus
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger/swagger'); // Импортируйте конфигурацию Swagger
@@ -89,15 +90,16 @@ app.use(function (req, res, next) {
 app.use('/', mainRouter);      // вывод страниц 
   
 /* BFF для warehouseService */
-app.use('/api/bff/warehouse/', warehouseBffRouter);     
-app.use('/api/bff/orders/',    ordersBffRouter); 
-app.use('/api/bff/payment/',   paymentRouter); 
-app.use('/api/bff/client/',  clientRouter); 
-app.use('/api/bff/reco/',    recoRouter); 
-app.use('/api/bff/mail/',   mailRouter); 
-app.use('/api/bff/verification/',  mainRouter); 
-app.use('/api/bff/confirmation/',  confirmationRouter); 
-app.use('/api/bff/delivery/',  deliveryRouter); 
+app.use('/api/bff/warehouse/',    warehouseBffRouter);     
+app.use('/api/bff/orders/',       ordersBffRouter); 
+app.use('/api/bff/payment/',      paymentRouter); 
+app.use('/api/bff/client/',       clientRouter); 
+app.use('/api/bff/reco/',         recoRouter); 
+app.use('/api/bff/mail/',         mailRouter); 
+app.use('/api/bff/verification/', mainRouter); 
+app.use('/api/bff/confirmation/', confirmationRouter); 
+app.use('/api/bff/delivery/',     deliveryRouter); 
+app.use('/api/bff/auth/',         authRouter); 
 
 // Middleware для обработки 404 ошибок
 app.use((req, res, next) => {

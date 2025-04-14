@@ -149,7 +149,15 @@ body{
            {{>balance_history}}
     {{else ifEquals service "balance-deposit"}}
            {{>balance_deposit}}
+    {{else ifEquals service "change-digital-code"}}
+           {{>change_digital_code}}
+    {{else ifEquals service "change-security-question"}}
+           {{>change_security_question}}
+    {{else ifEquals service "disable-security-question"}}
+           {{>disable_security_question}}
+
     {{/ifEquals}}              
+
  </div>
 
  <mobile-navbar>

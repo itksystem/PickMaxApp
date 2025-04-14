@@ -1,7 +1,8 @@
 class SubscriptionsManager {
     constructor() {
         this.api = new WebAPI();
-        this.webRequest = new WebRequest();    }
+        this.webRequest = new WebRequest();    
+}
 
     // Создание элемента радио-кнопки для подпискиы
     createSubscribeCheckbox(SubscribeId, name, label, isDefault, onClick) {

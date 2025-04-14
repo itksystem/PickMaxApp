@@ -1,10 +1,12 @@
 :root {
   --shop_status_min_width : 10%;
   --shop_order_font_size : 0.7rem;
+   font-family: "Roboto Condensed", sans-serif;
 }
 
 html {
  overflow-x: hidden;
+ font-family: "Roboto Condensed", sans-serif;
 }
 
 body{
@@ -1301,7 +1303,7 @@ img.custom-radio-new-card{
 }
 
 
-.account-history-button, .security-code-button {
+.account-history-button, .security-code-button, .question-button {
     font-size: 0.8rem;
     text-decoration: underline;
 }
@@ -1310,4 +1312,12 @@ img.custom-radio-new-card{
     text-align: center;
     padding: 1rem;
     font-size: 0.8rem;
+}
+
+.fs-7 {
+  font-size: 0.9rem!important;
+}
+
+.fs-8 {
+  font-size: 0.8rem!important;
 }

@@ -53,7 +53,9 @@ const protectedRoutes = [
     { method : 'GET', path: '/orders/page', page: common.COMMON_ORDERS_PAGE, service :{service : "orders"} },
     { method : 'GET', path: '/confirmation/email/page', page: common.COMMON_CONNFIRMATION_EMAIL_PAGE, service :{service : "confirmation-email"} },
     { method : 'GET', path: '/confirmation/phone/page', page: common.COMMON_CONNFIRMATION_PHONE_PAGE, service :{service : "confirmation-phone"} },
-    
+    { method : 'GET', path: '/profile/change-digital-code/page', page: common.COMMON_CONNFIRMATION_PHONE_PAGE, service :{service : "change-digital-code"} },
+    { method : 'GET', path: '/profile/change-security-question/page', page: common.COMMON_CONNFIRMATION_PHONE_PAGE, service :{service : "change-security-question"} },
+    { method : 'GET', path: '/profile/disable-security-question/page', page: common.COMMON_CONNFIRMATION_PHONE_PAGE, service :{service : "disable-security-question"} },
     { method : 'GET', path: '/balance/deposit/page', page: common.COMMON_BALANCE_DEPOSIT_PAGE, service :{service : "balance-deposit"} },
     { method : 'GET', path: '/balance/history/page', page: common.COMMON_BALANCE_HISTORY_PAGE, service :{service : "balance-history"} },
 
@@ -127,6 +129,19 @@ router.post('/v1/checkCode', async (req, res) => {
     const userId = await authClient.getUserId(req, res);                   
     if(!userId) throw(401)
     const response = await authClient.checkCode(req);
+    if (response.success) {        
+        res.status(200).json(response.data);
+    } else {
+        logger.error(response.error || 'Неизвестная ошибка' );   
+        res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
+    }
+});
+
+
+router.get('/v1/two-factors', async (req, res) => {    
+    const userId = await authClient.getUserId(req, res);                   
+    if(!userId) throw(401)
+    const response = await authClient.get2PAFactorsList(req);
     if (response.success) {        
         res.status(200).json(response.data);
     } else {

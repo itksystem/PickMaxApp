@@ -128,5 +128,93 @@ class DOMHelper {
         return selector;
     }
 
+    static createHL(drawerId, actionId) {
+        const placement = this.createElement("hr", "width-100 text-end", ``);
+        return placement;
+    }
+
+    static createBR() {
+        const placement = this.createElement("br", "", ``);
+        return placement;
+    }
+
+
+    static createRadio(cardId, name, label, isDefault, paySystem, onClick, onDelete) {
+        const placement = this.createElement("div");
+        placement.className = "custom-radio row";
+
+        const radioContainer =this.createElement("div");
+        radioContainer.className = "col-9";
+
+        const radioInput = this.createElement("input");
+        radioInput.className = "custom-control-input";
+        radioInput.type = "radio";
+        radioInput.id = `radio-${cardId}`;
+        radioInput.name = name;
+        radioInput.checked = isDefault;
+        radioInput.value = cardId;
+
+        const radioLabel = this.createElement("label");
+        radioLabel.className = "custom-control-label";
+        radioLabel.setAttribute("for", `radio-${cardId}`);
+        radioLabel.textContent = label;
+
+        radioContainer.appendChild(radioInput);
+        radioContainer.appendChild(radioLabel);
+
+        const buttonContainer = this.createElement("div");
+        buttonContainer.className = "col-2";
+
+        const removeButton = this.createElement("button");
+        removeButton.className = "btn small-hot-button";
+        removeButton.type = "button";
+        removeButton.value = cardId;
+
+        const removeIcon = this.createElement("i");
+        removeIcon.className = "fa-solid fa-x";
+        removeIcon.style.fontSize = "0.8rem";
+
+        if (onDelete) {
+          removeButton.appendChild(removeIcon);
+          buttonContainer.appendChild(removeButton);
+         }
+
+        placement.appendChild(radioContainer);
+        placement.appendChild(buttonContainer);
+
+        if (onClick) {
+            radioInput.addEventListener("click", () => onClick(cardId));
+        }
+        if (onDelete) {
+            removeButton.addEventListener("click", () => onDelete(cardId));
+        }
+
+        return placement;
+    }
+
+    static createTextBox(textBoxId,  extraClass =``) {
+        const placement = this.createElement("textarea",  `${extraClass}`, ``);
+        placement.id = textBoxId;
+        return placement;
+    }
+
+    static spanBox(text, extraClass =``) {
+        const placement = this.createElement("span", `${extraClass}`, ``);
+        if(text) placement.innerText = text;
+        return placement;
+    }
+
+    static divBox(text, extraClass =``) {
+        const placement = this.createElement("div", `${extraClass}`, ``);
+        if(text) placement.innerText = text;
+        return placement;
+    }
+
+    static Header(text) {
+        const placement = this.createElement("span", "w-100 text-decoration-underline fs-8", ``);	
+        if(text) placement.innerText = text;
+        return placement;
+    }
+
 
 }

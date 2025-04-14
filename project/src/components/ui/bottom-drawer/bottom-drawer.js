@@ -9,7 +9,13 @@ class BottomDrawer extends HTMLElement {
             const link = document.createElement('link');
             link.setAttribute('rel', 'stylesheet');
             link.setAttribute('href', `/src/${file.includes('bootstrap') ? 'pages/css' : 'components/ui/bottom-drawer/css'}/${file}`);
+
+            const link1 = document.createElement('link');
+            link1.setAttribute('rel', 'stylesheet');
+            link1.setAttribute('href', `/src/pages/plugins/fontawesome-free/css/all.min.css`);
             this.shadowRoot.appendChild(link);
+            this.shadowRoot.appendChild(link1);
+
         });
 
         // Разметка
@@ -17,7 +23,7 @@ class BottomDrawer extends HTMLElement {
             <div class="bottom-drawer">
 		<div class="bottom-drawer__content_slide_header">
 			<div class="bottom-drawer__content_slide_header_line"></div>
-			<span class="bottom-drawer__content_header_close_button">X</span>
+			<span class="bottom-drawer__content_header_close_button"><i class="fa-solid fa-circle-xmark"></i></span>
 		</div>
                 <div class="bottom-drawer__content">
                     <slot></slot>

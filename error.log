@@ -1232,3 +1232,58 @@
 {"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-04-08T05:49:31.483Z"}
 {"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-08T07:41:31.353Z"}
 {"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-08T10:45:18.363Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-09T04:57:59.670Z"}
+{"level":"error","message":"Не удалось сохранить профиль пользователя","service":"pickapp-service","timestamp":"2025-04-09T22:18:26.944Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-10T06:45:05.701Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-10T18:16:29.943Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-11T04:57:18.455Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:45:39\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-04-11T05:16:46.541Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-12T04:44:00.450Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-12T07:45:08.868Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-12T11:38:48.134Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-12T14:46:12.535Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-13T10:30:41.523Z"}
+{"level":"error","message":"Request with GET/HEAD method cannot have body","service":"pickapp-service","timestamp":"2025-04-13T11:53:34.234Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-13T17:43:29.138Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-14T05:43:28.361Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-14T09:54:25.900Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-14T12:54:35.108Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/two-factor-status reason: Unexpected token < in JSON at position 0","service":"pickapp-service","timestamp":"2025-04-14T12:55:51.354Z"}
+{"level":"error","message":"request to http://91.218.230.34:3001/api/auth/v1/pin-code-status failed, reason: socket hang up","service":"pickapp-service","timestamp":"2025-04-14T13:33:19.960Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2025-04-14T13:33:20.010Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-04-14T13:33:20.082Z"}
+{"level":"error","message":"request to http://91.218.230.34:3001/api/auth/v1/pin-code-status failed, reason: socket hang up","service":"pickapp-service","timestamp":"2025-04-14T13:36:08.229Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2025-04-14T13:36:08.288Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-04-14T13:36:08.358Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-04-14T13:36:08.444Z"}
+{"level":"error","message":"request to http://91.218.230.34:3001/api/auth/v1/pin-code-status failed, reason: socket hang up","service":"pickapp-service","timestamp":"2025-04-14T13:36:11.939Z"}
+{"level":"error","message":"request to http://91.218.230.34:3001/api/auth/v1/pin-code-status failed, reason: socket hang up","service":"pickapp-service","timestamp":"2025-04-14T13:36:13.744Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2025-04-14T13:36:13.796Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-04-14T13:36:13.863Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-04-14T13:36:13.936Z"}
+{"level":"error","message":"getRegions failed.","service":"pickapp-service","timestamp":"2025-04-14T13:36:14.020Z"}
+{"level":"error","message":"Client profile not found","service":"pickapp-service","timestamp":"2025-04-14T13:36:14.024Z"}
+{"level":"error","message":"request to http://91.218.230.34:3001/api/auth/v1/pin-code-status failed, reason: socket hang up","service":"pickapp-service","timestamp":"2025-04-14T13:40:39.721Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2025-04-14T13:40:39.807Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-04-14T13:40:39.902Z"}
+{"level":"error","message":"request to http://91.218.230.34:3001/api/auth/v1/pin-code-status failed, reason: socket hang up","service":"pickapp-service","timestamp":"2025-04-14T13:40:52.121Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2025-04-14T13:40:52.177Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-04-14T13:40:52.269Z"}
+{"level":"error","message":"request to http://91.218.230.34:3001/api/auth/v1/pin-code-status failed, reason: socket hang up","service":"pickapp-service","timestamp":"2025-04-14T13:44:13.221Z"}
+{"level":"error","message":"request to http://91.218.230.34:3001/api/auth/v1/pin-code-status failed, reason: socket hang up","service":"pickapp-service","timestamp":"2025-04-14T13:46:44.037Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2025-04-14T13:46:44.091Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-04-14T13:46:44.194Z"}
+{"level":"error","message":"request to http://91.218.230.34:3001/api/auth/v1/pin-code-status failed, reason: socket hang up","service":"pickapp-service","timestamp":"2025-04-14T14:03:05.358Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2025-04-14T14:03:05.429Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-04-14T14:03:05.525Z"}
+{"level":"error","message":"request to http://91.218.230.34:3001/api/auth/v1/pin-code-status failed, reason: socket hang up","service":"pickapp-service","timestamp":"2025-04-14T14:03:38.732Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2025-04-14T14:03:38.789Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-04-14T14:03:38.870Z"}
+{"level":"error","message":"request to http://91.218.230.34:3001/api/auth/v1/pin-code-status failed, reason: socket hang up","service":"pickapp-service","timestamp":"2025-04-14T14:05:53.451Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2025-04-14T14:05:53.515Z"}
+{"level":"error","message":"Ошибка при выполнении операции выхода из сессии","service":"pickapp-service","timestamp":"2025-04-14T14:05:53.595Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-14T17:28:58.477Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/sequrity-question reason: Unexpected token < in JSON at position 0","service":"pickapp-service","timestamp":"2025-04-14T17:42:14.529Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/sequrity-question reason: Unexpected token < in JSON at position 0","service":"pickapp-service","timestamp":"2025-04-14T17:43:09.413Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/sequrity-question reason: Unexpected token < in JSON at position 0","service":"pickapp-service","timestamp":"2025-04-14T17:43:20.832Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/security-question-answer reason: Unexpected token < in JSON at position 0","service":"pickapp-service","timestamp":"2025-04-14T18:29:39.576Z"}

@@ -13,37 +13,102 @@ class SecurityManager extends EventTarget {
         this.onRemoveCodeFactor = this.onRemoveCodeFactor.bind(this);
     }
     /**
+     * Проверка состояния установки контрольного вопроса
+     */
+     isSecurityQuestionActivated() {        
+        try {          
+          const response = this.webRequest.get(this.api.getIsSecurityQuestionActiveMethod(),{  }, true);
+          return response?.status ?? false;
+        } catch (error) {
+          console.log('isSecurityQuestionActivated:', error);
+        }
+        return false;
+    }
+    /**
+     * Проверка состояния установки pin-кода
+     */
+         isPINCodeActivated() {        
+            try {          
+              const response =  this.webRequest.get(this.api.getIsPINCodeActiveMethod(),{  }, true);
+              return response?.status ?? false;
+            } catch (error) {
+              console.log('isSecurityQuestionActivated:', error);
+            }
+            return false;
+        }
+    /**
      * Создает секцию выбора локации
      */
     createSecuritySection() {
+
+        let isSecurityQuestionActive = this.isSecurityQuestionActivated();
+        let isPINCodeActive = this.isPINCodeActivated();
         this.container =  DOMHelper.createDropdownSection("Безопасность", 
  	   [
-            DOMHelper.createButton("Установить код", "text-end", this.setCodeFactor.bind(this)),
-  	    DOMHelper.bottomDrawer(`about-security-code-drawer`, `about-security-code-help`),
+            DOMHelper.Header('PIN-код'),
+            DOMHelper.createButton("Установить PIN-код", "text-end", this.setCodeFactor.bind(this)),
+            DOMHelper.createConfirmationLabel(
+                (isPINCodeActive === true ? "PIN-код установлен!" : "PIN-код не установлен!"), 
+                (isPINCodeActive === true ? "success" : "failed"), ),
+  	        DOMHelper.bottomDrawer(`content-drawer`, ``),
             DOMHelper.createLinkButton(
-                `О коде безопасности`,
-                `text-end security-code-button`, 
+                `О pin-коде`,
+                `text-end security-code-button question-button`, 
                 this.onAboutCodeClick.bind(this)
-            )
+            ),            
+            DOMHelper.createHL(),
+            DOMHelper.Header('Контрольный вопрос'),
+            (isSecurityQuestionActive
+                ? DOMHelper.createButton("Отключить проверку", "text-end", this.setSecurityQuestionFactorDisable.bind(this))
+                : DOMHelper.createButton("Включить проверку", "text-end", this.setSecurityQuestionFactorEnable.bind(this))
+            ),
+            DOMHelper.createConfirmationLabel(
+                (isSecurityQuestionActive === true ? "Контрольный вопрос установлен!" : "Контрольный вопрос не установлен!"),
+                (isSecurityQuestionActive === true ? "success" : "failed"), ),
+            DOMHelper.createLinkButton(
+                `О контрольном вопросе`,
+                `text-end security-question-button question-button`, 
+                this.onAboutSecurityQuestionClick.bind(this)
+            ),
 
         ]);
 	return this.container;
     }
 
-	onAboutCodeClick() {
-	    this.aboutCodeLink = this.container.querySelector('[drawer-id="about-security-code-drawer"]');
-	    console.log(this.aboutCodeLink);
+      onAboutSecurityQuestionClick() {
+	    this.drawer = this.container.querySelector('[drawer-id="content-drawer"]');
+	    console.log(this.drawer);
     
-	    if (!this.aboutCodeLink) {
-	        console.error('Element with drawer-id="about-security-code-drawer" not found');
+	    if (!this.drawer) {
+	        console.error('Element with drawer-id="content-drawer" not found');
 	        return this;
 	    }
 
             if(eventBus) {
                 console.log(eventBus)
                 eventBus.emit("ContentBottomDrawerOpen", { // Убрать двойную вложенность
-		        contentId: this.aboutCodeLink.getAttribute('action-id'),
-		        drawerId: this.aboutCodeLink.getAttribute('drawer-id')		    
+		        contentId: `about-security-question-help`,
+		        drawerId: this.drawer.getAttribute('drawer-id')		    
+               });
+   	    }	
+	    return this;
+	}
+
+
+	onAboutCodeClick() {
+	    this.drawer = this.container.querySelector('[drawer-id="content-drawer"]');
+	    console.log(this.drawer);
+    
+	    if (!this.drawer) {
+	        console.error('Element with drawer-id="content-drawer" not found');
+	        return this;
+	    }
+
+            if(eventBus) {
+                console.log(eventBus)
+                eventBus.emit("ContentBottomDrawerOpen", { // Убрать двойную вложенность
+		        contentId: `about-security-code-help`,
+		        drawerId: this.drawer.getAttribute('drawer-id')		    
                });
    	    }	
 	    return this;
@@ -51,8 +116,20 @@ class SecurityManager extends EventTarget {
 
 
     setCodeFactor(){
-	return this;
+	    window.location.replace(`/profile/change-digital-code/page`);
+	    return this;
     }
+
+    setSecurityQuestionFactorEnable(){
+	    window.location.replace(`/profile/change-security-question/page`);
+	    return this;
+    }
+
+    setSecurityQuestionFactorDisable(){
+	    window.location.replace(`/profile/disable-security-question/page`);
+	    return this;
+    }
+
 
     /**
      * Обработчик установки кода
