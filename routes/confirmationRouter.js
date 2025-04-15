@@ -30,4 +30,25 @@ router.post('/v1/code', async (req, res) => {
         res.status(response.status || 500).json({ error: response.error || common.COMMON_HTTP_CODE_500});
     }
 });
+
+router.get('/v1/2pa-request/security-question', async (req, res) => {        
+    const response = await confirmationService.getSecurityQuestionRequestId(req);
+    if (response?.success) {        
+        res.status(200).json(response.data);
+    } else {
+        logger.error(response.error || 'Неизвестная ошибка' );   
+        res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
+    }
+});
+
+router.post('/v1/2pa-request', async (req, res) => {        
+    const response = await confirmationService.create2PARequestId(req);
+    if (response?.success) {        
+        res.status(200).json(response.data);
+    } else {
+        logger.error(response.error || 'Неизвестная ошибка' );   
+        res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
+    }
+});
+
 module.exports = router;

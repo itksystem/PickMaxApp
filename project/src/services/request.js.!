@@ -60,6 +60,7 @@ class WebRequest {
 
 
  post(url = '', params = {}, sync = false) {
+    const shopId = localStorage.getItem('shopId');
     const traceId = generateUUID();
     const dataToSend = typeof params === 'string' ? params : JSON.stringify(params);
 
@@ -86,12 +87,12 @@ class WebRequest {
         if (xhr.status === 401) {
             location.replace('/logon');
         } else if (xhr.status >= 200 && xhr.status < 300) {
-            return JSON.parse(xhr.responseText);
+            return Promise.resolve(JSON.parse(xhr.responseText));
         } else {
-            return {
+            return Promise.reject({
                 status: xhr.status,
                 message: xhr.statusText || 'An error occurred'
-            };
+            });
         }
     } else {
         return fetch(url, options)
@@ -117,6 +118,7 @@ class WebRequest {
 
 
  patch(url = '', params = {}, sync = false) {
+    const shopId = localStorage.getItem('shopId');
     const traceId = generateUUID();
     const dataToSend = typeof params === 'string' ? params : JSON.stringify(params);
 
@@ -176,6 +178,7 @@ class WebRequest {
     // Создаем строку параметров из объекта params
     const queryString = new URLSearchParams(params).toString();
     const fullUrl = queryString ? `${url}?${queryString}` : url;
+    const shopId = localStorage.getItem('shopId');
     const traceId = generateUUID();
     const headers = {
                 'Content-Type': 'application/json',
@@ -226,6 +229,7 @@ class WebRequest {
 
 
 uploadFile(url, file, sync = false) {
+    const shopId = localStorage.getItem('shopId');
     const traceId = generateUUID();
     const headers = {
 		'x-trace-id': traceId,

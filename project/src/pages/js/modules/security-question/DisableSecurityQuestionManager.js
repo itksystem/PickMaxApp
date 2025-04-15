@@ -3,6 +3,7 @@ class DisableSecurityQuestionManager {
         this.api = new WebAPI();
         this.webRequest = new WebRequest();    
         this.addEventListeners();
+        this.requestId = null;
     }
 
     addEventListeners(data) {
@@ -50,25 +51,33 @@ class DisableSecurityQuestionManager {
      }	
 
     createSecurityQuestionSection(data) {
+ 	 let isActiveRequestId = this.getActiveSecurityQuestionRequestIdExists();	  
+	 if(!isActiveRequestId) {
+  	     this.requestId = this.createSecurityQuestionRequestId('security-question');
+	      if(!this.requestId) 
+		isActiveRequestId = false;
+	 } 
 	 let elements = this.getElements() || [];
 	 elements.push(
 	    DOMHelper.createHL(),
 	    DOMHelper.divBox(`Введите ответ:`,`w-100 pb-3`),
             DOMHelper.createTextBox(`answer`,`answer-text-box form-control w-100`),
   	    DOMHelper.bottomDrawer(`content-drawer`, ``),
-            DOMHelper.createButton("Ответить", "btn-success text-center w-100", this.sendAnswerSecurityQuestion.bind(this)),
+            DOMHelper.createButton(`Ответить`, 
+		`btn-success text-center w-100 ${isActiveRequestId ? 'disabled' : ''}`, 
+	    this.sendAnswerSecurityQuestion.bind(this)),
+            DOMHelper.createConfirmationLabel(
+                (isActiveRequestId  ? "Попробуйте через 5 минут..." : ""),
+                (isActiveRequestId  ? "failed" : "success"), ),
             DOMHelper.createBR(),
             DOMHelper.createLinkButton(
                 `Справка`,
                 `text-end pt-4 security-question-button question-button`, 
                 this.onAboutSecurityQuestionClick.bind(this)
             ),
-
          )   
-        this.container =  DOMHelper.createDropdownSection("",  	   
-	    elements,
-        );
-	return this.container;
+        this.container =  DOMHelper.createDropdownSection("", elements, );
+       return this.container;
     }
 
       onAboutSecurityQuestionClick() {
@@ -90,51 +99,96 @@ class DisableSecurityQuestionManager {
 	    return this;
 	}
 
+     getActiveSecurityQuestionRequestIdExists(){ // получить активный идентификаатор запроса
+       console.log('getActiveSecurityQuestionRequestIdExists');	
+        try {
+            const response =  this.webRequest.get(this.api.getActiveSecurityQuestionRequestIdExists(), {}, true);
+            console.log('getActiveSecurityQuestionRequestIdExists', response);	
+            return response?.status ? true : false;
+        } catch (error) {
+            console.error('getActiveSecurityQuestionRequestIdExists ', error);
+            return false;
+        }
+       return false;
+    }
 
+    createSecurityQuestionRequestId(requestType = null){ // создать новый активный идентификатор запроса
+       console.log('createSecurityQuestionRequestIdMethod ');	
+        try {
+            const response =  this.webRequest.post(this.api.createSecurityQuestionRequestIdMethod(), {requestType}, true);
+  	    console.log(response);
+            return response?.requestId ?? null;
+        } catch (error) {
+            console.error('createSecurityQuestionRequestIdMethod ', error);
+            return false;
+        }
+       return false;
+    }
+
+
+    getSecurityQuestionChangeRequestId(){ // получить активный идентификаатор запроса
+       console.log('getSecurityQuestionChangeRequestId');	
+        try {
+            const response =  this.webRequest.get(this.api.getSecurityQuestionRequestIdMethod(), {}, true);
+            return response?.status ? true : false;
+        } catch (error) {
+            console.error('getSecurityQuestionChangeRequestId ', error);
+            return false;
+        }
+       return false;
+    }   
 
     sendAnswerSecurityQuestion(){
        console.log('sendAnswerSecurityQuestion');	
         try {
 	    const answerEl = this.container.querySelector('textarea.answer-text-box');
 	    const answer = answerEl.value.trim();
-	    console.log(answerEl);
-            const response =  this.webRequest.post(this.api.sendSecurityAnswerMethod(), {answer}, true);
+	    console.log(answerEl, this.requestId)	
+            const response =  this.webRequest.post(this.api.sendSecurityAnswerMethod(), 
+		{
+		  action : 'DISABLE_SECURITY_QUESTION', //  отключаем контрольный вопрос
+ 	  	  answer, 
+		  requestId : this.requestId
+		}, true);
 	    if(response?.status != true) throw('Ошибка при отправке ответа');
             return response?.status ? true : false;
         } catch (error) {
             console.error('Ошибка при получении вопросов:', error);
             toastr.error('Ошибка при получении вопросов', 'Безопасность', { timeOut: 3000 });
-            return [];
+            return false;
         }
-       return this;
+       return false;
     }
 
     // Отображение вопросов в интерфейсе
     getElements() {
-	    try {
-	        const question = this.getSecurityQuestion();
-	        let questions = [];
-		console.log(question);
-		questions.push(DOMHelper.spanBox(`${question[0].text}`));
-	        return questions;
-	    } catch (error) {
-	        console.error('Ошибка при получении вопросов:', error);
-	        toastr.error('Ошибка при получении вопросов', 'Безопасность', { timeOut: 3000 });
-	        return [];
-	    }
+    console.log('getElements');	
+     try {
+        const question = this.getSecurityQuestion();
+        let questions = [];
+	console.log(question);
+	questions.push(DOMHelper.spanBox(`${question[0].text}`));
+        return questions;
+      } catch (error) {
+        console.error('Ошибка при получении вопросов:', error);
+        toastr.error('Ошибка при получении вопросов', 'Безопасность', { timeOut: 3000 });
+       }
+        return [];
       }
 
 
-    getSecurityQuestion() {
+     getSecurityQuestion() {
+       console.log('getSecurityQuestion');	
         try {
             const response =  this.webRequest.get(this.api.getSecurityQuestionMethod(), {}, true);
-	    if(response?.status != true) throw('Ошибка при получении вопросов');
-            return response?.question ? [response?.question] : [];
+	    if(!response) throw('Ошибка при получении вопросов');
+	    console.log(response);
+            return response?.question ? [response?.question] : null;
         } catch (error) {
             console.error('Ошибка при получении вопросов:', error);
             toastr.error('Ошибка при получении вопросов', 'Безопасность', { timeOut: 3000 });
-            return [];
         }
+       return null;
     }
 
 }

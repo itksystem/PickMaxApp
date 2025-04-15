@@ -40,7 +40,6 @@ class SecurityManager extends EventTarget {
      * Создает секцию выбора локации
      */
     createSecuritySection() {
-
         let isSecurityQuestionActive = this.isSecurityQuestionActivated();
         let isPINCodeActive = this.isPINCodeActivated();
         this.container =  DOMHelper.createDropdownSection("Безопасность", 

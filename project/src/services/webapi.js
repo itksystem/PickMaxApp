@@ -423,13 +423,12 @@ class WebAPI {
     getIsPINCodeActiveMethod() { return `/api/bff/auth/v1/pin-code-status`; }
 
 // Получить от сервиса подтверждения id запроса на смену второго фактора
-    getSecurityQuestionRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request/2pa-question`; }
+    getActiveSecurityQuestionRequestIdExists() { return `/api/bff/confirmation/v1/2pa-request/security-question`; }
     getPINCodeRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request/pin-code`; }
 
-//  создание запроса на смену фторого фактора
-    createSecurityRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request`; }
-    getSecurityQuestionRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request/2pa-question`; }
-    getPINCodeRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request/pin-code`; }
+//  создание запроса на смену второго фактора
+    createSecurityQuestionRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request`; }
+
 //
     getSecurityQuestionMethod() { return `/api/bff/auth/v1/security-question`; }
     sendSecurityAnswerMethod() { return `/api/bff/auth/v1/security-question-answer`; }
