@@ -139,12 +139,12 @@ class DOMHelper {
     }
 
 
-    static createRadio(cardId, name, label, isDefault, onClick) {
+    static createRadio(cardId, name, label, isDefault, paySystem, onClick, onDelete) {
         const placement = this.createElement("div");
         placement.className = "custom-radio row  mt-2 ml-0";
 
         const radioContainer =this.createElement("div");
-        radioContainer.className = "col-12";
+        radioContainer.className = "col-9";
 
         const radioInput = this.createElement("input");
         radioInput.className = "custom-control-input";
@@ -162,10 +162,31 @@ class DOMHelper {
         radioContainer.appendChild(radioInput);
         radioContainer.appendChild(radioLabel);
 
+        const buttonContainer = this.createElement("div");
+        buttonContainer.className = "col-2";
+
+        const removeButton = this.createElement("button");
+        removeButton.className = "btn small-hot-button";
+        removeButton.type = "button";
+        removeButton.value = cardId;
+
+        const removeIcon = this.createElement("i");
+        removeIcon.className = "fa-solid fa-x";
+        removeIcon.style.fontSize = "0.8rem";
+
+        if (onDelete) {
+          removeButton.appendChild(removeIcon);
+          buttonContainer.appendChild(removeButton);
+         }
+
         placement.appendChild(radioContainer);
+        placement.appendChild(buttonContainer);
 
         if (onClick) {
             radioInput.addEventListener("click", () => onClick(cardId));
+        }
+        if (onDelete) {
+            removeButton.addEventListener("click", () => onDelete(cardId));
         }
 
         return placement;

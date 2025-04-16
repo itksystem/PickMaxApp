@@ -50,10 +50,10 @@ class ChangeSecurityQuestionManager {
      }	
 
     mySecurityQuestionBoxDisplay(visible = false) {
-    const labelElement = this.container.querySelector('div.question-text-box-label');
-    const textElement = this.container.querySelector('textarea.question-text-box');
+    const questionElement = this.container.querySelector('div.question-text-box-label');
+    const answerElement = this.container.querySelector('div.answer-text-box-label');
      
-     [labelElement, textElement].forEach(element => {
+     [questionElement, answerElement].forEach(element => {
         element.classList.remove(visible ? 'd-none' : 'd-block');
         element.classList.add(visible ? 'd-block' : 'd-none');
      });
@@ -88,10 +88,12 @@ class ChangeSecurityQuestionManager {
 	    elements,
         );
 	return this.container;
-     }
- 
-      radionButtonOnClick(e){       
-	this.mySecurityQuestionBoxDisplay((e == -1))  
+    }
+
+      radionButtonOnClick(){
+	
+       console.log(`radionButtonOnClick`, this);
+	
       }	
 
       onAboutSecurityQuestionClick() {

@@ -428,6 +428,7 @@ class WebAPI {
 
 //  создание запроса на смену второго фактора
     createSecurityQuestionRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request`; }
+    
 
 //
     getSecurityQuestionMethod() { return `/api/bff/auth/v1/security-question`; }
