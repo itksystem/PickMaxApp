@@ -3,6 +3,7 @@ class ChangeSecurityQuestionManager {
         this.api = new WebAPI();
         this.webRequest = new WebRequest();    
         this.addEventListeners();
+	this.SAVE_SECURITY_QUESTION_ERROR='Ошибка при сохранении контрольного вопроса';
     }
 
     addEventListeners(data) {
@@ -59,6 +60,46 @@ class ChangeSecurityQuestionManager {
      });
    }	
 
+    securityQuestionBoxResultDisplay(result = false) {
+     const questionTextBoxLabel = this.container.querySelector('div.question-text-box-label');
+     const questionTextBox = this.container.querySelector('textarea.question-text-box');
+
+     const questions = this.container.querySelectorAll('.custom-radio.row, .security-question-web-element');
+
+     const answerTextBoxLabel = this.container.querySelector('div.answer-text-box-label');
+     const answerTextBox = this.container.querySelector('textarea.answer-text-box');
+
+     const contentDrawer = this.container.querySelector('content-drawer');
+     const successButton= this.container.querySelector('.btn-send-request');
+
+     const successResultTextBoxLabel = this.container.querySelector('div.success-result-text-box-label');
+     const failedResultTextBoxLabel = this.container.querySelector('div.failed-result-text-box-label');
+
+     const resultQuestionButton = this.container.querySelector('button.result-question-button');
+
+     [questionTextBoxLabel, questionTextBox, answerTextBoxLabel,  answerTextBox, contentDrawer, successButton, 
+      ].forEach(element => {
+          element?.classList.remove('d-block');
+          element?.classList.add('d-none');
+       });
+
+     questions.forEach(element => {
+          element?.classList.remove('d-block');
+          element?.classList.add('d-none');
+       });
+
+     successResultTextBoxLabel?.classList.remove(result ? 'd-none' : 'd-block')
+     successResultTextBoxLabel?.classList.add(result ? 'd-block' : 'd-none'); 
+
+     failedResultTextBoxLabel?.classList.remove(!result ? 'd-none' : 'd-block')
+     failedResultTextBoxLabel?.classList.add(!result ? 'd-block' : 'd-none'); 
+
+     resultQuestionButton?.classList.remove('d-none'); 
+     resultQuestionButton?.classList.add('d-block'); 
+
+    }	
+
+
     createSecurityQuestionSection(data) {
 	 let elements = this.getElements() || [];
 	 elements.push(
@@ -74,9 +115,20 @@ class ChangeSecurityQuestionManager {
 	    DOMHelper.divBox(`Введите ответ`,`w-100 pb-2 pt-3 answer-text-box-label`),
             DOMHelper.createTextBox(`answer-text-box`,`answer-text-box form-control w-100`),
   	    DOMHelper.bottomDrawer(`content-drawer`, ``),
-            DOMHelper.createHL(),
-            DOMHelper.createButton("Установить проверку", "btn-success text-center w-100", this.saveSecurityQuestion.bind(this)),
-            DOMHelper.createBR(),
+            DOMHelper.createHL(`security-question-web-element`),
+            DOMHelper.createButton("Установить проверку", "btn-send-request text-center w-100", this.saveSecurityQuestion.bind(this)),
+            DOMHelper.createBR(`security-question-web-element`),
+	    DOMHelper.divBox(
+		`Контрольный вопрос установлен!`,
+		`success-result-text-box-label text-center w-100 pb-2 pt-3 d-none`),
+	    DOMHelper.divBox(
+		`Возникла ошибка, повторите попытку.`,
+		`failed-result-text-box-label text-center w-100 pb-2 pt-3 d-none`),
+            DOMHelper.createButton(
+                `В профиль`,
+                `text-center result-question-button btn-success d-none`, 
+                this.onResultSecurityQuestionClick.bind(this)
+            ),
             DOMHelper.createLinkButton(
                 `О контрольном вопросе`,
                 `text-end pt-4 security-question-button question-button`, 
@@ -89,6 +141,10 @@ class ChangeSecurityQuestionManager {
         );
 	return this.container;
      }
+
+      onResultSecurityQuestionClick(){
+         document.location.replace(this.api.PROFILE);
+      }
  
       radionButtonOnClick(e){       
 	this.mySecurityQuestionBoxDisplay((e == -1))  
@@ -114,26 +170,45 @@ class ChangeSecurityQuestionManager {
 	}
 
 
+    createSecurityQuestionRequestId(requestType = null){ // создать новый активный идентификатор запроса
+       console.log('createSecurityQuestionRequestIdMethod ');	
+        try {
+            const response =  this.webRequest.post(this.api.createSecurityQuestionRequestIdMethod(), {requestType}, true);
+  	    console.log(response);
+            return response?.requestId ?? null;
+        } catch (error) {
+            console.error('createSecurityQuestionRequestIdMethod ', error);
+            return false;
+        }
+       return false;
+    }
+
 
     saveSecurityQuestion(){
         try {
+            const requestId = this.createSecurityQuestionRequestId(`custom-question`);
+	    if(!requestId) throw(this.SAVE_SECURITY_QUESTION_ERROR);	
 	    const selectedQuestion = this.container.querySelector('input[name="customQuestions"]:checked');	
-   	    console.log(selectedQuestion);
- 	    let factorId     = selectedQuestion.value;
+ 	    let factorId     = selectedQuestion?.value == -1 ? null : selectedQuestion?.value; 
 	    const myQuestion = this.container.querySelector('textarea[id="question-text-box"]');	
-   	    console.log(myQuestion);
-	    let factorText   = myQuestion.value; 
-	    let answerText   = ``; 
-	    let requestId    =  this.requestId; 
-            const response   =  this.webRequest.post(this.api.setSecurityQuestionMethod(), 
+	    const myAnswer   = this.container.querySelector('textarea[id="answer-text-box"]');	
+	    let factorText   = myQuestion?.value ?? null; 
+	    let answerText   = myAnswer?.value ?? null; 
+	    console.log(factorId, factorText, answerText, requestId);	
+	    if((!factorText && !factorId) && (!answerText)) throw(this.SAVE_SECURITY_QUESTION_ERROR);		
+            const response   = this.webRequest.post(
+	      this.api.setSecurityQuestionMethod(), 
               { factorId, factorText, answerText, requestId }, 
-	      true);
-	    if(response?.status != true) throw('Ошибка при получении вопросов');
-            return response?.questions || [];
+	      true
+	    );
+	    if(!response || response?.status != true) throw(this.SAVE_SECURITY_QUESTION_ERROR);	
+	    this.securityQuestionBoxResultDisplay(true)
+            return response;
         } catch (error) {
-            console.error('Ошибка при получении вопросов:', error);
-            toastr.error('Ошибка при получении вопросов', 'Безопасность', { timeOut: 3000 });
-            return [];
+            console.error(error);
+            toastr.error(error, 'Безопасность', { timeOut: 3000 });
+	    this.securityQuestionBoxResultDisplay(false)
+            return null;
         }
     }
 

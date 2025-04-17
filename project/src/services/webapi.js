@@ -416,10 +416,11 @@ class WebAPI {
 // Второй фактор
     getSecurityQuestionsMethod() { return `/api/bff/auth/v1/two-factors`; }
     getSecurityQuestionCheckMethod() { return `/api/bff/auth/v1/two-factor-check`; }
-    setSecurityQuestionMethod() { return `/api/bff/auth/v1/two-factor`; }
+
+    setSecurityQuestionMethod() { return `/api/bff/auth/v1/security-question`; }
 
 //  Получить признак что установлен параметр
-    getIsSecurityQuestionActiveMethod() { return `/api/bff/auth/v1/two-factor-status`; }
+    getIsSecurityQuestionActiveMethod() { return `/api/bff/auth/v1/security-question-status`; }
     getIsPINCodeActiveMethod() { return `/api/bff/auth/v1/pin-code-status`; }
 
 // Получить от сервиса подтверждения id запроса на смену второго фактора

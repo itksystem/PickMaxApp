@@ -128,13 +128,13 @@ class DOMHelper {
         return selector;
     }
 
-    static createHL(drawerId, actionId) {
-        const placement = this.createElement("hr", "width-100 text-end", ``);
+    static createHL(extraClass = '') {
+        const placement = this.createElement("hr", `width-100 text-end ${extraClass}`, ``);
         return placement;
     }
 
-    static createBR() {
-        const placement = this.createElement("br", "", ``);
+    static createBR(extraClass = '') {
+        const placement = this.createElement("br", `${extraClass}`, ``);
         return placement;
     }
 

@@ -178,8 +178,8 @@ class DisableSecurityQuestionManager {
                     answer, 
                     requestId: this.requestId
                 }, true);
-	    console.log(response?.status);	
-            this.securityQuestionDisableBoxDisplay((response?.status == true) ?? false) 
+	    console.log(!response?.status);	
+            this.securityQuestionDisableBoxDisplay(!response?.status) 
             return response?.status ? true : false;
         } catch (error) {
             console.error('Ошибка при получении вопросов:', error);
