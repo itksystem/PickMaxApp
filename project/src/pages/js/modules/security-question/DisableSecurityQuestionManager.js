@@ -83,6 +83,8 @@ class DisableSecurityQuestionManager {
             DOMHelper.divBox(`Код неверен! Повторите операцию.`,`w-100 pb-3 text-center text-red failed-security-question-label disable-result-box-element d-none`),
             DOMHelper.divBox(`Контрольный вопрос отключен!`,`w-100 pb-3 text-center success-security-question-label disable-result-box-element d-none`),
             DOMHelper.createButton(`В профиль`,`btn-success text-center w-100  disable-result-box-element failed-security-question-label success-security-question-label d-none`, this.onDisableResultSecurityQuestionClick.bind(this)),
+            DOMHelper.staticText(`disable-security-question-recommendation`,`disable-result-box-element failed-security-question-label success-security-question-label d-none`),
+
         )	
         this.container =  DOMHelper.createDropdownSection("", elements, );
         return this.container;

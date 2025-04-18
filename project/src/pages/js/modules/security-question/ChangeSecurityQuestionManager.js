@@ -134,6 +134,7 @@ class ChangeSecurityQuestionManager {
                 `text-end pt-4 security-question-button question-button`, 
                 this.onAboutSecurityQuestionClick.bind(this)
             ),
+	    DOMHelper.staticText(`change-security-question-recommendation`),
 
          )   
         this.container =  DOMHelper.createDropdownSection("",  	   
