@@ -616,6 +616,14 @@ class MainApp {
     return this;
   }
 
+  DisableDigitalCodePage(){
+    let o = this;
+    const digitalCodePage = new DisableDigitalCodePageSection("security-question-card-container");
+    digitalCodePage.DisableDigitalCodeCardContainer();
+    digitalCodePage.render();
+    return this;
+  }
+
   ChangeSecurityQuestionPage(){
     let o = this;
     const securityQuestionPage = new ChangeSecurityQuestionPageSection("security-question-card-container");

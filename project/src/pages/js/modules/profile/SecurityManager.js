@@ -45,16 +45,18 @@ class SecurityManager extends EventTarget {
         this.container =  DOMHelper.createDropdownSection("Безопасность", 
  	   [
             DOMHelper.Header('PIN-код'),
-            DOMHelper.createButton("Установить PIN-код", "text-end", this.setCodeFactor.bind(this)),
+            DOMHelper.createButton(
+	    (isPINCodeActive === true ? "Отключить PIN-код" : "Установить PIN-код"), "text-end", 
+	    (isPINCodeActive === true 
+		? this.DisableCodeFactor.bind(this)
+		: this.setCodeFactor.bind(this)
+     	    )),
             DOMHelper.createConfirmationLabel(
                 (isPINCodeActive === true ? "PIN-код установлен!" : "PIN-код не установлен!"), 
                 (isPINCodeActive === true ? "success" : "failed"), ),
   	        DOMHelper.bottomDrawer(`content-drawer`, ``),
-            DOMHelper.createLinkButton(
-                `О pin-коде`,
-                `text-end security-code-button question-button`, 
-                this.onAboutCodeClick.bind(this)
-            ),            
+            DOMHelper.createLinkButton(`О pin-коде`,`text-end security-code-button question-button`, this.onAboutCodeClick.bind(this)),            
+
             DOMHelper.createHL(),
             DOMHelper.Header('Контрольный вопрос'),
             (isSecurityQuestionActive
@@ -113,6 +115,11 @@ class SecurityManager extends EventTarget {
 	    return this;
 	}
 
+
+    DisableCodeFactor(){
+	    window.location.replace(`/profile/disable-digital-code/page`);
+	    return this;
+    }
 
     setCodeFactor(){
 	    window.location.replace(`/profile/change-digital-code/page`);

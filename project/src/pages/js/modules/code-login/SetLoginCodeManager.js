@@ -38,10 +38,13 @@ class SetLoginCodeManager {
         o.secondLogin.visible = true;
        let response ={};
        if (firstCode === secondCode) {		
-            response =  this.webRequest.get(o.api.setDigitalCodeMethod(), { code : firstCode}, true);
-	    response.status = true;	
+            response =  this.webRequest.post(o.api.setPINCodeMethod(), { 
+		code : firstCode, 
+		requestId : this.requestId
+	  }, true);
 	} 
-       let actionResult = o.changeCodeActionResult(firstCode, secondCode, response?.status);
+       this.pinCodeBoxDisplay((response.status==true) ? `success`: `failed`)
+       let actionResult = o.changeCodeActionResult(firstCode, secondCode, (response?.status == true));
 	   o.nextActionRedirectURL = o.nextActionRedirect(actionResult);
            o.nextActionButtonCaption(o.secondLogin.nextActionButton, actionResult);
            o.setFinalProcessElementVisible();
@@ -88,30 +91,88 @@ class SetLoginCodeManager {
      }	
 
     createDigitalCodeSection(data) {
-      // Секция для карт
-        const content = `
-	  <login-code class="login-code"  visible app-name="Введите код" code-length="5" timeout="100"></login-code>
-	  <login-code class="login-code-repeat" app-name="Повторите код" code-length="5" timeout="100"></login-code>`;
-
+        this.requestId = this.createPINCodeRequestIdMethod('pin-code');
         this.container =  DOMHelper.createDropdownSection("", 
  	   [
             DOMHelper.createElement("div", "profile-change-code-container", `
-    	      <login-code class="login-code"  visible app-name="Введите код" code-length="5" timeout="300"></login-code>
-	      <login-code class="login-code-repeat" app-name="Повторите код" code-length="5" timeout="300"></login-code>`
+    	      <login-code class="login-code pin-code-box-diplay "  visible app-name="Введите код" code-length="5" timeout="300"></login-code>
+	      <login-code class="login-code-repeat pin-code-box-diplay" app-name="Повторите код" code-length="5" timeout="300"></login-code>`
   	     ),
   	    DOMHelper.bottomDrawer(`content-drawer`, ``),
 	    DOMHelper.createBR(),
             DOMHelper.createLinkButton(
                 `О pin-коде`,
-                `text-end security-code-button question-button`, 
-                this.onAboutCodeClick.bind(this)
-            ),
-
+                `text-end security-code-button question-button  pin-code-box-diplay`, 
+                this.onAboutCodeClick.bind(this)),
+            DOMHelper.divBox(`Код неверен! Повторите операцию.`,`w-100 pb-3 text-center text-red failed-result d-none`),
+            DOMHelper.divBox(`Время установки пин-кода истекло!`,`w-100 pb-3 text-center text-red timeout-result d-none`),
+            DOMHelper.divBox(`Пин-код установлен!`,`w-100 pb-3 text-center success-result d-none`),
+            DOMHelper.createButton(`В профиль`,`btn-success text-center w-100  success-result timeout-result failed-result  d-none`, 
+		this.onSetResultPINCodeClick.bind(this)),
+            DOMHelper.staticText(`set-pin-code-recommendation`,`pin-code-box-diplay`),
         ]);
 
 	return this.container;
-
     }
+
+       onSetResultPINCodeClick() {
+         document.location.replace(this.api.PROFILE);
+       }
+      	
+
+      pinCodeBoxDisplay(result = '') { // success, failed, timeout
+        const  pincodeBoxElements =  this.container.querySelectorAll('.pin-code-box-diplay'); 
+        const  successResultBoxElements = this.container.querySelectorAll('.success-result');
+        const  failedResultBoxElements  = this.container.querySelectorAll('.failed-result');
+        const  timeoutResultBoxElements = this.container.querySelectorAll('.timeout-result');
+
+       	  pincodeBoxElements.forEach(element => {
+            element?.classList.remove('d-block');
+            element?.classList.add('d-none');
+          });
+
+        switch(result) {
+	case 'success' : {
+	        // отключить 
+        	  successResultBoxElements.forEach(element => {
+	            element?.classList.remove('d-none');
+	            element?.classList.add('d-block');
+	          });
+		  break;	
+		}
+	case 'failed' : {
+        	// включить 
+	        failedResultBoxElements.forEach(element => {
+	            element?.classList.remove('d-none');
+	            element?.classList.add('d-block');
+	        });
+		  break;	
+  	     }
+	case 'timeout' : {
+        	// истекло время
+	        timeoutResultBoxElements.forEach(element => {
+	            element?.classList.remove('d-none');
+	            element?.classList.add('d-block');
+	        });
+		  break;	
+  	     }
+	}
+    }	
+
+
+    createPINCodeRequestIdMethod(requestType = null) { // создать новый активный идентификатор запроса
+        console.log('createPINCodeRequestId ');	
+        try {
+            const response =  this.webRequest.post(this.api.createPINCodeRequestIdMethod(), {requestType}, true);
+            console.log(response);
+            return response?.requestId ?? null;
+        } catch (error) {
+            console.error('createPINCodeRequestId ', error);
+            return false;
+        }
+        return false;
+    }
+
 
 	onAboutCodeClick() {
 	    this.drawer = this.container.querySelector('[drawer-id="content-drawer"]');

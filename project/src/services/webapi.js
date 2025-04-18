@@ -403,10 +403,8 @@ class WebAPI {
    getConfirmationRequestMethod() { return `/api/bff/confirmation/v1/request`; }
    getConfirmationRequestMethodPayload( confirmationType ) { return { confirmationType } }
    
-   getDigitalCodeVerificationMethod(){ return `/api/bff/confirmation/v1/digital-code-verification`; }
-   getDigitalCodeRequestMethod(){ return `/api/bff/confirmation/v1/digital-code-request`; }
-   setDigitalCodeMethod(){ return `/api/bff/confirmation/v1/digital-code`; }
-   removeDigitalCodeMethod(){ return `/api/bff/confirmation/v1/digital-code`; }
+//   getPINCodeVerificationMethod(){ return `/api/bff/confirmation/v1/digital-code-verification`; }
+//   getPINCodeRequestMethod(){ return `/api/bff/confirmation/v1/digital-code-request`; }
 
 // регионы пользователя
    getClientRegionsMethod() { return `/api/bff/client/v1/regions`; }
@@ -417,31 +415,41 @@ class WebAPI {
     getSecurityQuestionsMethod() { return `/api/bff/auth/v1/two-factors`; }
     getSecurityQuestionCheckMethod() { return `/api/bff/auth/v1/two-factor-check`; }
 
-    setSecurityQuestionMethod() { return `/api/bff/auth/v1/security-question`; }
-
 //  Получить признак что установлен параметр
     getIsSecurityQuestionActiveMethod() { return `/api/bff/auth/v1/security-question-status`; }
     getIsPINCodeActiveMethod() { return `/api/bff/auth/v1/pin-code-status`; }
 
-// Получить от сервиса подтверждения id запроса на смену второго фактора
-    getActiveSecurityQuestionRequestIdExists() { return `/api/bff/confirmation/v1/2pa-request/security-question`; }
-    getPINCodeRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request/pin-code`; }
-
-//  создание запроса на смену второго фактора
-    createSecurityQuestionRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request`; }
-    
-
-//
+// получить контрольный вопрос
     getSecurityQuestionMethod() { return `/api/bff/auth/v1/security-question`; }
+
+// выполнить действие с проверкой, 
+// DISABLE_SECURITY_QUESTION - отключить контрольный вопрос
+// CHECK_ANSWER_ON_SECURITY_QUESTION - проверить ответ на контрольный вопрос
     sendSecurityAnswerMethod() { return `/api/bff/auth/v1/security-question-answer`; }
 
+// установить контрольный вопрос,
+    setSecurityQuestionMethod() { return `/api/bff/auth/v1/security-question`; }
+
+// установить PIN-код
+    setPINCodeMethod(){ return `/api/bff/confirmation/v1/pin-code`; }
+
+//удалить PIN-код
+    removePINCodeMethod(){ return `/api/bff/confirmation/v1/pin-code`; }
+
+// Получить от сервиса подтверждения id запроса на смену второго фактора
+    getActiveSecurityQuestionRequestIdExists() { return `/api/bff/confirmation/v1/2pa-request/security-question`; }
+
+//  создание запроса на смену второго фактора
+    createSecurityQuestionRequestIdMethod() { 
+				     return `/api/bff/confirmation/v1/2pa-request`; }
+    createPINCodeRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request`; }
+    
 /* станицы */
    LOGON_URL(){ return `/logon` }
   
    getShopProductMethod(shop_id=null, product_id = null){ return `/telegram/shop/${shop_id}/products/${product_id}/page`}
    getShopProductPayloadMethod(){ return {} }
 
-//   getShopOrderMethod(shop_id=null, application_id = null){ return `/telegram/shop/${shop_id}/orders/${application_id}`; }
 
    setShopOrderActionMethod(shop_id=null, application_id = null){ return `/telegram/shop/${shop_id}/orders/${application_id}/execute`}
    setShopOrderActionPayload(props){ return {

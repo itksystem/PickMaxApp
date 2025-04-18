@@ -155,6 +155,8 @@ body{
            {{>change_security_question}}
     {{else ifEquals service "disable-security-question"}}
            {{>disable_security_question}}
+    {{else ifEquals service "disable-digital-code"}}
+           {{>disable_digital_code}}
 
     {{/ifEquals}}              
 

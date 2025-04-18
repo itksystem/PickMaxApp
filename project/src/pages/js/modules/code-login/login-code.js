@@ -239,7 +239,6 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-image: url(background.png);
   }
 
   .timer {

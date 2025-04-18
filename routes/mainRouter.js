@@ -54,6 +54,7 @@ const protectedRoutes = [
     { method : 'GET', path: '/confirmation/email/page', page: common.COMMON_CONNFIRMATION_EMAIL_PAGE, service :{service : "confirmation-email"} },
     { method : 'GET', path: '/confirmation/phone/page', page: common.COMMON_CONNFIRMATION_PHONE_PAGE, service :{service : "confirmation-phone"} },
     { method : 'GET', path: '/profile/change-digital-code/page', page: common.COMMON_CONNFIRMATION_PHONE_PAGE, service :{service : "change-digital-code"} },
+    { method : 'GET', path: '/profile/disable-digital-code/page', page: common.COMMON_CONNFIRMATION_PHONE_PAGE, service :{service : "disable-digital-code"} },
     { method : 'GET', path: '/profile/change-security-question/page', page: common.COMMON_CONNFIRMATION_PHONE_PAGE, service :{service : "change-security-question"} },
     { method : 'GET', path: '/profile/disable-security-question/page', page: common.COMMON_CONNFIRMATION_PHONE_PAGE, service :{service : "disable-security-question"} },
     { method : 'GET', path: '/balance/deposit/page', page: common.COMMON_BALANCE_DEPOSIT_PAGE, service :{service : "balance-deposit"} },
