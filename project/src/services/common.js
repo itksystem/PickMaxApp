@@ -57,7 +57,8 @@ class CommonFunctions {
         let webRequest = new WebRequest();
         let api = new WebAPI();
 //	this.removeAccessToken();
-        let request = webRequest.get(api.getTelegramMeMethod(), {}, true );
+//      let request = webRequest.get(api.getTelegramMeMethod(), {}, true );
+        let request = webRequest.get(api.getMeMethod(), {}, true );
         console.log(request);
         const token = (!request.telegramToken) ?  null : request.telegramToken;
         if(token)

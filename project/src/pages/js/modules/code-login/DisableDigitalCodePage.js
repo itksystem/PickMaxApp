@@ -1,7 +1,8 @@
-class DisableDigitalCodePage extends PageBuilder {
+class DisableDigitalCodePageSection extends PageBuilder {
     constructor(containerId) {
         super(containerId);
         this.api = new WebAPI();
+        this.webRequest = new WebRequest();
         this.common = new CommonFunctions();
         this.profile = null;
         this.requestId = null;
@@ -11,14 +12,13 @@ class DisableDigitalCodePage extends PageBuilder {
 
     async init() {
         try {
-            const webRequest = new WebRequest();
-            const request = webRequest.get(this.api.getShopProfileMethod(), {}, true);
+            const request = this.webRequest.get(this.api.getShopProfileMethod(), {}, true);
             this.profile = request.profile;
 	    console.log(this.profile);	
         } catch (error) {
             console.error('Failed to initialize profile:', error);
             toastr.error('Не удалось загрузить данные профиля', 'Ошибка', { timeOut: 3000 });
-        }
+        }                             
     }
 
     /**
@@ -26,21 +26,21 @@ class DisableDigitalCodePage extends PageBuilder {
      * @param {number} totalQuantity - Total quantity of items (unused in current implementation)
      * @param {number} totalAmount - Total amount (unused in current implementation)
      */
-    DigitalCodeCardContainer() {
+    DisableDigitalCodeCardContainer() {
         this.DigitalCodeContainer = document.createElement("div");
         this.DigitalCodeContainer.className = "card confirmation-code-container";
 
         const DigitalCodeContainerHeader = document.createElement("div");
         DigitalCodeContainerHeader.className = "card-header";
-        DigitalCodeContainerHeader.innerHTML = `<h3 class="card-title">Подтверждение телефона</h3>`;
+        DigitalCodeContainerHeader.innerHTML = `<h3 class="card-title">Отключение PIN-кода</h3>`;
 
         const DigitalCodeContainerContent = document.createElement("div");
         DigitalCodeContainerContent.className = "card-body";
         DigitalCodeContainerContent.innerHTML = `
             <div class="confirmation-phone-body-container">
                 <div class="confirmation-phone-empty-text text-center" style="padding: 1rem 0; font-size: 0.9rem;">
-                    Введите код полученный на указанный вами телефонный номер<br>
-                    <b>${this.profile?.phone || 'не указан'}</b>
+                    Запросите код.</br>Он поступит на ваш телефонный номер</br>
+                    <b>${this.common.maskPhoneNumber(this.profile?.phone || '', '*', 4) || 'не указан'}</b>
                 </div>
                 <div class="text-center w-100" style="padding: 1rem 0 2rem 0;">
                     <confirmation-code disabled></confirmation-code>
@@ -61,32 +61,63 @@ class DisableDigitalCodePage extends PageBuilder {
     }
 
     /**
-     * Requests confirmation code
-     * @param {string} confirmationType - Type of confirmation (default: 'phone')
-     * @returns {Promise<Object>} - Response from the server
-     */
-    async getDigitalCodeCode(confirmationType = 'phone') {
-        const webRequest = new WebRequest();
-        return await webRequest.post(
-            this.api.getConfirmationRequestMethod(),
-            this.api.getConfirmationRequestMethodPayload(confirmationType),
-            true
-        );
-    }
-
-    /**
      * Sends confirmation code for verification
      * @param {string} code - The confirmation code
      * @param {string} requestId - The request ID from the confirmation request
+     * @param {string} action - The request ID from the confirmation request
      * @returns {Promise<Object>} - Response from the server
      */
-    async sendDigitalCodeCode(code, requestId) {
-        const webRequest = new WebRequest();
-        return await webRequest.post(
-            this.api.sendConfirmationCodeMethod(),
-            this.api.sendConfirmationCodeMethodPayload(code, requestId),
-            true
-        );
+
+     checkConfirmationCode(code, requestId, action) {
+        try {
+            const response =
+	        this.webRequest.post(
+	        this.api.checkConfirmationCodeMethod(), 
+		{code, 
+		requestId,
+		action
+		}, true);
+                console.log(response);
+            return response.requestId ?? null;
+        } catch (error) {
+            console.error('checkConfirmationCodeMethod ', error);
+            return null;
+        }
+        return null;
+    }
+
+// создать новый активный идентификатор запроса
+    createConfirmationRequest(confirmationType = null) { 
+        console.log('createConfirmationRequest ');	
+        try {
+            const response =
+	        this.webRequest.post(
+	  	 this.api.createConfirmationRequestMethod(), {confirmationType}, true);
+                 console.log(response);
+            return response?.requestId ?? null;
+        } catch (error) {
+            console.error('createConfirmationRequest ', error);
+            return null;
+        }
+        return null;
+    }
+
+// отправить код по идентификатору запроса
+    deliveryConfirmationCodeRequest(confirmationType = null, requestId = null) { 
+        console.log('deliveryConfirmationCodeRequest ');	
+        try {
+	   if(!confirmationType || !requestId ) throw('!confirmationType || !requestId error');
+           const response =  
+		this.webRequest.post(
+		this.api.deliveryConfirmationCodeRequestMethod(), 
+		{confirmationType, requestId}, true);
+	        console.log(response);
+            return response?.requestId ?? null;
+        } catch (error) {
+            console.error('deliveryConfirmationCodeRequest ', error);
+            return false;
+        }
+        return false;
     }
     
     /**
@@ -106,24 +137,21 @@ class DisableDigitalCodePage extends PageBuilder {
             sendConfirmationCodeButton.classList.remove('d-none');
         });
 
-        // Handle get code button click
+        // запросить код
         getConfirmationCodeButton?.addEventListener('click', async () => {
             try {
                 getConfirmationCodeButton.disabled = true;
                 infoLabel.innerHTML = 'Запрашиваем код...';
                 infoLabel.classList.remove('failed');
                 
-                const request = await this.getDigitalCodeCode('phone');
-                
-                if (!request?.status) {
+              	this.requestId = this.createConfirmationRequest('phone'); //создаем новый идентификатор запроса
+                if (!this.requestId) {
                     throw new Error(request?.message || 'Неизвестная ошибка при запросе кода');
                 }
-
-                if (!request.requestId) {
-                    throw new Error('Отсутствует requestId в ответе сервера');
+                const requestId = this.deliveryConfirmationCodeRequest('phone', this.requestId);      //создаем запрос на доставку кода
+                if (!requestId) {
+                    throw new Error('Повторите операцию позже...');
                 }
-
-                this.requestId = request.requestId;
 
                 // Update UI
                 confirmationCodeElement.disabled = false;
@@ -138,37 +166,35 @@ class DisableDigitalCodePage extends PageBuilder {
                 infoLabel.innerHTML = error.message || 'Произошла непредвиденная ошибка';
                 toastr.error('Ошибка при запросе кода', 'Подтверждение', { timeOut: 3000 });
             } finally {
-                getConfirmationCodeButton.disabled = false;
+                getConfirmationCodeButton.disabled = true;
             }
         });
 
-        // Handle send code button click
+        // отправить код
         sendConfirmationCodeButton?.addEventListener('click', async () => {
             try {
                 sendConfirmationCodeButton.disabled = true;
                 infoLabel.innerHTML = 'Проверяем код...';
                 infoLabel.classList.remove('failed');
-                
+
                 const code = confirmationCodeElement.getCode();
                 if (!code) {
                     throw new Error('Код не введен');
                 }
-
-                const request = await this.sendDigitalCodeCode(code, this.requestId);
-                
-                if (!request?.status) {
+                // выполняемый процесс
+                const requestId = this.checkConfirmationCode(code, this.requestId, 'PIN_CODE_DISABLE');  
+                if (!requestId) {
                     throw new Error(request?.message || 'Неизвестная ошибка при проверке кода');
                 }
 
                 // Success case
                 confirmationCodeElement.disabled = true;
-                infoLabel.innerHTML = 'Телефон подтвержден!';
+                infoLabel.innerHTML = 'PIN-код отключен!';
                 infoLabel.classList.add('success');
                 getConfirmationCodeButton.classList.add('d-none');
                 sendConfirmationCodeButton.classList.add('d-none');
                 backProfileButton.classList.add('d-block');   
                 backProfileButton.classList.remove('d-none'); 
-                // Optionally emit an event or call a callback to notify parent component
             } catch (error) {
                 console.error('Code verification error:', error);
                 infoLabel.classList.add('failed');

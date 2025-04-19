@@ -396,16 +396,7 @@ class WebAPI {
    getTelegramMeMethod() { return `/@telegram`; }
    getTelegramMeMethodPayload() { return {};  }
 
-// Сервис подтверждения
-   sendConfirmationCodeMethod() { return `/api/bff/confirmation/v1/code`; }
-   sendConfirmationCodeMethodPayload( code, requestId ) { return { code, requestId } }
-
-   getConfirmationRequestMethod() { return `/api/bff/confirmation/v1/request`; }
-   getConfirmationRequestMethodPayload( confirmationType ) { return { confirmationType } }
-   
-//   getPINCodeVerificationMethod(){ return `/api/bff/confirmation/v1/digital-code-verification`; }
-//   getPINCodeRequestMethod(){ return `/api/bff/confirmation/v1/digital-code-request`; }
-
+  
 // регионы пользователя
    getClientRegionsMethod() { return `/api/bff/client/v1/regions`; }
    sendClientRegionMethod() { return `/api/bff/client/v1/region`; }
@@ -413,7 +404,7 @@ class WebAPI {
 
 // Второй фактор
     getSecurityQuestionsMethod() { return `/api/bff/auth/v1/two-factors`; }
-    getSecurityQuestionCheckMethod() { return `/api/bff/auth/v1/two-factor-check`; }
+//    getSecurityQuestionCheckMethod() { return `/api/bff/auth/v1/two-factor-check`; }
 
 //  Получить признак что установлен параметр
     getIsSecurityQuestionActiveMethod() { return `/api/bff/auth/v1/security-question-status`; }
@@ -431,18 +422,36 @@ class WebAPI {
     setSecurityQuestionMethod() { return `/api/bff/auth/v1/security-question`; }
 
 // установить PIN-код
-    setPINCodeMethod(){ return `/api/bff/confirmation/v1/pin-code`; }
+    pinCodeEnableMethod(){ return    `/api/bff/auth/v1/pin-code-enable`; }
 
 //удалить PIN-код
-    removePINCodeMethod(){ return `/api/bff/confirmation/v1/pin-code`; }
+    pinCodeDisableMethod(){ return `/api/bff/auth/v1/pin-code-disable`; }
 
 // Получить от сервиса подтверждения id запроса на смену второго фактора
-    getActiveSecurityQuestionRequestIdExists() { return `/api/bff/confirmation/v1/2pa-request/security-question`; }
+//    getActiveSecurityQuestionRequestIdExists() { return `/api/bff/confirmation/v1/request/security-question`; }
 
-//  создание запроса на смену второго фактора
-    createSecurityQuestionRequestIdMethod() { 
-				     return `/api/bff/confirmation/v1/2pa-request`; }
-    createPINCodeRequestIdMethod() { return `/api/bff/confirmation/v1/2pa-request`; }
+//  создание запроса на работу с контрольными вопросами
+//    createSecurityQuestionRequestIdMethod() {return `/api/bff/confirmation/v1/request`; }
+
+
+// ****************************  Сервис подтверждения  ********************************
+// отправка кода для проверки
+   checkConfirmationCodeMethod() { return `/api/bff/confirmation/v1/check-code`; }
+   checkConfirmationCodeMethodPayload( code, requestId ) { return { code, requestId } }
+
+// отправить запрос на доставку кода по указанному каналу confirmationType = email || phone
+   deliveryConfirmationCodeRequestMethod() { return `/api/bff/confirmation/v1/send-code-request`; }
+   deliveryConfirmationCodeRequestMethodPayload( confirmationType ) { return { confirmationType } }
+
+//   Запросить создание нового активного запроса на подтверждение request{requestType=security-question || pin-code }, отменив старые
+   createConfirmationRequestMethod() { return `/api/bff/confirmation/v1/request`; }
+   createConfirmationRequestMethodPayload(requestType) { return { requestType } }
+
+//  Получить активный запрос request{requestType = security-question || pin-code }
+   getConfirmationActiveRequestMethod() { return `/api/bff/confirmation/v1/request`; }
+   getConfirmationActiveRequestMethodPayload(requestType) { return { requestType } }
+
+
     
 /* станицы */
    LOGON_URL(){ return `/logon` }

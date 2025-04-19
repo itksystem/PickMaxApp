@@ -21,14 +21,13 @@ class ConfirmationServiceHandler {
         }
     }
     
-
     /**
-     * Метод для отправки запроса на смс-код 
+     * Метод проверки кода  
      * @returns {Object} - Объект с результатом
      */
-    async sendRequest(req, res) {
+    async checkCode(req, res) {
         try {
-            const response = await fetch(process.env.GET_CONFIRMATION_REQUEST_URL, {
+            const response = await fetch(process.env.CHECK_CONFIRMATION_CODE_URL, {
                 method: 'POST',
                 headers: this.headers(req),
                 body: JSON.stringify(req.body),
@@ -36,39 +35,14 @@ class ConfirmationServiceHandler {
 
             const data = await response.json();
             if (response.ok) {
-                console.log(`sendRequest successfully.`);
+                console.log(`checkCode successfully.`);
                 return { success: true, data };
             } else {
-                console.log(`sendRequest failed.`);
+                console.log(`checkCode failed.`);
                 return { success: false, status: response.status, data };
             }
         } catch (error) {
-            console.log(`sendRequest failed.`);
-            return { success: false, error: error.message };
-        }
-    }
-    /**
-     * Метод для отправки смс-кода на проверку 
-     * @returns {Object} - Объект с результатом
-     */
-    async sendCode(req, res) {
-        try {
-            const response = await fetch(process.env.SEND_CONFIRMATION_CODE_URL, {
-                method: 'POST',
-                headers: this.headers(req),
-                body: JSON.stringify(req.body),
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                console.log(`sendCode successfully.`);
-                return { success: true, data };
-            } else {
-                console.log(`sendCode failed.`);
-                return { success: false, status: response.status, data };
-            }
-        } catch (error) {
-            console.log(`sendCode failed.`);
+            console.log(`checkCode failed.`);
             return { success: false, error: error.message };
         }
     }
@@ -114,27 +88,60 @@ async getPINCodeRequestId(req) {
     }
   }
   
-// создание запроса для 2PA
-async create2PARequestId(req) {
-    try {        
-        const response = await fetch(process.env.CONFIRMATION_CREATE_2PA_REQUEST_ID_URL, {
+    /**
+     * Метод создания запроса на доставку кода
+     * @returns {Object} - Объект с результатом
+     */
+    async createRequest(req, res) {
+        try {
+            const response = await fetch(process.env.CONFIRMATION_CREATE_REQUEST_ID_URL, {
+                method: 'POST',
+                headers: this.headers(req),
+                body: JSON.stringify(req.body),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                console.log(`sendRequest successfully.`);
+                return { success: true, data };
+            } else {
+                console.log(`sendRequest failed.`);
+                return { success: false, status: response.status, data };
+            }
+        } catch (error) {
+            console.log(`sendRequest failed.`);
+            return { success: false, error: error.message };
+        }
+    }
+
+/**
+* Метод для отправки кода 
+* @returns {Object} - Объект с результатом
+*/
+async sendCodeRequest(req, res) {
+    try {
+        const response = await fetch(process.env.DELIVERY_CONFIRMATION_CODE_REQUEST_ID_URL, {
             method: 'POST',
-            headers: this.headers(req),            
+            headers: this.headers(req),
             body: JSON.stringify(req.body),
         });
+
         const data = await response.json();
         if (response.ok) {
-            console.log(`create2PARequestId success.`);
+            console.log(`sendCodeRequest successfully.`);
             return { success: true, data };
         } else {
-            console.log(`create2PARequestId failed.`);
+            console.log(`sendCodeRequest failed.`);
             return { success: false, status: response.status, data };
         }
     } catch (error) {
-        console.log(`create2PARequestId failed.`);
+        console.log(`sendCodeRequest failed.`);
         return { success: false, error: error.message };
     }
-  }
+}    
+
 }
+
+
 
 module.exports = ConfirmationServiceHandler;

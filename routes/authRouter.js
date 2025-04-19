@@ -11,7 +11,7 @@ const authClient = new AuthServiceClientHandler();              // интерф�
 require('dotenv').config({ path: '.env-pickmax-service' });
 
 
-router.get('/v1/two-factors', async (req, res) => {    
+router.get('/v1/two-factors', async (req, res) => {    // список вопросов для установки второго фактора
     const userId = await authClient.getUserId(req, res);                   
     if(!userId) throw(401)
     const response = await authClient.get2PAFactorsList(req);
@@ -24,7 +24,7 @@ router.get('/v1/two-factors', async (req, res) => {
 });
 
 
-router.get('/v1/security-question-status', async (req, res) => {    
+router.get('/v1/security-question-status', async (req, res) => {    // проверка на наличие установленного контрольного вопроса
     const userId = await authClient.getUserId(req, res);                   
     if(!userId) throw(401)
     const response = await authClient.getSecurityQuestionStatus(req);
@@ -37,7 +37,7 @@ router.get('/v1/security-question-status', async (req, res) => {
 });
 
 
-router.get('/v1/pin-code-status', async (req, res) => {    
+router.get('/v1/pin-code-status', async (req, res) => {    // проверка на наличие установленного PIN-кода
     const userId = await authClient.getUserId(req, res);                   
     if(!userId) throw(401)
     const response = await authClient.getPINCodeStatus(req);
@@ -49,7 +49,7 @@ router.get('/v1/pin-code-status', async (req, res) => {
     }
 });
 
-router.get('/v1/security-question', async (req, res) => {    
+router.get('/v1/security-question', async (req, res) => {    //  получить контрольный вопрос пользователя
     const userId = await authClient.getUserId(req, res);                   
     if(!userId) throw(401)
     const response = await authClient.getSecurityQuestion(req);
@@ -62,7 +62,7 @@ router.get('/v1/security-question', async (req, res) => {
 });
 
 
-router.post('/v1/security-question-answer', async (req, res) => {    
+router.post('/v1/security-question-answer', async (req, res) => {  // направить ответ на вопрос
     const userId = await authClient.getUserId(req, res);                   
     if(!userId) throw(401)
     const response = await authClient.getSecurityAnswer(req);
@@ -75,7 +75,7 @@ router.post('/v1/security-question-answer', async (req, res) => {
 });
 
 
-router.post('/v1/security-question', async (req, res) => {    
+router.post('/v1/security-question', async (req, res) => {  // установить контрольный вопрос
     const userId = await authClient.getUserId(req, res);                   
     if(!userId) throw(401)
     const response = await authClient.setSecurityQuestion(req);
@@ -86,5 +86,9 @@ router.post('/v1/security-question', async (req, res) => {
         res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
     }
 });
+
+
+
+
 
 module.exports = router;

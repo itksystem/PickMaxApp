@@ -618,7 +618,7 @@ class MainApp {
 
   DisableDigitalCodePage(){
     let o = this;
-    const digitalCodePage = new DisableDigitalCodePageSection("security-question-card-container");
+    const digitalCodePage = new DisableDigitalCodePageSection("digital-code-card-container");
     digitalCodePage.DisableDigitalCodeCardContainer();
     digitalCodePage.render();
     return this;
