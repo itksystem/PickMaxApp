@@ -1364,3 +1364,7 @@
 {"level":"error","message":"/v1/request 422","service":"pickapp-service","timestamp":"2025-04-19T20:03:23.266Z"}
 {"level":"error","message":"/v1/request 422","service":"pickapp-service","timestamp":"2025-04-19T20:14:19.894Z"}
 {"level":"error","message":"/v1/request 422","service":"pickapp-service","timestamp":"2025-04-19T20:14:28.570Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-19T21:03:33.330Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-19T21:05:19.704Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-19T21:16:34.977Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-20T06:01:32.766Z"}

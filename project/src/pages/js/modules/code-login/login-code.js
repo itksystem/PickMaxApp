@@ -7,6 +7,7 @@
         this.timeLeft = parseInt(this.getAttribute('timeout')) || 300;
         this.timerInterval = null;
         this.maskTimeouts = [];
+	this.timeoutCallbackProc = null;
       }
 
       static get observedAttributes() {
@@ -496,8 +497,11 @@ h1 {
         this.showMessage(text, isSuccess);
      }
 
+     timeoutCallback(callback){
+	this.timeoutCallbackProc = callback;
+     }
 
-      startTimer() {
+     startTimer() {
         this.updateTimerDisplay();
         this.timerInterval = setInterval(() => {
           this.timeLeft--;
@@ -506,6 +510,8 @@ h1 {
           if (this.timeLeft <= 0) {
             clearInterval(this.timerInterval);
             this.showMessage('Время ожидания истекло');
+	    if(this.timeoutCallbackProc) 
+		this.timeoutCallbackProc(this);
           }
         }, 1000);
       }
