@@ -102,14 +102,14 @@ async getPINCodeRequestId(req) {
 
             const data = await response.json();
             if (response.ok) {
-                console.log(`sendRequest successfully.`);
+                console.log(`createRequest successfully.`);
                 return { success: true, data };
             } else {
-                console.log(`sendRequest failed.`);
+                console.log(`createRequest failed.`);
                 return { success: false, status: response.status, data };
             }
         } catch (error) {
-            console.log(`sendRequest failed.`);
+            console.log(`createRequest failed.`);
             return { success: false, error: error.message };
         }
     }
@@ -140,8 +140,70 @@ async sendCodeRequest(req, res) {
     }
 }    
 
+async getSecurityQuestionStatus(req) {
+    try {        
+        const response = await fetch(process.env.CONFIRMATION_GET_SECURITY_STATUS_URL, {
+            method: 'GET',                           
+            headers: this.headers(req),            
+        });
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`getSecurityStatus success.`);
+            return { success: true, data };
+        } else {
+            console.log(`getSecurityStatus failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+        console.log(`getSecurityStatus failed.`);
+        return { success: false, error: error.message };
+    }
+  }
+
+  
+async getSecurityQuestions(req) {
+    try {                                               
+        const response = await fetch(process.env.CONFIRMATION_GET_SECURITY_QUESTION_LIST_URL, {
+            method: 'GET',                           
+            headers: this.headers(req),            
+        });
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`getSecurityQuestions success.`);
+            return { success: true, data };
+        } else {
+            console.log(`getSecurityQuestions failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+        console.log(`getSecurityQuestions failed.`);
+        return { success: false, error: error.message };
+    }
+  }
+
+  
+  async setSecurityQuestion(req) {
+    try {                                               
+        const response = await fetch(process.env.CONFIRMATION_POST_SECURITY_QUESTION_URL, {
+            method: 'POST',                           
+            headers: this.headers(req),
+            body: JSON.stringify(req.body), 
+        });
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`getSecurityQuestions success.`);
+            return { success: true, data };
+        } else {
+            console.log(`getSecurityQuestions failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+        console.log(`getSecurityQuestions failed.`);
+        return { success: false, error: error.message };
+    }
+  }
+
+
+/* ---------------------------------------------*/
 }
-
-
-
 module.exports = ConfirmationServiceHandler;

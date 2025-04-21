@@ -2928,3 +2928,74 @@
 {"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T08:12:37.168Z"}
 {"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T08:14:05.746Z"}
 {"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T08:14:06.471Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-20T09:05:23.379Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-04-20T09:05:30.888Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T09:05:36.712Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T09:05:37.411Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T09:59:07.198Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:00:26.309Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:01:02.730Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:02:54.988Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:05:18.555Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:08:58.547Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:10:17.009Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T10:10:36.183Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T10:10:36.914Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:14:29.944Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:16:22.224Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T10:16:46.454Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T10:16:47.055Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:27:04.034Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:27:04.704Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:36:35.392Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:36:36.084Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:38:49.103Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:38:49.784Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:43:50.995Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:43:51.624Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:45:49.539Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:45:51.177Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:54:45.451Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:54:46.107Z"}
+{"error":"request to http://91.218.230.34:3001/api/auth/v1/checkToken failed, reason: connect ECONNREFUSED 91.218.230.34:3001","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-20T11:57:48.691Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-04-20T11:57:54.844Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:58:00.034Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:58:00.597Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:58:44.150Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T11:58:44.743Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T12:03:18.597Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T12:03:19.253Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T12:03:49.558Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T12:03:50.301Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T12:04:06.222Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T12:04:06.818Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-20T12:04:32.674Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-20T12:04:33.321Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-21T09:12:16.779Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-04-21T09:12:22.902Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T09:23:35.782Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T09:23:36.444Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T10:08:45.890Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T10:08:46.472Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-21T12:16:06.459Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-04-21T12:16:12.213Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T12:16:19.797Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T12:17:16.373Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T12:17:20.967Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T12:17:21.505Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T12:17:39.260Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T12:17:39.884Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T12:17:40.902Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T12:17:41.440Z"}
+{"level":"error","message":"Only absolute URLs are supported","service":"pickapp-service","timestamp":"2025-04-21T13:24:29.741Z"}
+{"level":"error","message":"Only absolute URLs are supported","service":"pickapp-service","timestamp":"2025-04-21T13:26:38.057Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/confirmation/v1/security-questions reason: Unexpected token < in JSON at position 0","service":"pickapp-service","timestamp":"2025-04-21T13:27:39.277Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/confirmation/v1/security-questions reason: Unexpected token < in JSON at position 0","service":"pickapp-service","timestamp":"2025-04-21T13:27:58.861Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-21T17:02:23.213Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-04-21T17:02:29.580Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T17:02:40.943Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T17:02:41.582Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T17:20:05.354Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T17:20:06.001Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T17:20:08.067Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T17:20:08.642Z"}

@@ -403,23 +403,22 @@ class WebAPI {
    deleteClientRegionMethod() { return `/api/bff/client/v1/region`; }
 
 // Второй фактор
-    getSecurityQuestionsMethod() { return `/api/bff/auth/v1/two-factors`; }
-//    getSecurityQuestionCheckMethod() { return `/api/bff/auth/v1/two-factor-check`; }
+    getSecurityQuestionsMethod() { return `/api/bff/confirmation/v1/security-questions`; }
 
 //  Получить признак что установлен параметр
-    getIsSecurityQuestionActiveMethod() { return `/api/bff/auth/v1/security-question-status`; }
+    getIsSecurityQuestionActiveMethod() { return `/api/bff/confirmation/v1/security-question-status`; }
     getIsPINCodeActiveMethod() { return `/api/bff/auth/v1/pin-code-status`; }
 
 // получить контрольный вопрос
     getSecurityQuestionMethod() { return `/api/bff/auth/v1/security-question`; }
 
 // выполнить действие с проверкой, 
-// DISABLE_SECURITY_QUESTION - отключить контрольный вопрос
-// CHECK_ANSWER_ON_SECURITY_QUESTION - проверить ответ на контрольный вопрос
+	// DISABLE_SECURITY_QUESTION - отключить контрольный вопрос
+	// CHECK_ANSWER_ON_SECURITY_QUESTION - проверить ответ на контрольный вопрос
     sendSecurityAnswerMethod() { return `/api/bff/auth/v1/security-question-answer`; }
 
-// установить контрольный вопрос,
-    setSecurityQuestionMethod() { return `/api/bff/auth/v1/security-question`; }
+// установить контрольный вопрос, POST
+    setSecurityQuestionMethod() { return `/api/bff/confirmation/v1/security-question`; }
 
 // установить PIN-код
     pinCodeEnableMethod(){ return    `/api/bff/auth/v1/pin-code-enable`; }

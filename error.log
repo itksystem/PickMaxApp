@@ -1368,3 +1368,21 @@
 {"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-19T21:05:19.704Z"}
 {"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-19T21:16:34.977Z"}
 {"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-20T06:01:32.766Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-20T09:05:23.379Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T09:59:07.198Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:00:26.309Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:01:02.730Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:02:54.988Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:05:18.555Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:08:58.547Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:10:17.009Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:14:29.944Z"}
+{"level":"error","message":"/v1/check-code 422","service":"pickapp-service","timestamp":"2025-04-20T10:16:22.224Z"}
+{"error":"request to http://91.218.230.34:3001/api/auth/v1/checkToken failed, reason: connect ECONNREFUSED 91.218.230.34:3001","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-20T11:57:48.691Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-21T09:12:16.779Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-21T12:16:06.459Z"}
+{"level":"error","message":"Only absolute URLs are supported","service":"pickapp-service","timestamp":"2025-04-21T13:24:29.741Z"}
+{"level":"error","message":"Only absolute URLs are supported","service":"pickapp-service","timestamp":"2025-04-21T13:26:38.057Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/confirmation/v1/security-questions reason: Unexpected token < in JSON at position 0","service":"pickapp-service","timestamp":"2025-04-21T13:27:39.277Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/confirmation/v1/security-questions reason: Unexpected token < in JSON at position 0","service":"pickapp-service","timestamp":"2025-04-21T13:27:58.861Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-21T17:02:23.213Z"}

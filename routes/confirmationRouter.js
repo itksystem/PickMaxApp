@@ -72,4 +72,40 @@ router.post('/v1/send-code-request', async (req, res) => {
 });
 
 
+router.get('/v1/security-question-status', async (req, res) => {    // проверка на наличие установленного контрольного вопроса    
+    try {
+        const response = await confirmationService.getSecurityQuestionStatus(req);    
+        if (response.success) 
+            res.status(200).json(response.data);
+    } catch (error) {
+        logger.error(response.error || 'Неизвестная ошибка' );   
+        res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
+    }
+
+});
+
+router.get('/v1/security-questions', async (req, res) => {    // список вопросов
+    try{
+      const response = await confirmationService.getSecurityQuestions(req);
+      if (response.success) 
+        res.status(200).json(response.data);
+    } catch (error) {
+      logger.error(response.error || 'Неизвестная ошибка' );   
+      res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
+  }
+});
+
+router.post('/v1/security-question', async (req, res) => {    // установить вопрос
+    try{
+      const response = await confirmationService.setSecurityQuestion(req);
+      if (response.success) 
+        res.status(200).json(response.data);
+    } catch (error) {
+      logger.error(response.error || 'Неизвестная ошибка' );   
+      res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
+  }
+});
+
+
+
 module.exports = router;

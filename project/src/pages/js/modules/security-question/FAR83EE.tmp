@@ -238,12 +238,9 @@ class ChangeSecurityQuestionManager {
 	    this.requestId = ConfirmationHelper.createConfirmationRequest(ConfirmationHelper.SECURITY_QUESTION);
 	    console.log(factorId, factorText, answerText, this.requestId);	
 	    if(this.requestId) {
-              const response = 
-		this.webRequest.post(
-   	          this.api.setSecurityQuestionMethod(), 
-			{ factorId, factorText, answerText, requestId : this.requestId },
-		   true );
-		   console.log(response);
+              const response   = this.webRequest.post(
+   	          this.api.setSecurityQuestionMethod(), { factorId, factorText, answerText, requestId : this.requestId }, true );
+		  console.log(response);
 		    if(!response || response?.status != true) 
 			throw(this.SAVE_SECURITY_QUESTION_ERROR);	
  	    }

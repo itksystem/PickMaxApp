@@ -23,7 +23,7 @@ router.get('/v1/two-factors', async (req, res) => {    // список вопр�
     }
 });
 
-
+/*
 router.get('/v1/security-question-status', async (req, res) => {    // проверка на наличие установленного контрольного вопроса
     const userId = await authClient.getUserId(req, res);                   
     if(!userId) throw(401)
@@ -35,7 +35,7 @@ router.get('/v1/security-question-status', async (req, res) => {    // пров�
         res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
     }
 });
-
+*/
 
 router.get('/v1/pin-code-status', async (req, res) => {    // проверка на наличие установленного PIN-кода
     const userId = await authClient.getUserId(req, res);                   

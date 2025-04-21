@@ -8,6 +8,8 @@ class ConfirmationHelper {
      */
       static PHONE = 'phone';
       static EMAIL = 'email';
+      static SECURITY_QUESTION = 'security-question';
+
       static api = new WebAPI();
       static webRequest = new WebRequest();
 

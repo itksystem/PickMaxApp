@@ -6,48 +6,15 @@ class ChangeSecurityQuestionManager {
 	this.SAVE_SECURITY_QUESTION_ERROR='Ошибка при сохранении контрольного вопроса';
     }
 
-     successButtonActive() {
-	  const hasAnswer = this.myAnswer.value.length > 0;
-	  const isCustomQuestion = this.myQuestion.classList.contains('d-block');  
-	  return hasAnswer && (!isCustomQuestion || this.myQuestion.value.length > 0);
-    }
-
-
     addEventListeners(data) {
+     let o = this;	
      window.addEventListener('DOMContentLoaded', () => {
-        let o = this;
-        this.myQuestion = this.container.querySelector('textarea[id="question-text-box"]');
-        this.myAnswer = this.container.querySelector('textarea[id="answer-text-box"]');
-        this.radioGroupElements = this.container.querySelectorAll('[name="customQuestions"]');
-        this.successButton= this.container.querySelector('.btn-send-request');
-	this.successButton.disabled = true;
-        this.myAnswer.disabled = true; // Initially disable the answer box
 
-        if (!this.myQuestion || !this.myAnswer || !this.radioGroupElements.length) {
-            console.error("Required elements not found!");
-            return;
-        }
-
-        this.myAnswer.addEventListener('keyup', () => {
-	   this.successButton.disabled = !this.successButtonActive();
-        });
-
-        this.myQuestion.addEventListener('keyup', () => {
-	   this.successButton.disabled = !this.successButtonActive();
-        });
-
-        this.radioGroupElements.forEach(radio => {
-            radio.addEventListener('change', () => {
-                o.myAnswer.disabled = !radio.checked; 
- 	        o.successButton.disabled = !o.successButtonActive();
-            });
-
-        });
-    });
+      });
    }
 
    changeCodeActionResult(firstCode = null, secondCode = null, status = null){
-      return (firstCode !== secondCode || !status ) ? false : true; 
+      return (firstCode != secondCode || !status ) ? false : true; 
    }
     
     nextActionButtonCaption(el, isSuccess){
@@ -141,7 +108,7 @@ class ChangeSecurityQuestionManager {
 	        "customQuestions",
 	        `Укажу свой вопрос`,
 		false,
-		this.radioButtonOnClick.bind(this)
+		this.radionButtonOnClick.bind(this)
 	        ),
 	    DOMHelper.divBox(`Введите свой вопрос`,`question-text-box-label w-100 pb-2 pt-3 d-none`),
             DOMHelper.createTextBox(`question-text-box`,`question-text-box form-control w-100 d-none`),
@@ -149,8 +116,7 @@ class ChangeSecurityQuestionManager {
             DOMHelper.createTextBox(`answer-text-box`,`answer-text-box form-control w-100`),
   	    DOMHelper.bottomDrawer(`content-drawer`, ``),
             DOMHelper.createHL(`security-question-web-element`),
-            DOMHelper.createButton("Установить проверку", "btn-send-request text-center w-100", 
-		this.saveSecurityQuestion.bind(this)),
+            DOMHelper.createButton("Установить проверку", "btn-send-request text-center w-100", this.saveSecurityQuestion.bind(this)),
             DOMHelper.createBR(`security-question-web-element`),
 	    DOMHelper.divBox(
 		`Контрольный вопрос установлен!`,
@@ -174,11 +140,6 @@ class ChangeSecurityQuestionManager {
         this.container =  DOMHelper.createDropdownSection("",  	   
 	    elements,
         );
-        try{
-	        this.container.querySelector('[name="customQuestions"][id="-1"]').checked = true;
-	    }catch(error){
-	}
-
 	return this.container;
      }
 
@@ -186,7 +147,7 @@ class ChangeSecurityQuestionManager {
          document.location.replace(this.api.PROFILE);
       }
  
-      radioButtonOnClick(e){       
+      radionButtonOnClick(e){       
 	this.mySecurityQuestionBoxDisplay((e == -1))  
       }	
 
@@ -199,7 +160,8 @@ class ChangeSecurityQuestionManager {
 	        return this;
 	    }
 
-            if (typeof eventBus !== 'undefined' && eventBus) {
+            if(eventBus) {
+                console.log(eventBus)
                 eventBus.emit("ContentBottomDrawerOpen", { // Убрать двойную вложенность
 		        contentId: `about-security-question-help`,
 		        drawerId: this.drawer.getAttribute('drawer-id')		    
@@ -219,37 +181,29 @@ class ChangeSecurityQuestionManager {
             console.error('createSecurityQuestionRequestIdMethod ', error);
             return false;
         }
+       return false;
     }
 
 
     saveSecurityQuestion(){
         try {
+            const requestId = this.createSecurityQuestionRequestId(`custom-question`);
+	    if(!requestId) throw(this.SAVE_SECURITY_QUESTION_ERROR);	
 	    const selectedQuestion = this.container.querySelector('input[name="customQuestions"]:checked');	
- 	    let factorId     = selectedQuestion?.value == -1 ? null : selectedQuestion?.value ?? null; 
+ 	    let factorId     = selectedQuestion?.value == -1 ? null : selectedQuestion?.value; 
 	    const myQuestion = this.container.querySelector('textarea[id="question-text-box"]');	
 	    const myAnswer   = this.container.querySelector('textarea[id="answer-text-box"]');	
 	    let factorText   = myQuestion?.value ?? null; 
 	    let answerText   = myAnswer?.value ?? null; 
-
-	    if((!factorText && !factorId) || (!answerText))
-	       throw(this.SAVE_SECURITY_QUESTION_ERROR);		
-
-            let response ={};
-	    this.requestId = ConfirmationHelper.createConfirmationRequest(ConfirmationHelper.SECURITY_QUESTION);
-	    console.log(factorId, factorText, answerText, this.requestId);	
-	    if(this.requestId) {
-              const response = 
-		this.webRequest.post(
-   	          this.api.setSecurityQuestionMethod(), 
-			{ factorId, factorText, answerText, requestId : this.requestId },
-		   true );
-		   console.log(response);
-		    if(!response || response?.status != true) 
-			throw(this.SAVE_SECURITY_QUESTION_ERROR);	
- 	    }
-
+	    console.log(factorId, factorText, answerText, requestId);	
+	    if((!factorText && !factorId) && (!answerText)) throw(this.SAVE_SECURITY_QUESTION_ERROR);		
+            const response   = this.webRequest.post(
+	      this.api.setSecurityQuestionMethod(), 
+              { factorId, factorText, answerText, requestId }, 
+	      true
+	    );
+	    if(!response || response?.status != true) throw(this.SAVE_SECURITY_QUESTION_ERROR);	
 	    this.securityQuestionBoxResultDisplay(true)
-
             return response;
         } catch (error) {
             console.error(error);
@@ -270,7 +224,7 @@ class ChangeSecurityQuestionManager {
 	                "customQuestions",
 	                `${question.question}`,
 	                 null,
-			 this.radioButtonOnClick.bind(this)
+			 this.radionButtonOnClick.bind(this)
 	            )
 	        );
                               
