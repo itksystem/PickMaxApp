@@ -2999,3 +2999,23 @@
 {"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T17:20:06.001Z"}
 {"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T17:20:08.067Z"}
 {"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T17:20:08.642Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T18:02:00.868Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T18:02:01.581Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T18:02:36.290Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T18:02:36.885Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T19:32:43.218Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T19:32:43.833Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-21T21:46:34.447Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-04-21T21:46:40.545Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T21:53:34.375Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T21:53:34.890Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T21:54:13.010Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T21:54:14.539Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-21T21:55:02.479Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-21T21:55:02.970Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-04-23T17:18:44.887Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-04-23T17:18:51.464Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-04-23T17:19:03.785Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-23T17:19:04.321Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/security-question-answer reason: Unexpected token < in JSON at position 0","service":"pickapp-service","timestamp":"2025-04-23T17:49:09.471Z"}
+{"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/security-question-answer reason: Unexpected token < in JSON at position 0","service":"pickapp-service","timestamp":"2025-04-23T18:16:53.701Z"}

@@ -204,6 +204,49 @@ async getSecurityQuestions(req) {
   }
 
 
+  async getSecurityQuestion(req) {
+    try {                                               
+        const response = await fetch(process.env.CONFIRMATION_GET_SECURITY_QUESTION_URL, {
+            method: 'GET',                           
+            headers: this.headers(req),            
+        });
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`getSecurityQuestion success.`);
+            return { success: true, data };
+        } else {
+            console.log(`getSecurityQuestion failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+        console.log(`getSecurityQuestion failed.`);
+        return { success: false, error: error.message };
+    }
+  }  
+
+
+  async checkSecurityQuestion(req) {
+    try {                                               
+        const response = await fetch(process.env.CONFIRMATION_CHECK_SECURITY_QUESTION_URL, {
+            method: 'POST',                           
+            headers: this.headers(req),
+            body: JSON.stringify(req.body), 
+        });
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`checkSecurityQuestion success.`);
+            return { success: true, data };
+        } else {
+            console.log(`checkSecurityQuestion failed.`);
+            return { success: false, status: response.status, data };
+        }
+    } catch (error) {
+        console.log(`checkSecurityQuestion failed.`);
+        return { success: false, error: error.message };
+    }
+  }  
+
+
 /* ---------------------------------------------*/
 }
 module.exports = ConfirmationServiceHandler;

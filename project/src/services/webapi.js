@@ -410,12 +410,12 @@ class WebAPI {
     getIsPINCodeActiveMethod() { return `/api/bff/auth/v1/pin-code-status`; }
 
 // получить контрольный вопрос
-    getSecurityQuestionMethod() { return `/api/bff/auth/v1/security-question`; }
+    getSecurityQuestionMethod() { return `/api/bff/confirmation/v1/security-question`; }
 
 // выполнить действие с проверкой, 
-	// DISABLE_SECURITY_QUESTION - отключить контрольный вопрос
-	// CHECK_ANSWER_ON_SECURITY_QUESTION - проверить ответ на контрольный вопрос
-    sendSecurityAnswerMethod() { return `/api/bff/auth/v1/security-question-answer`; }
+// DISABLE_SECURITY_QUESTION - отключить контрольный вопрос
+// CHECK_ANSWER_ON_SECURITY_QUESTION - проверить ответ на контрольный вопрос
+    sendSecurityAnswerMethod() { return `/api/bff/confirmation/v1/security-question-answer`; }
 
 // установить контрольный вопрос, POST
     setSecurityQuestionMethod() { return `/api/bff/confirmation/v1/security-question`; }
