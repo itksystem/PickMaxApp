@@ -3019,3 +3019,4 @@
 {"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-04-23T17:19:04.321Z"}
 {"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/security-question-answer reason: Unexpected token < in JSON at position 0","service":"pickapp-service","timestamp":"2025-04-23T17:49:09.471Z"}
 {"level":"error","message":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/security-question-answer reason: Unexpected token < in JSON at position 0","service":"pickapp-service","timestamp":"2025-04-23T18:16:53.701Z"}
+{"level":"error","message":422,"service":"pickapp-service","timestamp":"2025-04-23T18:50:52.591Z"}

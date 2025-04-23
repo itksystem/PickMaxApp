@@ -75,11 +75,11 @@ router.post('/v1/send-code-request', async (req, res) => {
 router.get('/v1/security-question-status', async (req, res) => {    // проверка на наличие установленного контрольного вопроса    
     try {
         const response = await confirmationService.getSecurityQuestionStatus(req);    
-        if (response.success) 
-            res.status(200).json(response.data);
+        if (!response.success) throw(422)
+        res.status(200).json(response.data);
     } catch (error) {
-        logger.error(response.error || 'Неизвестная ошибка' );   
-        res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
+        logger.error(error || 'Неизвестная ошибка' );   
+        res.status(error).json({  status: false });
     }
 
 });
@@ -87,44 +87,44 @@ router.get('/v1/security-question-status', async (req, res) => {    // пров�
 router.get('/v1/security-questions', async (req, res) => {    // список вопросов
     try{
       const response = await confirmationService.getSecurityQuestions(req);
-      if (response.success) 
+      if (!response.success) throw(422)
         res.status(200).json(response.data);
     } catch (error) {
-      logger.error(response.error || 'Неизвестная ошибка' );   
-      res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
+      logger.error(error || 'Неизвестная ошибка' );   
+      res.status(error).json({  status: false });
   }
 });
 
 router.post('/v1/security-question', async (req, res) => {    // установить вопрос
     try{
       const response = await confirmationService.setSecurityQuestion(req);
-      if (response.success) 
+      if (!response.success) throw(422)
         res.status(200).json(response.data);
     } catch (error) {
-      logger.error(response.error || 'Неизвестная ошибка' );   
-      res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
+      logger.error(error || 'Неизвестная ошибка' );   
+      res.status(error).json({  status: false });
   }
 });
 
 router.get('/v1/security-question', async (req, res) => {    // получить контрольный вопрос
     try{
-      const response = await confirmationService.getSecurityQuestion(req);
-      if (response.success) 
+        const response = await confirmationService.getSecurityQuestion(req);
+        if (!response.success) throw(422)
         res.status(200).json(response.data);
     } catch (error) {
-      logger.error(response.error || 'Неизвестная ошибка' );   
-      res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
+      logger.error(error || 'Неизвестная ошибка' );   
+      res.status(error).json({  status: false });
   }
 });
 
 router.post('/v1/security-question-answer',  async (req, res) => {    // получить контрольный вопрос
     try{
       const response = await confirmationService.checkSecurityQuestion(req);
-      if (response.success) 
-        res.status(200).json(response.data);
+      if (!response.success) throw(422)
+      res.status(200).json(response.data);
     } catch (error) {
-      logger.error(response.error || 'Неизвестная ошибка' );   
-      res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
+      logger.error(error || 'Неизвестная ошибка' );   
+      res.status(error).json({  status: false });
   }
 });    
 

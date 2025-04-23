@@ -51,7 +51,6 @@ class DisableSecurityQuestionManager {
     }	
 
     createSecurityQuestionSection(data) {
-        this.requestId = this.createSecurityQuestionRequestId('security-question');
         let elements = this.getElements();
         console.log(elements)
         if(!elements) {
@@ -142,8 +141,8 @@ class DisableSecurityQuestionManager {
     getSecurityQuestionChangeRequestId() { // получить активный идентификаатор запроса
         console.log('getSecurityQuestionChangeRequestId');	
         try {
-            const response =  this.webRequest.get(this.api.getSecurityQuestionRequestIdMethod(), {}, true);
-            return response?.status ? true : false;
+              const response =  this.webRequest.get(this.api.getSecurityQuestionRequestIdMethod(), {}, true);
+              return response?.status ? true : false;	   
         } catch (error) {
             console.error('getSecurityQuestionChangeRequestId ', error);
             return false;
@@ -173,16 +172,15 @@ class DisableSecurityQuestionManager {
         try {
             const answerEl = this.container.querySelector('textarea.answer-text-box');
             const answer = answerEl.value.trim();
+	    this.requestId = ConfirmationHelper.createConfirmationRequest(ConfirmationHelper.SECURITY_QUESTION);
+	    if(this.requestId) {
             console.log(answerEl, this.requestId)	
             const response =  this.webRequest.post(this.api.sendSecurityAnswerMethod(), 
-                {
-                    action: 'DISABLE_SECURITY_QUESTION', //  отключаем контрольный вопрос
-                    answer, 
-                    requestId: this.requestId
-                }, true);
+                { answer,  requestId: this.requestId }, true);
 	    console.log(response?.status);	
             this.securityQuestionDisableBoxDisplay((response?.status == true) ?? false) 
             return response?.status ? true : false;
+	 }
         } catch (error) {
             console.error('Ошибка при получении вопросов:', error);
             toastr.error('Ошибка при получении вопросов', 'Безопасность', { timeOut: 3000 });
