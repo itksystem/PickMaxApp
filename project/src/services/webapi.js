@@ -19,6 +19,8 @@ class WebAPI {
     this._USER_PRODUCT_MAIL_FILE_UPLOAD_EVENT_ = 'product-mail-file-upload';
     this.PROFILE_CHANGE_DIGITAL_CODE = `/profile/change-digital-code/page`;
     this.PROFILE = `/profile/page`;
+    this.PRODUCTS_PAGE = `/products/page`;
+    this.PIN_CODE_LOGON_PAGE = `/pincode-logon`;
     return this
   }
  
@@ -425,6 +427,10 @@ class WebAPI {
 
 //удалить PIN-код
     pinCodeDisableMethod(){ return `/api/bff/auth/v1/pin-code-disable`; }
+
+// вход по пиин-коду
+    pinCodeLogonMethod(){ return `/api/bff/auth/v1/pin-code-logon`; }
+
 
 // Получить от сервиса подтверждения id запроса на смену второго фактора
 //    getActiveSecurityQuestionRequestIdExists() { return `/api/bff/confirmation/v1/request/security-question`; }

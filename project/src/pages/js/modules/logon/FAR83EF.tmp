@@ -1,0 +1,128 @@
+class PINCodeLogonManager {
+    constructor() {
+        this.api = new WebAPI();
+        this.webRequest = new WebRequest();    
+        this.addEventListeners();
+        this.common = new CommonFunctions();
+        this.timeout = 300;
+        this.init();
+    }
+
+    async init() {
+        try {
+            const webRequest = new WebRequest();
+            const request = webRequest.get(this.api.getShopProfileMethod(), {}, true);
+            this.profile = request.profile;
+	    console.log(this.profile);	
+        } catch (error) {
+            console.error('Failed to initialize profile:', error);
+            toastr.error('Не удалось загрузить данные профиля', 'Ошибка', { timeOut: 3000 });
+        }
+    }
+
+
+    addEventListeners(data) {
+     // Обработка события ввода кода
+     let o = this;	
+     window.addEventListener('DOMContentLoaded', () => {
+      o.firstLogin = document.querySelector('.login-code');
+      o.firstLogin.addEventListener('code-submitted', (e) => {
+	console.log(`firstLogin code-submitted event`);
+	const code = o.firstLogin.codeValues.join('');
+        const response = o.webRequest.post(o.api.pinCodeLogonMethod(), { code }, true);
+	 if(!response.status){
+  	     console.log(`Logon failed`);
+	     document.location.replace(o.api.PIN_CODE_LOGON_PAGE);
+	    } else {
+  	     console.log(`Logon success`);
+	     document.location.replace(o.api.PRODUCTS_PAGE);
+  	  }
+        });
+      });
+    }
+
+    finalMessage(isSuccess){
+       return (!isSuccess)
+	   ?  `Возникла ошибка при установке кода! Повторите попытку.`
+           :  'Код установлен!';
+    }
+
+
+    displayFinalMessage(text, isSuccess){
+   	  this.secondLogin.showPublicMessage(text, (isSuccess));
+     }	
+
+
+    createPINCodeSection(data) {
+        this.container =  DOMHelper.createDropdownSection("", 
+ 	   [
+            DOMHelper.createElement("div", "profile-change-code-container", `
+    	      <login-code class="login-code pin-code-box-diplay "  visible app-name="Введите код" code-length="5" ></login-code>`
+  	     ),
+        ]);
+
+	return this.container;
+    }
+
+       onSetResultPINCodeClick() {
+         document.location.replace(this.api.PROFILE);
+       }
+      	
+
+      pinCodeBoxDisplay(result = '') { // success, failed, timeout
+        const  pincodeBoxElements 	= this.container.querySelectorAll('.pin-code-box-diplay'); 
+        const  successResultBoxElements = this.container.querySelectorAll('.success-result');
+        const  failedResultBoxElements  = this.container.querySelectorAll('.failed-result');
+        const  timeoutResultBoxElements = this.container.querySelectorAll('.timeout-result');
+
+       	  pincodeBoxElements.forEach(element => {
+            element?.classList.remove('d-block');
+            element?.classList.add('d-none');
+          });
+
+        switch(result) {
+	case 'success' : {
+	        // отключить 
+        	  successResultBoxElements.forEach(element => {
+	            element?.classList.remove('d-none');
+	            element?.classList.add('d-block');
+	          });
+		  break;	
+		}
+	case 'failed' : {
+        	// включить 
+	        failedResultBoxElements.forEach(element => {
+	            element?.classList.remove('d-none');
+	            element?.classList.add('d-block');
+	        });
+		  break;	
+  	     }
+	case 'timeout' : {
+        	// истекло время
+	        timeoutResultBoxElements.forEach(element => {
+	            element?.classList.remove('d-none');
+	            element?.classList.add('d-block');
+	        });
+		  break;	
+  	     }
+	}
+    }	
+
+
+	onAboutCodeClick() {
+	    this.drawer = this.container.querySelector('[drawer-id="content-drawer"]');
+	    if (!this.drawer) {
+	        console.error('Element with drawer-id="content-drawer" not found');
+	        return this;
+	    }
+            if(eventBus) {
+                console.log(eventBus)
+                eventBus.emit("ContentBottomDrawerOpen", { // Убрать двойную вложенность
+		        contentId: `about-security-code-help`,
+		        drawerId: this.drawer.getAttribute('drawer-id')		    
+               });
+   	    }	
+	    return this;
+	}
+}
+

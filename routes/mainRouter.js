@@ -20,7 +20,7 @@ const publicRoutes = [
     { path: '/registration-decline', page: common.COMMON_REGISTRATION_DECLINE_PAGE },
     { path: '/registration-failure', page: common.COMMON_REGISTRATION_FAILURE_PAGE },
     { path: '/page-404', page: common.COMMON_404_PAGE },
-    { path: '/logon', page: common.COMMON_LOGON_PAGE },
+    { path: '/logon', page: common.COMMON_LOGON_PAGE },    
     { path: '/products/page', page: common.COMMON_PRODUCTS_PAGE, service : { service : "products"} },
     { path: '/logon-failed', page: common.COMMON_LOGON_FAILED_PAGE},
     { path: '/forgot-password', page: common.COMMON_FORGOT_PASSWORD_PAGE},
@@ -57,6 +57,8 @@ const protectedRoutes = [
     { method : 'GET', path: '/profile/disable-digital-code/page', page: common.COMMON_CONNFIRMATION_PHONE_PAGE, service :{service : "disable-digital-code"} },
     { method : 'GET', path: '/profile/change-security-question/page', page: common.COMMON_CONNFIRMATION_PHONE_PAGE, service :{service : "change-security-question"} },
     { method : 'GET', path: '/profile/disable-security-question/page', page: common.COMMON_CONNFIRMATION_PHONE_PAGE, service :{service : "disable-security-question"} },
+    { method : 'GET', path: '/pincode-logon', page: common.COMMON_PINCODE_LOGON_PAGE, service :{service : "pincode-logon"} },
+
     { method : 'GET', path: '/balance/deposit/page', page: common.COMMON_BALANCE_DEPOSIT_PAGE, service :{service : "balance-deposit"} },
     { method : 'GET', path: '/balance/history/page', page: common.COMMON_BALANCE_HISTORY_PAGE, service :{service : "balance-history"} },
 

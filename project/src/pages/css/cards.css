@@ -1321,3 +1321,8 @@ img.custom-radio-new-card{
 .fs-8 {
   font-size: 0.8rem!important;
 }
+
+.card-header {
+    background-color: unset;
+    padding-left: 0;	
+}

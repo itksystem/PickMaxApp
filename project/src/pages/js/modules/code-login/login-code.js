@@ -4,7 +4,7 @@
         this.attachShadow({ mode: 'open' });
         this.codeValues = [];
         this.currentPosition = 0;
-        this.timeLeft = parseInt(this.getAttribute('timeout')) || 300;
+        this.timeLeft = parseInt(this.getAttribute('timeout')) || null;
         this.timerInterval = null;
         this.maskTimeouts = [];
 	this.timeoutCallbackProc = null;
@@ -58,6 +58,8 @@
       render() {
         const appName = this.getAttribute('app-name') || 'App';
         const codeLength = parseInt(this.getAttribute('code-length')) || 5;
+        const timeLeft = parseInt(this.getAttribute('timeout')) || null;
+
         
         this.codeValues = Array(codeLength).fill('');
         this.maskTimeouts = Array(codeLength).fill(null);
@@ -326,7 +328,7 @@ h1 {
               <div class="code-display">
                 ${codeDigitsHTML}
               </div>
-              <div class="timer" id="timer">Ожидание: 05:00</div>
+              <div class="timer" id="timer">${timeLeft ? 'Ожидание: 05:00' : ''}</div>
               <div class="message" id="code-info-message"></div>
               <button type="button" class="next-action-button d-none btn btn-block btn-success btn-lg"> Понятно </button>              
               <div class="virtual-keyboard">
@@ -502,6 +504,7 @@ h1 {
      }
 
      startTimer() {
+       if(!this.timeLeft) return;
         this.updateTimerDisplay();
         this.timerInterval = setInterval(() => {
           this.timeLeft--;

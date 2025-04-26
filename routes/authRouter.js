@@ -23,19 +23,6 @@ router.get('/v1/two-factors', async (req, res) => {    // список вопр�
     }
 });
 
-/*
-router.get('/v1/security-question-status', async (req, res) => {    // проверка на наличие установленного контрольного вопроса
-    const userId = await authClient.getUserId(req, res);                   
-    if(!userId) throw(401)
-    const response = await authClient.getSecurityQuestionStatus(req);
-    if (response.success) {        
-        res.status(200).json(response.data);
-    } else {
-        logger.error(response.error || 'Неизвестная ошибка' );   
-        res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
-    }
-});
-*/
 
 router.get('/v1/pin-code-status', async (req, res) => {    // проверка на наличие установленного PIN-кода
     const userId = await authClient.getUserId(req, res);                   
@@ -87,6 +74,17 @@ router.post('/v1/security-question', async (req, res) => {  // установи�
     }
 });
 
+router.post('/v1/pin-code-logon', async (req, res) => {  // установить контрольный вопрос
+    const userId = await authClient.getUserId(req, res);                   
+    if(!userId) throw(401)
+    const response = await authClient.pinCodeLogon(req);
+    if (response?.success) {        
+        res.status(200).json(response.data);
+    } else {
+        logger.error(response.error || 'Неизвестная ошибка' );   
+        res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });
+    }
+});
 
 
 

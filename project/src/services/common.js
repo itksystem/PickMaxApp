@@ -1,9 +1,14 @@
 class CommonFunctions {
    constructor() {
    console.log(`CommonFunctions loading...`);
+   this.webRequest = new WebRequest();
+   this.api = new WebAPI();
    return this;
    }
 
+ init(){
+     this.me = this.webRequest.get(this.api.getMeMethod(), {}, true );
+ }
 
 /**
  * Сохраняете telegramWebAppObject в localStorage.
@@ -52,14 +57,12 @@ class CommonFunctions {
  * Сохраняет telegramToken в localStorage.
  * @param {string} token - Токен доступа (accessToken).
  */
- saveTelegramAccessToken() {
+ saveTelegramAccessToken(request = null) {
     try {
-        let webRequest = new WebRequest();
-        let api = new WebAPI();
-//	this.removeAccessToken();
-//      let request = webRequest.get(api.getTelegramMeMethod(), {}, true );
-        let request = webRequest.get(api.getMeMethod(), {}, true );
-        console.log(request);
+//        let webRequest = new WebRequest();
+//        let api = new WebAPI();
+//        let request = webRequest.get(api.getMeMethod(), {}, true );
+        console.log(`saveTelegramAccessToken `,request);
         const token = (!request.telegramToken) ?  null : request.telegramToken;
         if(token)
           localStorage.setItem('telegramToken', token);
@@ -73,13 +76,13 @@ class CommonFunctions {
  * Сохраняет accessToken в localStorage.
  * @param {string} token - Токен доступа (accessToken).
  */
- saveAccessToken() {
+ saveAccessToken(request = null) {
     try {
-        let webRequest = new WebRequest();
-        let api = new WebAPI();
-	this.removeAccessToken();
-        let request = webRequest.get(api.getMeMethod(), {}, true );
-        console.log(request);
+//        let webRequest = new WebRequest();
+//        let api = new WebAPI();
+//	this.removeAccessToken();
+//        let request = webRequest.get(api.getMeMethod(), {}, true );
+        console.log(`saveAccessToken `,request);
         const token = (!request.accessToken) ?  null : request.accessToken;
         if(token)
           localStorage.setItem('accessToken', token);

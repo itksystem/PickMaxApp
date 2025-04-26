@@ -1,4 +1,4 @@
-class DisableSecurityQuestionPageSection extends PageBuilder {
+class PINCodeLogonPageSection extends PageBuilder {
     constructor(containerId) {
         super(containerId);
         this.common = new CommonFunctions();
@@ -10,38 +10,35 @@ class DisableSecurityQuestionPageSection extends PageBuilder {
     
     initManagers() { // Централизованная инициализация менеджеров
         this.managers = {
-            SecurityQuestion: new DisableSecurityQuestionManager(this),
+            PINCode: new PINCodeLogonManager(this),
         };
     }
 
-    DisableSecurityQuestionCardContainer(data = null) {
-        const SecurityQuestionContainer = this.createSecurityQuestionContainer();
-        this.buildSecurityQuestionContent(SecurityQuestionContainer, data);
-        return SecurityQuestionContainer;
+    PINCodeLogonPageCardContainer(data = null) {
+        const pinCodeContainer = this.createPINCodeContainer();
+        this.buildPINCodeContent(pinCodeContainer, data);
+        return pinCodeContainer;
     }
-
-    createSecurityQuestionContainer() {
-        const container = DOMHelper.createElement("div", "card confirmation-code-container");
+                             
+    createPINCodeContainer() {
+        const container = DOMHelper.createElement("div", "pincode-container");
         container.appendChild(this.createHeader());
-
         return container;
     }
 
-    createHeader() {
-        return DOMHelper.createElement("div", "card-header", `
-            <h3 class="card-title">Отключение контрольного вопроса</h3>
-        `);
+   createHeader() {
+        return DOMHelper.createElement("div", "card-header1", `<h3 class="card-title"></h3>`);
     }
 
-    buildSecurityQuestionContent(container, data) {
-        this.addSecurityQuestionSections(container, data);
-        this.addModule("SecurityQuestion", container);
-        this.SecurityQuestionContainer = container;
+    buildPINCodeContent(container, data) {
+        this.addPINCodeSections(container, data);
+        this.addModule("PINCode", container);
+        this.PINCodeContainer = container;
     }
 
-    addSecurityQuestionSections(container, data) {
+    addPINCodeSections(container, data) {
         const sections = [
-            { manager: 'SecurityQuestion', method: 'createSecurityQuestionSection' },
+            { manager: 'PINCode', method: 'createPINCodeSection' },
     ];
 
     sections.forEach(section => {
@@ -97,7 +94,7 @@ class DisableSecurityQuestionPageSection extends PageBuilder {
         const firstCode = firstLogin.codeValues.join('');
         const secondCode = secondLogin.codeValues.join('');
         if (firstCode === secondCode) {		
-            const response =  this.webRequest.get(api.setSecurityQuestionMethod(), { code : firstCode}, true);
+            const response =  this.webRequest.get(api.setPINCodeMethod(), { code : firstCode}, true);
               if(response?.status) {
 	          window.location.replace('/login-check/success/page');
 	      } else 	

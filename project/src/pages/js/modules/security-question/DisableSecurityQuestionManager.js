@@ -64,14 +64,14 @@ class DisableSecurityQuestionManager {
         } else 
         elements.push(
             DOMHelper.createHL(`disable-box-element`),
-            DOMHelper.divBox(`Введите ответ:`,`w-100 pb-3 disable-box-element`),
+            DOMHelper.divBox(`Введите ответ:`,`w-100 pb-3 disable-box-element text-bold`),
             DOMHelper.createTextBox(`answer`,`answer-text-box form-control w-100 disable-box-element`),
             DOMHelper.bottomDrawer(`content-drawer`, ``),
             DOMHelper.createButton(`Ответить`, 
                 `btn-success text-center disable-box-element w-100 `, 
             this.sendAnswerSecurityQuestion.bind(this)),
             DOMHelper.createConfirmationLabel(
-                (!this.requestId ? "Попробуйте через 5 минут..." : ""),
+                (!this.requestId ? "" : ""),
                 (!this.requestId ? "failed disable-box-element" : "success disable-box-element"), ),
             DOMHelper.createBR(`answer-text-box-web-element disable-box-element`),
             DOMHelper.createLinkButton(
@@ -82,10 +82,15 @@ class DisableSecurityQuestionManager {
             DOMHelper.divBox(`Код неверен! Повторите операцию.`,`w-100 pb-3 text-center text-red failed-security-question-label disable-result-box-element d-none`),
             DOMHelper.divBox(`Контрольный вопрос отключен!`,`w-100 pb-3 text-center success-security-question-label disable-result-box-element d-none`),
             DOMHelper.createButton(`В профиль`,`btn-success text-center w-100  disable-result-box-element failed-security-question-label success-security-question-label d-none`, this.onDisableResultSecurityQuestionClick.bind(this)),
-            DOMHelper.staticText(`disable-security-question-recommendation`,`disable-result-box-element failed-security-question-label success-security-question-label d-none`),
+            DOMHelper.staticText(`disable-security-question-recommendation`,`disable-result-box-element success-security-question-label d-none`),
 
         )	
-        this.container =  DOMHelper.createDropdownSection("", elements, );
+        const BodyContainerContent = document.createElement("div");
+        BodyContainerContent.className = "card-body";
+
+        BodyContainerContent.appendChild(DOMHelper.createDropdownSection("", elements, ));
+
+        this.container =  BodyContainerContent;
         return this.container;
     }
 
@@ -197,7 +202,9 @@ class DisableSecurityQuestionManager {
             let questions = question ? []  : null;
             console.log(question);
             if(question) {
-                questions.push(DOMHelper.spanBox(`${question[0]?.text}`, `disable-box-element`));
+                questions.push(DOMHelper.divBox(`Ответьте на вопрос:`, `disable-box-element text-bold`));
+                questions.push(DOMHelper.createBR(`disable-box-element`));
+                questions.push(DOMHelper.divBox(`${question[0]?.text}`, `disable-box-element`));
             }
             return questions;
         } catch (error) {

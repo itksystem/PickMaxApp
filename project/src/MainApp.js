@@ -9,11 +9,22 @@ class MainApp {
       this.limit = 10; // Количество товаров для загрузки за раз
       this.loading = false; // Флаг, чтобы предотвратить повторную загрузку данных   
       this.common = new CommonFunctions();
-      this.common.saveAccessToken();
-      this.common.saveTelegramAccessToken();
+      this.common.init();
+      this.common.saveAccessToken(this.common.me);
+      this.common.saveTelegramAccessToken(this.common.me);
       this.common.saveTelegramWebAppObject();
+      this.init();	
       return this;
    }
+
+ init(){
+   let me = this.common.me;
+/*   if(me.pinCodeEnabled  
+	&& !me.pinCodeChecked 
+ 	   && window.location.pathname != this.api.PIN_CODE_LOGON_PAGE)
+   	         document.location.replace(this.api.PIN_CODE_LOGON_PAGE);
+*/
+ }
 
  showCaseEmptyPageOutput(){
   return `
@@ -639,6 +650,15 @@ class MainApp {
     securityQuestionPage.render();
     return this;
   }
+
+   PINCodeLogonPage(){
+    let o = this;
+    const pinCodeLogonPage = new PINCodeLogonPageSection("pincode-logon-container");
+    pinCodeLogonPage.PINCodeLogonPageCardContainer();
+    pinCodeLogonPage.render();
+    return this;
+  }
+
 
 
 }

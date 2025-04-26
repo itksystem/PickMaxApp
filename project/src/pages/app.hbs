@@ -157,11 +157,11 @@ body{
            {{>disable_security_question}}
     {{else ifEquals service "disable-digital-code"}}
            {{>disable_digital_code}}
-
+    {{else ifEquals service "pincode-logon"}}
+           {{>pincode_logon}}
     {{/ifEquals}}              
 
  </div>
-
  <mobile-navbar>
     <mobile-navbar-item 
       label="Товары" 
@@ -186,9 +186,8 @@ body{
   </mobile-navbar>
  <div class="footer fixed-bottom"></div> 
 </body>
-
- <script src="/src/services/DOMHelper.js"></script>
  <script src="/src/components/ui/mobile-navbar/mobile-navbar.js"></script>
+ <script src="/src/services/DOMHelper.js"></script>
  <script src="/src/components/ui/product-card/product-card.js"></script>
  <link rel="stylesheet" href="/src/components/ui/basket-button/css/basket-button.css">                           
  <script src="/src/components/ui/basket-button/basket-button.js"></script>
