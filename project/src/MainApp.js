@@ -19,11 +19,11 @@ class MainApp {
 
  init(){
    let me = this.common.me;
-/*   if(me.pinCodeEnabled  
-	&& !me.pinCodeChecked 
- 	   && window.location.pathname != this.api.PIN_CODE_LOGON_PAGE)
-   	         document.location.replace(this.api.PIN_CODE_LOGON_PAGE);
-*/
+   if(me.isTelegramAuth == true  // для телеграмм-авторизации
+	&& me.pinCodeEnabled  	//  если установлен пин-код
+		&& !me.pinCodeChecked  // пин-код не введен
+			&& window.location.pathname != this.api.PIN_CODE_LOGON_PAGE) // не на странице авторизации
+   document.location.replace(this.api.PIN_CODE_LOGON_PAGE);
  }
 
  showCaseEmptyPageOutput(){
@@ -104,7 +104,7 @@ class MainApp {
            console.log(data)
   	   const basketPage = new BasketSection("basket-container");
            const totalQuantity = data?.basket?.reduce((quantity, item) => quantity + item.quantity, 0);
- 	   basketPage.BasketCardContainer(totalQuantity, data?.totalAmount);
+ 	   basketPage.BasketCardContainer(totalQuantity, data?.totalAmount, data);
   	   basketPage.render();
             data.basket.forEach(item => {
 		new BasketItem("basket-body-container", item);
@@ -563,6 +563,7 @@ class MainApp {
 			o.verificationCodeConfirmed()
 
               // Слушатели событий
+
 		const autocomplete = document.getElementById('address');
 		 autocomplete
 		        .setUrl('/api/bff/client/v1/suggest/address?query=') // Установите URL для поиска
@@ -585,6 +586,7 @@ class MainApp {
 	        .onSelect((item) => {
               console.log('Выбран элемент', item);
             });
+
           }
         })                                
      .catch(function(error) {

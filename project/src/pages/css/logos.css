@@ -1,0 +1,44 @@
+.russian-post-logo {
+  width: 6rem;
+  height: 6rem;
+  background-image: url('/src/pages/images/logo/russian-post.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.cdek-logo {
+  width: 6rem;
+  height: 6rem;
+  background-image: url('/src/pages/images/logo/cdek.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.courier-logo {
+  width: 6rem;
+  height: 6rem;
+  background-image: url('/src/pages/images/logo/courier.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.self-delivery-logo {
+  width: 6rem;
+  height: 6rem;
+  background-image: url('/src/pages/images/logo/self-delivery.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.parcel-locker-logo {
+  width: 6rem;
+  height: 6rem;
+  background-image: url('/src/pages/images/logo/parcel_locker.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}

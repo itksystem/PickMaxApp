@@ -106,7 +106,7 @@ class ProfileSection extends PageBuilder {
             { manager: 'phone',   method: 'createPhoneSection' },
             { manager: 'security',   method: 'createSecuritySection' },
             { manager: 'location',  method: 'createLocationSection' },
-            { manager: 'cards',   method: 'createCardsSection' },
+//            { manager: 'cards',   method: 'createCardsSection' },
             { manager: 'subscriptions',   method: 'createSubscriptionsSection' },
             { manager: 'balance',   method: 'createAccountBalanceSection' },
             { manager: 'address',   method: 'createAddressesSection' },

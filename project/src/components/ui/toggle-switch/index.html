@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToggleSwitch Component</title>
+    <style>
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #2196F3;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .toggle-switch.disabled .toggle-slider {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+class ToggleSwitch {
+    constructor(options = {}) {
+        this.options = {
+            id: options.id || `toggle-${Math.random().toString(36).substr(2, 9)}`,
+            checked: options.checked || false,
+            disabled: options.disabled || false,
+            onChange: options.onChange || null,
+            size: options.size || 'medium' // 'small', 'medium', 'large'
+        };
+        
+        this.element = this._createElement();
+        this._setupEventListeners();
+    }
+    
+    _createElement() {
+        const container = document.createElement('label');
+        container.className = `toggle-switch ${this.options.disabled ? 'disabled' : ''}`;
+        
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.id = this.options.id;
+        input.checked = this.options.checked;
+        input.disabled = this.options.disabled;
+        
+        const slider = document.createElement('span');
+        slider.className = 'toggle-slider';
+        
+        container.appendChild(input);
+        container.appendChild(slider);
+        
+        // Apply size
+        this._applySize(container);
+        
+        return container;
+    }
+    
+    _applySize(container) {
+        const sizes = {
+            small: { width: 45, height: 25, sliderSize: 19, sliderOffset: 3 },
+            medium: { width: 60, height: 34, sliderSize: 26, sliderOffset: 4 },
+            large: { width: 75, height: 42, sliderSize: 32, sliderOffset: 5 }
+        };
+        
+        const size = sizes[this.options.size] || sizes.medium;
+        
+        container.style.width = `${size.width}px`;
+        container.style.height = `${size.height}px`;
+        
+        const slider = container.querySelector('.toggle-slider');
+        slider.style.borderRadius = `${size.height}px`;
+        
+        const sliderBefore = slider;
+        sliderBefore.style.height = `${size.sliderSize}px`;
+        sliderBefore.style.width = `${size.sliderSize}px`;
+        sliderBefore.style.left = `${size.sliderOffset}px`;
+        sliderBefore.style.bottom = `${size.sliderOffset}px`;
+        
+        // Adjust transform for checked state
+        if (this.options.checked) {
+            sliderBefore.style.transform = `translateX(${size.width - size.sliderSize - size.sliderOffset * 2}px)`;
+        }
+    }
+    
+    _setupEventListeners() {
+        const input = this.element.querySelector('input');
+        
+        input.addEventListener('change', (e) => {
+            if (this.options.onChange) {
+                this.options.onChange(e.target.checked);
+            }
+        });
+    }
+    
+    get checked() {
+        return this.element.querySelector('input').checked;
+    }
+    
+    set checked(value) {
+        this.element.querySelector('input').checked = value;
+    }
+    
+    get disabled() {
+        return this.element.querySelector('input').disabled;
+    }
+    
+    set disabled(value) {
+        this.element.querySelector('input').disabled = value;
+        if (value) {
+            this.element.classList.add('disabled');
+        } else {
+            this.element.classList.remove('disabled');
+        }
+    }
+    
+    toggle() {
+        const input = this.element.querySelector('input');
+        input.checked = !input.checked;
+        if (this.options.onChange) {
+            this.options.onChange(input.checked);
+        }
+    }
+    
+    render(container) {
+        if (typeof container === 'string') {
+            const el = document.querySelector(container);
+            if (el) el.appendChild(this.element);
+        } else if (container instanceof HTMLElement) {
+            container.appendChild(this.element);
+        }
+        return this.element;
+    }
+}
+
+// Пример использования:
+document.addEventListener('DOMContentLoaded', () => {
+    // Создаем переключатель с настройками
+    const toggle1 = new ToggleSwitch({
+        id: 'my-toggle',
+        checked: true,
+        onChange: (checked) => {
+            console.log('Toggle state changed:', checked);
+        },
+        size: 'medium'
+    });
+    
+    // Рендерим в body
+    toggle1.render(document.body);
+    
+    // Или можно рендерить в конкретный контейнер
+    // toggle1.render('#container');
+    
+    // Еще один пример
+    const toggle2 = new ToggleSwitch({
+        size: 'large',
+        onChange: (checked) => {
+            document.body.style.backgroundColor = checked ? '#f0f0f0' : '#ffffff';
+        }
+    });
+    toggle2.render(document.body);
+});
+</script>
+
+</body>
+</html>

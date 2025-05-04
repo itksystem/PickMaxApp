@@ -345,7 +345,31 @@ class WebAPI {
 	return `/api/bff/payment/v1/card`
    }
 
+/* Почтовая доставка  */
+
+   getDeliveryRussianPostesMethod(){
+    return `/api/bff/delivery/v1/russian-postal-units`;
+   }
+
+   addDeliveryRussianPostMethod(){
+    return `/api/bff/delivery/v1/russian-postal-unit`;
+   }
+
+   deleteDeliveryRussianPostMethod(){
+    return `/api/bff/delivery/v1/russian-postal-unit`;
+   }
+
+   setDefaultDeliveryRussianPostMethod(){
+    return `/api/bff/delivery/v1/russian-postal-unit`;
+   }
+
 /* Адреса доставки  */
+
+   getDeliveryTypesMethod(){
+    return `/api/bff/delivery/v1/delivery-types`;
+   }
+
+
    getDeliveryAddressesMethod(){
     return `/api/bff/delivery/v1/addresses`;
    }

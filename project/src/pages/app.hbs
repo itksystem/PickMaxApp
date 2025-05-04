@@ -46,6 +46,8 @@
    <script src="/src/pages/js/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
    <script src="/src/services/webapi.js"></script> 
    <script src="/src/services/common.js"></script>
+   <script src="/src/services/payture-widget.min.js"></script> 
+
 
    <script src="/src/components/widgets/ListComponent.js"></script>
    <script src="/src/components/widgets/ShopImageGallery.js"></script> 
@@ -101,6 +103,7 @@ body{
  <link type="text/css" href="/src/pages/css/cards2.css" rel="stylesheet" />
  <link type="text/css" href="/src/pages/css/cards.css" rel="stylesheet" />
  <link type="text/css" href="/src/pages/css/gallery.css" rel="stylesheet" />
+ <link type="text/css" href="/src/pages/css/logos.css" rel="stylesheet" />
  <link type="text/css" href="/src/pages/css/card_media_gallery.css" rel="stylesheet" />
  <link type="text/css" href="/src/components/ui/product-card/css/product-card.css" rel="stylesheet" />
  <link rel="stylesheet" href="/src/components/ui/basket-button/css/basket-button.css">
@@ -162,31 +165,9 @@ body{
     {{/ifEquals}}              
 
  </div>
- <mobile-navbar>
-    <mobile-navbar-item 
-      label="Товары" 
-      icon="fa-box" 
-      url="/products/page">
-    </mobile-navbar-item>
-    <mobile-navbar-item 
-      label="Заказы" 
-      icon="fa-shopping-cart" 
-      url="/orders/page">
-    </mobile-navbar-item>
-    <mobile-navbar-item 
-      label="Корзина" 
-      icon="fa-cart-plus" 
-      url="/basket/page">
-    </mobile-navbar-item>
-    <mobile-navbar-item 
-      label="Профиль" 
-      icon="fa-user" 
-      url="/profile/page">
-    </mobile-navbar-item>
-  </mobile-navbar>
  <div class="footer fixed-bottom"></div> 
 </body>
- <script src="/src/components/ui/mobile-navbar/mobile-navbar.js"></script>
+
  <script src="/src/services/DOMHelper.js"></script>
  <script src="/src/components/ui/product-card/product-card.js"></script>
  <link rel="stylesheet" href="/src/components/ui/basket-button/css/basket-button.css">                           

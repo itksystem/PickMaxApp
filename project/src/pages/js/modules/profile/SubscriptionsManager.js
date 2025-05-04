@@ -41,10 +41,73 @@ class SubscriptionsManager {
 
     createSubscriptionsSection(data) {
         // Секция для карт
-	 let SubscriptionsSection =  DOMHelper.createDropdownSection("Мои подписки", this.getElements() || []);
-	 return SubscriptionsSection;
+         let isSubscriptionActive = false;
+	 this.container =  DOMHelper.createDropdownSection("Подписка", 
+	  [
+            (isSubscriptionActive
+                ? DOMHelper.createButton("Отключить подписку", "text-end", this.setSubscriptionDisable.bind(this))
+                : DOMHelper.createButton("Включить подписку", "text-end", this.setSubscriptionEnable.bind(this))
+            ),
+	    DOMHelper.bottomDrawer(`content-drawer`, ``),
+            DOMHelper.createLinkButton(`О подписке`,`text-end subscription-mode-button question-button`, this.onSubscriptionModeClick.bind(this)),            
+
+	  ],
+		);
+	 return this.container;
     }
 
+    onSubscriptionModeClick(){
+	    this.drawer = this.container.querySelector('[drawer-id="content-drawer"]');
+	    console.log(this.drawer);
+    
+	    if (!this.drawer) {
+	        console.error('Element with drawer-id="content-drawer" not found');
+	        return this;
+	    }
+
+            if(eventBus) {
+                console.log(eventBus)
+                eventBus.emit("ContentBottomDrawerOpen", { // Убрать двойную вложенность
+		        contentId: `subscription-mode-question-help`,
+		        drawerId: this.drawer.getAttribute('drawer-id')		    
+               });
+   	    }	
+	    return this;
+    }
+
+    setSubscriptionEnable(){
+new PaytureWidget({
+            Key: "Merchant_Widget",
+            Amount: 20,
+            Product: "Payment for order No. 1",
+            Domain: 2,
+            CustomParams: {
+                TemplateTag: "Default",
+                Language: "ENG",
+                Name: "Ivan Ivanov",
+                Delivery: "Сustomer pickup"
+            },
+            ChequeParams: {
+                Positions: [{
+                    Quantity: 1,
+                    Price: 10,
+                    Tax: 2,
+                    Text: "Tea"
+                }, {
+                    Quantity: 2,
+                    Price: 5,
+                    Tax: 2,
+                    Text: "Pie"
+                }],
+                CustomerContact: "",
+                Message: "Cheque Payture"
+            },
+            OnTransactionCompleted: function(e) {}
+        })
+    }
+
+    setSubscriptionDisable(){
+    }
 
     // Получение подписок
     getSubscriptions() {

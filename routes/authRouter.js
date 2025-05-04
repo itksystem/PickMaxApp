@@ -78,8 +78,15 @@ router.post('/v1/pin-code-logon', async (req, res) => {  // установить
     const userId = await authClient.getUserId(req, res);                   
     if(!userId) throw(401)
     const response = await authClient.pinCodeLogon(req);
-    if (response?.success) {        
-        res.status(200).json(response.data);
+    console.log('/v1/pin-code-logon',response)
+    if (response?.success && response.data.accessToken) {
+        res.cookie('accessToken', response.data.accessToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            maxAge: 10800000, // 3 часа
+        });        
+        res.status(200).json(response.data);    
     } else {
         logger.error(response.error || 'Неизвестная ошибка' );   
         res.status(response.status || 500).json({ error: response.error ||  common.COMMON_HTTP_CODE_500 });

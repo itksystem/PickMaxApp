@@ -19,13 +19,14 @@ class RussiaRegionSelector extends HTMLElement {
             const regions = await this.getClientRegions();
             
             if (regions && regions.length > 0) {
-                const formattedRegions = await this.convertToDaDataFormat(regions);
+//                const formattedRegions = await this.convertToDaDataFormat(regions);
                 
-                formattedRegions.forEach(region => {
+//                formattedRegions.forEach(region => {
+                regions.forEach(region => {
                     this.selectedRegions.push({
                         label: region.regionName,
                         value: region.fiasId,
-                        data: { fias_id: region.fiasId }
+//                        data: { fias_id: region.fiasId }
                     });
                 });
                 

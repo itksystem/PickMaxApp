@@ -1,3 +1,4 @@
+<link href="/src/pages/css/profile.css" rel="stylesheet" />
 <!-- Верхняя строка меню -->
 <top-header></top-header>
 <div class="row">
@@ -5,7 +6,34 @@
    <div class="col-sm-11 col-md-8 col-lg-6 col-xl-6 col-xxl-6 basket-container"></div>
    <div class="col-sm col-md-2 col-lg-3 col-xl-3 col-xxl-3"></div>
 </div>
+ <mobile-navbar>
+    <mobile-navbar-item 
+      label="Товары" 
+      icon="fa-box" 
+      url="/products/page">
+    </mobile-navbar-item>
+    <mobile-navbar-item 
+      label="Заказы" 
+      icon="fa-shopping-cart" 
+      url="/orders/page">
+    </mobile-navbar-item>
+    <mobile-navbar-item 
+      label="Корзина" 
+      icon="fa-cart-plus" 
+      url="/basket/page">
+    </mobile-navbar-item>
+    <mobile-navbar-item 
+      label="Профиль" 
+      icon="fa-user" 
+      url="/profile/page">
+    </mobile-navbar-item>
+  </mobile-navbar>
 
+
+<script src="/src/components/ui/mobile-navbar/mobile-navbar.js"></script>
+<script src="/src/components/ui/autocomplete/AutoComplete.js"></script>
+<script src="/src/pages/js/modules/profile/AddressManager.js"></script>
+<script src="/src/pages/js/modules/basket/RussianPostManager.js"></script>
 <script src="/src/pages/js/modules/basket/basketPage.js"></script>
 <script src="/src/pages/js/modules/basket/basketItem.js"></script>
 <script src="/src/components/ui/top-header/top-header.js"></script>        

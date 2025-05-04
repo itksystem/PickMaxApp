@@ -95,18 +95,16 @@ router.delete('/v1/address',
 
 
 
-/* Сохранить профиль клиента */
-/*
-router.post('/v1/profile', 	
+router.get('/v1/delivery-types', 	
 	async (req, res) => {        
         try {
-            const profile = await clientService.saveProfile(req, res);        
-            if (!profile.success)  throw({code : profile.status, message : "Не удалось сохранить профиль пользователя" })             
+            const result = await deliveryService.deliveryTypes(req, res);        
+            if (!result.success) throw({code : 422, message : "Delivery types not found" })
                 _response
                     .setCode(200)                    
-                    .setData(profile.data)
+                    .setData(result.data)
                     .send(res);    
-        } catch (error) {
+        } catch (error) {            
                 _response
                     .setCode(error.code)
                     .setStatus(false)
@@ -114,107 +112,5 @@ router.post('/v1/profile',
                     .send(res);                    
         }
 });
-
-// Доступность сервиса заказов 
-router.post('/v1/logout', 	
-	async (req, res) => {        
-        try {
-            const logout = await authClient.logout(req, res);        
-            if (!logout.success)  throw({code : logout.status, message : "Ошибка при выполнении операции выхода из сессии" })
-                _response
-                    .setCode(200)                    
-                    .setData(logout.data)
-                    .send(res);    
-        } catch (error) {
-            _response
-                    .setCode(error.code)
-                    .setStatus(false)
-                    .setMessage(error.message)
-                    .send(res);                    
-        }
-});
-
-// Доступность сервиса заказов 
-router.get('/v1/logout', 	
-	async (req, res) => {        
-        try {
-            const logout = await authClient.logout(req, res);        
-            if (!logout.success)  throw({code : logout.status, message : "Ошибка при выполнении операции выхода из сессии" })
-                _response
-                    .setCode(200)                    
-                    .setData(logout.data)
-                    .send(res);    
-        } catch (error) {
-            _response
-                    .setCode(error.code)
-                    .setStatus(false)
-                    .setMessage(error.message)
-                    .send(res);                    
-        }
-});
-
-
-
-
-
-// Дадата 
-router.get('/v1/suggest/address', async (req, res) => {        
-    try {
-        const profile = await clientService.getSuggestAddress(req, res);        
-        if (!profile.success)  throw({code : profile.status, message : "Не получить адрес ищ сервиса Dadata" })             
-            _response
-                .setCode(200)                    
-                .setData(profile.data)
-                .send(res);    
-    } catch (error) {
-            _response
-                .setCode(error.code)
-                .setStatus(false)
-                .setMessage(error.message)
-                .send(res);                    
-    }
-   } 
-);
-
-
-// Получить подписки 
-router.get('/v1/subscriptions', 	
-	async (req, res) => {        
-        try {
-            const result = await clientService.getSubscriptions(req, res);        
-            if (!result.success)  throw({code : logout.status, message : "Ошибка при выполнении операции выхода из сессии" })
-                let subscriptions = result?.data || [];
-                _response
-                    .setCode(200)                    
-                    .setData(subscriptions)
-                    .send(res);    
-        } catch (error) {
-            _response
-                    .setCode(error.code)
-                    .setStatus(false)
-                    .setMessage(error.message)
-                    .send(res);                    
-        }
-});
-
-router.patch('/v1/subscription', 	
-	async (req, res) => {        
-        try {
-            const result = await clientService.setSubscription(req, res);        
-            if (!result.success)  throw({code : logout.status, message : "Ошибка при выполнении операции выхода из сессии" })
-                let subscriptions = result.data;
-                _response
-                    .setCode(200)                    
-                    .setData(subscriptions)
-                    .send(res);    
-        } catch (error) {
-            _response
-                    .setCode(error.code)
-                    .setStatus(false)
-                    .setMessage(error.message)
-                    .send(res);                    
-        }
-});
-*/
   
 module.exports = router;

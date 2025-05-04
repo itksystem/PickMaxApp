@@ -185,6 +185,7 @@ router.get('/@me', async (req, res) => {
     }    
 });
 
+/*
 router.get('/@telegram', async (req, res) => {    
     try {
         const response = await authClient.telegramMe(req, res);
@@ -206,5 +207,6 @@ router.get('/@me', async (req, res) => {
         res.status(200).json({ status : false});
     }
 });
+*/
 
 module.exports = router;

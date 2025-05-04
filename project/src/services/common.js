@@ -8,7 +8,30 @@ class CommonFunctions {
 
  init(){
      this.me = this.webRequest.get(this.api.getMeMethod(), {}, true );
+     console.log(this.me);
  }
+
+
+ trackWindowOpen() {
+    // Ваш код для отслеживания открытия окна
+    console.log('Window opened event tracked');
+    // Например, отправка аналитики или выполнение других действий
+    document.location.replace(this.api.PIN_CODE_LOGON_PAGE);
+ }
+
+
+ TelegramOpenWindowCheck(){
+  if (window.Telegram && Telegram.WebApp) {
+    Telegram.WebApp.ready();
+    Telegram.WebApp.onEvent('viewportChanged', (event) => {
+        if (event.isStateStable) {
+            trackWindowOpen();
+        }
+    });
+   } 
+ }
+
+// Проверяем, загружен ли Telegram WebApp API
 
 /**
  * Сохраняете telegramWebAppObject в localStorage.
