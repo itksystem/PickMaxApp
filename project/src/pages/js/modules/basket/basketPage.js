@@ -1,3 +1,4 @@
+const USER_DELIVERY_ADDRESS_LOAD_MESSAGE = 'USER_DELIVERY_ADDRESS_LOAD_MESSAGE';
 
 class BasketSection extends PageBuilder {
     constructor(containerId) {
@@ -6,6 +7,7 @@ class BasketSection extends PageBuilder {
         this.common = new CommonFunctions();
         this.deliveryType = null;
         this.address = null;
+	this.addEventListeners();
     }
 
     /**
@@ -47,8 +49,8 @@ class BasketSection extends PageBuilder {
         }
         this.addModule("Basket", BasketContainer);
         this.addModule("BasketDelivery", BasketDeliveryContainer);
-        this.addModule("BasketRussianPostDelivery", BasketRussianPostAddressContainer);
         this.addModule("BasketAddress", BasketAddressContainer);
+        this.addModule("BasketRussianPostDelivery", BasketRussianPostAddressContainer);
         this.addModule("BasketSendOrderButton",BasketSendOrderButtonContainer);
     }
 
@@ -205,11 +207,8 @@ class BasketSection extends PageBuilder {
 	const deliverySelfTypeContainerContent = document.createElement("i");
 	deliverySelfTypeContainerContent.className = extClass;
 
-	const deliverySelfTextContainerContent = document.createElement("span");
-	deliverySelfTextContainerContent.style.fontFamily = "Roboto Condensed";
-	deliverySelfTextContainerContent.style.fontSize = "0.8rem";
-	deliverySelfTextContainerContent.style.fontWeight = "400";
-	deliverySelfTextContainerContent.style.paddingLeft = "0.5rem";
+	const deliverySelfTextContainerContent = document.createElement("div");
+	deliverySelfTextContainerContent.className = 'delivery-type-btn-title';
 	deliverySelfTextContainerContent.innerText = text;
 
 	aContainerContent.appendChild(deliverySelfTypeContainerContent);
@@ -266,7 +265,7 @@ class BasketSection extends PageBuilder {
         deliveryContainer.appendChild(deliveryHotKeyContainer);
 
         const deliveryDescriptionBoxContainer = document.createElement("div");
-        deliveryDescriptionBoxContainer.className = "delivery-description-box";
+        deliveryDescriptionBoxContainer.className = "delivery-description-box d-none";
         deliveryContainer.appendChild(deliveryDescriptionBoxContainer);
 
 
@@ -302,6 +301,7 @@ class BasketSection extends PageBuilder {
     const sendOrderButtonContainer = document.querySelector(".send-order-button-container");
     const sendOrderButton 	= document.querySelector(".send-order-btn");
     const descriptionBox 	= document.querySelector(".delivery-description-box");
+
     if(descriptionBox) descriptionBox.innerText = description;
     
     // Удаляем класс selected у всех элементов доставки
@@ -320,19 +320,23 @@ class BasketSection extends PageBuilder {
 	this.toggleVisibility(addressBox, false);
 	this.toggleVisibility(sendOrderButtonContainer, false);
 	this.toggleVisibility(sendOrderButton, false);
-    
+	this.toggleVisibility(descriptionBox, false);
     // Обработка разных типов доставки
     switch(this.deliveryType) {
         case "SELF_DELIVERY":
         case "PARCEL_LOCKER":
 	    this.toggleVisibility(sendOrderButtonContainer, true);
 	    this.toggleVisibility(sendOrderButton, true);
+	    this.toggleVisibility(descriptionBox, true);
             break;
         case "RUSSIAN_POST":
+    	    this.toggleVisibility(addressContainer, true);
+	    this.toggleVisibility(addressBox, true);            
 	    this.toggleVisibility(russianPostContainer, true);
 	    this.toggleVisibility(russianPostBox, true);
 	    this.toggleVisibility(sendOrderButtonContainer, true);
 	    this.toggleVisibility(sendOrderButton, true);
+	    this.toggleVisibility(descriptionBox, true);
             break;
         case "COURIER_SERVICE":
         case "CDEK":
@@ -340,8 +344,8 @@ class BasketSection extends PageBuilder {
 	    this.toggleVisibility(addressBox, true);            
 	    this.toggleVisibility(sendOrderButtonContainer, true);
 	    this.toggleVisibility(sendOrderButton, true);
+	    this.toggleVisibility(descriptionBox, true);
    	    break;
-            
         default:
             console.warn('Unknown delivery type:', this.deliveryType);
     }
@@ -393,46 +397,22 @@ class BasketSection extends PageBuilder {
 
 
  RussianPostAddressContainer(container) {
-        const addressContainer = document.createElement("div");
-        addressContainer.className = "russian-post-address-container d-none";
+        const RussianPostAddressContainer = document.createElement("div");
+        RussianPostAddressContainer.className = "russian-post-address-container d-none";
 
-        const addressContainerHeader = document.createElement("div");
-        addressContainerHeader.className = "card-header";
-        addressContainerHeader.innerHTML = `<h3 class="card-title">Укажите адрес доставки, мы подберем ближайшее отделение</h3>`;
+        const RussianPostAddressContainerHeader = document.createElement("div");
+        RussianPostAddressContainerHeader.className = "card-header";
+        RussianPostAddressContainerHeader.innerHTML = `<h3 class="card-title">Укажите адрес доставки, мы подберем ближайшее отделение</h3>`;
 
-        const addressContainerContent = document.createElement("div");
-        addressContainerContent.className = "card-body";
-        addressContainerContent.innerHTML = `<div class="russian-post-address-body-container"></div>`;
+        const RussianPostAddressContainerContent = document.createElement("div");
+        RussianPostAddressContainerContent.className = "card-body";
+        RussianPostAddressContainerContent.innerHTML = `<div class="russian-post-address-body-container"></div>`;
 
-        addressContainer.appendChild(addressContainerHeader);
-        addressContainer.appendChild(addressContainerContent);
-        let address =  new AddressManager(this);
-	addressContainer.appendChild(address.createAddressesSection());
-	container.appendChild(addressContainer);
-
-// подключить обработчик
-	const autocomplete = container.querySelector('#address');
-		 autocomplete
-		        .setUrl('http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/postal_unit') // Установите URL для поиска
-			.setPlaceholder('Введите данные для доставки - город, улицу, дом, квартиру...')
-		        .onRequest(() => {
-			   console.log('Запрос к API отправлен');
-		        })
-		        .onLoad((response) => {
-		            console.log('Данные загружены', response);
-		            if(!response.data) { 
-				autocomplete.hideItemsBlock() 
-			     } else {
-		              (response?.data?.length == 0)
-			        ? autocomplete.hideItemsBlock()
-		                : response.data.forEach(item => {
-		                   autocomplete.dropDownListItemDraw(item, item.fiasId, item.value);
-		           });
-			  }	
-		        })
-	        .onSelect((item) => {
-              console.log('Выбран элемент', item);
-            });
+        RussianPostAddressContainer.appendChild(RussianPostAddressContainerHeader);
+	RussianPostAddressContainer.appendChild(RussianPostAddressContainerContent);
+	container.appendChild(RussianPostAddressContainer);
+	this.russianPostManager = new RussianPostManager();
+	this.russianPostManager.createRussianPostalUnitsSection('');
     }
 
 /**
@@ -516,5 +496,44 @@ class BasketSection extends PageBuilder {
       });
     }    
 
+   getRussianPostalUnitRequestHandler() {
+       const webRequest = new WebRequest();
+        webRequest
+        .post(o.api.createOrderMethod(), { referenceId: o.referenceId }, false)
+        .then((data) => {
+        const order = new OrderDto(data.order);
+        if (!order) throw new Error("Object order is null");
+          order.saveToLocalStorage(o.referenceId);
+              window.location.href = `/orders/delivery/${o.referenceId}`;
+                })
+                .catch((error) => {
+                    console.error("Ошибка при создании заказа:", error);
+
+                    if (error.status === 409) {
+                        window.location.href = "/orders/payment/availability-error";
+                    } else {
+                        window.location.href = "/orders/create-error";
+                    }
+                })
+                .finally(() => {
+                    // Разблокируем кнопку независимо от результата
+                    button.disabled = false;
+                    button.textContent = "Создать заказ";
+         });
+  }
+
+
+/************************************ Обработка шины событий  ************************************/
+    addEventListeners() {
+	let o = this;
+        if (typeof eventBus === 'undefined') {
+            console.error('eventBus не определен');
+            return;
+        }
+        
+        eventBus.on(USER_DELIVERY_ADDRESS_LOAD_MESSAGE, () => {
+            o.russianPostManager().update();
+        });
+    }
 
 }

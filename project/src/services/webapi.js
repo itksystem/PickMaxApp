@@ -347,19 +347,19 @@ class WebAPI {
 
 /* Почтовая доставка  */
 
-   getDeliveryRussianPostesMethod(){
+   getDeliveryRussianPostalUnitsMethod(){
     return `/api/bff/delivery/v1/russian-postal-units`;
    }
 
-   addDeliveryRussianPostMethod(){
+   addDeliveryRussianPostalUnitMethod(){
     return `/api/bff/delivery/v1/russian-postal-unit`;
    }
 
-   deleteDeliveryRussianPostMethod(){
+   deleteDeliveryRussianPostalUnitMethod(){
     return `/api/bff/delivery/v1/russian-postal-unit`;
    }
 
-   setDefaultDeliveryRussianPostMethod(){
+   setDefaultDeliveryRussianPostalUnitMethod(){
     return `/api/bff/delivery/v1/russian-postal-unit`;
    }
 

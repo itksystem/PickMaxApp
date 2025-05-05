@@ -184,7 +184,7 @@ router.get('/v1/logout',
 router.get('/v1/suggest/address', async (req, res) => {        
     try {
         const profile = await clientService.getSuggestAddress(req, res);        
-        if (!profile.success)  throw({code : profile.status, message : "Не получить адрес ищ сервиса Dadata" })             
+        if (!profile.success)  throw({code : profile.status, message : "Не получить адрес из сервиса Dadata" })             
             _response
                 .setCode(200)                    
                 .setData(profile.data)

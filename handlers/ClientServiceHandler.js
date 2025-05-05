@@ -231,6 +231,8 @@ async checkEmail(req, res) {
         }
     }
 
+
+
     /**
      * Метод для получения подписки
      * @returns {Object} - Объект с результатом

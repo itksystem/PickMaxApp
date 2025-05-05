@@ -92,6 +92,7 @@ class AddressManager {
     async saveAddress() {
         try {
             const address = DOMHelper.getElement('#address').getObject();
+
             await this.webRequest.post(
                 this.api.addDeliveryAddressMethod(),
                 address,
@@ -100,6 +101,7 @@ class AddressManager {
             DOMHelper.getElement('#address').setValue('');
             toastr.success('Адрес успешно сохранен', 'Доставка', { timeOut: 3000 });
             this.reloadAddressDialog();
+
         } catch (error) {
             console.error('Ошибка при сохранении адреса:', error);
 	    toastr.error('Не удалось сохранить адрес', 'Ошибка', { timeOut: 3000 });
@@ -133,6 +135,12 @@ class AddressManager {
         try {
             const response =  this.webRequest.patch(this.api.setDefaultDeliveryAddressMethod(), {addressId}, true);
             toastr.success('Aдрес по умолчанию успешно изменен', 'Доставка', { timeOut: 3000 });
+
+   	    const defaultAddress = this.addresses.find(address => address.addressId == addressId );
+	    if (defaultAddress) {
+	         console.log(`eventBus.GET_DEFAULT_DELIVERY_ADDRESS->`,defaultAddress);
+		  eventBus.emit("GET_DEFAULT_DELIVERY_ADDRESS", defaultAddress);
+	     }	        
             return response;
         } catch (error) {
             console.error('Ошибка при установке адреса по умолчанию:', error);
@@ -190,9 +198,9 @@ class AddressManager {
     // Отображение адресов в интерфейсе
     getElements() {
 	    try {
-	        const addresses = this.getAddresses();
-		console.log(addresses);
-	        const addressElements = addresses.map(element =>
+	        this.addresses = this.getAddresses();
+		console.log(this.addresses);
+	        const addressElements = this.addresses.map(element =>
 	            this.createAddressRadio(
 	                element.addressId,
 	                "customAddress",
@@ -202,6 +210,13 @@ class AddressManager {
 	                this.deleteAddress.bind(this)
 	            )
 	        );
+
+		const defaultAddress = this.addresses.find(address => address.isDefault);
+		if (defaultAddress) {
+		  console.log(`eventBus.GET_DEFAULT_DELIVERY_ADDRESS->`,defaultAddress);
+		  eventBus.emit("GET_DEFAULT_DELIVERY_ADDRESS", defaultAddress);
+		}	        
+
 	        return addressElements;
 	    } catch (error) {
 	        console.error('Ошибка при получении адресов:', error);

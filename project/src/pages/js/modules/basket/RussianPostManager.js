@@ -57,32 +57,29 @@ class RussianPostManager {
         return placement;
     }
 
-    createRussianPostesSection(data) {
-        this.russianPostesContainer = DOMHelper.createElement("div", "russianPostes-card-container");
-        this.getElements().forEach(item => 
-            this.russianPostesContainer.appendChild(item)
+    createRussianPostalUnitsSection(query='') {
+        this.russianPostalUnitsContainer = DOMHelper.createElement("div", "russian-postal-unit-card-container");
+        this.getElements(query).forEach(item => 
+            this.russianPostalUnitsContainer.appendChild(item)
         );
 
         const elements = [
-            this.russianPostesContainer,
-            this.RussianPostAutoComplete(
-                "Добавить адрес",
-                "russianPost",
-                "Укажите адрес доставки",
-                true,
-                "Заполните данные для доставки товара"
-            ),
+            this.russianPostalUnitsContainer,            
             DOMHelper.createButton("Сохранить", "text-end", this.saveRussianPost.bind(this))
         ];
-        return DOMHelper.createDropdownSection("Мои адреса доставки", elements);
+        return DOMHelper.createDropdownSection("Почтовые отделения", elements);
     }
 
 
     // Получение адресов
-    getRussianPostes() {
+    getRussianPostalUnits(query) {
         try {
-            const response =  this.webRequest.get(this.api.getDeliveryRussianPostesMethod(), {}, true);
-            return response?.russianPostes || [];
+            const response =  this.webRequest.get(
+		this.api.getDeliveryRussianPostalUnitsMethod(), 
+			 	
+		   {query : query},
+		   true);
+            return response?.russianPostalUnits || [];
         } catch (error) {
             console.error('Ошибка при получении адресов:', error);
             return [];
@@ -120,9 +117,9 @@ class RussianPostManager {
         }
         
         eventBus.on('reloadRussianPostDialog', () => {
-            o.russianPostesContainer.innerHTML = '';
+            o.russianPostalUnitsContainer.innerHTML = '';
             o.getElements().forEach(item => 
-                o.russianPostesContainer.appendChild(item)
+                o.russianPostalUnitsContainer.appendChild(item)
             );
         });
     }
@@ -131,7 +128,7 @@ class RussianPostManager {
     // Установка адреса  по умолчанию
     setDefaultRussianPost(russianPostId) {
         try {
-            const response =  this.webRequest.patch(this.api.setDefaultDeliveryRussianPostMethod(), {russianPostId}, true);
+            const response =  this.webRequest.patch(this.api.setDefaultDeliveryRussianPostalUnitMethod(), {russianPostId}, true);
             toastr.success('Aдрес по умолчанию успешно изменен', 'Доставка', { timeOut: 3000 });
             return response;
         } catch (error) {
@@ -144,7 +141,7 @@ class RussianPostManager {
     // Удаление адресов
     deleteRussianPost(russianPostId) {
         try {
-            const response = this.webRequest.delete(this.api.deleteDeliveryRussianPostMethod(), {russianPostId}, true);
+            const response = this.webRequest.delete(this.api.deleteDeliveryRussianPostalUnitMethod(), {russianPostId}, true);
             toastr.success('Aдрес успешно удален', 'Доставка', { timeOut: 3000 });
             if(eventBus) {
              console.log(eventBus)
@@ -190,9 +187,9 @@ class RussianPostManager {
     // Отображение адресов в интерфейсе
     getElements() {
 	    try {
-	        const russianPostes = this.getRussianPostes();
-		console.log(russianPostes);
-	        const russianPostElements = russianPostes.map(element =>
+	        const russianPostalUnits = this.getRussianPostalUnits();
+		console.log(russianPostalUnits);
+	        const russianPostElements = russianPostalUnits.map(element =>
 	            this.createRussianPostRadio(
 	                element.russianPostId,
 	                "customRussianPost",

@@ -3222,3 +3222,21 @@
 {"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-05-04T07:56:59.991Z"}
 {"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-05-04T07:57:04.458Z"}
 {"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-05-04T07:57:04.902Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-05-04T11:02:48.094Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-05-04T11:02:57.706Z"}
+{"level":"error","message":"Set address not execute","service":"pickapp-service","timestamp":"2025-05-04T15:43:55.239Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-05-04T22:52:54.704Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-05-04T22:53:08.000Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-05-04T22:53:35.028Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-05-04T22:53:35.457Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-05-05T06:31:07.740Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-05-05T06:31:14.245Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-05-05T09:03:26.869Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-05-05T09:03:27.348Z"}
+{"level":"error","message":"Не получить адрес ищ сервиса Dadata","service":"pickapp-service","timestamp":"2025-05-05T11:23:00.513Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-05-05T11:23:00.621Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-05-05T11:23:08.067Z"}
+{"level":"error","message":"Не получить адрес из сервиса Dadata","service":"pickapp-service","timestamp":"2025-05-05T13:26:23.656Z"}
+{"level":"error","message":"Не получить адрес из сервиса Dadata","service":"pickapp-service","timestamp":"2025-05-05T13:40:58.153Z"}
+{"level":"error","message":"Не получить адрес из сервиса Dadata","service":"pickapp-service","timestamp":"2025-05-05T13:43:01.815Z"}
+{"level":"error","message":"Не получить адрес из сервиса Dadata","service":"pickapp-service","timestamp":"2025-05-05T13:46:40.618Z"}

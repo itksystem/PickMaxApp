@@ -113,4 +113,45 @@ router.get('/v1/delivery-types',
         }
 });
   
+
+
+router.get('/v1/russian-postal-units', async (req, res) => {        
+    try {
+        const profile = await deliveryService.getSuggestRussianPostalUnits(req, res);        
+        if (!profile.success)  throw({code : profile.status, message : "Не получить адрес из сервиса Dadata" })             
+            _response
+                .setCode(200)                    
+                .setData(profile.data)
+                .send(res);    
+    } catch (error) {
+            _response
+                .setCode(error.code)
+                .setStatus(false)
+                .setMessage(error.message)
+                .send(res);                    
+    }
+   } 
+);
+
+router.get('/v1/cdek-filials', async (req, res) => {        
+    try {
+        const profile = await deliveryService.getSuggestCdekFilials(req, res);        
+        if (!profile.success)  throw({code : profile.status, message : "Не получить адрес из сервиса Dadata" })             
+            _response
+                .setCode(200)                    
+                .setData(profile.data)
+                .send(res);    
+    } catch (error) {
+            _response
+                .setCode(error.code)
+                .setStatus(false)
+                .setMessage(error.message)
+                .send(res);                    
+    }
+   } 
+);
+
+
+
+
 module.exports = router;
