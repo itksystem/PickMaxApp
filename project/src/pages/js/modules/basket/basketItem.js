@@ -137,7 +137,7 @@ class BasketItem {
             }
            if(eventBus) {
              console.log(eventBus)
-             eventBus.emit("basketItemUpdated", { productId: this.productId, quantity: 1 });
+             eventBus.emit(EVENT_BASKET_ITEM_UPDATE, { productId: this.productId, quantity: 1 });
            }
 
 

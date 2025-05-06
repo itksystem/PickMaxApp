@@ -7,6 +7,7 @@ class BasketSection extends PageBuilder {
         this.common = new CommonFunctions();
         this.deliveryType = null;
         this.address = null;
+	this.russianPostManager = null;
 	this.addEventListeners();
     }
 
@@ -39,13 +40,9 @@ class BasketSection extends PageBuilder {
         } else {
    	    this.BasketContainerItog(BasketContainer, totalQuantity, totalAmount);
             this.DeliveryContainer(BasketDeliveryContainer); // Тип доставки
-            this.AddressContainer(BasketAddressContainer); //  Адрес
             this.RussianPostAddressContainer(BasketRussianPostAddressContainer); //  Адрес
+            this.AddressContainer(BasketAddressContainer); //  Адрес
             this.SendOrderButtonContainer(BasketSendOrderButtonContainer); // Кнопка отправить заказ
-
-  	    eventBus.on("basketItemUpdated", (_message) => { // Подписчик: реагирует на событие
-		o.basketUpdate(_message);
-	   });	    
         }
         this.addModule("Basket", BasketContainer);
         this.addModule("BasketDelivery", BasketDeliveryContainer);
@@ -402,17 +399,20 @@ class BasketSection extends PageBuilder {
 
         const RussianPostAddressContainerHeader = document.createElement("div");
         RussianPostAddressContainerHeader.className = "card-header";
-        RussianPostAddressContainerHeader.innerHTML = `<h3 class="card-title">Укажите адрес доставки, мы подберем ближайшее отделение</h3>`;
+        RussianPostAddressContainerHeader.innerHTML = `<h3 class="card-title">Укажите почтовое отделение</h3>`;
 
         const RussianPostAddressContainerContent = document.createElement("div");
         RussianPostAddressContainerContent.className = "card-body";
         RussianPostAddressContainerContent.innerHTML = `<div class="russian-post-address-body-container"></div>`;
 
+	this.russianPostManager = new RussianPostManager();
+
         RussianPostAddressContainer.appendChild(RussianPostAddressContainerHeader);
 	RussianPostAddressContainer.appendChild(RussianPostAddressContainerContent);
+        RussianPostAddressContainer.appendChild(
+		this?.russianPostManager?.createRussianPostalUnitsSection()
+	);
 	container.appendChild(RussianPostAddressContainer);
-	this.russianPostManager = new RussianPostManager();
-	this.russianPostManager.createRussianPostalUnitsSection('');
     }
 
 /**
@@ -531,9 +531,16 @@ class BasketSection extends PageBuilder {
             return;
         }
         
-        eventBus.on(USER_DELIVERY_ADDRESS_LOAD_MESSAGE, () => {
-            o.russianPostManager().update();
+        eventBus?.on(EVENT_GET_DEFAULT_DELIVERY_ADDRESS, (event) => {
+	    console.log(event);	
+            o?.russianPostManager?.update(event?.value);
         });
+
+
+        eventBus?.on(EVENT_BASKET_ITEM_UPDATE, (_message) => { // Подписчик: реагирует на событие
+		o.basketUpdate(_message);
+        });	    
+
     }
 
 }

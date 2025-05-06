@@ -1,3 +1,4 @@
+
 class AddressManager {
     constructor() {
         this.api = new WebAPI();
@@ -110,7 +111,7 @@ class AddressManager {
 
     reloadAddressDialog() {
         if (typeof eventBus !== 'undefined') {
-            eventBus.emit("reloadAddressDialog", {});
+	    this.sendEvent(EVENT_RELOAD_ADDRESS_DIALOG, {})
         }
     }
 
@@ -121,7 +122,7 @@ class AddressManager {
             return;
         }
         
-        eventBus.on('reloadAddressDialog', () => {
+        eventBus.on(EVENT_RELOAD_ADDRESS_DIALOG, () => {
             o.addressesContainer.innerHTML = '';
             o.getElements().forEach(item => 
                 o.addressesContainer.appendChild(item)
@@ -137,14 +138,11 @@ class AddressManager {
             toastr.success('Aдрес по умолчанию успешно изменен', 'Доставка', { timeOut: 3000 });
 
    	    const defaultAddress = this.addresses.find(address => address.addressId == addressId );
-	    if (defaultAddress) {
-	         console.log(`eventBus.GET_DEFAULT_DELIVERY_ADDRESS->`,defaultAddress);
-		  eventBus.emit("GET_DEFAULT_DELIVERY_ADDRESS", defaultAddress);
-	     }	        
+	    if (defaultAddress) 			 
+		 this.sendEvent(EVENT_GET_DEFAULT_DELIVERY_ADDRESS, defaultAddress)
             return response;
         } catch (error) {
-            console.error('Ошибка при установке адреса по умолчанию:', error);
-            toastr.error('Ошибка при установке адреса по умолчанию', 'Доставка', { timeOut: 3000 });
+               toastr.error('Ошибка при установке адреса по умолчанию', 'Доставка', { timeOut: 3000 });
             return null;
         }
     }
@@ -155,13 +153,11 @@ class AddressManager {
             const response = this.webRequest.delete(this.api.deleteDeliveryAddressMethod(), {addressId}, true);
             toastr.success('Aдрес успешно удален', 'Доставка', { timeOut: 3000 });
             if(eventBus) {
-             console.log(eventBus)
-             eventBus.emit("reloadAddressDialog", {});
+	     this.reloadAddressDialog();	
            }
 
             return response;
         } catch (error) {
-            console.error('Ошибка при удалении адреса:', error);
             toastr.error('Ошибка при удалении адреса', 'Доставка', { timeOut: 3000 });
             return null;
         }
@@ -212,15 +208,19 @@ class AddressManager {
 	        );
 
 		const defaultAddress = this.addresses.find(address => address.isDefault);
-		if (defaultAddress) {
-		  console.log(`eventBus.GET_DEFAULT_DELIVERY_ADDRESS->`,defaultAddress);
-		  eventBus.emit("GET_DEFAULT_DELIVERY_ADDRESS", defaultAddress);
-		}	        
-
+		if (defaultAddress)
+		 this.sendEvent(EVENT_GET_DEFAULT_DELIVERY_ADDRESS, defaultAddress)
 	        return addressElements;
 	    } catch (error) {
 	        console.error('Ошибка при получении адресов:', error);
 	        return [];
 	    }
       }
+   
+    sendEvent(event, o){
+      console.log(`eventBus.${event}`,o);
+	if(eventBus)    
+	  eventBus.emit(event, o);
+    }
+
 }

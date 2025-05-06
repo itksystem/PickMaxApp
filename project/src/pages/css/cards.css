@@ -1364,13 +1364,13 @@ img.custom-radio-new-card{
 }
 
 .delivery-type-btn-title {
-    font-family : "Roboto Condensed",
-    font-size : "0.8rem",
-    font-weight : "400",
-    padding-left : "0.5rem"
+    font-family : "Roboto Condensed";
+    font-size : 0.8rem;
+    font-weight : 400;
+    padding-left : "0.5rem";
 }
 
-.delivery-type-btn {
+.delivery-type-btn, .postal-unit {
   box-shadow: 0 0 1px rgba(0,0,0,.125),0 1px 3px rgba(0,0,0,.2);
 }
 
@@ -1378,4 +1378,10 @@ img.custom-radio-new-card{
     color: var(--bs-btn-hover-color);
     background-color: #ffffff;
     border: 3px solid #000;  	
+}
+
+ul.schedule-russian-post li {
+    font-family : "Roboto Condensed";
+    font-size : 0.8rem;
+    font-weight: 300;
 }

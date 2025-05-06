@@ -1,3 +1,8 @@
+const EVENT_GET_DEFAULT_DELIVERY_ADDRESS = 'EVENT_GET_DEFAULT_DELIVERY_ADDRESS';
+const EVENT_RELOAD_ADDRESS_DIALOG = "reloadAddressDialog";
+const EVENT_BASKET_ITEM_UPDATE = "basketItemUpdated";
+
+
 class MainApp {
    constructor() {
     this.config = {
