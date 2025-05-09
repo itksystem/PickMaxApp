@@ -1385,3 +1385,11 @@ ul.schedule-russian-post li {
     font-size : 0.8rem;
     font-weight: 300;
 }
+
+.commentary-body-textarea-box  {
+    box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+    border-color: rgb(0, 123, 255);
+    outline: none;
+    border-radius: 0.5rem 0.5rem  0.5rem 0.5rem;
+    width : 100%
+}

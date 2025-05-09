@@ -1,3 +1,4 @@
+
 class AddressManager {
     constructor() {
         this.api = new WebAPI();

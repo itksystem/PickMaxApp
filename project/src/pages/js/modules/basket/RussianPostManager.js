@@ -3,6 +3,7 @@ class RussianPostManager {
         this.api = new WebAPI();
         this.webRequest = new WebRequest();    
         this.addEventListeners();
+        this.postCode = null;
     }
 
     // Создание элемента радио-кнопки для адресов
@@ -31,7 +32,7 @@ class RussianPostManager {
         const radioLabel = document.createElement("label");
         radioLabel.className = "custom-control-label";
         radioLabel.setAttribute("for", `radio-${postCode}`);
-        radioLabel.textContent = label;
+        radioLabel.textContent = `${postCode}, ${label}`;
 
         radioContainer.appendChild(radioInput);
         radioContainer.appendChild(radioLabel);
@@ -200,7 +201,7 @@ class RussianPostManager {
 
 
     // Установка адреса  по умолчанию
-    setDefaultRussianPost(russianPostId) {
+    setDefaultRussianPost() {
         try {
             const response =  this.webRequest.patch(this.api.setDefaultDeliveryRussianPostalUnitMethod(), {russianPostId}, true);
             toastr.success('Aдрес по умолчанию успешно изменен', 'Доставка', { timeOut: 3000 });
@@ -210,6 +211,21 @@ class RussianPostManager {
             return null;
         }
     }
+
+   setRussianPostOnClick(postCode = null) {
+      try {
+         console.log(postCode);
+         this.postCode = postCode;
+            if(eventBus) {
+             eventBus.emit(EVENT_POSTAL_UNIT_UPDATE, {postCode});
+           }
+
+         return response;
+        } catch (error) {
+         return null;
+       }
+    }
+
 
     // Удаление адресов
     deleteRussianPost(russianPostId) {
@@ -261,12 +277,12 @@ class RussianPostManager {
 	console.log(russianPostalUnits);
         const russianPostElements = russianPostalUnits.map(element =>
             this.createRussianPostRadio(
-                element.postalCode,
+                element.postalСode, 
                 "customRussianPost",
                 element.value,
                 element.isDefault ?? false,
                 element.schedule,
-                this.setDefaultRussianPost.bind(this),
+                (postalСode)=>this.setRussianPostOnClick(element.postalСode),
             )
         );
 	console.log(russianPostElements);
