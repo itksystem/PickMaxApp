@@ -22,7 +22,9 @@ router.get('/v1/addresses',
 	async (req, res) => {        
         try {
             const profile = await deliveryService.getAdresses(req, res);        
-            if (!profile.success) throw({code : 422, message : "Client profile not found" })
+            console.log(profile);
+            if (!profile.success)
+                throw({code : (profile?.status?.message =='401') ? 401: 422})                    
                 _response
                     .setCode(200)                    
                     .setData(profile.data)
@@ -41,7 +43,8 @@ router.patch('/v1/address',
 	async (req, res) => {        
         try {
             const result = await deliveryService.setDefaultAdress(req, res);        
-            if (!result.success) throw({code : 422, message : "Set address not execute" })
+            if (!result.success) 
+                throw({code : (result?.status?.message =='401') ? 401: 422})                    
                 _response
                     .setCode(200)                    
                     .setData(result.data)
@@ -60,7 +63,7 @@ router.post('/v1/address',
 	async (req, res) => {        
         try {
             const result = await deliveryService.saveAddress(req, res);        
-            if (!result.success) throw({code : 422, message : "Save new address not executed" })
+            if (!result.success) throw({code : (result?.status?.message =='401') ? 401: 422})                    
                 _response
                     .setCode(200)                    
                     .setData(result.data)
@@ -79,7 +82,7 @@ router.delete('/v1/address',
 	async (req, res) => {        
         try {
             const result = await deliveryService.deleteAddress(req, res);        
-            if (!result.success) throw({code : 422, message : "Delete address not executed" })
+            if (!result.success) throw({code : (result?.status?.message =='401') ? 401: 422})                    
                 _response
                     .setCode(200)                    
                     .setData(result.data)
@@ -99,7 +102,7 @@ router.get('/v1/delivery-types',
 	async (req, res) => {        
         try {
             const result = await deliveryService.deliveryTypes(req, res);        
-            if (!result.success) throw({code : 422, message : "Delivery types not found" })
+            if (!result.success) throw({code : (result?.status?.message =='401') ? 401: 422})                    
                 _response
                     .setCode(200)                    
                     .setData(result.data)
@@ -118,7 +121,7 @@ router.get('/v1/delivery-types',
 router.get('/v1/russian-postal-units', async (req, res) => {        
     try {
         const profile = await deliveryService.getSuggestRussianPostalUnits(req, res);        
-        if (!profile.success)  throw({code : profile.status, message : "Не получить адрес из сервиса Dadata" })             
+        if (!profile.success) throw({code : (profile?.status?.message =='401') ? 401: 422})                    
             _response
                 .setCode(200)                    
                 .setData(profile.data)
@@ -136,7 +139,7 @@ router.get('/v1/russian-postal-units', async (req, res) => {
 router.get('/v1/cdek-filials', async (req, res) => {        
     try {
         const profile = await deliveryService.getSuggestCdekFilials(req, res);        
-        if (!profile.success)  throw({code : profile.status, message : "Не получить адрес из сервиса Dadata" })             
+        if (!profile.success) throw({code : (profile?.status?.message =='401') ? 401: 422})                    
             _response
                 .setCode(200)                    
                 .setData(profile.data)
@@ -150,8 +153,5 @@ router.get('/v1/cdek-filials', async (req, res) => {
     }
    } 
 );
-
-
-
 
 module.exports = router;

@@ -99,6 +99,7 @@ class AddressManager {
         try {
             const address = DOMHelper.getElement('#address').getObject();
             address.deliveryType = this.addressType;
+	    console.log(`saveAddress=>`,address);
             await this.webRequest.post(
                 this.api.addDeliveryAddressMethod(),
                 address,
@@ -145,7 +146,11 @@ class AddressManager {
    	    const defaultAddress = this.addresses.find(address => address.addressId == addressId );
 	    if (defaultAddress) 			 
 		 this.sendEvent(EVENT_SET_DEFAULT_DELIVERY_ADDRESS, 
-			{value: defaultAddress.value, addressId})
+		{
+		  value: defaultAddress.value, 
+		  addressId,
+		  o : defaultAddress
+		 })
             return response;
         } catch (error) {
                toastr.error('Ошибка при установке адреса по умолчанию', 'Доставка', { timeOut: 3000 });
@@ -215,7 +220,14 @@ class AddressManager {
 
 		const defaultAddress = this.addresses.find(address => address.isDefault);
 	        this.sendEvent(EVENT_SET_DEFAULT_DELIVERY_ADDRESS, 
-			defaultAddress ? {value: defaultAddress.value, addressId : defaultAddress.addressId} : {})
+			defaultAddress 
+			? {
+			    value: defaultAddress.value, 
+			    addressId : defaultAddress.addressId,
+			    o : defaultAddress
+			   } 
+			: {})
+
 	        return addressElements;
 	    } catch (error) {
 	        console.error('Ошибка при получении адресов:', error);

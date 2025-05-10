@@ -121,7 +121,7 @@ class RussianPostManager {
         return this.russianPostalUnitsContainer;
     }
 
-    update(query) {
+    update(query=null, latlng=null) {
   
     if (!this.russianPostalUnitsContainer) return;    
 // Показываем индикатор загрузки
@@ -133,7 +133,7 @@ class RussianPostManager {
  // Используем setTimeout чтобы дать браузеру отобразить спиннер
     setTimeout(async () => {
         try {
-            const elements = await this.getElements(query);
+            const elements = await this.getElements(query, latlng);
             container.innerHTML = '';
             
             if (elements.length === 0) {
@@ -152,12 +152,14 @@ class RussianPostManager {
 
 
     // Получение адресов
-    getRussianPostalUnits(query) {
+    getRussianPostalUnits(query = null, latlng = null) {
         try {
+	    console.log(`getRussianPostalUnits`, query, latlng)
             const response =  this.webRequest.get(
-		this.api.getDeliveryRussianPostalUnitsMethod(), 
-			 	
-		   {query : query},
+		   this.api.getDeliveryRussianPostalUnitsMethod(), 			 	
+		latlng		   
+		  ? { lat : latlng?.lat, lon : latlng?.lon }
+		  : { query : query },
 		   true);
             return response?.data || [];
         } catch (error) {
@@ -165,6 +167,8 @@ class RussianPostManager {
             return [];
         }
     }
+
+    // Получение адресов ближайших к геолокации
 
     async saveRussianPost() {
      try {
@@ -268,9 +272,9 @@ class RussianPostManager {
   }
 
    // Отображение адресов в интерфейсе
-   getElements(query = null) {
+   getElements(query = null, latlng = null) {
     try {
-        const russianPostalUnits = query ? this.getRussianPostalUnits(query) : [];
+        const russianPostalUnits = this.getRussianPostalUnits(query, latlng);
         const russianPostElements = russianPostalUnits.map(element =>
             this.createRussianPostRadio(
                 element.postalСode, 

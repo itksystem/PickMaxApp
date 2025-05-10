@@ -210,7 +210,7 @@ class BasketSection extends PageBuilder {
     switch(this.deliveryType) {
         case "SELF_DELIVERY"  : return  true;
         case "PARCEL_LOCKER"  : return  this._getDefaltDeliveryAddress() ? true :  false;
-        case "RUSSIAN_POST"   : return  this.russianPostManager.postCode ? true :  false;
+        case "RUSSIAN_POST"   : return  this._getDefaltDeliveryAddress() ? true :  false;
         case "COURIER_SERVICE": return  this._getDefaltDeliveryAddress() ? true :  false;
         case "CDEK": return  this._getDefaltDeliveryAddress() ? true :  false;
     }
@@ -388,7 +388,7 @@ class BasketSection extends PageBuilder {
         addressContainer.appendChild(addressContainerHeader);
         addressContainer.appendChild(addressContainerContent);
 
-        this.address =  new AddressManager(this);
+        this.address =  new AddressManager(this, true);
 	addressContainer.appendChild(this.address.createAddressesSection());
 	container.appendChild(addressContainer);
     }
@@ -422,7 +422,12 @@ class BasketSection extends PageBuilder {
         [EVENT_SET_DEFAULT_DELIVERY_ADDRESS]: (message) => {
             console.log(EVENT_SET_DEFAULT_DELIVERY_ADDRESS, message);
             this.addressId = message?.addressId || null;
-            this.russianPostManager?.update(message?.value);
+	    let query = message.value ? message.value : null;
+	    let latlng = message?.o?.latitude && message?.o?.longitude 
+		? { lat : message?.o?.latitude, lon: message?.o?.longitude, radius_meters: 1000 }
+		: null;			
+	    console.log(query, latlng);
+            this.russianPostManager.update(query, latlng);
             this.UpdateSendButtonStatus();
         },
         [EVENT_BASKET_ITEM_UPDATE]: (message) => {
@@ -433,7 +438,12 @@ class BasketSection extends PageBuilder {
         [EVENT_RELOAD_ADDRESS_DIALOG]: (message) => {
             console.log(EVENT_RELOAD_ADDRESS_DIALOG, message);
             this.addressId = message ? message.addressId : null;
-            this.russianPostManager?.update(message?.value);
+	    let query = message.value ? message.value : null;
+	    let latlng = message?.o?.latitude && message?.o?.longitude 
+		? { lat : message?.o?.latitude, lon: message?.o?.longitude, radius_meters: 1000 }
+		: null;			
+	    console.log(query, latlng);
+            this.russianPostManager.update(query, latlng);
             this.UpdateSendButtonStatus();
         },
         [EVENT_POSTAL_UNIT_UPDATE]: (message) => {
@@ -454,7 +464,7 @@ class BasketSection extends PageBuilder {
         if (!autocomplete) return;
         autocomplete
             .setUrl(`${o.api.getClientAddressMethod()}?query=`)
-            .setPlaceholder(DELIVERY_ADDRESS_PLACEHOLDER )
+            .setPlaceholder(DELIVERY_ADDRESS_PLACEHOLDER)
             .onRequest(() => console.log('Request sended...'))
             .onLoad((response) => {
                 if (!response.data || response.data.length === 0) {
