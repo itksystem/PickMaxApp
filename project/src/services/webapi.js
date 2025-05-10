@@ -403,7 +403,6 @@ class WebAPI {
   }
 
 
-
 /* */
    getSubscriptionsMethod(){
      return `/api/bff/client/v1/subscriptions`;
@@ -427,6 +426,7 @@ class WebAPI {
    getClientRegionsMethod() { return `/api/bff/client/v1/regions`; }
    sendClientRegionMethod() { return `/api/bff/client/v1/region`; }
    deleteClientRegionMethod() { return `/api/bff/client/v1/region`; }
+   getClientAddressMethod() { return `/api/bff/client/v1/suggest/address`}
 
 // Второй фактор
     getSecurityQuestionsMethod() { return `/api/bff/confirmation/v1/security-questions`; }

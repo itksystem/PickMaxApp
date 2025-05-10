@@ -122,18 +122,20 @@ class RussianPostManager {
     }
 
     update(query) {
-  
+    console.log(`Updating Russian Post units with query:`, query);
+    
     if (!this.russianPostalUnitsContainer) return;    
 // Показываем индикатор загрузки
     this.russianPostalUnitsContainer.innerHTML = 
         '<div class="loading-spinner">Загрузка...</div>';
 // Сохраняем контекст для использования в промисах
     let container = this.russianPostalUnitsContainer;
-
+    console.log(`container`, container);
  // Используем setTimeout чтобы дать браузеру отобразить спиннер
     setTimeout(async () => {
         try {
             const elements = await this.getElements(query);
+	    console.log(elements);	
             container.innerHTML = '';
             
             if (elements.length === 0) {
@@ -212,6 +214,7 @@ class RussianPostManager {
 
    setRussianPostOnClick(postCode = null) {
       try {
+         console.log(postCode);
          this.postCode = postCode;
             if(eventBus) {
              eventBus.emit(EVENT_POSTAL_UNIT_UPDATE, {postCode});
@@ -271,6 +274,7 @@ class RussianPostManager {
    getElements(query = null) {
     try {
         const russianPostalUnits = query ? this.getRussianPostalUnits(query) : [];
+	console.log(russianPostalUnits);
         const russianPostElements = russianPostalUnits.map(element =>
             this.createRussianPostRadio(
                 element.postalСode, 
@@ -281,6 +285,7 @@ class RussianPostManager {
                 (postalСode)=>this.setRussianPostOnClick(element.postalСode),
             )
         );
+	console.log(russianPostElements);
         return russianPostElements;
     } catch (error) {
         console.error('Ошибка при получении адресов:', error);
