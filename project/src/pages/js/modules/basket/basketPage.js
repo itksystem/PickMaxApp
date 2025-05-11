@@ -1,21 +1,37 @@
-const CDEK_CHOICE_ADDRESS_DESCRIPTION =  'Выберите адрес CDEK из списка или введите новый';
-const DELIVERY_ADDITIONAL_INFO = 'Дополнительная информация для службы доставки';
-const DELIVERY_ADDRESS_INSTRUCTIONS = 
-  'В разделе «Укажите адрес доставки» введите регион, город и улицу - система автоматически покажет ближайшие отделения';
-const BASKET_TITLE = 'Ваша корзина';
-const EMPTY_CART_MESSAGE = 'В корзине пока пусто';
-const EMPTY_CART_SUBTEXT = 'Зайдите в каталог, чтобы выбрать товары или найти нужное в поиске';
-const GO_TO_CATALOG_TEXT = 'Перейти в каталог';
-const CHECKOUT_BUTTON_TEXT = 'Перейти к оформлению заказа';
-const SEND_ORDER = "Отправить заказ";
-const DELIVERY_TYPE_TITLE = 'Выберите тип доставки';
-const POSTAMAT_ADDRESS_PROMPT = 'Укажите адрес постамата';
-const DELIVERY_ADDRESS_PROMPT = 'Укажите адрес доставки';
-const POST_OFFICE_PROMPT = 'Укажите почтовое отделение';
-const CREATE_ORDER = "Создать заказ";
-const DELIVERY_ADDRESS_PLACEHOLDER = 'Введите данные для доставки - город, улицу, дом, квартиру...';
-const CREATING_MESSAGE = "Создание...";
-const DELIVERY_ADDRESSES = "Адреса доставки";
+const BASKET_TITLE 		= 'Ваша корзина';
+const EMPTY_CART_MESSAGE 	= 'В корзине пока пусто';
+const EMPTY_CART_SUBTEXT 	= 'Зайдите в каталог, чтобы выбрать товары или найти нужное в поиске';
+const GO_TO_CATALOG_TEXT 	= 'Перейти в каталог';
+const CHECKOUT_BUTTON_TEXT 	= 'Перейти к оформлению заказа';
+const DELIVERY_TYPE_TITLE 	= 'Выберите тип доставки';
+const DELIVERY_TYPE_INFO 	= 'Доставка';
+const DELIVERY_SELF_INFO 	= 'Самостоятельно заберу в ПВЗ или в торговой организации';
+const DELIVERY_COURIER_INFO     = 'Доставка курьером';
+
+const POSTAMAT_ADDRESS_PROMPT 	= 'Укажите адрес постамата';
+const POSTAMAT_ADDRESS_INFO 	= 'Адрес постамата';
+const CDEK_ADDRESS_INFO       	= 'Адрес филиала CDEK';
+
+const DELIVERY_ADDRESS_PROMPT 	= 'Укажите адрес доставки';
+const POST_OFFICE_PROMPT      	= 'Укажите почтовое отделение';
+const POST_OFFICE_INFO      	= 'Адрес почтового отделения';
+
+const CREATE_ORDER 		= "Создать заказ";
+const SEND_ORDER 		= "Проверить и отправить заказ";
+const CREATING_MESSAGE 		= "Создание...";
+const DELIVERY_ADDRESSES 	= "Адреса доставки";
+const DELIVERY_ADDRESS_PLACEHOLDER 	= 'Введите данные для доставки - город, улицу, дом, квартиру...';
+const DELIVERY_ADDITIONAL_INFO 		= 'Дополнительная информация к заказу';
+const CDEK_CHOICE_ADDRESS_DESCRIPTION 	= 'Укажите адрес CDEK из списка или введите новый';
+const DELIVERY_ADDRESS_INSTRUCTIONS 	= 'В разделе «Укажите адрес доставки» введите регион, город и улицу - система автоматически покажет ближайшие отделения';
+const CREATE_ORDER_ERROR_PAGE 		= '/orders/create-error';
+const UNDEFINED  = 'не опеределено'; 
+const NO_COMMENTARY  = 'Нет дополнительной информации к заказу' ;
+const AUDIT_ORDER_TITLE  = 'Дополнительная информация к заказу' ;
+
+const RECIPIENT_NAME_INFO  = 'Получатель';
+const RECIPIENT_PHONE_INFO = 'Контактный номер';
+const CHANGE_LINK_INFO = 'Хочу внести изменения!'
 
 
 class BasketSection extends PageBuilder {
@@ -26,6 +42,15 @@ class BasketSection extends PageBuilder {
         this.deliveryType = null;
 	this.addressId = null;
 	this.russianPostManager = null;
+	this.person = null;
+    }
+
+    loadProfile(){
+     try{
+        this.person = new WebRequest().get(this.api?.getShopProfileMethod(), {}, true );
+        }catch(error) {
+	console.log('error load profile...');
+     }
     }
 
 
@@ -33,7 +58,7 @@ class BasketSection extends PageBuilder {
 	if(!element) return;
         const _container = document.createElement(element);
 	if(elementClass) 
-        _container.className = elementClass;
+        _container.className = `${elementClass}`;
 	if(textContent) 
 	_container.textContent = textContent;
 	if(innerHTML) 
@@ -47,12 +72,13 @@ class BasketSection extends PageBuilder {
     BasketCardContainer(totalQuantity = 0, totalAmount = 0, data) {
         let o = this;
 	
-        this.BasketContainer 			= this.createContainer("div","container basket");
-        this.BasketDeliveryContainer 		= this.createContainer("div", "container delivery d-none");
-        this.BasketAddressContainer 		= this.createContainer("div","container address d-none");
-        this.BasketRussianPostAddressContainer	= this.createContainer("div","container russian-postal-address d-none");
-        this.BasketCommentaryContainer 		= this.createContainer("div","container commentary d-none");
+        this.BasketContainer 			= this.createContainer("div","card container basket");
+        this.BasketDeliveryContainer 		= this.createContainer("div", "card container delivery d-none");
+        this.BasketAddressContainer 		= this.createContainer("div","card container address d-none");
+        this.BasketRussianPostAddressContainer	= this.createContainer("div","card container russian-postal-address d-none");
+        this.BasketCommentaryContainer 		= this.createContainer("div","card container commentary d-none");
         this.BasketSendOrderButtonContainer 	= this.createContainer("div","container send-order-button-container d-none");
+        this.BasketPreAuditWorksheetContainer 	= this.createContainer("div","card container pre-audit-worksheet-container d-none");
 
 	this.BasketBodyContainer(this.BasketContainer, totalQuantity, totalAmount);//	Сами товары 
 
@@ -64,6 +90,7 @@ class BasketSection extends PageBuilder {
             this.RussianPostAddressContainer(this.BasketRussianPostAddressContainer); //  Адрес
             this.AddressContainer(this.BasketAddressContainer); //  Адрес
             this.CommentaryContainer(this.BasketCommentaryContainer); //  Комментарий пользователя
+            this.PreAuditWorksheetContainer(this.BasketPreAuditWorksheetContainer);  // проверочная ведомость
             this.SendOrderButtonContainer(this.BasketSendOrderButtonContainer); // Кнопка отправить заказ
         }
         this.addModule("Basket", this.BasketContainer);
@@ -71,9 +98,11 @@ class BasketSection extends PageBuilder {
         this.addModule("BasketAddress", this.BasketAddressContainer);
         this.addModule("BasketRussianPostDelivery", this.BasketRussianPostAddressContainer);
         this.addModule("BasketCommentary", this.BasketCommentaryContainer);
+        this.addModule("PreAuditWorksheet", this.BasketPreAuditWorksheetContainer);
         this.addModule("BasketSendOrderButton",this.BasketSendOrderButtonContainer);
 
 	this.addEventListeners();
+	this.loadProfile();
     }
 
 
@@ -151,6 +180,7 @@ class BasketSection extends PageBuilder {
          container.appendChild(BasketTotalAmountContainer);
   }
 
+
   BasketContainerItog(container, totalQuantity, totalAmount){
             const BasketContainerItog =  this.createContainer("div", "card-itog-body-container", null,  `
             <div class="row">
@@ -190,6 +220,7 @@ class BasketSection extends PageBuilder {
 
 
 // элементы 
+    _deliveryContainer(){ return document.querySelector(".container.delivery") ?? null};
     _russianPostContainer(){ return document.querySelector(".container.russian-postal-address") ?? null};
     _russianPostBox(){	    return document.querySelector(".russian-post-address-container") ?? null};
     _addressContainer(){     return document.querySelector(".container.address") ?? null};
@@ -199,6 +230,10 @@ class BasketSection extends PageBuilder {
     _sendOrderButton(){	return document.querySelector(".send-order-btn") ?? null};
     _descriptionBox(){	return document.querySelector(".delivery-description-box") ?? null};
     _commentaryBox(){ 	return document.querySelector(".container.commentary") ?? null};
+    _commentary(){ 	return document.querySelector(".commentary-body-textarea-box") ?? null};
+    _auditContainer(){ 	return document.querySelector(".container.pre-audit-worksheet-container") ?? null};
+    _auditBox(){ 	return document.querySelector(".audit-body-container") ?? null};
+
     _getDefaltDeliveryAddress(){ 
 	let  isDefault= this.addressId ?? null;
 	return isDefault ? true : false;
@@ -411,6 +446,158 @@ class BasketSection extends PageBuilder {
     }
 
 
+  PreAuditWorksheetUpdate(container){
+	let o = this;
+ 	const _deliveryType = this.deliveryTypes?.types?.find(type => type.code == o.deliveryType ) ?? UNDEFINED;
+ 	const _postamat = this.address?.addresses?.find(address => address.addressId == o.addressId ) ?? UNDEFINED;
+ 	const _cdek = this.address?.addresses?.find(address => address.addressId == o.addressId ) ?? UNDEFINED;
+ 	const _address = this.address?.addresses?.find(address => address.addressId == o.addressId ) ?? UNDEFINED;
+ 	const _courier = this.address?.addresses?.find(address => address.addressId == o.addressId ) ?? UNDEFINED;
+	const _postCode = this.russianPostManager?.postCode ?? UNDEFINED;
+	const _postAddress = this.russianPostManager?.postAddresses?.find(address => address.postalCode == _postCode ) ?? UNDEFINED;
+	const _commentary = this._commentary()?.value.trim() !== '' ? this._commentary()?.value :  NO_COMMENTARY;
+
+	const deliveryTypeHeader = container?.querySelector('.delivery-type-audit-header-container');
+	const deliveryTypeBox = container?.querySelector('.delivery-type-audit-body-container');
+	if(deliveryTypeBox) deliveryTypeBox.innerText = _deliveryType.name;
+
+	const postamatHeader = container?.querySelector('.delivery-postamat-audit-header-container');
+	const postamatBox = container?.querySelector('.delivery-postamat-audit-body-container');
+	if(postamatBox) postamatBox.innerText = _postamat.value;
+
+	const cdekHeader = container?.querySelector('.delivery-cdek-audit-header-container');
+	const cdekBox = container?.querySelector('.delivery-cdek-audit-body-container');
+	if(cdekBox) cdekBox.innerText = _cdek.value;
+
+	const courierAddressHeader = container?.querySelector('.delivery-courier-audit-header-container');
+	const courierAddressBox = container?.querySelector('.delivery-courier-audit-body-container');
+	if(courierAddressBox) courierAddressBox.innerText = _courier.value;
+
+	const postAddressHeader = container?.querySelector('.delivery-post-unit-audit-header-container');
+	const postAddressBox = container?.querySelector('.delivery-post-unit-audit-body-container');
+	if(postAddressBox) postAddressBox.innerText = `${_postAddress.postalCode}, ${_postAddress.value}`;
+
+	const addressHeader = container?.querySelector('.delivery-address-audit-header-container');
+	const addressBox = container?.querySelector('.delivery-address-audit-body-container');
+	if(addressBox) addressBox.innerText = _address.value;
+
+	const commentaryHeader = container?.querySelector('.commentary-audit-header-container');
+	const commentaryBox = container?.querySelector('.commentary-audit-body-container');
+	if(commentaryBox) commentaryBox.innerText = _commentary;       
+
+	const recipientHeader = container?.querySelector('.recipient-audit-header-container');
+	const recipientBox = container?.querySelector('.recipient-audit-body-container');
+	if(recipientBox) recipientBox.innerText = `${this.person.profile.name} ${this.person.profile.patronymic} ${this.person.profile.surname[0]}.`;
+
+	const recipientPhoneHeader = container?.querySelector('.recipient-phone-audit-header-container');
+	const recipientPhoneBox = container?.querySelector('.recipient-phone-audit-body-container');
+	if(recipientPhoneBox) recipientPhoneBox.innerText = `${this.person.profile.phone}`;
+
+	const changeLinkButton = container?.querySelector('.change-link-audit-container');
+
+// включаем нужные пункты 	
+        this.toggleVisibility(deliveryTypeHeader, true);
+        this.toggleVisibility(deliveryTypeBox, true);
+        this.toggleVisibility(commentaryHeader, true);
+        this.toggleVisibility(commentaryBox, true);
+        this.toggleVisibility(recipientHeader, true);
+        this.toggleVisibility(recipientBox, true);
+        this.toggleVisibility(recipientPhoneHeader, true);
+        this.toggleVisibility(recipientPhoneBox, true);
+        this.toggleVisibility(changeLinkButton, true);
+
+	const deliveryActions = {
+	    SELF_DELIVERY: () => {
+	    },
+	    PARCEL_LOCKER: () => {
+	        this.toggleVisibility(postamatHeader, true);
+	        this.toggleVisibility(postamatBox, true);
+	    },
+	    RUSSIAN_POST: () => {
+	        this.toggleVisibility(postAddressHeader, true);
+	        this.toggleVisibility(postAddressBox, true);
+	    },
+	    COURIER_SERVICE: () => {
+	        this.toggleVisibility(courierAddressHeader, true);
+	        this.toggleVisibility(courierAddressBox, true);
+	    },
+	    CDEK: () => {
+	        this.toggleVisibility(cdekHeader, true);
+	        this.toggleVisibility(cdekBox, true);
+	    }
+	};
+// Выполняем действие по типу доставки
+	(deliveryActions[this.deliveryType] || (() => {
+	    console.warn('Unknown delivery type:', this.deliveryType);
+	}))();
+
+
+  }
+
+  PreAuditWorksheetContainer(container){ // проверочная ведомость
+        const preAuditWorksheetBodyContainer  =  this.createContainer("div", "audit-container")
+        const preAuditWorksheetBodyContainerHeader = this.createContainer("div", "card-header", null, `<h3 class="card-title">${AUDIT_ORDER_TITLE}</h3>`);
+        const preAuditWorksheetBodyContainerContent = this.createContainer("div", "card-body", null, `<div class="audit-body-container"></div>`);
+	preAuditWorksheetBodyContainer.appendChild(preAuditWorksheetBodyContainerHeader)
+	preAuditWorksheetBodyContainer.appendChild(preAuditWorksheetBodyContainerContent)
+
+        const deliveryTypeChoiceHeaderContainer =  this.createContainer("div", "delivery-type-audit-header-container d-none",DELIVERY_TYPE_INFO)
+        const deliveryTypeChoiceBodyContainer =  this.createContainer("div", "delivery-type-audit-body-container d-none audit-worksheet-text text-right dotted small m-2")
+
+        const deliveryPostamatAddressChoiceHeaderContainer =  this.createContainer("div", "delivery-postamat-audit-header-container d-none",POSTAMAT_ADDRESS_INFO)
+        const deliveryPostamatAddressChoiceBodyContainer =  this.createContainer("div", "delivery-postamat-audit-body-container d-none audit-worksheet-text text-right dotted small m-2")
+
+        const deliveryCdekAddressChoiceHeaderContainer =  this.createContainer("div", "delivery-cdek-audit-header-container d-none",CDEK_ADDRESS_INFO)
+        const deliveryCdekAddressChoiceBodyContainer =  this.createContainer("div", "delivery-cdek-audit-body-container d-none audit-worksheet-text text-right dotted small m-2")
+
+        const deliveryCourierAddressChoiceHeaderContainer =  this.createContainer("div", "delivery-courier-audit-header-container d-none",DELIVERY_COURIER_INFO)
+        const deliveryCourierAddressChoiceBodyContainer =  this.createContainer("div", "delivery-courier-audit-body-container d-none audit-worksheet-text text-right dotted small m-2")
+
+        const deliveryPostUnitAddressChoiceHeaderContainer =  this.createContainer("div", "delivery-post-unit-audit-header-container d-none",POST_OFFICE_INFO)
+        const deliveryPostUnitAddressChoiceBodyContainer =  this.createContainer("div", "delivery-post-unit-audit-body-container d-none audit-worksheet-text text-right dotted small m-2")
+
+        const deliveryAddressChoiceHeaderContainer =  this.createContainer("div", "delivery-address-audit-header-container d-none",DELIVERY_ADDRESSES)
+        const deliveryAddressChoiceBodyContainer =  this.createContainer("div", "delivery-address-audit-body-container d-none audit-worksheet-text text-right dotted small m-2")
+
+        const deliveryCommentaryChoiceHeaderContainer =  this.createContainer("div", "commentary-audit-header-container d-none", DELIVERY_ADDITIONAL_INFO)
+        const deliveryCommentaryChoiceBodyContainer =  this.createContainer("div", "commentary-audit-body-container d-none audit-worksheet-text text-right dotted small m-2")
+
+        const recipientHeaderContainer =  this.createContainer("div", "recipient-audit-header-container d-none", RECIPIENT_NAME_INFO)
+        const recipientBodyContainer =  this.createContainer("div", "recipient-audit-body-container d-none audit-worksheet-text text-right dotted small m-2")
+
+        const phoneHeaderContainer =  this.createContainer("div", "recipient-phone-audit-header-container d-none", RECIPIENT_PHONE_INFO)
+        const phoneBodyContainer =  this.createContainer("div", "recipient-phone-audit-body-container d-none audit-worksheet-text text-right dotted small m-2")
+
+        const changeLinkButtonContainer =  this.createContainer("div", "btn btn-block btn-outline-dark btn-lg mt-4 change-link-audit-container d-none", CHANGE_LINK_INFO)
+        changeLinkButtonContainer.addEventListener("click", 
+		this.changeLinkButtonContainerOnClick.bind(this));
+
+	preAuditWorksheetBodyContainerContent.appendChild(recipientHeaderContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(recipientBodyContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(phoneHeaderContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(phoneBodyContainer)
+
+	preAuditWorksheetBodyContainerContent.appendChild(deliveryTypeChoiceHeaderContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(deliveryTypeChoiceBodyContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(deliveryPostamatAddressChoiceHeaderContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(deliveryPostamatAddressChoiceBodyContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(deliveryCdekAddressChoiceHeaderContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(deliveryCdekAddressChoiceBodyContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(deliveryCourierAddressChoiceHeaderContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(deliveryCourierAddressChoiceBodyContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(deliveryPostUnitAddressChoiceHeaderContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(deliveryPostUnitAddressChoiceBodyContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(deliveryAddressChoiceHeaderContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(deliveryAddressChoiceBodyContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(deliveryCommentaryChoiceHeaderContainer)
+	preAuditWorksheetBodyContainerContent.appendChild(deliveryCommentaryChoiceBodyContainer)
+
+	preAuditWorksheetBodyContainerContent.appendChild(changeLinkButtonContainer)
+
+        container.appendChild(preAuditWorksheetBodyContainer);
+  }
+
+
 /************************************ Обработка шины событий  ************************************/
   addEventListeners() {
     if (typeof eventBus === 'undefined') {
@@ -561,7 +748,7 @@ class BasketSection extends PageBuilder {
                     if (error.status === 409) {
                         window.location.href = "/orders/payment/availability-error";
                     } else {
-                        window.location.href = "/orders/create-error";
+                        window.location.href = CREATE_ORDER_ERROR_PAGE;
                     }
                 })
                 .finally(() => {
@@ -572,7 +759,21 @@ class BasketSection extends PageBuilder {
   }
 
   sendOrderButtonOnClick(){
-            console.log(this);
+       console.log(this);
+       this.toggleVisibility(this._deliveryContainer(), false);
+       this.toggleVisibility(this._russianPostContainer(), false);
+       this.toggleVisibility(this._russianPostBox(), false);
+       this.toggleVisibility(this._addressContainer(), false);
+       this.toggleVisibility(this._addressBox(), false);
+       this.toggleVisibility(this._commentaryBox(), false);
+       this.toggleVisibility(this._descriptionBox(), false);
+       this.toggleVisibility(this._auditContainer(), true);
+       this.PreAuditWorksheetUpdate(this._auditContainer());
   }
+
+
+ changeLinkButtonContainerOnClick(){
+	location.reload(true);
+ }
 
 }

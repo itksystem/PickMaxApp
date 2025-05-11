@@ -979,9 +979,9 @@ dd {
 }
 
 .basket-card-price {
-    font-size: 1.2rem;
-    padding: 0.5rem 0;
-    font-weight: 500;
+    font-size: 1.6rem;
+/*    padding: 0.5rem 0; */
+/*    font-weight: 500; */
 }
 
 .basket-card-title{
@@ -1048,8 +1048,9 @@ dd {
 }
 
 .basket-itog-sum{
-    font-size: 1.2rem;
-    padding: 0.5rem 0;
+    font-size: 1.6rem;
+    /* padding: 0.5rem 0; */
+    font-weight: 400;
 }
 
 .basket-itog-quantity-title{
@@ -1392,4 +1393,9 @@ ul.schedule-russian-post li {
     outline: none;
     border-radius: 0.5rem 0.5rem  0.5rem 0.5rem;
     width : 100%
+}
+
+.audit-worksheet-text {
+    font-style: italic;
+    color: #877878;
 }

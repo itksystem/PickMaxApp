@@ -4,6 +4,7 @@ class RussianPostManager {
         this.webRequest = new WebRequest();    
         this.addEventListeners();
         this.postCode = null;
+        this.postAddresses = null;
     }
 
     // Создание элемента радио-кнопки для адресов
@@ -216,7 +217,7 @@ class RussianPostManager {
 
    setRussianPostOnClick(postCode = null) {
       try {
-         this.postCode = postCode;
+            this.postCode = postCode;
             if(eventBus) {
              eventBus.emit(EVENT_POSTAL_UNIT_UPDATE, {postCode});
            }
@@ -275,14 +276,15 @@ class RussianPostManager {
    getElements(query = null, latlng = null) {
     try {
         const russianPostalUnits = this.getRussianPostalUnits(query, latlng);
+        this.postAddresses = russianPostalUnits;
         const russianPostElements = russianPostalUnits.map(element =>
             this.createRussianPostRadio(
-                element.postalСode, 
+                element.postalCode, 
                 "customRussianPost",
                 element.value,
                 element.isDefault ?? false,
                 element.schedule,
-                (postalСode)=>this.setRussianPostOnClick(element.postalСode),
+                (postalCode)=>this.setRussianPostOnClick(element.postalCode),
             )
         );
         return russianPostElements;
