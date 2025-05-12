@@ -972,6 +972,7 @@ dd {
     width: -webkit-fill-available;
     display: block;
     border-radius: var(--product-card-border-radius, 0.625rem);
+    position: relative;
 }
 
 .basket-card-quantity {
@@ -1001,35 +1002,24 @@ dd {
     div.card-body div.row {
         height: 8rem;
     }
-    .basket-item img {
-	width : 8 rem;
-    }
 }
 
 @media (min-width: 22.56rem) and (max-width: 48rem) { /* 361px - 768px */
     div.card-body div.row {
         height: 8rem;
     }
-    .basket-item img {
-	width : 8rem;
-    }
+
 }
 
 @media (min-width: 48.06rem) and (max-width: 62rem) { /* 769px - 992px */
     div.card-body div.row {
         height: 8rem;
     }
-    .basket-item img {
-	width : 8rem;
-    }
 }
 
 @media (min-width: 62.06rem) { /* 993px */
     div.card-body div.row {
         height: 8rem;
-    }
-    .basket-item img {
-	width : 8rem;
     }
 }
 
@@ -1350,7 +1340,7 @@ img.custom-radio-new-card{
     font-family: "Roboto Condensed", sans-serif;
     height: max-content;
     margin: 0.2rem;
-    border-top: 4px solid #eee;
+ /*   border-top: 4px solid #eee; */
 }
 .check-bottom {
     background: #f1f3f3;
@@ -1398,4 +1388,13 @@ ul.schedule-russian-post li {
 .audit-worksheet-text {
     font-style: italic;
     color: #877878;
+}
+
+.order-card-image{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: -webkit-fill-available;
+    height: 100%;
+    object-fit: cover;
 }

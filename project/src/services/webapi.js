@@ -273,7 +273,7 @@ class WebAPI {
 
 /* Список товаров в корзине пользователя */
    getShopBasketMethod(){  return `/api/bff/warehouse/v1/basket` }
-/* Список товаров в корзине пользователя */
+/* Создать заказ */
    createOrderMethod(){  return `/api/bff/orders/v1/order/create` }
 /* Установка типа доставки */
    setOrderDeliveryMethod(){  return `/api/bff/delivery/v1/select` }
@@ -284,7 +284,10 @@ class WebAPI {
    sendPaymentMethodPayload(order){  return order; }
 /* Список заказов */
    getShopOrdersMethod(){  return `/api/bff/orders/v1/orders` }
-   getShopOrdersMethodPayload(){  return {} }
+   getShopOrdersMethodPayload(status = null){
+    if(!status) status = 'NEW';
+       return { status : status } 
+}
 
 /* Получиение детализации заказа */
    getShopOrderDetailsMethod(orderId=null){  return `/api/bff/warehouse/v1/order/${orderId}/details` }

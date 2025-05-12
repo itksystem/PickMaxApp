@@ -51,6 +51,20 @@ class DropdownSection extends HTMLElement {
     disconnectedCallback() {
         this.toggleButton.removeEventListener('click', this.toggle);
     }
+
+
+    open() {
+        this.toggleButton.setAttribute('aria-expanded', 'true');
+        this.section.classList.add('dropdown-open');
+    }
+
+    // Новый метод для принудительного закрытия
+    close() {
+        this.toggleButton.setAttribute('aria-expanded', 'false');
+        this.section.classList.remove('dropdown-open');
+    }
+
+
 }
 
 // Регистрация кастомного элемента

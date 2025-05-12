@@ -80,10 +80,15 @@ class OrderServiceClientHandler {
      */
     async getOrders(req) {
         try {
-            const response = await fetch(process.env.ORDER_SERVICE_ORDERS_URL, {
+            const status = req.query.status;
+            const url = new URL(process.env.ORDER_SERVICE_ORDERS_URL);
+            url.searchParams.append('status', status);
+
+            const response = await fetch(url, {
                 method: 'GET',                
                 headers: this.headers(req),         
             });  
+            
             if (!response.ok)  throw(response.status);       
             let data;
             try {
