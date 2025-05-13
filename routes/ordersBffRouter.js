@@ -29,7 +29,7 @@ router.post('/v1/order/create',
         try {
             const {referenceId} = req.body;
             if(!referenceId) { throw(common.HTTP_CODES.BAD_REQUEST.code) }
-            const response = await orderClient.create(req, referenceId);
+            const response = await orderClient.create(req);
             if (!response.success)  throw(response.status)
             res.status(200).json(response.data);            
         } catch (error) {            

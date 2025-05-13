@@ -19,21 +19,26 @@ const POST_OFFICE_INFO      	= 'Адрес почтового отделения
 const CREATE_ORDER 		= "Создать заказ";
 const AUDIT_ORDER 		= "Проверить заказ";
 const SEND_ORDER 		= "Отправить заказ";
+const RESULT_ORDER              = "Понятно";
 
-const CREATING_MESSAGE 		= "Создание...";
-const DELIVERY_ADDRESSES 	= "Адреса доставки";
+const CREATE_ORDER_ERROR_INFO 		= 'Возникла ошибка при создании заказа!';
+const ORDER_CREATED_INFO 		= 'Создан заказ №';
+const ERROR_TITLE 			= 'Ошибка';
+
+const CREATING_MESSAGE 			= "Создание...";
+const DELIVERY_ADDRESSES 		= "Адреса доставки";
 const DELIVERY_ADDRESS_PLACEHOLDER 	= 'Введите данные для доставки - город, улицу, дом, квартиру...';
 const DELIVERY_ADDITIONAL_INFO 		= 'Дополнительная информация к заказу';
 const CDEK_CHOICE_ADDRESS_DESCRIPTION 	= 'Укажите адрес CDEK из списка или введите новый';
 const DELIVERY_ADDRESS_INSTRUCTIONS 	= 'В разделе «Укажите адрес доставки» введите регион, город и улицу - система автоматически покажет ближайшие отделения';
 const CREATE_ORDER_ERROR_PAGE 		= '/orders/create-error';
-const UNDEFINED  = 'не опеределено'; 
-const NO_COMMENTARY  = 'Нет дополнительной информации к заказу' ;
-const AUDIT_ORDER_TITLE  = 'Дополнительная информация к заказу' ;
+const UNDEFINED  			= 'не опеределено'; 
+const NO_COMMENTARY  			= 'Нет дополнительной информации к заказу' ;
+const AUDIT_ORDER_TITLE  		= 'Дополнительная информация к заказу' ;
 
-const RECIPIENT_NAME_INFO  = 'Получатель';
-const RECIPIENT_PHONE_INFO = 'Контактный номер';
-const CHANGE_LINK_INFO = 'Хочу внести изменения!'
+const RECIPIENT_NAME_INFO  		= 'Получатель';
+const RECIPIENT_PHONE_INFO 		= 'Контактный номер';
+const CHANGE_LINK_INFO 			= 'Хочу внести изменения!'
 
 
 class BasketSection extends PageBuilder {
@@ -53,6 +58,7 @@ class BasketSection extends PageBuilder {
         this.person = new WebRequest().get(this.api?.getShopProfileMethod(), {}, true );
         }catch(error) {
 	console.log('error load profile...');
+        toastr.error('Не удалось получить данные пользователя', 'Пользователь', { timeOut: 3000 });
      }
     }
 
@@ -82,6 +88,7 @@ class BasketSection extends PageBuilder {
         this.BasketCommentaryContainer 		= this.createContainer("div","card container commentary d-none");
         this.BasketAuditOrderButtonContainer 	= this.createContainer("div","container audit-order-button-container d-none");
         this.BasketSendOrderButtonContainer 	= this.createContainer("div","container send-order-button-container d-none");
+        this.BasketResultOrderButtonContainer 	= this.createContainer("div","container result-order-button-container d-none");
         this.BasketPreAuditWorksheetContainer 	= this.createContainer("div","card container pre-audit-worksheet-container d-none");
 
 	this.BasketBodyContainer(this.BasketContainer, totalQuantity, totalAmount);//	Сами товары 
@@ -97,6 +104,7 @@ class BasketSection extends PageBuilder {
             this.PreAuditWorksheetContainer(this.BasketPreAuditWorksheetContainer);  // проверочная ведомость
             this.AuditOrderButtonContainer(this.BasketAuditOrderButtonContainer); // Кнопка проверить заказ
             this.SendOrderButtonContainer(this.BasketSendOrderButtonContainer); // Кнопка отправить заказ
+            this.ResultOrderButtonContainer(this.BasketResultOrderButtonContainer); // Кнопка результата заказа
         }
 
         this.addModule("Basket", this.BasketContainer);
@@ -107,6 +115,7 @@ class BasketSection extends PageBuilder {
         this.addModule("PreAuditWorksheet", this.BasketPreAuditWorksheetContainer);
         this.addModule("BasketAuditOrderButton",this.BasketAuditOrderButtonContainer);
         this.addModule("BasketSendOrderButton",this.BasketSendOrderButtonContainer);
+        this.addModule("BasketResultOrderButton",this.BasketResultOrderButtonContainer);
 
 	this.addEventListeners();
 	this.loadProfile();
@@ -148,6 +157,7 @@ class BasketSection extends PageBuilder {
         })                                
      .catch(function(error) {
        console.log('showBasketOutput.Произошла ошибка =>', error);
+       toastr.error('Не удалось получить информацию о состоянии корзины', 'Корзина', { timeOut: 3000 });
      });
     return this;
  }
@@ -233,9 +243,20 @@ class BasketSection extends PageBuilder {
 	    );
   }
 
-
+  ResultOrderButtonContainer(container){
+            const resultOrderContainer = this.createContainer("div", "w-100 mt-1");
+            const resultOrderDescriptionContainer = this.createContainer("div", "result-order-description text-center w-100 mt-1");
+            const resultOrderButton = this.createContainer("button", "btn btn-lg btn-success w-100 result-order-btn mt-4",`${RESULT_ORDER}`);
+            resultOrderContainer.appendChild(resultOrderDescriptionContainer);          
+            resultOrderContainer.appendChild(resultOrderButton);          
+            container.appendChild(resultOrderContainer);          
+	    resultOrderButton.addEventListener("click", 
+		this.resultOrderButtonOnClick.bind(this)
+	    );
+  }
 
 // элементы 
+    _basketContainer(){ return document.querySelector(".container.basket") ?? null};
     _deliveryContainer(){ return document.querySelector(".container.delivery") ?? null};
     _russianPostContainer(){ return document.querySelector(".container.russian-postal-address") ?? null};
     _russianPostBox(){ return document.querySelector(".russian-post-address-container") ?? null};
@@ -246,6 +267,9 @@ class BasketSection extends PageBuilder {
 
     _sendOrderButtonContainer(){ return document.querySelector(".send-order-button-container") ?? null};
     _sendOrderButton(){ return document.querySelector(".send-order-btn") ?? null};
+    _sendResultButtonContainer(){ return document.querySelector(".result-order-button-container") ?? null};
+    _sendResultDescriptionBox(){ return document.querySelector(".result-order-description") ?? null};
+
 
     _descriptionBox(){ return document.querySelector(".delivery-description-box") ?? null};
     _commentaryBox(){ return document.querySelector(".container.commentary") ?? null};
@@ -524,7 +548,7 @@ class BasketSection extends PageBuilder {
 
 	const postamatHeader = container?.querySelector('.delivery-postamat-audit-header-container');
 	const postamatBox = container?.querySelector('.delivery-postamat-audit-body-container');
-	if(postamatBox && postamatHeader) postamatBox.innerText = _postamat.value;
+	if(postamatBox && postamatHeader) postamatBox.innerText = _address.value;
 
 	const cdekHeader = container?.querySelector('.delivery-cdek-audit-header-container');
 	const cdekBox = container?.querySelector('.delivery-cdek-audit-body-container');
@@ -668,34 +692,28 @@ class BasketSection extends PageBuilder {
 
     const eventHandlers = {    // Define event handlers in a more maintainable way
         [EVENT_SET_DEFAULT_DELIVERY_ADDRESS]: (message) => {
-            console.log(EVENT_SET_DEFAULT_DELIVERY_ADDRESS, message);
             this.addressId = message?.addressId || null;
 	    let query = message.value ? message.value : null;
 	    let latlng = message?.o?.latitude && message?.o?.longitude 
 		? { lat : message?.o?.latitude, lon: message?.o?.longitude, radius_meters: 1000 }
 		: null;			
-	    console.log(query, latlng);
             this.russianPostManager.update(query, latlng);
             this.UpdateSendButtonStatus();
         },
         [EVENT_BASKET_ITEM_UPDATE]: (message) => {
-            console.log(EVENT_BASKET_ITEM_UPDATE, message);
             this.basketUpdate(message);
             this.UpdateSendButtonStatus();
         },
         [EVENT_RELOAD_ADDRESS_DIALOG]: (message) => {
-            console.log(EVENT_RELOAD_ADDRESS_DIALOG, message);
             this.addressId = message ? message.addressId : null;
 	    let query = message.value ? message.value : null;
 	    let latlng = message?.o?.latitude && message?.o?.longitude 
 		? { lat : message?.o?.latitude, lon: message?.o?.longitude, radius_meters: 1000 }
 		: null;			
-	    console.log(query, latlng);
             this.russianPostManager.update(query, latlng);
             this.UpdateSendButtonStatus();
         },
         [EVENT_POSTAL_UNIT_UPDATE]: (message) => {
-            console.log(EVENT_POSTAL_UNIT_UPDATE, message);
             this.russianPostManager = message ? this.russianPostManager : null;
 	    this.russianPostManager.postCode = message.postCode;
             this.UpdateSendButtonStatus();
@@ -723,15 +741,15 @@ class BasketSection extends PageBuilder {
                     });
                 }
             })
-            .onSelect((item) => console.log('Выбран элемент', item));
+            .onSelect((item) => console.log(item));
     };
 
     initAutocomplete();
 }
 
     sendEvent(event, o){
-     console.log(`eventBus.${event}`,o);
-     if(eventBus)  eventBus.emit(event, o);
+	console.log(`eventBus.${event}`,o);
+	if(eventBus)  eventBus.emit(event, o);
     }
 
 /*  Обработка кнопок */
@@ -748,25 +766,46 @@ class BasketSection extends PageBuilder {
     }    
 
   sendOrderButtonOnClick(){
-   console.log(`sendOrderButtonOnClick`,this);
-   let request = new WebRequest().post(this.api.createOrderMethod(),  
-	{
-	  referenceId : this.referenceId,
-          deliveryType : this._getDeliveryType(this),
-	  postamat : this._getDeliveryType(this),
-	  cdek : this._getCdek(this),
-	  address : this._getAddress(this),
-	  courier : this._getCourier(this),
-	  postCode : this._getPostCode(this),
-	  postAddress : this._getPostAddress(this),
-	  commentary : this._getCommentary(this)
-	}, true );
-   if(!request.ok) 
-     console.log(request);
+   let description = this._sendResultDescriptionBox();
+   try{
+ 	const _deliveryType = this._getDeliveryType(this);
+ 	const _postamat = this._getDeliveryType(this);
+ 	const _cdek = this._getCdek(this);
+ 	const _address = this._getAddress(this);
+ 	const _courier = this._getCourier(this);
+	const _postCode = this._getPostCode(this);
+	const _postAddress = this._getPostAddress(this);
+	const _commentary = this._getCommentary(this);
+
+        this.toggleVisibility(this._basketContainer(), false);
+        this.toggleVisibility(this._auditContainer(), false);
+        this.toggleVisibility(this._sendOrderButtonContainer(), false);
+        this.toggleVisibility(this._sendOrderButton(), false);
+
+        let request = new WebRequest().post(this.api.createOrderMethod(),  
+		{
+		  referenceId 	: this.referenceId,
+        	  deliveryType  : _deliveryType.code,
+		  address 	: _address.value,
+		  postCode 	: _postAddress.postalCode,
+		  postAddress 	: _postAddress.value,
+		  commentary 	: _commentary
+		}, true );
+
+       if(!request.status && !request.orderId)
+ 	   throw(CREATE_ORDER_ERROR_INFO)
+
+	description.innerHTML = `${ORDER_CREATED_INFO} ${request.orderId}`;
+        this.toggleVisibility(this._sendResultButtonContainer(), true); 
+
+      }catch(error){
+        toastr.error(error, ERROR_TITLE, { timeOut: 3000 });
+	description.innerHTML = `<center>${error}</center>`;
+        this.toggleVisibility(this._sendResultButtonContainer(), true);       
+    }
   }
 
   auditOrderButtonOnClick(){
-       console.log(`auditOrderButtonOnClick`,this);
        this.toggleVisibility(this._deliveryContainer(), false);
        this.toggleVisibility(this._russianPostContainer(), false);
        this.toggleVisibility(this._russianPostBox(), false);
@@ -784,6 +823,10 @@ class BasketSection extends PageBuilder {
 
 
  changeLinkButtonContainerOnClick(){
+	location.reload(true);
+ }
+
+ resultOrderButtonOnClick(){
 	location.reload(true);
  }
 

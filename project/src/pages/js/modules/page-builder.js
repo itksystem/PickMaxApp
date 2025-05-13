@@ -47,4 +47,5 @@ class PageBuilder {
             this.container.appendChild(moduleContainer);
         });
     }
+
 }

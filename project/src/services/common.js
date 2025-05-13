@@ -208,7 +208,7 @@ ORDER_STATUS = {
   DELIVERY: { class: 'order_item_status_done', description: "Передан в доставку" },
   DONE: { class: 'order_item_status_done', description: "Заказ доставлен" },
 
-  DECLINE: { class: 'order_item_status_done', description: "Заказа отменен" },
+  DECLINE: { class: 'order_item_status_decline', description: "Заказ отменен" },
   COURIER_SEARCH: { class: 'order_item_status_confirmed', description: "Поиск курьера" },
 }
 

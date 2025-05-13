@@ -1,4 +1,17 @@
 class OrderDetailsItem {
+
+    createContainer( element = null, elementClass = null, textContent = null, innerHTML = null){
+	if(!element) return;
+        const _container = document.createElement(element);
+	if(elementClass) 
+        _container.className = `${elementClass}`;
+	if(textContent) 
+	_container.textContent = textContent;
+	if(innerHTML) 
+	_container.innerHTML = innerHTML;
+	return _container;
+    }
+
     constructor(containerClass, item) {
         // Найти контейнер с указанным классом
         const container = document.querySelector(`.${containerClass}`);
@@ -7,15 +20,8 @@ class OrderDetailsItem {
         }
 
         // Создать элемент контейнера для товара
-        const OrderDetailsItemContainer = document.createElement("div");
-        OrderDetailsItemContainer.className = "order-details-item";
-
-        // Создать тело элемента с содержимым
-        const OrderDetailsItemBody = document.createElement("div");
-        OrderDetailsItemBody.className = "card-body";
-	console.log(item);
-        // Заполнить содержимое карточки
-        OrderDetailsItemBody.innerHTML = `
+	const OrderDetailsItemContainer =  this.createContainer("div","order-details-item");
+        const OrderDetailsItemBody =  this.createContainer("div","card-body",null, `
             <div class="row">        
                 <div class="col-5 col-sm-3 col-md-2">
                     <img class="image" src="${item?.mediaFiles.length > 0
@@ -42,7 +48,7 @@ class OrderDetailsItem {
                         </div>
                     </div>
                 </div>                                             
-            </div>`;
+            </div>`);
 
         // Вставить тело в контейнер товара
         OrderDetailsItemContainer.appendChild(OrderDetailsItemBody);

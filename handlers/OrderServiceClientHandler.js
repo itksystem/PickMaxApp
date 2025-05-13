@@ -26,7 +26,7 @@ class OrderServiceClientHandler {
             const response = await fetch(process.env.ORDER_SERVICE_CREATE_URL, {
                 method: 'POST',                
                 headers: this.headers(req),
-                body: JSON.stringify({referenceId})
+                body: JSON.stringify(req.body)
             }); 
             if (!response.ok)  throw(response.status);       
             let data;
@@ -88,7 +88,7 @@ class OrderServiceClientHandler {
                 method: 'GET',                
                 headers: this.headers(req),         
             });  
-            
+
             if (!response.ok)  throw(response.status);       
             let data;
             try {

@@ -516,26 +516,16 @@ class MainApp {
 
   let webRequest = new WebRequest();
   let request = webRequest.get(o.api.getShopOrderMethod(o.orderId), {}, false )
-     .then(function(_o) {
-	console.log(_o);
-	 if(_o?.order) {
-	     let request = webRequest.get(o.api.getShopOrderDetailsMethod(o.orderId),{}, false )
-	       .then(function(data) {
-		console.log(data);
-	           const totalQuantity = data.items.reduce((quantity, item) => quantity + item.quantity, 0);
-	  	   const ordersPage = new OrderDetailsSection("order-container");
-	 	   ordersPage.OrderDetailsCardContainer(_o.order, totalQuantity, data.totalAmount);
-	  	   ordersPage.render();
-	            if(data?.items?.length != 0) {
-	              data?.items?.forEach(item => {
-	 		new OrderDetailsItem("order-details-body-container", item);
-	             });
-	          }
-	        }) 
-	     .catch(function(error) {
-	       console.log('showOrderInfoPage.Произошла ошибка =>', error);
-	     });
-	   }
+       .then(function(data) {
+	console.log(data);
+  	   const ordersPage = new OrderDetailsSection("order-container");
+ 	   ordersPage.OrderDetailsCardContainer(data.order, data.order.itemsCount, data.order.totalAmount);
+  	   ordersPage.render();
+            if(data?.order.items?.length != 0) {
+              data?.order.items?.forEach(item => {
+ 		new OrderDetailsItem("order-details-body-container", item);
+             });
+          }
         }) 
      .catch(function(error) {
        console.log('showOrderInfoPage.Произошла ошибка =>', error);
