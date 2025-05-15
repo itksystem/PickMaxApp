@@ -61,10 +61,11 @@ class MainApp {
                 data.forEach(product => {
   	       	    const container = document.querySelector("div.product-card-container");
 		     const productCard = document.createElement('product-card');
+//		     const mediaKeysString = product?.mediaFiles?.map(file => file.mediaKey).join(',');
 		     productCard.setAttribute('product-id', product.productId);
 		     productCard.setAttribute('like', product.like);
 		     productCard.setAttribute('status', 'active');
-		     productCard.setAttribute('image-src', product.mediaFiles[0]?.mediaKey || '');
+		     productCard.setAttribute('image-src', product?.mediaFiles[0]?.mediaKey || '');
 		     productCard.setAttribute('image-alt', product.productName);
 		     productCard.setAttribute('brand', 'Brand');
 		     productCard.setAttribute('name', product.productName);
@@ -489,7 +490,6 @@ class MainApp {
   let webRequest = new WebRequest();
   let request = webRequest.get(o.api.getShopOrdersMethod(), o.api.getShopOrdersMethodPayload(), false )
      .then(function(data) {
-	console.log(data);
   	   const ordersPage = new OrdersSection("orders-container");
  	   ordersPage.OrdersCardContainer(data.orders?.length);
   	   ordersPage.render();
@@ -512,18 +512,18 @@ class MainApp {
   const url = window.location.pathname; // Получаем путь, например, /delivery/12345
   const match = url.match(/\/orders\/(\d+)\/page/);
   o.orderId = match ? match[1] : null;
-  console.log(o.orderId);
 
   let webRequest = new WebRequest();
   let request = webRequest.get(o.api.getShopOrderMethod(o.orderId), {}, false )
        .then(function(data) {
-	console.log(data);
   	   const ordersPage = new OrderDetailsSection("order-container");
- 	   ordersPage.OrderDetailsCardContainer(data.order, data.order.itemsCount, data.order.totalAmount);
+ 	   ordersPage.OrderDetailsCardContainer(
+		data.order, data.order.itemsCount, data.order.totalAmount);
   	   ordersPage.render();
             if(data?.order.items?.length != 0) {
               data?.order.items?.forEach(item => {
- 		new OrderDetailsItem("order-details-body-container", item);
+ 		new OrderDetailsItem("order-details-body-container", 
+		data?.order?.orderId, item);
              });
           }
         }) 

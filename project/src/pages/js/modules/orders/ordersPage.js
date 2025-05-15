@@ -42,17 +42,29 @@ class OrdersSection extends PageBuilder {
           } else {
 
         const OrderStatusSelectorContainer = this.createContainer("div", "order-status-selector-container")
+        const OrderNewSelectorContainer      = this.createContainer("button", "w-auto btn btn-block btn-outline-primary selector-button m-1 active",
+	this.common.ORDER_STATUS.NEW.description)
+        OrderNewSelectorContainer.setAttribute('attribute-status',this.common.ORDER_STATUS.NEW.status);
 
-        const OrderNewSelectorContainer      = this.createContainer("button", "w-auto btn btn-block btn-outline-primary m-1","Новый")
-        OrderNewSelectorContainer.setAttribute('attribute-status','NEW');
-        const OrderCreateSelectorContainer   = this.createContainer("button", "w-auto btn btn-block btn-outline-primary m-1","Принят")
-        OrderCreateSelectorContainer.setAttribute('attribute-status','CREATED');
-        const OrderDeliverySelectorContainer = this.createContainer("button", "w-auto btn btn-block btn-outline-primary m-1","В доставке")
-        OrderDeliverySelectorContainer.setAttribute('attribute-status','DELIVERY');
-        const OrderExecuteSelectorContainer  = this.createContainer("button", "w-auto btn btn-block btn-outline-primary m-1","Исполнен")
-        OrderExecuteSelectorContainer.setAttribute('attribute-status','EXECUTED');
-        const OrderFailedSelectorContainer   = this.createContainer("button", "w-auto btn btn-block btn-outline-primary m-1","Отменен")
-        OrderFailedSelectorContainer.setAttribute('attribute-status','DECLINE');
+        const OrderPaymentCompletedSelectorContainer   = this.createContainer("button", "w-auto btn btn-block btn-outline-primary selector-button m-1",
+	this.common.ORDER_STATUS.ORDER_PAYMENT_COMPLETED.description)
+        OrderPaymentCompletedSelectorContainer.setAttribute('attribute-status',this.common.ORDER_STATUS.ORDER_PAYMENT_COMPLETED.status);
+
+        const OrderCreateSelectorContainer   = this.createContainer("button", "w-auto btn btn-block btn-outline-primary selector-button m-1",
+	this.common.ORDER_STATUS.ORDER_BEING_PREPARED.description)
+        OrderCreateSelectorContainer.setAttribute('attribute-status',this.common.ORDER_STATUS.ORDER_BEING_PREPARED.status);
+
+        const OrderDeliverySelectorContainer = this.createContainer("button", "w-auto btn btn-block btn-outline-primary selector-button m-1",
+	this.common.ORDER_STATUS.ORDER_SENT_TO_DELIVERY.description)
+        OrderDeliverySelectorContainer.setAttribute('attribute-status',this.common.ORDER_STATUS.ORDER_SENT_TO_DELIVERY.status);
+
+        const OrderExecuteSelectorContainer  = this.createContainer("button", "w-auto btn btn-block btn-outline-primary selector-button m-1",
+	this.common.ORDER_STATUS.ORDER_SUCCESSFULLY_DELIVERED.description)
+        OrderExecuteSelectorContainer.setAttribute('attribute-status',this.common.ORDER_STATUS.ORDER_SUCCESSFULLY_DELIVERED.status);
+
+        const OrderFailedSelectorContainer   = this.createContainer("button", "w-auto btn btn-block btn-outline-primary selector-button m-1",
+	this.common.ORDER_STATUS.ORDER_DECLINE.description)
+        OrderFailedSelectorContainer.setAttribute('attribute-status',this.common.ORDER_STATUS.ORDER_DECLINE.status);
 
 	OrderNewSelectorContainer.addEventListener("click", this.getOrdersButtonOnClick.bind(this));
 	OrderCreateSelectorContainer.addEventListener("click", this.getOrdersButtonOnClick.bind(this));
@@ -78,13 +90,19 @@ class OrdersSection extends PageBuilder {
 
       getOrdersButtonOnClick(event){
 	 let o = this;
+	 const buttons = document.querySelectorAll('.selector-button');
+	 buttons.forEach(button => {
+	  button.classList.remove('active');
+	 });	 
 	 let el = event.target.closest('[attribute-status]')
+	 el.classList.add('active');
 	 let status = el.getAttribute('attribute-status');
-	 console.log(status)	 
+         let container = o._getOrdersBodyContainer();
+	 container.innerHTML='<center>Ищем заказы, подождите...</center>';
+
 	 let request = new WebRequest().get(o.api.getShopOrdersMethod(), o.api.getShopOrdersMethodPayload(status), false )
-	     .then(function(data) {
-		    let container = o._getOrdersBodyContainer();
-		    container.innerText='';
+	     .then(function(data) {    
+		  container.innerText='';
 	            if(data?.orders?.length != 0) {
 	              data?.orders?.forEach(item => {
 	 		new OrderItem("orders-body-container", item);

@@ -29,21 +29,31 @@ class OrderItem {
                 </div>
                </div>
 	      <div class="row" style=" padding:1rem 0 0 0;">		
-	  	  <div class="col-5 text-start basket-card-title">
-		     ${item?.items[0]?.mediaFiles[0]?.mediaKey ? `<img class="order-card-image" src="${item?.items[0]?.mediaFiles[0]?.mediaKey}"></img>` : ``}
+	  	  <div class="col-6 text-start basket-card-title">
+			<a href="/orders/${item.orderId}/page" style="font-size: 0.76rem;"> 
+			     ${item?.items[0]?.mediaFiles[0]?.mediaKey ? `<img class="order-card-image" src="${item?.items[0]?.mediaFiles[0]?.mediaKey}"></img>` : ``}
+			</a>		
         	  </div>
-	  	  <div class="col-7 text-start basket-card-title">
-	  	      <div class="row" style=" padding:1rem 0 0 0;">		
+	  	  <div class="col-6 text-start basket-card-title">
+	  	      <div class="row">		
 		        <div class="text-left basket-card-title">Заказ № ${item.orderId}</div>
 	              </div>
-	  	      <div class="row" style=" padding:1rem 0 0 0;">		
-	  		  <div class="col-12 text-start basket-card-title">${item.itemsCount} шт.</div>
-		          <div class="col-12 text-start basket-card-price">${item.totalAmount} ₽</div>
-	              </div>
-		      <div class="row" style=" padding:1rem 0 0 0;">
-			  <div class="col text-end basket-card-title">
-			       <a href="/orders/${item.orderId}/page" style="font-size: 0.76rem;"> Перейти к заказу </a>		
-		          </div>
+	  	      <div class="row">		
+	  		  <div class="col-12 col-xs-6 col-sm-4 col-md-2">
+		  		  <div class="order-details-card-quantity">
+ 	 			    ${item.itemsCount} шт.
+				 </div>
+			  </div>
+		          <div class="col-12  col-xs-6 col-sm-4 col-md-2">
+		  		  <div class="order-details-card-price">
+  				    ${item.totalAmount} ₽
+				  </div>
+			  </div>
+		          <div class="col-12  col-xs-6 col-sm-4 col-md-2">
+		  		  <div class="basket-card-title">
+				       <a href="/orders/${item.orderId}/page" style="font-size: 0.76rem;"> Перейти к заказу </a>		
+				  </div>
+			  </div>
 	              </div>
         	  </div>
               </div>

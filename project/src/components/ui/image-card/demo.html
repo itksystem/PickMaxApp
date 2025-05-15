@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Пример ProductImage</title>
+  <script src="product-image.js"></script>
+  <style>
+    .product-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+    }
+    .product-card {
+      width: 300px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .image-wrapper {
+      height: 200px;
+      background: #f5f5f5;
+    }
+    .controls {
+      padding: 10px;
+      background: #f9f9f9;
+    }
+    button {
+      padding: 5px 10px;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Демонстрация компонента ProductImage</h1>
+  
+  <div class="product-container">
+    <!-- Пример 1: Обычное изображение -->
+    <div class="product-card">
+      <div class="image-wrapper">
+        <product-image 
+          src="https://example.com/images/product1.jpg"
+          alt="Пример товара 1"
+        ></product-image>
+      </div>
+      <div class="controls">
+        <p>Пример 1: Обычное изображение</p>
+      </div>
+    </div>
+    
+    <!-- Пример 2: С fallback изображением -->
+    <div class="product-card">
+      <div class="image-wrapper">
+        <product-image 
+          src="https://invalid-url.com/non-existent-image.jpg"
+          fallback-src="https://example.com/fallback-image.jpg"
+          alt="Пример с fallback"
+        ></product-image>
+      </div>
+      <div class="controls">
+        <p>Пример 2: С обработкой ошибки</p>
+      </div>
+    </div>
+    
+    <!-- Пример 3: Динамическая загрузка -->
+    <div class="product-card">
+      <div class="image-wrapper">
+        <product-image 
+          id="dynamic-image"
+          alt="Динамическое изображение"
+        ></product-image>
+      </div>
+      <div class="controls">
+        <p>Пример 3: Динамическая загрузка</p>
+        <button onclick="loadImage()">Загрузить изображение</button>
+        <button onclick="checkLoaded()">Проверить загрузку</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function loadImage() {
+      const image = document.getElementById('dynamic-image');
+      image.setAttribute('src', 'https://example.com/images/product3.jpg');
+    }
+    
+    function checkLoaded() {
+      const image = document.getElementById('dynamic-image');
+      alert(image.isLoaded() ? 'Изображение загружено' : 'Изображение не загружено');
+    }
+    
+    // Предзагрузка изображений при загрузке страницы
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('product-image').forEach(img => {
+        img.preload();
+      });
+    });
+  </script>
+</body>
+</html>

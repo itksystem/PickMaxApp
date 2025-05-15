@@ -6,8 +6,16 @@ const common = require("openfsm-common"); // Библиотека с общим�
 const OrderServiceClientHandler = require("../handlers/OrderServiceClientHandler");
 const orderClient = new OrderServiceClientHandler();   // интерфейс для  связи с MC Заказы
 
+const WarehouseServiceClientHandler = require("openfsm-warehouse-service-client-handler");
+const warehouseClient = new WarehouseServiceClientHandler();   // интерфейс для  связи с MC
+
 const CommonFunctionHelper = require("openfsm-common-functions")
 const commonFunction= new CommonFunctionHelper();
+
+const AuthServiceClientHandler = require("openfsm-auth-service-client-handler");
+const authClient = new AuthServiceClientHandler();              // интерфейс для  связи с MC AuthService
+
+
 require('dotenv').config({ path: '.env-pickmax-service' });
 
 /* Доступность сервиса заказов */
@@ -80,5 +88,24 @@ router.get('/v1/order/:id',
           res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  new CommonFunctionHelper().getDescriptionByCode((Number(error) || 500)) });                        
         }
 });   
+
+
+/* удалить из заказа товар */
+router.post('/v1/order/product-remove', 	
+	async (req, res) => {        
+        try {
+          const userId = await authClient.getUserId(req, res);                   
+          if(!userId) throw(401)
+           const {orderId, productId} = req.body;
+           if(!orderId || !productId) { throw(common.HTTP_CODES.BAD_REQUEST.code) }
+           const response = await warehouseClient.removeItemFromOrder(req);    
+           if (!response.success)  throw(response.status)
+           res.status(200).json(response.data);
+        } catch (error) {
+          logger.error(error || 'Неизвестная ошибка' );   
+          res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  new CommonFunctionHelper().getDescriptionByCode((Number(error) || 500)) });                        
+        }
+});   
+
 
 module.exports = router;

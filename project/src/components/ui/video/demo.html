@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пример ProductVideo</title>
+    <script src="product-video.js"></script> <!-- Подключаем наш компонент -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .video-wrapper {
+            width: 100%;
+            height: 200px;
+            background-color: #f5f5f5;
+        }
+        
+        .info {
+            padding: 15px;
+        }
+        
+        h1 {
+            color: #333;
+        }
+        
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Демонстрация компонента ProductVideo</h1>
+    
+    <div class="container">
+        <!-- Пример 1: Простое видео -->
+        <div class="card">
+            <div class="video-wrapper">
+                <product-video 
+                    src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4"
+                    class="product-video"
+                ></product-video>
+            </div>
+            <div class="info">
+                <h3>Пример 1: Базовое видео</h3>
+                <p>Автоматические контролы при наведении</p>
+            </div>
+        </div>
+        
+        <!-- Пример 2: Видео с автовоспроизведением -->
+        <div class="card">
+            <div class="video-wrapper">
+                <product-video 
+                    src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4"
+                    autoplay
+                    class="product-video"
+                ></product-video>
+            </div>
+            <div class="info">
+                <h3>Пример 2: Автовоспроизведение</h3>
+                <p>Начнет играть автоматически</p>
+                <button onclick="document.querySelectorAll('product-video')[1].pause()">
+                    Пауза
+                </button>
+            </div>
+        </div>
+        
+        <!-- Пример 3: Динамическая загрузка видео -->
+        <div class="card">
+            <div class="video-wrapper">
+                <product-video 
+                    id="dynamic-video"
+                    class="product-video"
+                ></product-video>
+            </div>
+            <div class="info">
+                <h3>Пример 3: Динамическая загрузка</h3>
+                <p>Видео загружается по кнопке</p>
+                <button onclick="loadVideo()">
+                    Загрузить видео
+                </button>
+                <button onclick="playVideo()">
+                    Воспроизвести
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function loadVideo() {
+            const video = document.getElementById('dynamic-video');
+            video.setAttribute('src', 'https://samplelib.com/lib/preview/mp4/sample-5s.mp4');
+        }
+        
+        function playVideo() {
+            const video = document.getElementById('dynamic-video');
+            // Можно вызывать методы компонента напрямую
+            video.play();
+        }
+        
+        // Можно слушать события компонента
+        document.addEventListener('DOMContentLoaded', () => {
+            const videos = document.querySelectorAll('product-video');
+            videos.forEach(video => {
+                video.addEventListener('play', (e) => {
+                    console.log('Видео началось', e.target);
+                });
+                
+                video.addEventListener('pause', (e) => {
+                    console.log('Видео на паузе', e.target);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,6 +1,5 @@
 class CommonFunctions {
    constructor() {
-   console.log(`CommonFunctions loading...`);
    this.webRequest = new WebRequest();
    this.api = new WebAPI();
    return this;
@@ -8,7 +7,6 @@ class CommonFunctions {
 
  init(){
      this.me = this.webRequest.get(this.api.getMeMethod(), {}, true );
-     console.log(this.me);
  }
 
 
@@ -24,6 +22,7 @@ class CommonFunctions {
   if (window.Telegram && Telegram.WebApp) {
     Telegram.WebApp.ready();
     Telegram.WebApp.onEvent('viewportChanged', (event) => {
+	console.log(`viewportChanged`)
         if (event.isStateStable) {
             trackWindowOpen();
         }
@@ -82,10 +81,6 @@ class CommonFunctions {
  */
  saveTelegramAccessToken(request = null) {
     try {
-//        let webRequest = new WebRequest();
-//        let api = new WebAPI();
-//        let request = webRequest.get(api.getMeMethod(), {}, true );
-        console.log(`saveTelegramAccessToken `,request);
         const token = (!request.telegramToken) ?  null : request.telegramToken;
         if(token)
           localStorage.setItem('telegramToken', token);
@@ -101,11 +96,6 @@ class CommonFunctions {
  */
  saveAccessToken(request = null) {
     try {
-//        let webRequest = new WebRequest();
-//        let api = new WebAPI();
-//	this.removeAccessToken();
-//        let request = webRequest.get(api.getMeMethod(), {}, true );
-        console.log(`saveAccessToken `,request);
         const token = (!request.accessToken) ?  null : request.accessToken;
         if(token)
           localStorage.setItem('accessToken', token);
@@ -202,14 +192,12 @@ class CommonFunctions {
 
 
 ORDER_STATUS = {
-  NEW: { class: 'order_item_status_new', description: "Новый заказ" },
-  RESERVED: { class: 'order_item_status_confirmed', description: "Зарезервирован" },
-  PAID: { class: 'order_item_status_paid', description: "Заказ оплачен" },
-  DELIVERY: { class: 'order_item_status_done', description: "Передан в доставку" },
-  DONE: { class: 'order_item_status_done', description: "Заказ доставлен" },
-
-  DECLINE: { class: 'order_item_status_decline', description: "Заказ отменен" },
-  COURIER_SEARCH: { class: 'order_item_status_confirmed', description: "Поиск курьера" },
+  NEW: { status:"NEW", class: 'order_item_status_new', description: "Ожидает оплату" },
+  ORDER_PAYMENT_COMPLETED: { status:"ORDER_PAYMENT_COMPLETED", class: 'order_item_status_paid', description: "Оплачен" },
+  ORDER_BEING_PREPARED: {status:"ORDER_BEING_PREPARED",  class: 'order_item_status_confirmed', description: "Собирается" },
+  ORDER_SENT_TO_DELIVERY: { status:"ORDER_SENT_TO_DELIVERY", class: 'order_item_status_done', description: "В доставке" },
+  ORDER_SUCCESSFULLY_DELIVERED: { status:"ORDER_SUCCESSFULLY_DELIVERED", class: 'order_item_status_done', description: "Доставлен" },
+  ORDER_DECLINE: { status:"ORDER_DECLINE", class: 'order_item_status_decline', description: "Отменен" }
 }
 
 /**
@@ -268,5 +256,86 @@ ORDER_STATUS = {
     const pad = (num) => num.toString().padStart(2, '0');
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
  }
+
+// функция, которая возвращает true, если ширина экрана пользователя больше 480px       
+  isScreenWiderThan480px() {
+   return window.matchMedia('(min-width: 481px)').matches;
+ }
+
+// Преобразует Date в удобочитаемую строку.
+// Пример: formatDate(new Date()) → "2023-12-31"
+ formatDate(date, format = 'YYYY-MM-DD') {
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+  
+  return format
+    .replace('YYYY', year)
+    .replace('MM', month)
+    .replace('DD', day);
+}
+
+// Создаёт уникальный ID заданной длины.
+// Пример: generateId() → "a1b2c3d4"
+ generateId(length = 8) {
+    return Math.random().toString(36).substring(2, 2 + length);
+ }
+
+// Определяет, пуст ли объект или массив.
+// Пример: isEmpty({}) → true, isEmpty([1, 2]) → false
+ isEmpty(value) {
+   if (Array.isArray(value)) return value.length === 0;
+   if (typeof value === 'object' && value !== null) {
+    return Object.keys(value).length === 0;
+  }
+  return false;
+ }
+
+// Клонирует объект (включая вложенные структуры).
+// Пример: const obj = { a: 1, b: { c: 2 } }; deepClone(obj) → { a: 1, b: { c: 2 } }
+ deepClone(obj) {
+   return JSON.parse(JSON.stringify(obj));
+ }
+
+// Обеспечивает выполнение функции не чаще, чем раз в delay мс.
+// Пример: window.addEventListener('scroll', throttle(() => console.log('Scrolling!'), 200));
+ throttle(func, delay = 300) {
+  let lastCall = 0;
+  return (...args) => {
+    const now = Date.now();
+    if (now - lastCall >= delay) {
+      func.apply(this, args);
+      lastCall = now;
+    }
+  };
+}
+
+// Удаляет из объекта свойства с null или undefined.
+// Пример: filterObject({ a: 1, b: null, c: 'hello' }) → { a: 1, c: 'hello' }
+
+ filterObject(obj) {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([_, value]) => value != null)
+  );
+}
+
+// Преобразует первую букву строки в верхний регистр.
+// Пример: capitalize('hello') → "Hello"
+ capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+//Определяет, является ли значение числом (включая строки с числами).
+// Пример: isNumeric('123') → true, isNumeric('abc') → false
+ isNumeric(value) {
+  return !isNaN(parseFloat(value)) && isFinite(value);
+}
+
+// Объединяет несколько объектов в один (поверхностное слияние).
+// Пример: mergeObjects({ a: 1 }, { b: 2 }) → { a: 1, b: 2 }
+ mergeObjects(...objects) {
+  return Object.assign({}, ...objects);
+}
+
 
 }

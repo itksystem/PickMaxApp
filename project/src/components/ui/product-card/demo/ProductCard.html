@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Пример использования ProductCard с видео</title>
+    <style>
+        /* Дополнительные стили для контейнера карточек */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        /* Обеспечивает, что карточки не превышают 4 в строку на больших экранах */
+        @media (min-width: 62.06rem) { /* 993px */
+            .container {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Контейнер для карточек -->
+    <div class="container">
+        <!-- Карточка с изображением -->
+        <product-card
+            href="https://www.wildberries.ru/catalog/31344425/detail.aspx"
+            image-src="https://basket-03.wbbasket.ru/vol313/part31344/31344425/images/c516x688/1.webp"
+            image-alt="Протеиновые батончики без сахара 12 шт по 50 гр FitnesShock"
+            brand="FitnesShock"
+            name="Протеиновые батончики без сахара 12 шт по 50 гр"
+            current-price="849 ₽"
+            old-price="1 459 ₽"
+            discount="-39%"
+            wallet-condition="с WB кошельком"
+            aria-label="Протеиновые батончики без сахара 12 шт по 50 гр FitnesShock">
+        </product-card>
+
+        <product-card
+            href="https://www.wildberries.ru/catalog/31344425/detail.aspx"
+            image-src="https://basket-03.wbbasket.ru/vol313/part31344/31344425/images/c516x688/1.webp"
+            image-alt="Протеиновые батончики без сахара 12 шт по 50 гр FitnesShock"
+            brand="FitnesShock"
+            name="Протеиновые батончики без сахара 12 шт по 50 гр"
+            current-price="849 ₽"
+            old-price="1 459 ₽"
+            discount="-39%"
+            wallet-condition="с WB кошельком"
+            aria-label="Протеиновые батончики без сахара 12 шт по 50 гр FitnesShock">
+        </product-card>
+
+        <product-card
+            href="https://www.wildberries.ru/catalog/31344425/detail.aspx"
+            image-src="https://basket-03.wbbasket.ru/vol313/part31344/31344425/images/c516x688/1.webp"
+            image-alt="Протеиновые батончики без сахара 12 шт по 50 гр FitnesShock"
+            brand="FitnesShock"
+            name="Протеиновые батончики без сахара 12 шт по 50 гр"
+            current-price="849 ₽"
+            old-price="1 459 ₽"
+            discount="-39%"
+            wallet-condition="с WB кошельком"
+            aria-label="Протеиновые батончики без сахара 12 шт по 50 гр FitnesShock">
+        </product-card>
+
+        <product-card
+            href="https://www.wildberries.ru/catalog/31344425/detail.aspx"
+            image-src="https://basket-03.wbbasket.ru/vol313/part31344/31344425/images/c516x688/1.webp"
+            image-alt="Протеиновые батончики без сахара 12 шт по 50 гр FitnesShock"
+            brand="FitnesShock"
+            name="Протеиновые батончики без сахара 12 шт по 50 гр"
+            current-price="849 ₽"
+            old-price="1 459 ₽"
+            discount="-39%"
+            wallet-condition="с WB кошельком"
+            aria-label="Протеиновые батончики без сахара 12 шт по 50 гр FitnesShock">
+        </product-card>
+
+        <product-card
+            href="https://www.wildberries.ru/catalog/31344425/detail.aspx"
+            image-src="https://basket-03.wbbasket.ru/vol313/part31344/31344425/images/c516x688/1.webp"
+            image-alt="Протеиновые батончики без сахара 12 шт по 50 гр FitnesShock"
+            brand="FitnesShock"
+            name="Протеиновые батончики без сахара 12 шт по 50 гр"
+            current-price="849 ₽"
+            old-price="1 459 ₽"
+            discount="-39%"
+            wallet-condition="с WB кошельком"
+            aria-label="Протеиновые батончики без сахара 12 шт по 50 гр FitnesShock">
+        </product-card>
+
+
+    </div>
+
+    <!-- Подключение скрипта с определением компонента -->
+    <script src="ProductCard.js"></script>
+</body>
+</html>

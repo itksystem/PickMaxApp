@@ -259,6 +259,10 @@ class WebAPI {
    removeFromBasketMethod(){  return `/api/bff/warehouse/v1/basket/product-remove` }
    removeFromBasketMethodPayload(productId, quantity){  return { productId: productId, quantity: quantity } }
    removeItemBasketMethod(){  return `/api/bff/warehouse/v1/basket/item` }
+
+/**/
+   removeOrderItemMethod(){  return `/api/bff/orders/v1/order/product-remove` }
+
 /* */
    setProductLikeMethod(productId=null){
      return `/api/bff/reco/v1/like/${(productId) ? productId : ''}` 
@@ -275,6 +279,8 @@ class WebAPI {
    getShopBasketMethod(){  return `/api/bff/warehouse/v1/basket` }
 /* Создать заказ */
    createOrderMethod(){  return `/api/bff/orders/v1/order/create` }
+/* Отменить заказ */
+   declineOrderMethod(){  return `/api/bff/orders/v1/order/decline` }
 /* Установка типа доставки */
    setOrderDeliveryMethod(){  return `/api/bff/delivery/v1/select` }
 /* Установка типа доставки */

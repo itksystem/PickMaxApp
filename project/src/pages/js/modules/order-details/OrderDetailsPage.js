@@ -1,189 +1,333 @@
+
 class OrderDetailsSection extends PageBuilder {
+    // Текстовые константы
+    static TEXTS = {
+        ORDER_TITLE: (orderId, hasItems) => 
+            hasItems ? `Ваш заказ № ${orderId}` : `Нет информации о заказе ${orderId}`,
+        EMPTY_ORDER_MESSAGE: 'Зайдите в каталог, чтобы выбрать товары или найти нужное в поиске',
+        GO_TO_CATALOG: 'Перейти в каталог',
+        TOTAL_ITEMS: 'Всего товаров',
+        TOTAL_AMOUNT: 'Итого',
+        CURRENCY: '₽',
+        CANCEL_ORDER: 'Отменить',
+        PAY_ORDER: 'Оплатить',
+        BACK_TO_ORDERS: 'Вернуться к заказам',
+        CONFIRM_CANCEL_TITLE: 'Вы уверены? Заказ будет отменен полностью.',
+        CONFIRM_YES: 'Да, отменить',
+        CONFIRM_NO: 'Нет, оставить',
+	ORDER_DECLINE_ERROR_MSG :'Не удалось отменить заказ. Попробуйте позже...',
+	ORDER_MSG: 'Заказ'
+    };
+
     constructor(containerId) {
         super(containerId);
         this.api = new WebAPI();
         this.common = new CommonFunctions();
     }
 
-
-    createContainer( element = null, elementClass = null, textContent = null, innerHTML = null){
-	if(!element) return;
-        const _container = document.createElement(element);
-	if(elementClass) 
-        _container.className = `${elementClass}`;
-	if(textContent) 
-	_container.textContent = textContent;
-	if(innerHTML) 
-	_container.innerHTML = innerHTML;
-	return _container;
+    createContainer(element = null, classes = null, textContent = null, innerHTML = null) {
+        if (!element) return null;
+        
+        const container = document.createElement(element);
+        if (classes) container.className = classes;
+        if (textContent) container.textContent = textContent;
+        if (innerHTML) container.innerHTML = innerHTML;
+        
+        return container;
     }
 
-    /**
-     * Generates the OrderDetails section module.
-     */
     OrderDetailsCardContainer(order = null, totalQuantity = 0, totalAmount = 0) {
-	if(!order && !order?.orderId) return;
-        let updateAt = new DatetimeValidator();
-	this.order = order;
-        const OrderDetailsContainer = this.createContainer("div","card container");
-        const OrderDetailsContainerHeader = this.createContainer("div","card-header", null, `<h3 class="card-title">
-	  ${
-		(totalQuantity !== 0)
-		  ? `Ваш заказ № ${order.orderId}` 
-		  : `Нет информации о заказе ${order.orderId}`                  
-		}
-	</h3>`);;
+        if (!order?.orderId) return;
 
-        const OrderStatusDetailsContainerContent = this.createContainer("div","row", null, `
-	      <div class="row">		
-	   	<div class="col text-left basket-card-title">		
-		      <small>${updateAt.formatToCustom(order?.updatedAt)}</small>
-		 </div>
-	         <div class="col text-right basket-card-title text-center status-${order?.status.toLowerCase()}">
-		     ${this?.common?.ORDER_STATUS[order?.status]?.description ?? ``}
-        	 </div>
-               </div>
-	`);
-        const OrderDetailsContainerContent = this.createContainer("div", "card-body", null, `<div class="order-details-body-container"></div>`);
-        OrderDetailsContainer.appendChild(OrderDetailsContainerHeader);
-        OrderDetailsContainer.appendChild(OrderStatusDetailsContainerContent);
-        OrderDetailsContainer.appendChild(OrderDetailsContainerContent);
+        this.order = order;
+        this.totalQuantity = totalQuantity;
+        this.totalAmount = totalAmount;
+        const hasItems = totalQuantity !== 0;
+        const updateAt = new DatetimeValidator();
 
-        if (totalQuantity === 0) {
-            const OrderDetailsTotalAmountContainer = this.createContainer("div", null, null, `
-		<div class="order-details-empty-text text-center" style="padding: 1rem 0; font-size: 0.9rem;"> Зайдите в каталог, чтобы выбрать товары или найти нужное в поискe</div> 
-		<div class="order-details-button-container"> <a href="/products/page" class="btn btn-lg btn-success w-100 create-order-btn">Перейти в каталог</a></div> 
-	`);
+        // Создаем основную карточку
+        const card = this.createCard(
+            order, 
+            hasItems, 
+            updateAt.formatToCustom(order?.updatedAt)
+        );
 
-        OrderDetailsContainer.appendChild(OrderDetailsTotalAmountContainer);
+        if (hasItems) {
+            this.addOrderTotalInfo(card);
         } else {
-            const OrderDetailsContainerItog = this.createContainer("div", "card-itog-body-container", null, `
+            this.addEmptyOrderMessage(card);
+        }
+        if (hasItems) 
+          this.addOrderActions(card, order.status);
+        this.addModule("OrderDetails", card);
+        this.setupEventHandlers();    
+    }
+
+    createCard(order, hasItems, formattedDate) {
+        const card = this.createContainer("div", "card container");
+        
+        // Заголовок карточки
+        const header = this.createContainer(
+            "div",
+            "card-header",
+            null,
+            `<h3 class="card-title">
+                ${OrderDetailsSection.TEXTS.ORDER_TITLE(order.orderId, hasItems)}
+            </h3>`
+        );
+
+        // Статус заказа
+        const statusContent = this.createStatusContent(order, formattedDate);
+        
+        // Тело карточки
+        const body = this.createContainer(
+            "div",
+            "card-body",
+            null,
+            '<div class="order-details-body-container"></div>'
+        );
+
+        card.appendChild(header);
+        if (hasItems) card.appendChild(statusContent);
+        card.appendChild(body);
+        return card;
+    }
+
+    createStatusContent(order, formattedDate) {
+        const statusRow = this.createContainer("div", "row");
+
+        const dateCol = this.createContainer(
+            "div",
+            "col text-left basket-card-title",
+            null,
+            `<small>${formattedDate}</small>`
+        );
+
+        const statusCol = this.createContainer(
+            "div",
+            `col text-right basket-card-title text-center status-${order?.status.toLowerCase()}`,
+            null,
+            this.common?.ORDER_STATUS[order?.status]?.description ?? ''
+        );
+
+        statusRow.appendChild(dateCol);
+        statusRow.appendChild(statusCol);
+
+        return statusRow;
+    }
+
+    addEmptyOrderMessage(card) {
+        const emptyMessage = this.createContainer(
+            "div",
+            null,
+            null,
+            `
+            <div class="order-details-empty-text text-center" style="padding: 1rem 0; font-size: 0.9rem;">
+                ${OrderDetailsSection.TEXTS.EMPTY_ORDER_MESSAGE}
+            </div> 
+            <div class="order-details-button-container">
+                <a href="/products/page" class="btn btn-lg btn-success w-100 goto-orders-btn">
+                    ${OrderDetailsSection.TEXTS.GO_TO_CATALOG}
+                </a>
+            </div>`
+        );
+
+        card.appendChild(emptyMessage);
+    }
+
+    addOrderTotalInfo(card) {
+        const totalInfo = this.createContainer(
+            "div",
+            "card-itog-body-container",
+            null,
+            `
             <div class="row">
                 <div class="col-6 text-left">
-                    <div class="order-details-itog-quantity-title">Всего товаров</div>
+                    <div class="order-details-itog-quantity-title">${OrderDetailsSection.TEXTS.TOTAL_ITEMS}</div>
                 </div>
                 <div class="col-6 text-right">
-                    <div class="order-details-itog-quantity-sum">${totalQuantity}</div>
+                    <div class="order-details-itog-quantity-sum">${this.totalQuantity}</div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6 text-left">
-                    <div class="order-details-itog-title">Итого</div>
+                    <div class="order-details-itog-title">${OrderDetailsSection.TEXTS.TOTAL_AMOUNT}</div>
                 </div>
                 <div class="col-6 text-right">
-                    <div class="order-details-itog-sum">${totalAmount} ₽</div>
+                    <div class="order-details-itog-sum">${this.totalAmount} ${OrderDetailsSection.TEXTS.CURRENCY}</div>
                 </div>
-            </div>`);
+            </div>`
+        );
 
-            const ButtonDescriptionContainer = this.createContainer("div", "row w-100 card description-button-container d-none");  	    
-            const ButtonDescriptionTextContainer = this.createContainer("div", "row w-100 text-center text-description-button-container", null,       
-		 '<div class="col-12">Вы уверены? Заказ будет отменен полностью.</div>');  	    
+        card.appendChild(totalInfo);
+    }
 
-            const OrderDetailsButtonsContainer = this.createContainer("div", "row w-100 card-created-order-button-container");
-            const OrderDetailsButtonsRow1Container = this.createContainer("div", "col-6");
-            const OrderDetailsButtonsRow2Container = this.createContainer("div", "col-6");
-            const OrderDetailsButtonsRow3Container = this.createContainer("div", "col");
+    addOrderActions(card, orderStatus) {
+        // Контейнер подтверждения отмены
+        const confirmContainer = this.createConfirmContainer();
+        card.appendChild(confirmContainer);
 
-            const DeclineOrderButton 	= this.createContainer("button", "btn btn-block btn-outline-dark btn-lg mt-4 change-link-audit-container d-block", "Отменить заказ");
-            const PayOrderButton 	= this.createContainer("button",  "btn btn-lg btn-success w-100 create-order-btn mt-4 ", "Оплатить заказ");
-            const GotoOrdersButton 	= this.createContainer("button",  "btn btn-lg btn-success w-100 create-order-btn mt-4 ", "Вернуться к заказам");
+        // Основные кнопки действий
+        const buttonsContainer = this.createButtonsContainer(orderStatus);
+        card.appendChild(buttonsContainer);
+    }
 
-            const DeclineButtonsContainer = this.createContainer("div", "row w-100 decline-button-container d-none");
-            const DeclineButtonsRow1Container = this.createContainer("div", "col-6");
-            const DeclineButtonsRow2Container = this.createContainer("div", "col-6");
-            const DeclineOrderButtonYes = this.createContainer("button", "btn btn-block btn-outline-dark btn-lg mt-4 confirm-decline-button-container d-block", "Да, отменить");
-            const DeclineOrderButtonNo = this.createContainer("button",  "btn btn-lg btn-success w-100 no-confirm-decline-button-container  mt-4 ", "Нет, оставить");
+    createConfirmContainer() {
+        const container = this.createContainer(
+            "div",
+            "row w-100 description-button-container d-none"
+        );
 
-            DeclineButtonsRow1Container.appendChild(DeclineOrderButtonYes);
-            DeclineButtonsRow2Container.appendChild(DeclineOrderButtonNo);
+        const textContainer = this.createContainer(
+            "div",
+            "row w-100 text-center text-description-button-container",
+            null,
+            `<div class="col-12">${OrderDetailsSection.TEXTS.CONFIRM_CANCEL_TITLE}</div>`
+        );
 
-	    DeclineButtonsContainer.appendChild(DeclineButtonsRow1Container);
-	    DeclineButtonsContainer.appendChild(DeclineButtonsRow2Container);
+        const buttonsRow = this.createContainer("div", "row w-100 decline-button-container d-none");
+        const yesButtonCol = this.createContainer("div", "col-6");
+        const noButtonCol = this.createContainer("div", "col-6");
 
+        const yesButton = this.createContainer(
+            "button",
+            "btn btn-block btn-outline-dark btn-lg mt-4 confirm-decline-btn d-block",
+            OrderDetailsSection.TEXTS.CONFIRM_YES
+        );
 
- 	    ButtonDescriptionContainer.appendChild(ButtonDescriptionTextContainer);
-            ButtonDescriptionContainer.appendChild(DeclineButtonsContainer);
+        const noButton = this.createContainer(
+            "button",
+            "btn btn-lg btn-success w-100 no-confirm-decline-btn mt-4",
+            OrderDetailsSection.TEXTS.CONFIRM_NO
+        );
 
-            OrderDetailsButtonsRow1Container.appendChild(DeclineOrderButton);
-            OrderDetailsButtonsRow2Container.appendChild(PayOrderButton);
-	    OrderDetailsButtonsRow3Container.appendChild(GotoOrdersButton);
+        yesButtonCol.appendChild(yesButton);
+        noButtonCol.appendChild(noButton);
+        buttonsRow.appendChild(yesButtonCol);
+        buttonsRow.appendChild(noButtonCol);
 
-            if (order.status == 'NEW') {
-               OrderDetailsButtonsContainer.appendChild(OrderDetailsButtonsRow1Container);
-               OrderDetailsButtonsContainer.appendChild(OrderDetailsButtonsRow2Container);
-	    } else 
-            OrderDetailsButtonsContainer.appendChild(OrderDetailsButtonsRow3Container);
+        container.appendChild(textContainer);
+        container.appendChild(buttonsRow);
 
-            OrderDetailsContainer.appendChild(OrderDetailsContainerItog);
-	    OrderDetailsContainer.appendChild(ButtonDescriptionContainer);
-            OrderDetailsContainer.appendChild(OrderDetailsButtonsContainer);
-//            OrderDetailsContainer.appendChild(DeclineButtonsContainer);
+        return container;
+    }
 
-            // Добавляем обработчик после добавления кнопки в DOM
-  	    PayOrderButton.addEventListener("click", this.PayOrderButtonOnClick.bind(this) );
-  	    GotoOrdersButton.addEventListener("click", this.GotoOrdersButtonOnClick.bind(this));
-  	    DeclineOrderButton.addEventListener("click", this.DeclineOrderButtonOnClick.bind(this));
+    createButtonsContainer(orderStatus) {
+        const container = this.createContainer(
+            "div",
+            "row w-100 card-created-order-button-container"
+        );
 
-  	    DeclineOrderButtonYes.addEventListener("click", this.DeclineOrderButtonYesOnClick.bind(this));
-  	    DeclineOrderButtonNo.addEventListener("click", this.DeclineOrderButtonNoOnClick.bind(this));
+        if (orderStatus === 'NEW') {
+            const cancelCol = this.createContainer("div", "col-6");
+            const payCol = this.createContainer("div", "col-6");
+
+            const cancelButton = this.createContainer(
+                "button",
+                "btn btn-block btn-outline-dark btn-lg mt-4 decline-order-btn d-block",
+                OrderDetailsSection.TEXTS.CANCEL_ORDER
+            );
+
+            const payButton = this.createContainer(
+                "button",
+                "btn btn-lg btn-success w-100 create-order-btn mt-4",
+                OrderDetailsSection.TEXTS.PAY_ORDER
+            );
+
+            cancelCol.appendChild(cancelButton);
+            payCol.appendChild(payButton);
+            container.appendChild(cancelCol);
+            container.appendChild(payCol);
+        } else {
+            const backCol = this.createContainer("div", "col");
+            const backButton = this.createContainer(
+                "button",
+                "btn btn-lg btn-success w-100 goto-orders-btn mt-4",
+                OrderDetailsSection.TEXTS.BACK_TO_ORDERS
+            );
+            backCol.appendChild(backButton);
+            container.appendChild(backCol);
         }
 
-        this.addModule("OrderDetails", OrderDetailsContainer);
+        return container;
     }
 
-    _buttonDescriptionContainer(){ return document.querySelector(".description-button-container") ?? null};
-    _payOrderButton(){ return document.querySelector(".create-order-btn") ?? null};
-    _orderButtonsContainer(){ return document.querySelector(".card-created-order-button-container") ?? null};
-    _declineOrderButtonsContainer(){ return document.querySelector(".decline-button-container") ?? null};
-    _declineOrderConfirmButton(){ return document.querySelector(".confirm-decline-button-container") ?? null};
-    _declineOrderNoConfirmButton(){ return document.querySelector(".no-confirm-decline-button-container") ?? null};
+    setupEventHandlers() {
+        // Добавляем небольшую задержку для гарантированного наличия элементов в DOM
+        setTimeout(() => {
+            const container = this.container || document.querySelector(`#${this.containerId}`);
+            
+            if (!container) {
+                console.error('Container not found');
+                return;
+            }
 
+            const payButton = container.querySelector("button.create-order-btn");
+            const backButton = container.querySelector("button.goto-orders-btn");
+            const cancelButton = container.querySelector("button.decline-order-btn");
+            const confirmYesButton = container.querySelector("button.confirm-decline-btn");
+            const confirmNoButton = container.querySelector("button.no-confirm-decline-btn");
 
-    toggleVisibility(element, show){
-     if (!element) return;
-     if(!show) {
-       element.classList.add('d-none');
-      } else 
-     element.classList.remove('d-none');
-    };
+            console.log('Found buttons:', { 
+		container,
+                payButton, 
+                backButton, 
+                cancelButton, 
+                confirmYesButton, 
+                confirmNoButton 
+            });
 
-
-    DeclineOrderButtonYesOnClick(){
-       this.toggleVisibility(this._buttonDescriptionContainer(), false)
-       this.toggleVisibility(this._orderButtonsContainer(), false)
-       this.toggleVisibility(this._declineOrderButtonsContainer(), false)
-       location.reload(true);
-    }
-
-    DeclineOrderButtonNoOnClick(){
-       this.toggleVisibility(this._buttonDescriptionContainer(), false)
-       this.toggleVisibility(this._orderButtonsContainer(), true)
-       this.toggleVisibility(this._declineOrderButtonsContainer(), false)
-    }
-
-
-    /** Attaches a click handler to the "Create Order" button.    */
-    PayOrderButtonOnClick() {
-        const o = this;
-        console.log("PayOrderButtonOnClick");
-        window.location.href = `/orders/payment/${this.order.orderId}`; //перешли на доставку`;
-    }
-
-    DeclineOrderButtonOnClick() {
-       const o = this;
-       let description = this._buttonDescriptionContainer()
-       this.toggleVisibility(description, true)
-       this.toggleVisibility(this._orderButtonsContainer(), false)
-       this.toggleVisibility(this._declineOrderButtonsContainer(), true)
-       console.log("DeclineOrderButtonOnClick");
+            // Назначаем обработчики с bind для сохранения контекста
+            payButton?.addEventListener("click", () => this.payOrder());
+            backButton?.addEventListener("click", () => this.goToOrders());
+            cancelButton?.addEventListener("click", () => this.showCancelConfirmation());
+            confirmYesButton?.addEventListener("click", () => this.confirmCancel());
+            confirmNoButton?.addEventListener("click", () => this.hideCancelConfirmation());
+        }, 50);
     }
 
 
-    /** Attaches a click handler to the "Goto Orders" button.    */
-    GotoOrdersButtonOnClick() {
-       console.log("GotoOrdersButtonOnClick");
-       window.location.href = `/orders/page`;
-
+    toggleElementVisibility(selector, show) {
+        const element = this.container.querySelector(selector);
+        if (!element) return;
+        
+        element.classList.toggle("d-none", !show);
     }
 
+    showCancelConfirmation() {
+	console.log(`showCancelConfirmation`)
+        this.toggleElementVisibility(".description-button-container", true);
+        this.toggleElementVisibility(".card-created-order-button-container", false);
+        this.toggleElementVisibility(".decline-button-container", true);
+    }
+
+    hideCancelConfirmation() {
+	console.log(`hideCancelConfirmation`)
+        this.toggleElementVisibility(".description-button-container", false);
+        this.toggleElementVisibility(".card-created-order-button-container", true);
+        this.toggleElementVisibility(".decline-button-container", false);
+    }
+
+    confirmCancel() {
+	console.log(`confirmCancel`)
+        this.hideCancelConfirmation();
+        try{
+          let result = new WebRequest().post(this.api?.declineOrderMethod(), { orderId : this.order.orderId }, true );
+	  if(!result || !result.status) throw(OrderDetailsSection.TEXTS.ORDER_DECLINE_ERROR_MSG)
+          location.reload(true);
+        }catch(error) {
+	console.log('error load profile...');
+        toastr.error(error, OrderDetailsSection.TEXTS.ORDER_MSG, { timeOut: 3000 });
+      }
+    }
+
+    payOrder() {
+	console.log(`payOrder`)
+        window.location.href = `/orders/payment/${this.order.orderId}`;
+    }
+
+    goToOrders() {
+	console.log(`goToOrders`)
+        window.location.href = `/orders/page`;
+    }
 }

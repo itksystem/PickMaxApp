@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Демо: Универсальный Tooltip</title>
+  <style>
+    /* Стили для тултипа */
+    .tooltip {
+      font-family: Arial, sans-serif;
+      max-width: 300px;
+      padding: 16px;
+      border-radius: 8px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin: 20px 0;
+    }
+
+    .tooltip__title {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .tooltip__subtitle {
+      margin: 0 0 16px 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .tooltip__buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .tooltip__button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      flex: 1;
+    }
+
+    .tooltip__button--primary {
+      background: #0066ff;
+      color: white;
+    }
+
+    .tooltip__button--regular {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    /* Стили для демо-страницы */
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .demo-section {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .demo-button {
+      padding: 10px 15px;
+      background: #0066ff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .demo-button.secondary {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    pre {
+      background: #f5f5f5;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Демонстрация Tooltip-компонента</h1>
+
+  <!-- Класс Tooltip -->
+  <script>
+    class Tooltip {
+      constructor(options) {
+        this.options = {
+          title: "Настроим погоду и новости для вас",
+          subtitle: "Разрешите определить ваш город, чтобы показывать актуальную информацию",
+          primaryButtonText: "Разрешить",
+          secondaryButtonText: "Изменить",
+          onPrimaryClick: () => console.log("Primary clicked"),
+          onSecondaryClick: () => console.log("Secondary clicked"),
+          ...options,
+        };
+
+        this.element = this.#createTooltip();
+      }
+
+      #createTooltip() {
+        const tooltip = document.createElement("div");
+        tooltip.className = "tooltip";
+        tooltip.innerHTML = `
+          <h3 class="tooltip__title">${this.options.title}</h3>
+          <div class="tooltip__subtitle">${this.options.subtitle}</div>
+          <div class="tooltip__buttons">
+            <button class="tooltip__button tooltip__button--primary">${this.options.primaryButtonText}</button>
+            ${this.options.secondaryButtonText ? 
+              `<button class="tooltip__button tooltip__button--regular">${this.options.secondaryButtonText}</button>` : ''}
+          </div>
+        `;
+
+        const primaryBtn = tooltip.querySelector(".tooltip__button--primary");
+        primaryBtn.addEventListener("click", this.options.onPrimaryClick);
+
+        if (this.options.secondaryButtonText) {
+          const secondaryBtn = tooltip.querySelector(".tooltip__button--regular");
+          secondaryBtn.addEventListener("click", this.options.onSecondaryClick);
+        }
+
+        return tooltip;
+      }
+
+      show(parent = document.body) {
+        parent.appendChild(this.element);
+      }
+
+      hide() {
+        if (this.element.parentNode) {
+          this.element.parentNode.removeChild(this.element);
+        }
+      }
+    }
+  </script>
+
+  <!-- Демо 1: Геолокация -->
+  <div class="demo-section">
+    <h2>1. Запрос геолокации</h2>
+    <button class="demo-button" id="geo-btn">Показать тултип геолокации</button>
+    <div id="geo-container"></div>
+
+    <script>
+      document.getElementById('geo-btn').addEventListener('click', () => {
+        const tooltip = new Tooltip({
+          title: "Доступ к геолокации",
+          subtitle: "Разрешите доступ для точного прогноза погоды",
+          onPrimaryClick: () => {
+            navigator.geolocation.getCurrentPosition(
+              pos => alert(`Ваши координаты: ${pos.coords.latitude}, ${pos.coords.longitude}`),
+              err => alert("Ошибка: " + err.message)
+            );
+            tooltip.hide();
+          },
+          onSecondaryClick: () => {
+            console.log("Пользователь отказался от геолокации");
+            tooltip.hide();
+          }
+        });
+        tooltip.show(document.getElementById('geo-container'));
+      });
+    </script>
+
+    <pre><code>
+// Код примера:
+const tooltip = new Tooltip({
+  title: "Доступ к геолокации",
+  onPrimaryClick: () => {
+    navigator.geolocation.getCurrentPosition(
+      pos => console.log("Координаты:", pos.coords),
+      err => console.error("Ошибка:", err)
+    );
+    tooltip.hide();
+  }
+});
+tooltip.show();
+    </code></pre>
+  </div>
+
+  <!-- Демо 2: Кастомное действие -->
+  <div class="demo-section">
+    <h2>2. Подтверждение действия</h2>
+    <button class="demo-button" id="confirm-btn">Показать тултип подтверждения</button>
+
+    <script>
+      document.getElementById('confirm-btn').addEventListener('click', () => {
+        const tooltip = new Tooltip({
+          title: "Сохранить настройки?",
+          subtitle: "Изменения будут применены сразу",
+          primaryButtonText: "Да",
+          secondaryButtonText: "Нет",
+          onPrimaryClick: () => {
+            alert("Настройки сохранены!");
+            tooltip.hide();
+          },
+          onSecondaryClick: () => {
+            console.log("Действие отменено");
+            tooltip.hide();
+          }
+        });
+        tooltip.show();
+      });
+    </script>
+
+    <pre><code>
+// Код примера:
+new Tooltip({
+  title: "Сохранить?",
+  primaryButtonText: "Да",
+  onPrimaryClick: () => {
+    localStorage.setItem("saved", "true");
+    tooltip.hide();
+  }
+});
+    </code></pre>
+  </div>
+
+  <!-- Демо 3: Только одна кнопка -->
+  <div class="demo-section">
+    <h2>3. Уведомление (одна кнопка)</h2>
+    <button class="demo-button" id="alert-btn">Показать уведомление</button>
+
+    <script>
+      document.getElementById('alert-btn').addEventListener('click', () => {
+        const tooltip = new Tooltip({
+          title: "Успешно!",
+          subtitle: "Файл загружен на сервер",
+          secondaryButtonText: null, // Скрываем вторую кнопку
+          onPrimaryClick: () => tooltip.hide()
+        });
+        tooltip.show();
+      });
+    </script>
+
+    <pre><code>
+// Код примера:
+new Tooltip({
+  secondaryButtonText: null,
+  subtitle: "Файл успешно загружен!",
+  onPrimaryClick: () => tooltip.hide()
+});
+    </code></pre>
+  </div>
+
+  <!-- Демо 4: HTML-контент -->
+  <div class="demo-section">
+    <h2>4. HTML в контенте</h2>
+    <button class="demo-button" id="html-btn">Показать HTML-тултип</button>
+
+    <script>
+      document.getElementById('html-btn').addEventListener('click', () => {
+        const tooltip = new Tooltip({
+          title: "Внимание!",
+          subtitle: '<span style="color: red; font-weight: bold;">Важно!</span> Вы уверены, что хотите удалить этот элемент?',
+          onPrimaryClick: () => {
+            alert("Элемент удалён!");
+            tooltip.hide();
+          }
+        });
+        tooltip.show();
+      });
+    </script>
+
+    <pre><code>
+// Код примера:
+new Tooltip({
+  subtitle: '&lt;span style="color: red;"&gt;Внимание!&lt;/span&gt; Вы уверены?',
+  onPrimaryClick: () => alert("Подтверждено")
+});
+    </code></pre>
+  </div>
+</body>
+</html>

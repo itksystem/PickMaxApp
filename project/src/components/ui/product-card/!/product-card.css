@@ -1,0 +1,101 @@
+/* ProductCard.css */
+
+:host {
+    display: block;
+    max-width: var(--product-card-max-width, 11.69rem);
+    min-width: var(--product-card-max-width, 9.69rem);
+    border-radius: var(--product-card-border-radius, 0.625rem);
+    box-shadow: var(--product-card-box-shadow, 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1));
+    background-color: var(--product-card-bg-color, #fff);
+    margin: var(--product-card-margin, 0.9% 0.9%);
+    overflow: hidden;
+    transition: 
+        transform var(--product-card-transition-duration, 0.3s) ease-in-out, 
+        box-shadow var(--product-card-transition-duration, 0.3s) ease-in-out;
+    font-family: var(--product-card-font-family, Arial, sans-serif);
+}
+
+:host(:hover) {
+    transform: var(--product-card-hover-transform, translateY(-0.3125rem));
+    box-shadow: var(--product-card-hover-box-shadow, 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2));
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+
+.info {
+    padding: var(--product-card-info-padding, 0.625rem);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.title {
+    font-size: var(--product-card-title-font-size, 0.8125rem);
+    color: var(--product-card-title-color, #555);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: var(--product-card-title-padding, 0 0 0.5rem 0);
+}
+
+.brand {
+    font-weight: bold;
+    display: block;
+    margin-bottom: var(--product-card-brand-margin-bottom, 0.3125rem);
+}
+
+.name {
+    font-size: var(--product-card-name-font-size, 0.8125rem);
+    color: var(--product-card-name-color, #555);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.price {
+    display: flex;
+    flex-direction: column;
+    gap: var(--product-card-price-gap, 0.3125rem);
+}
+
+.current-price {
+    font-size: var(--product-card-current-price-font-size, 1rem);
+    color: var(--product-card-current-price-color, #e60000);
+    font-weight: bold;
+}
+
+.old-price {
+    font-size: var(--product-card-old-price-font-size, 0.875rem);
+    color: var(--product-card-old-price-color, #999);
+    text-decoration: line-through;
+}
+
+.discount {
+    font-size: var(--product-card-discount-font-size, 0.8125rem);
+    color: var(--product-card-discount-color, #e60000);
+}
+
+.wallet-condition {
+    font-size: var(--product-card-wallet-condition-font-size, 0.75rem);
+    color: var(--product-card-wallet-condition-color, #777);
+}
+
+.additional-info {
+    font-size: var(--product-card-start-info-font-size, 0.75rem);
+    color: var(--product-card-start-info-color, #777);
+}
+
+/* Медиа-запросы остаются без изменений */
