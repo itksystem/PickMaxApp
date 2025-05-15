@@ -13,7 +13,7 @@ class MainApp {
     };
       this.api = new WebAPI();
       this.page = 1; // Номер текущей страницы
-      this.limit = 6; // Количество товаров для загрузки за раз
+      this.limit = 10; // Количество товаров для загрузки за раз
       this.loading = false; // Флаг, чтобы предотвратить повторную загрузку данных   
       this.common = new CommonFunctions();
       this.common.init();
@@ -40,118 +40,68 @@ class MainApp {
 	</section>`;
  }
   
-showCasePage() {
+ showCasePage() {
     try {
         let o = this;
         let webRequest = new WebRequest();
-        const urlParams = new URLSearchParams(window.location.search);
-        const active = urlParams.get('active'); // Оставлено, если будет использоваться в будущем
-        
-        // Добавляем флаг для отслеживания наличия дополнительных товаров
-        o.hasMoreProducts = true;
-        
-        // Добавляем debounce для обработчика скролла
-        let scrollTimeout;
-        const scrollHandler = function() {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(function() {
-                // Проверяем, нужно ли загружать новые товары
-                if (o.hasMoreProducts && 
-                    !o.loading && 
-                    $(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
-                    o.page++;
-                    loadProducts(o.page);
-                }
-            }, 200);
-        };
+        const urlParams = new URLSearchParams(window.location.search); // Получаем текущий URL
+        const active = urlParams.get('active'); // Извлекаем значение параметра 'active'
 
-        function loadProducts(page) {
-            if (o.loading || !o.hasMoreProducts) return;
+        
+        function loadProducts(page) { // Функция загрузки товаров с пагинацией
+            if (o.loading) return;    // Предотвращаем повторную загрузку
             o.loading = true;
             
-            // Показываем индикатор загрузки
-            $("div.product-card-container").append('<div class="loading-indicator">Загрузка...</div>');
-            
-            webRequest.post(
-                o.api.getShopProductsMethod(), 
-                {page, limit : o.limit}, 
+            let request = webRequest.post(
+                o.api.getShopProductsMethod(o.page, o.limit), 
+                {}, 
                 false
             )
             .then(function(data) {
-                // Удаляем индикатор загрузки
-                $(".loading-indicator").remove();
-                
-                if (data.length === 0) {
-                    o.hasMoreProducts = false;
-                    // Если это первая загрузка и нет товаров - показываем пустую страницу
-                    if (page === 1) {
-                        $("div.product-card-container").html(o.showCaseEmptyPageOutput()).show();
-                    }
-                    return;
-                }
-                
-                // Если это первая страница - очищаем контейнер
-                if (page === 1) {
-                    $("div.product-card-container").empty();
-                }
-                
                 data.forEach(product => {
-                    const productCard = document.createElement('product-card');
-                    productCard.setAttribute('product-id', product.productId);
-                    productCard.setAttribute('like', product.like);
-                    productCard.setAttribute('status', 'active');
-                    productCard.setAttribute('image-src', product?.mediaFiles[0]?.mediaKey || '');
-                    productCard.setAttribute('image-alt', product.productName);
-                    productCard.setAttribute('brand', 'Brand');
-                    productCard.setAttribute('name', product.productName);
-                    productCard.setAttribute('current-price', product.price);
-                    productCard.setAttribute('old-price', product.price * 1.3);
-                    productCard.setAttribute('currency-type', '₽');
-                    productCard.setAttribute('aria-label', product.productName);
-                    productCard.setAttribute('basket-count', product.basketCount);
-                    
-                    document.querySelector("div.product-card-container").appendChild(productCard);
+  	       	    const container = document.querySelector("div.product-card-container");
+		     const productCard = document.createElement('product-card');
+//		     const mediaKeysString = product?.mediaFiles?.map(file => file.mediaKey).join(',');
+		     productCard.setAttribute('product-id', product.productId);
+		     productCard.setAttribute('like', product.like);
+		     productCard.setAttribute('status', 'active');
+		     productCard.setAttribute('image-src', product?.mediaFiles[0]?.mediaKey || '');
+		     productCard.setAttribute('image-alt', product.productName);
+		     productCard.setAttribute('brand', 'Brand');
+		     productCard.setAttribute('name', product.productName);
+		     productCard.setAttribute('current-price', product.price);
+		     productCard.setAttribute('old-price', product.price * 1.3);
+		     productCard.setAttribute('currency-type', '₽');
+		     productCard.setAttribute('aria-label', product.productName);
+		     productCard.setAttribute('basket-count', product.basketCount);
+		     container.appendChild(productCard);
                 });
-                
-                // Если получено меньше товаров чем лимит - значит это последняя страница
-                if (data.length < o.limit) {
-                    o.hasMoreProducts = false;
-                }
+                o.loading = false; // Сбрасываем флаг загрузки
             })
             .catch(function(error) {
-                $(".loading-indicator").remove();
-                console.error('initializeProductCard.Произошла ошибка =>', error);
-                
-                // Показываем ошибку только при первой загрузке
-                if (page === 1) {
-                    $("div.product-card-container").html(o.showCaseEmptyPageOutput()).show();
-                }
-                toastr.error('Ошибка при получении товаров', 'Товары', {timeOut: 3000});
-            })
-            .finally(function() {
-                o.loading = false;
+                console.log('initializeProductCard.Произошла ошибка =>', error);
+		$("div.product-card-container").append(o.showCaseEmptyPageOutput()).show();
+		toastr.error('Ошибка при получении товаров', 'Товары', {timeOut: 3000});
+                o.loading = false; // Сбрасываем флаг загрузки при ошибке
             });
         }
 
-        // Изначально загружаем первую страницу товаров
+        // Изначально загружаем первую порцию товаров
         loadProducts(o.page);
 
-        // Устанавливаем обработчик скролла
-        $(window).on('scroll', scrollHandler);
-
-        // Добавляем метод для очистки
-        o.cleanupShowCase = function() {
-            $(window).off('scroll', scrollHandler);
-        };
+        // Обработчик прокрутки страницы для догрузки товаров
+        $(window).on('scroll', function() {
+            if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+                o.page++; // Увеличиваем номер страницы
+                loadProducts(o.page); // Загружаем следующую порцию товаров
+            }
+        });
 
     } catch (e) {
-        console.error('initializeProductCard.catch =>', e);
-        $("div.product-card-container").html(this.showCaseEmptyPageOutput()).show();
+        console.log('initializeProductCard.catch =>', e);
     }
     return this;
-}
-
-
+ }
 
 /* Вывод страницы профиля */
  showBasketPage() {

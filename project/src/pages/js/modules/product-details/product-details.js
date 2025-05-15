@@ -160,6 +160,7 @@ class ProductDetails extends HTMLElement {
     this.setSellerTypeBox(this._getSellerType(this.getAttribute('seller-type') || ''));
     this.setMainImage();
     this.setSeeAlsoBox();
+    this.setBasketAddButton();
     this._slideUpFromBottom('.product-details-add-basket-button-box');
   }
 
@@ -304,13 +305,20 @@ class ProductDetails extends HTMLElement {
     likeButton?.setAttribute('id', likes); 
    }
 
+  setBasketAddButton(){
+    const basketButton = this.shadowRoot.querySelector('basket-button.button-add-to-basket');
+    basketButton.setAttribute('product-id', this.getAttribute("product-id")); 
+  }
+
+
+
 
  setLike(productId , status) {
      let o = this; 
      let webRequest = new WebRequest();
      let request = webRequest.post(o.api.setProductLikeMethod(productId),  {productId , status}, false )
      .then(function(data) {
-      })                                
+      })                                               
      .catch(function(error) {
        console.log('setLike.Произошла ошибка =>', error);
      });

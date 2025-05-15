@@ -12,7 +12,7 @@ class OrderDetailsItem {
 	return _container;
     }
 
-    constructor(containerClass, orderId, item) {
+    constructor(containerClass, orderId, orderStatus, item) {
         // Найти контейнер с указанным классом
         const container = document.querySelector(`.${containerClass}`);
         if (!container) {
@@ -22,6 +22,7 @@ class OrderDetailsItem {
         this.api = new WebAPI();
         this.productId =  item?.productId || null;
         this.orderId =  orderId || null;
+        this.orderStatus =  orderStatus || null;
  
         // Создать элемент контейнера для товара
 	const OrderDetailsItemContainer =  this.createContainer("div","order-details-item");
@@ -48,9 +49,13 @@ class OrderDetailsItem {
                         </div>
                         <div class="col-12 col-sm-1 col-md-1"></div>
                         <div class="col-12">
-	                <delete-confirm>
-        	           <i slot="trigger" class="fa-solid fa-trash-alt basket-card-trash-hotkey"></i>
-	                 </delete-confirm>
+			${
+			   this.orderStatus == 'NEW'
+  			  ? `<delete-confirm><i slot="trigger" class="fa-solid fa-trash-alt basket-card-trash-hotkey"></i></delete-confirm>`
+			  : ``
+			}	                
+
+
                         </div>
                     </div>
                 </div>       
@@ -63,6 +68,7 @@ class OrderDetailsItem {
 
         // Добавить контейнер товара в основной контейнер
         container.appendChild(OrderDetailsItemContainer);
+	if(this.orderStatus == 'NEW')
 	this.setupDeleteHandler(OrderDetailsItemContainer)
     }
 

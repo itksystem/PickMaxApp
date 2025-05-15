@@ -40,8 +40,9 @@ router.get('/v1/products/:id',
 	async (req, res) => {        
       try {
           let {categoryId} = req.body; 
-          if(!categoryId) categoryId = null;
-          const response = await warehouseClient.getProducts(req,categoryId);
+          if(!categoryId) 
+            req.body.categoryId = null;
+          const response = await warehouseClient.getProducts(req);
           for (const item of response.data) {
             let _likes = await recoClient.getLikes(req, item.productId);
              item.likes = (_likes?.data) ? _likes?.data?.likes : 0;     
