@@ -16,7 +16,7 @@ basket-button {
   background-color: var(--button-bg-color);
   color: var(--button-text-color);
   border: none;
-  padding: var(--button-padding);
+  padding: none
   border-radius: var(--button-border-radius);
   cursor: pointer;
   font-size: var(--button-font-size);

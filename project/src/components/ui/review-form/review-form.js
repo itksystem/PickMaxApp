@@ -113,9 +113,9 @@ class ReviewForm extends HTMLElement {
             body: JSON.stringify(reviewData),
           }
         );
-
+        console.log(response);
         if (response.ok) {
-          toastr.success('Ошибка при отправке отзыва','Отзыв', 3000);
+          toastr.success('Отзыв отправлен.','Отзыв', 3000);
 	  window.location.href = window.location.pathname;
           textarea.value = '';
           this.uploadedFiles = [];
@@ -124,6 +124,7 @@ class ReviewForm extends HTMLElement {
           throw new Error('Ошибка при отправке отзыва');
         }
       } catch (error) {
+	  console.log(error);
           toastr.error('Что-то пошло не так(','Упс...', 3000);
       }
     });

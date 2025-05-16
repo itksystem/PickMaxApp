@@ -1,0 +1,343 @@
+class ProductDetails extends HTMLElement {
+  constructor() {
+    super();
+    this.api = new WebAPI();
+    this.common = new CommonFunctions();
+    this.loading = false;
+    this.page = 1;
+    this.limit = 10; // Добавлено для пагинации
+    this.attachShadow({ mode: 'open' });
+    this._initializeTemplate();
+  }
+
+  connectedCallback() {
+    this._render();
+    this._addEventListeners();
+  }
+
+  // Приватные методы
+  _initializeTemplate() {
+    const template = document.createElement('template');
+    template.innerHTML = `
+      <link rel="stylesheet" href="/src/pages/js/modules/product-details/css/product-details.css">
+      <link rel="stylesheet" href="/src/pages/css/bootstrap.min.css">
+      <div class="product-details-card-dialog">
+        <div class="product-details-card-box">
+          <div class="ribbon-wrapper ribbon-lg">
+            <div class="ribbon"></div>
+          </div>
+          <icon-button template="return" redirect="/products/page" class="return-button"></icon-button>
+          <icon-button template="like" class="like-button"></icon-button>
+          <image-gallery
+            class="product-gallery"
+            show-indicators
+            loop
+            event="event"
+            autoplay
+            autoplay-interval="5000"
+            active-index="0">  
+          </image-gallery>
+
+          <div class="product-details__swiper">
+            <div class="product-details__swiper-container"></div>
+            <div class="product-details__swiper-indicators"></div>
+          </div>
+          
+          <div class="product-details__content">
+            <div class="row">
+              <div class="col-6 price-col">
+                <p>
+                  <span class="product-details__price"></span>     
+                  <del class="price-block__old-price"></del>     
+                </p>
+              </div>
+              <div class="col-6 rating-col">
+                <div class="product-details__btn-group">
+                  <div class="row">
+                    <div class="col-12">
+                      <stars-rating class="product-rating" readonly></stars-rating>
+                    </div>
+                    <div class="col-12">
+                      <reviews class="product-reviews"></reviews>
+                    </div>
+                  </div>		
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="discount-box"></div>
+        </div>
+        
+        <div class="product-details-card-title-box">
+          <div class="row">
+            <div class="col-12">
+              <div class="product-details__seller-type"></div>
+            </div>
+            <div class="col-12">
+              <div class="product-details__title"></div>
+            </div>
+            <div class="w-100">
+              <basket-button class="btn btn-lg button-add-to-basket w-100"></basket-button>
+            </div>
+          </div>
+        </div>
+
+        <dropdown-section class="description-section">
+          <span slot="title">Описание товара</span>
+          <p class="product-details__description"></p>
+        </dropdown-section>
+
+        <div class="row">
+          <div class="col-6 pe-1">
+            <dropdown-section class="reviews-box">
+              <span slot="title">Отзывы о товаре</span>
+              <p class="product-details__reviews"></p>
+            </dropdown-section>
+          </div>
+          <div class="col-6 ps-1">
+            <dropdown-section class="mail-box" link="/products/mailbox/">
+              <span slot="title">Ваша переписка</span>
+              <p class="product-details__reviews"></p>
+            </dropdown-section>
+          </div>
+        </div>
+
+        <dropdown-section class="see-also-box" aria-expanded="true">
+          <span slot="title">Смотреть также</span>
+          <div class="product-card-container"></div>
+        </dropdown-section>
+
+    `;
+/*
+        <div class="product-details-add-basket-button-box">   	
+          <div class="row">
+            <div class="col-12">
+              <div>
+                <span class="product-details__price"></span>     
+                <del class="price-block__old-price"></del>     
+                <div class="product-details__short_title text-truncate"></div>
+              </div>
+            </div>
+            <div class="col-12">
+              <basket-button class="button-add-to-basket"></basket-button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+*/
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+  }
+
+  _render() {
+    const productId = this.getAttribute('product-id');
+    const images = this.getAttribute('images') || '';
+    
+    // Установка атрибутов для image-gallery
+    const gallery = this.shadowRoot.querySelector('.product-gallery');
+    if (gallery) {
+      gallery.setAttribute('title', this.getAttribute('title') || '');
+      gallery.setAttribute('images', images);
+      gallery.setAttribute('id', productId || '');
+    }
+
+    // Установка текстового содержимого
+    this._setTextContent('.product-details__description', 'description', 'Product Description');
+    this._setTextContentAll('.product-details__price', 'price', '$0.00');
+    this._setTextContentAll('del.price-block__old-price', 'del-price', '$0.00');
+    this._setTextContentAll('.product-details__title', 'title', '');
+    this._setTextContentAll('.product-details__short_title', 'title', '');
+
+    // Установка сложных компонентов
+    this._setRating();
+    this._setLikeButton();
+    this._setDiscountBox();
+    this._setSellerType();
+    this._setBasketButton();
+    
+    // Установка ссылок для компонентов
+    this._setComponentLinks(productId);
+
+    // Загрузка дополнительных данных
+    this._setSeeAlsoBox();
+    this._slideUpFromBottom('.product-details-add-basket-button-box');
+  }
+
+  _addEventListeners() {
+    // Обработчик для бесконечной загрузки
+    const scrollHandler = this._throttle(() => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+        this.page++;
+        this._loadMoreProducts();
+      }
+    }, 200);
+
+    window.addEventListener('scroll', scrollHandler);
+    this._scrollHandler = scrollHandler; // Сохраняем ссылку для последующего удаления
+  }
+
+  disconnectedCallback() {
+    // Удаляем обработчики событий при удалении компонента
+    if (this._scrollHandler) {
+      window.removeEventListener('scroll', this._scrollHandler);
+    }
+  }
+
+  // Вспомогательные методы
+  _throttle(func, limit) {
+    let lastFunc;
+    let lastRan;
+    return function() {
+      const context = this;
+      const args = arguments;
+      if (!lastRan) {
+        func.apply(context, args);
+        lastRan = Date.now();
+      } else {
+        clearTimeout(lastFunc);
+        lastFunc = setTimeout(function() {
+          if ((Date.now() - lastRan) >= limit) {
+            func.apply(context, args);
+            lastRan = Date.now();
+          }
+        }, limit - (Date.now() - lastRan));
+      }
+    };
+  }
+
+  _setTextContent(selector, attribute, defaultValue = '') {
+    const element = this.shadowRoot.querySelector(selector);
+    if (element) {
+      element.textContent = this.getAttribute(attribute) || defaultValue;
+    }
+  }
+
+  _setTextContentAll(selector, attribute, defaultValue = '') {
+    this.shadowRoot.querySelectorAll(selector).forEach(el => {
+      el.textContent = this.getAttribute(attribute) || defaultValue;
+    });
+  }
+
+  // Методы для установки компонентов
+  _setRating() {
+    const ratingElement = this.shadowRoot.querySelector('.product-rating');
+    if (ratingElement) {
+      ratingElement.setAttribute('stars', this.getAttribute('stars') || '0');
+      ratingElement.setAttribute('reviews', this.getAttribute('reviews') || '0');
+    }
+  }
+
+  _setLikeButton() {
+    const likeButton = this.shadowRoot.querySelector('.like-button');
+    if (likeButton) {
+      likeButton.setAttribute('value', this.getAttribute('like') || '0');
+      likeButton.setAttribute('id', this.getAttribute('product-id') || '');
+    }
+  }
+
+  _setDiscountBox() {
+    const discount = this.getAttribute('discount') || '0';
+    this.shadowRoot.querySelector('.discount-box').textContent = 
+      discount > 0 ? `Скидка ${discount}%` : '';
+  }
+
+  _setSellerType() {
+    const sellerType = this.common.sellerType(this.getAttribute('seller-type') || '');
+    this.shadowRoot.querySelector('.product-details__seller-type').innerHTML = sellerType;
+  }
+
+  _setBasketButton() {
+    const basketButton = this.shadowRoot.querySelector('.button-add-to-basket');
+    if (basketButton) {
+      basketButton.setAttribute('product-id', this.getAttribute('product-id') || '');
+    }
+  }
+
+  _setComponentLinks(productId) {
+    if (!productId) return;
+
+    const reviewsSection = this.shadowRoot.querySelector('.reviews-box');
+    if (reviewsSection) {
+      reviewsSection.setAttribute('link', this.api.getProductReviewCardMethod(productId));
+    }
+
+    const mailsSection = this.shadowRoot.querySelector('.mail-box');
+    if (mailsSection) {
+      mailsSection.setAttribute('link', this.api.getProductMailsCardMethod(productId));
+    }
+
+    const starsRating = this.shadowRoot.querySelector('.product-rating');
+    if (starsRating) {
+      starsRating.setAttribute('product-id', productId);
+    }
+  }
+
+  // Методы для загрузки данных
+  async _setSeeAlsoBox() {
+    try {
+      await this._loadMoreProducts();
+    } catch (error) {
+      console.error('Error loading products:', error);
+      toastr.error('Ошибка при получении товаров', 'Товары', { timeOut: 3000 });
+    }
+  }
+
+  async _loadMoreProducts() {
+    if (this.loading) return;
+    this.loading = true;
+
+    try {
+      const webRequest = new WebRequest();
+      const data = await webRequest.post(
+        this.api.getShopProductsMethod(this.page, this.limit), 
+        {}, 
+        false
+      );
+
+      const container = this.shadowRoot.querySelector('.product-card-container');
+      data.forEach(product => {
+        const productCard = document.createElement('product-card');
+        productCard.setAttribute('product-id', product.productId);
+        productCard.setAttribute('like', product.like);
+        productCard.setAttribute('status', 'active');
+        productCard.setAttribute('image-src', product.mediaFiles[0]?.mediaKey || '');
+        productCard.setAttribute('image-alt', product.productName);
+        productCard.setAttribute('brand', 'Brand');
+        productCard.setAttribute('name', product.productName);
+        productCard.setAttribute('current-price', product.price);
+        productCard.setAttribute('old-price', product.price * 1.3);
+        productCard.setAttribute('currency-type', '₽');
+        productCard.setAttribute('aria-label', product.productName);
+        productCard.setAttribute('basket-count', product.basketCount);
+
+        container.appendChild(productCard);
+      });
+    } catch (error) {
+      console.error('Error loading more products:', error);
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  // Анимация
+  _slideUpFromBottom(selector) {
+    const element = this.shadowRoot.querySelector(selector);
+    if (!element) {
+      console.error(`Element not found: ${selector}`);
+      return;
+    }
+
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(100%)';
+    element.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+    element.style.display = 'block';
+
+    requestAnimationFrame(() => {
+      element.style.opacity = '1';
+      element.style.transform = 'translateY(0)';
+    });
+  }
+}
+
+customElements.define('product-details', ProductDetails);

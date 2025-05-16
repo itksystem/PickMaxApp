@@ -1,3 +1,8 @@
+basket-button {
+    border: none;
+    padding: 0;
+}
+
 .basket-button {
   background-color: #007bff;
   color: white;

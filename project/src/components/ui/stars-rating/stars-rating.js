@@ -43,7 +43,7 @@ class StarsRating extends HTMLElement {
   }
 
   updateStars() {
-    if(this.rating == 0) return;
+//    if(this.rating == 0) return;
     const starsContainer = this.shadowRoot.querySelector('.rating-stars__stars');
     const starsValueContainer = this.shadowRoot.querySelector('.rating-stars__value');
     const starsCounterContainer = this.shadowRoot.querySelector('.rating-stars__counter');

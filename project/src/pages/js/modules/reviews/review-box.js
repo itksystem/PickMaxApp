@@ -42,7 +42,7 @@ class ReviewsSection extends HTMLElement {
         headers: { 'Content-Type': 'application/json' },
       });
 
-      if (!response.ok) {
+      if (!response.status !== true) {
         throw new Error(`Ошибка загрузки комментариев: ${response.status}`);
       }
 

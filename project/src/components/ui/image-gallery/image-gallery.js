@@ -1,6 +1,6 @@
 class ImageGallery extends HTMLElement {
   static get observedAttributes() {
-    return  ['image-src', 'active-index', 'show-indicators', 'loop', 'autoplay', 'autoplay-interval', 'hide-navigation', 'href'];
+    return  ['images', 'active-index', 'show-indicators', 'loop', 'autoplay', 'autoplay-interval', 'hide-navigation', 'href'];
   }
 
   constructor() {
@@ -11,17 +11,14 @@ class ImageGallery extends HTMLElement {
     this.isSwiping = false;
     this.swipeOffset = 0;
     this.touchStartX = 0;
-    this._autoplayInterval = null;
-    
     
     // Шаблон с улучшенной структурой
     this.shadowRoot.innerHTML = `
       <style>
         :host {
           display: block;
-          position: absolute;
+          position: relative;
           overflow: hidden;
-	  top : 0;
         }
         .gallery-container {
           position: relative;
@@ -40,7 +37,7 @@ class ImageGallery extends HTMLElement {
         }
         .swiper-image {
           width: 100%;
-          height: 19rem;
+          height: 100%;
           object-fit: cover;
           display: block;
         }
@@ -99,21 +96,13 @@ class ImageGallery extends HTMLElement {
 
 
   attributeChangedCallback(name, oldValue, newValue) {
-    if (!this.track) return;
-    if (name === 'image-src' && oldValue !== newValue) {
+    if (name === 'images' && oldValue !== newValue) {
       this._parseImages();
       this._render();
-// Перезапускаем автопрокрутку при изменении изображений
-      if (this.autoplay) {
-        this._restartAutoplay();
-      }
     }
     if (name === 'active-index' && oldValue !== newValue) {
       this.currentIndex = Math.max(0, Math.min(parseInt(newValue) || 0, this.images.length - 1));
       this._updateSlider();
-    }
-  if ((name === 'autoplay' || name === 'autoplay-interval') && oldValue !== newValue) {
-      this._restartAutoplay();
     }
   }
 
@@ -124,7 +113,7 @@ class ImageGallery extends HTMLElement {
   }
 
   _parseImages() {
-    this.images = (this.getAttribute('image-src') || '')
+    this.images = (this.getAttribute('images') || '')
       .split(',')
       .map(url => url.trim())
       .filter(Boolean);
@@ -358,63 +347,6 @@ class ImageGallery extends HTMLElement {
   get id() {
     return this.getAttribute('id');
   }
-
-
-  // Автопрокрутка ==============================
-  _startAutoplay() {
-    this._stopAutoplay();
-    const interval = this.autoplayInterval;
-    
-    this._autoplayInterval = setInterval(() => {
-      this.next();
-    }, interval);
-    
-    // Пауза при наведении мыши
-    this.addEventListener('mouseenter', this._stopAutoplay.bind(this));
-    this.addEventListener('mouseleave', this._startAutoplay.bind(this));
-    
-    // Пауза при касании на мобильных устройствах
-    this.addEventListener('touchstart', this._stopAutoplay.bind(this));
-    this.addEventListener('touchend', this._startAutoplay.bind(this));
-  }
-
-  _stopAutoplay() {
-    if (this._autoplayInterval) {
-      clearInterval(this._autoplayInterval);
-      this._autoplayInterval = null;
-    }
-  }
-
-  _restartAutoplay() {
-    if (this.autoplay) {
-      this._startAutoplay();
-    } else {
-      this._stopAutoplay();
-    }
-  }
-  // ============================================
-
-  // Добавляем геттеры для новых атрибутов
-  get autoplay() {
-    return this.hasAttribute('autoplay');
-  }
-
-  set autoplay(value) {
-    if (value) {
-      this.setAttribute('autoplay', '');
-    } else {
-      this.removeAttribute('autoplay');
-    }
-  }
-
-  get autoplayInterval() {
-    return parseInt(this.getAttribute('autoplay-interval')) || 3000; // default 3 seconds
-  }
-
-  set autoplayInterval(value) {
-    this.setAttribute('autoplay-interval', value.toString());
-  }
-
 
 
 }

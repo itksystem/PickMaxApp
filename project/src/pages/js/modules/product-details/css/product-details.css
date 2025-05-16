@@ -254,3 +254,15 @@ reviews {
     margin: 0.2rem;
 }
 
+
+.return-button{
+   position: absolute; 
+   left: 2rem; 
+   top: 1rem;
+}
+
+.like-button{
+   position: absolute; 
+   right: 4rem; 
+   top: 1rem;
+}

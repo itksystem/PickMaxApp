@@ -79,6 +79,17 @@ app.use((req, res, next) => {
 });
 
 
+// кэширование
+app.use(express.static('public', {
+  maxAge: '1y',
+  setHeaders: (res, path) => {
+    if (path.endsWith('.css') || path.endsWith('.js')) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000');
+    }
+  }
+}));
+
+
 app.use(function (req, res, next) {    
     res.setHeader("Content-Security-Policy", "frame-ancestors 'self' https://web.telegram.org;");
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');   

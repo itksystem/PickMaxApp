@@ -337,5 +337,16 @@ ORDER_STATUS = {
   return Object.assign({}, ...objects);
 }
 
+// типы организаций
+  sellerType(type){
+    switch(type) {
+    case `ORGANIZATION`:   return `Организация`;  
+    case `INDIVIDUAL_ENTREPRENEUR`:   return `ИП`;  
+    case `INDIVIDUAL`: 
+    default:
+     return `Физическое лицо`;  
+    }
+  }
+
 
 }
