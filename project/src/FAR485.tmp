@@ -110,8 +110,6 @@ showCasePage() {
                     productCard.setAttribute('currency-type', product?.charCurrency ||'₽');
                     productCard.setAttribute('aria-label', product?.productName || '');
                     productCard.setAttribute('basket-count', product?.basketCount || 0);                    
-                    productCard.setAttribute('rating', product?.rating || 0);                    
-                    productCard.setAttribute('comments', product?.comments || 0);                    
                     document.querySelector("div.product-card-container").appendChild(productCard);
 		   }	
                 });

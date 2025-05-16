@@ -96,24 +96,21 @@ showCasePage() {
                 }
                 
                 data.forEach(product => {
-		 if(product?.productId && product?.productId !== '') {
                     const productCard = document.createElement('product-card');
-                    productCard.setAttribute('product-id', product?.productId);
-                    productCard.setAttribute('like', product?.like || 0);
+                    productCard.setAttribute('product-id', product.productId);
+                    productCard.setAttribute('like', product.like);
                     productCard.setAttribute('status', 'active');
                     productCard.setAttribute('image-src', product?.mediaFiles[0]?.mediaKey || '');
-                    productCard.setAttribute('image-alt', product?.productName || '');
+                    productCard.setAttribute('image-alt', product?.productName);
                     productCard.setAttribute('brand', product?.brandName || '');
-                    productCard.setAttribute('name', product?.productName || '');
-                    productCard.setAttribute('current-price', product.price || 'цена не указана');
-                    productCard.setAttribute('old-price', product?.priceOld || ``);
-                    productCard.setAttribute('currency-type', product?.charCurrency ||'₽');
-                    productCard.setAttribute('aria-label', product?.productName || '');
-                    productCard.setAttribute('basket-count', product?.basketCount || 0);                    
-                    productCard.setAttribute('rating', product?.rating || 0);                    
-                    productCard.setAttribute('comments', product?.comments || 0);                    
+                    productCard.setAttribute('name', product.productName);
+                    productCard.setAttribute('current-price', product.price);
+                    productCard.setAttribute('old-price', product.price * 1.3);
+                    productCard.setAttribute('currency-type', '₽');
+                    productCard.setAttribute('aria-label', product.productName);
+                    productCard.setAttribute('basket-count', product.basketCount);
+                    
                     document.querySelector("div.product-card-container").appendChild(productCard);
-		   }	
                 });
                 
                 // Если получено меньше товаров чем лимит - значит это последняя страница
