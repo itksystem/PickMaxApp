@@ -29,7 +29,7 @@
   class MobileNavbarItem extends HTMLElement {
     constructor() {
       super();
-      const shadow = this.attachShadow({ mode: 'open' });
+      this.shadow = this.attachShadow({ mode: 'open' });
 
       // Создаём ссылку
       const link = document.createElement('a');
@@ -50,23 +50,22 @@
 
       // Применяем активный класс, если установлен
       if (this.hasAttribute('active')) {
-        link.classList.add('active');
+        link?.classList.add('active');
       }
 
       // Добавляем ссылку в Shadow DOM
-      shadow.appendChild(link);
+      this.shadow.appendChild(link);
 
       // Добавляем ссылку на CSS
       const linkElem = document.createElement('link');
       linkElem.setAttribute('rel', 'stylesheet');
       linkElem.setAttribute('href', '/src/components/ui/mobile-navbar/css/mobile-navbar-item.css');
-      shadow.appendChild(linkElem);
+      this.shadow.appendChild(linkElem);
 
       const linkElemFont = document.createElement('link');
       linkElemFont.setAttribute('rel', 'stylesheet');
       linkElemFont.setAttribute('href', '/src/pages/plugins/fontawesome-free/css/all.min.css');
-      shadow.appendChild(linkElemFont);
-
+      this.shadow.appendChild(linkElemFont);
     }
 
     // Наблюдаемые атрибуты для динамического обновления
@@ -91,6 +90,11 @@
       if (name === 'active') {
         if (this.hasAttribute('active')) {
           link.classList.add('active');
+ 	  const _i= this.shadow.querySelector('i');
+ 	  console.log(_i);
+	  _i.classList.add('active');
+
+
         } else {
           link.classList.remove('active');
         }
@@ -98,11 +102,11 @@
     }
   }
 
-
     // Скрипт для управления активным пунктом меню
     document.addEventListener('DOMContentLoaded', () => {
       const navbar = document.querySelector('mobile-navbar');
-      navbar.style.display = 'inline-flex';
+      const _navBar = navbar.shadowRoot.querySelector('.mobile-navbar');
+      _navBar.style.display = 'flex';
       navbar.addEventListener('click', (event) => {
         const item = event.target.closest('mobile-navbar-item');
         if (item) {
@@ -114,7 +118,13 @@
       });
     });
 
+/*
 
+	const _i= shadow.querySelector('i');
+	console.log(_i);
+	_i?.classList.add('active');
+
+*/
 
   // Регистрируем компоненты
   customElements.define('mobile-navbar', MobileNavbar);

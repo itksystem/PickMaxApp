@@ -1,3 +1,7 @@
+.mobile-navbar-item i.active {
+ color : #4ba2ff;
+}
+
 .mobile-navbar-item {
   display: flex;
   flex-direction: column;

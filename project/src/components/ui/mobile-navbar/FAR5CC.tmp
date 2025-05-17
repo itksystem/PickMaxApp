@@ -90,6 +90,11 @@
       if (name === 'active') {
         if (this.hasAttribute('active')) {
           link.classList.add('active');
+ 	  const _i= this.shadow.querySelector('i');
+ 	  console.log(_i);
+	  _i.classList.add('active');
+
+
         } else {
           link.classList.remove('active');
         }
