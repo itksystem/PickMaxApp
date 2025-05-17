@@ -29,7 +29,7 @@ class MainApp {
    }
 
    sendEvent(queue, o){
-	console.log(queue, o);
+//	console.log(queue, o);
       if (eventBus) {
         eventBus.emit(queue, o);
       }
@@ -85,6 +85,20 @@ showCasePage() {
 	  scrollTimeoutWaitMouseStopped = setTimeout(onScrollStop, 300); // 300 мс - задержка
 	});
 
+	let lastScrollPosition = window.scrollY || document.documentElement.scrollTop;
+
+	// Слушаем событие скролла
+	window.addEventListener('scroll', (e) => {
+	const currentScrollPosition = window.scrollY || document.documentElement.scrollTop;  
+  // Если позиция скролла изменилась
+	  if (currentScrollPosition !== lastScrollPosition) {
+	    clearTimeout(scrollTimeoutWaitMouseStopped);
+	    scrollTimeoutWaitMouseStopped = setTimeout(onScrollStop, 300);
+	    lastScrollPosition = currentScrollPosition;
+	  }
+	});
+
+
 /* ************************************************** */
 
         let scrollTimeout;
@@ -103,7 +117,7 @@ showCasePage() {
 
 // Очищаем при получении события
  	eventBus?.on(QUEUE_TOP_HEADER_ACTIONS, async (message) => {
-	  console.log(message);
+//	  console.log(message);
 	  if(message.event == EVENT_TOP_HEADER_SEARCH_ACTION || 
 		(message.event ==  EVENT_TOP_HEADER_SEARCH_INPUT_CHANGE_ACTION && message.value == '')) {
 		  $("div.product-card-container").empty();
