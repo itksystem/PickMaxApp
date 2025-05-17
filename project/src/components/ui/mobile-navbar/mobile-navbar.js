@@ -23,6 +23,26 @@
       linkElem.setAttribute('href', '/src/components/ui/mobile-navbar/css/mobile-navbar.css');
       shadow.appendChild(linkElem);
     }
+
+/**
+ * Функция для обновления выравнивания элементов в мобильной навигационной панели
+ * Если видимых элементов == 1, использует flex-start, иначе space-around
+ */
+ updateNavbarAlignment() {
+  const navbar = document.querySelector('mobile-navbar');
+  if (!navbar) return;
+
+  const navContainer = navbar.shadowRoot.querySelector('.mobile-navbar');
+  if (!navContainer) return;
+
+  // Считаем количество видимых элементов
+  const visibleItems = navbar.querySelectorAll('mobile-navbar-item:not([hidden])').length;
+  
+  // Обновляем justify-content в зависимости от количества элементов
+  navContainer.style.justifyContent = visibleItems === 1 ? 'flex-start' : 'space-around';
+ }
+
+
   }
 
   // Определяем компонент <mobile-navbar-item>
@@ -67,6 +87,13 @@
       linkElemFont.setAttribute('href', '/src/pages/plugins/fontawesome-free/css/all.min.css');
       this.shadow.appendChild(linkElemFont);
     }
+    
+    static menuItemContainer(name){
+	console.log(`menuItemContainer`,document.querySelector(`mobile-navbar`));
+	const menu = document.querySelector(`mobile-navbar`);
+	console.log(`menuItemContainer`,menu.shadowRoot.querySelector(`mobile-navbar-item[name="${name}"]`));
+	return menu.shadowRoot.querySelector(`mobile-navbar-item[name="${name}"]`);
+    } 
 
     // Наблюдаемые атрибуты для динамического обновления
     static get observedAttributes() {
@@ -112,14 +139,6 @@
         }
       });
     });
-
-/*
-
-	const _i= shadow.querySelector('i');
-	console.log(_i);
-	_i?.classList.add('active');
-
-*/
 
   // Регистрируем компоненты
   customElements.define('mobile-navbar', MobileNavbar);

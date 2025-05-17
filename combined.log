@@ -3447,3 +3447,11 @@
 {"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-05-17T08:58:38.618Z"}
 {"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-05-17T08:58:39.023Z"}
 {"level":"error","message":null,"service":"pickapp-service","timestamp":"2025-05-17T08:58:40.922Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-05-17T10:37:43.707Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-05-17T10:37:44.164Z"}
+{"level":"error","message":"401","service":"pickapp-service","stack":"Error: 401\n    at WarehouseServiceClientHandler.addItemToBasket (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-warehouse-service-client-handler\\WarehouseServiceClientHandler.js:67:38)\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)\n    at async C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:63:30","timestamp":"2025-05-17T10:39:14.280Z"}
+{"data":{"message":"Токен недействителен. Необходима авторизация в системе."},"level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","status":401,"success":false,"timestamp":"2025-05-17T10:39:47.020Z"}
+{"data":{"message":"Токен недействителен. Необходима авторизация в системе."},"level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","status":401,"success":false,"timestamp":"2025-05-17T10:44:59.444Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-05-17T10:45:04.978Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-05-17T10:50:48.004Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-05-17T10:50:48.436Z"}

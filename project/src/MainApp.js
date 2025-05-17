@@ -58,6 +58,22 @@ showCasePage() {
         this.searchWord = null;
 	this.categories = null;
 
+	let me = AuthDto.loadFromLocalStorage()
+        console.log(me.isTokenValid());
+        const ordersMenuItem = MobileNavbarItem.menuItemContainer(`orders`)
+        const basketMenuItem = MobileNavbarItem.menuItemContainer(`basket`)
+        const profileMenuItem = MobileNavbarItem.menuItemContainer(`profile`)
+        const logonMenuItem = MobileNavbarItem.menuItemContainer(`logon`)
+        const questionsMenuItem = MobileNavbarItem.menuItemContainer(`questions`)
+
+
+        ordersMenuItem.style.display = (ordersMenuItem?.style && me.isTokenValid()) ? 'block' : 'none';
+        basketMenuItem.style.display = (basketMenuItem?.style && me.isTokenValid()) ? 'block' : 'none';
+        profileMenuItem.style.display = (profileMenuItem?.style && me.isTokenValid()) ? 'block' : 'none';
+        logonMenuItem.style.display = (logonMenuItem?.style && !me.isTokenValid()) ? 'block' : 'none';
+        questionsMenuItem.style.display = (questionsMenuItem?.style && !me.isTokenValid()) ? 'block' : 'none';
+
+
         let webRequest = new WebRequest();
         const urlParams = new URLSearchParams(window.location.search);
         const active = urlParams.get('active'); // Оставлено, если будет использоваться в будущем
