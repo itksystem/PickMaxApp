@@ -83,7 +83,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0.6rem 0 0.6rem 0;
+/*    margin: 0.6rem 0 0.6rem 0;*/
 }
 
 .header__logo img {
@@ -171,4 +171,9 @@ body {
         flex-direction: column;
         gap: 0.625rem; /* 10px на 16 = 0.625rem */
     }
+}
+
+.filter-button {
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    margin: 0 0 0 0.3rem;
 }

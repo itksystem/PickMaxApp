@@ -3,7 +3,11 @@ const EVENT_SET_DEFAULT_DELIVERY_ADDRESS = 'EVENT_SET_DEFAULT_DELIVERY_ADDRESS';
 const EVENT_RELOAD_ADDRESS_DIALOG = "reloadAddressDialog";
 const EVENT_BASKET_ITEM_UPDATE = "basketItemUpdated";
 const EVENT_POSTAL_UNIT_UPDATE = "EVENT_POSTAL_UNIT_UPDATE";
-
+const EVENT_TOP_HEADER_SEARCH_INPUT_CHANGE_ACTION  = "EVENT_TOP_HEADER_SEARCH_INPUT_CHANGE_ACTION";
+const EVENT_TOP_HEADER_FILTER_ACTION  = "EVENT_TOP_HEADER_FILTER_ACTION";
+const EVENT_TOP_HEADER_SEARCH_ACTION = "EVENT_TOP_HEADER_SEARCH_ACTION";
+const QUEUE_TOP_HEADER_ACTIONS = "QUEUE_TOP_HEADER_ACTIONS"
+const EVENT_PRODUCTS_PAGE_SCROLL = 'EVENT_PRODUCTS_PAGE_SCROLL'
 
 class MainApp {
    constructor() {
@@ -13,7 +17,7 @@ class MainApp {
     };
       this.api = new WebAPI();
       this.page = 1; // Номер текущей страницы
-      this.limit = 6; // Количество товаров для загрузки за раз
+      this.limit = 10; // Количество товаров для загрузки за раз
       this.loading = false; // Флаг, чтобы предотвратить повторную загрузку данных   
       this.common = new CommonFunctions();
       this.common.init();
@@ -23,6 +27,14 @@ class MainApp {
       this.init();	
       return this;
    }
+
+   sendEvent(queue, o){
+	console.log(queue, o);
+      if (eventBus) {
+        eventBus.emit(queue, o);
+      }
+    }
+
 
  init(){
    let me = this.common.me;
@@ -43,6 +55,9 @@ class MainApp {
 showCasePage() {
     try {
         let o = this;
+        this.searchWord = null;
+	this.categories = null;
+
         let webRequest = new WebRequest();
         const urlParams = new URLSearchParams(window.location.search);
         const active = urlParams.get('active'); // Оставлено, если будет использоваться в будущем
@@ -51,33 +66,81 @@ showCasePage() {
         o.hasMoreProducts = true;
         
         // Добавляем debounce для обработчика скролла
+/* ************************************************** */
+        let scrollTimeoutWaitMouseStopped;
+
+	function onScrollStop() { // Функция, которая вызывается, когда прокрутка остановилась
+//	  console.log('Пользователь перестал скролить');
+	  // Здесь можно выполнить нужные действия
+           if(eventBus) {// шлем событие в шину
+              o.sendEvent(QUEUE_TOP_HEADER_ACTIONS, { event : EVENT_PRODUCTS_PAGE_SCROLL})
+           }
+
+	}
+	// Слушаем событие прокрутки колесиком мыши
+	window.addEventListener('wheel', (e) => {
+	  // Сбрасываем предыдущий таймер
+	  clearTimeout(scrollTimeoutWaitMouseStopped);
+	  // Устанавливаем новый таймер
+	  scrollTimeoutWaitMouseStopped = setTimeout(onScrollStop, 300); // 300 мс - задержка
+	});
+
+/* ************************************************** */
+
         let scrollTimeout;
-        const scrollHandler = function() {
-            clearTimeout(scrollTimeout);
+         const scrollHandler = function() {       
+           clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(function() {
                 // Проверяем, нужно ли загружать новые товары
                 if (o.hasMoreProducts && 
                     !o.loading && 
                     $(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
                     o.page++;
-                    loadProducts(o.page);
+                    loadProducts(o.page, this.searchWord, this.categories);
                 }
             }, 200);
         };
 
-        function loadProducts(page) {
+// Очищаем при получении события
+ 	eventBus?.on(QUEUE_TOP_HEADER_ACTIONS, async (message) => {
+	  console.log(message);
+	  if(message.event == EVENT_TOP_HEADER_SEARCH_ACTION || 
+		(message.event ==  EVENT_TOP_HEADER_SEARCH_INPUT_CHANGE_ACTION && message.value == '')) {
+		  $("div.product-card-container").empty();
+		  o.searchWord = message.value || null;
+		  o.categories = message.categories || [];
+		  o.loading = false;
+		  o.hasMoreProducts = true;
+		  o.page = 1;
+		  loadProducts(1, o.searchWord, o.categories);
+	   } 
+// подгружаем в фоновом режиме
+	  if(message.event == EVENT_PRODUCTS_PAGE_SCROLL) {
+                if (o.hasMoreProducts && !o.loading) {
+                    o.page++;
+                    loadProducts(o.page, this.searchWord, this.categories);
+                }
+	   }
+
+	});	    
+
+
+        function loadProducts(page=1, search=null, categories=[]) {
             if (o.loading || !o.hasMoreProducts) return;
-            o.loading = true;
-            
+            o.loading = true;                        
             // Показываем индикатор загрузки
             $("div.product-card-container").append('<div class="loading-indicator">Загрузка...</div>');
             
             webRequest.post(
                 o.api.getShopProductsMethod(), 
-                {page, limit : o.limit}, 
+                {page, 
+		  limit : o.limit, 
+		  search : o.searchWord , 
+		  categories : o.categories}, 
                 false
             )
             .then(function(data) {
+  	       console.log(o.page, data.length, o.hasMoreProducts);	
                 // Удаляем индикатор загрузки
                 $(".loading-indicator").remove();
                 
