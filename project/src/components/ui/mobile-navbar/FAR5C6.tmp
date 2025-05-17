@@ -102,8 +102,7 @@
     // Скрипт для управления активным пунктом меню
     document.addEventListener('DOMContentLoaded', () => {
       const navbar = document.querySelector('mobile-navbar');
-      const _navBar = navbar.shadowRoot.querySelector('.mobile-navbar');
-      _navBar.style.display = 'flex';
+      navbar.style.display = 'inline-flex';
       navbar.addEventListener('click', (event) => {
         const item = event.target.closest('mobile-navbar-item');
         if (item) {

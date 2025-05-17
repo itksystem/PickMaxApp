@@ -7,6 +7,8 @@ class CommonFunctions {
 
  init(){
      this.me = this.webRequest.get(this.api.getMeMethod(), {}, true );
+     const authDto = new AuthDto(this.me);
+     if(authDto) console.log(`Error save auth data ...`)
  }
 
 
@@ -97,8 +99,7 @@ class CommonFunctions {
  saveAccessToken(request = null) {
     try {
         const token = (!request.accessToken) ?  null : request.accessToken;
-        if(token)
-          localStorage.setItem('accessToken', token);
+        localStorage.setItem('accessToken', token);
     } catch (error) {
         console.error('Ошибка при сохранении токена в localStorage:', error);
     }
