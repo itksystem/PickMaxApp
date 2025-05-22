@@ -1,0 +1,72 @@
+/* sidebar.css */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  transition: right 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  opacity: 0;
+  display: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.sidebar-header {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.sidebar-title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.sidebar-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.sidebar-close-btn:hover {
+  color: #333;
+}
+
+.sidebar-content {
+  padding: 1rem;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+  .sidebar {
+   width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    width: 360px;
+  }
+}

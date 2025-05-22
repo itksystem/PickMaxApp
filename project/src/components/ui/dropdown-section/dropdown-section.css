@@ -24,7 +24,7 @@
 /* Хедер */
 .header {
     background-color: #fff;
-    position: sticky;
+    position: relative;
     top: 0;
     z-index: 1000;
 }

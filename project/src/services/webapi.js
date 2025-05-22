@@ -489,6 +489,10 @@ class WebAPI {
    getConfirmationActiveRequestMethod() { return `/api/bff/confirmation/v1/request`; }
    getConfirmationActiveRequestMethodPayload(requestType) { return { requestType } }
 
+// Категории и бренды
+   getProductCategoriesMethod() { return `/api/bff/warehouse/v1/products/categories`; }
+   getProductBrandsMethod() { return `/api/bff/warehouse/v1/products/brands`; }
+
 
     
 /* станицы */

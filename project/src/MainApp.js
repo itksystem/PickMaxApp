@@ -24,6 +24,9 @@ class MainApp {
       this.common.saveAccessToken(this.common.me);
       this.common.saveTelegramAccessToken(this.common.me);
       this.common.saveTelegramWebAppObject();
+      this.webRequest = new WebRequest();
+      this.categories = null;
+      this.brands = null;
       this.init();	
       return this;
    }
@@ -52,6 +55,17 @@ class MainApp {
 	</section>`;
  }
   
+loadCategories() {
+  let result = this.webRequest.get(this.api.getProductCategoriesMethod(), {}, true );
+  return result.data.categories || [];
+}
+
+loadBrands() {
+  let result = this.webRequest.get(this.api.getProductBrandsMethod(), {}, true );
+  return result.data.brands || [];
+}
+
+
 showCasePage() {
     try {
         let o = this;
@@ -72,7 +86,6 @@ showCasePage() {
         profileMenuItem.style.display = (profileMenuItem?.style && me.isTokenValid()) ? 'block' : 'none';
         logonMenuItem.style.display = (logonMenuItem?.style && !me.isTokenValid()) ? 'block' : 'none';
         questionsMenuItem.style.display = (questionsMenuItem?.style && !me.isTokenValid()) ? 'block' : 'none';
-
 
         let webRequest = new WebRequest();
         const urlParams = new URLSearchParams(window.location.search);
@@ -98,7 +111,7 @@ showCasePage() {
 	  // Сбрасываем предыдущий таймер
 	  clearTimeout(scrollTimeoutWaitMouseStopped);
 	  // Устанавливаем новый таймер
-	  scrollTimeoutWaitMouseStopped = setTimeout(onScrollStop, 300); // 300 мс - задержка
+	  scrollTimeoutWaitMouseStopped = setTimeout(onScrollStop, 10); // 300 мс - задержка
 	});
 
 	let lastScrollPosition = window.scrollY || document.documentElement.scrollTop;
@@ -109,7 +122,7 @@ showCasePage() {
   // Если позиция скролла изменилась
 	  if (currentScrollPosition !== lastScrollPosition) {
 	    clearTimeout(scrollTimeoutWaitMouseStopped);
-	    scrollTimeoutWaitMouseStopped = setTimeout(onScrollStop, 300);
+	    scrollTimeoutWaitMouseStopped = setTimeout(onScrollStop, 10);
 	    lastScrollPosition = currentScrollPosition;
 	  }
 	});
@@ -151,7 +164,12 @@ showCasePage() {
                     loadProducts(o.page, this.searchWord, this.categories);
                 }
 	   }
-
+// открываем боковую панель
+	  if(message.event == EVENT_TOP_HEADER_FILTER_ACTION) {
+	      const sidebar = document.querySelector('right-sidebar');
+	      console.log(sidebar);
+ 	      sidebar.open();
+	    }
 	});	    
 
 
@@ -239,6 +257,15 @@ showCasePage() {
         o.cleanupShowCase = function() {
             $(window).off('scroll', scrollHandler);
         };
+
+	o.categories = o.loadCategories();
+        const categories = document.getElementById('categories');
+        categories.data = o.categories; // загрузили категории
+
+	o.brands = o.loadBrands();
+        const brands = document.getElementById('brands');
+        brands.data = o.brands; // загрузили бренды
+
 
     } catch (e) {
         console.error('initializeProductCard.catch =>', e);

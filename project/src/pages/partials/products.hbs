@@ -1,49 +1,112 @@
 <!-- Верхняя строка меню -->
 <top-header></top-header>
+
 <!-- Контейнер для карточки -->
 <div class="product-card-container"></div>
- <mobile-navbar>
-    <mobile-navbar-item 
-      name = "products"	
-      label="Товары" 
-      icon="fa-box active" 
-      url="/products/page">
-    </mobile-navbar-item>
 
-    <mobile-navbar-item 
-      name = "logon"	
-      label="Авторизация"             
-      icon="fa-key" 
-      url="/logon">
-    </mobile-navbar-item>
-    <mobile-navbar-item 
-      name = "questions"	
-      label="Вопросы"             
-      icon="fa-question" 
-      url="/questions">
-    </mobile-navbar-item>
+<mobile-navbar>
+  <mobile-navbar-item 
+    name="products"
+    label="Товары" 
+    icon="fa-box active" 
+    url="/products/page">
+  </mobile-navbar-item>
 
-    <mobile-navbar-item 
-      name = "orders"	
-      label="Заказы" 
-      icon="fa-shopping-cart" 
-      url="/orders/page">
-    </mobile-navbar-item>
-    <mobile-navbar-item 
-      name = "basket"	
-      label="Корзина" 
-      icon="fa-cart-plus" 
-      url="/basket/page">
-    </mobile-navbar-item>
-    <mobile-navbar-item 
-      name = "profile"	
-      label="Профиль" 
-      icon="fa-user" 
-      url="/profile/page">
-    </mobile-navbar-item>
-  </mobile-navbar>
+  <mobile-navbar-item 
+    name="logon"
+    label="Авторизация"             
+    icon="fa-key" 
+    url="/logon">
+  </mobile-navbar-item>
 
+  <mobile-navbar-item 
+    name="questions"
+    label="Вопросы"             
+    icon="fa-question" 
+    url="/questions">
+  </mobile-navbar-item>
 
+  <mobile-navbar-item 
+    name="orders"
+    label="Заказы" 
+    icon="fa-shopping-cart" 
+    url="/orders/page">
+  </mobile-navbar-item>
+
+  <mobile-navbar-item 
+    name="basket"
+    label="Корзина" 
+    icon="fa-cart-plus" 
+    url="/basket/page">
+  </mobile-navbar-item>
+
+  <mobile-navbar-item 
+    name="profile"
+    label="Профиль" 
+    icon="fa-user" 
+    url="/profile/page">
+  </mobile-navbar-item>
+</mobile-navbar>
+
+<right-sidebar title="Параметры выбора">
+  <section class="section-option page-padding block-space">
+    <section class="filters-container">
+    <div class="flex-container">
+         <h2 class="header">Цена</h2>
+            <div class="section-content price">
+                <div class="price-range">		
+                  <div id="price-slider"></div>   					
+                  <div class="price-range-inputs row">
+                    <div class="col-6 pt-1">
+                      <input type="number" class="form-control" id="min-price" min=0 placeholder="От" oninput="validity.valid||(value='0');">
+                    </div>	
+                    <div class="col-6 pt-1">
+                      <input type="number" class="form-control" id="max-price" min=0 placeholder="До" oninput="validity.valid||(value='0');">
+                    </div>	
+                </div>
+              </div>
+            </div>
+      </div>
+  </section>
+  <section class="section-option page-padding block-space mt-2">
+    <div class="flex-container categories">
+            <h2 class="header">Категории</h2>
+            <div class="section-content categories">
+                <div class="category-range">		
+                  <div id="category-slider"></div>   					
+                  <div class="category-range-inputs row">
+                    <div class="col pt-1">
+                      <tree-selector id="categories" required="required"></tree-selector>
+                  </div>
+                </div>
+              </div>
+            </div>
+    </div>
+  </section>                                                       
+  <section class="section-option page-padding block-space">
+    <div class="flex-container brands">
+            <h2 class="header">Бренды</h2>
+            <div class="section-content brands">
+                <div class="brand-range">		
+                  <div id="brand-slider"></div>   					
+                  <div class="brand-range-inputs row">
+                    <div class="col pt-1">
+                       <tree-selector id="brands" required="required"></tree-selector>
+                    </div>	
+                </div>
+              </div>
+            </div>
+    </div>
+  </section>
+    <div class="flex-container buttons">
+      <button type="button" class="btn btn-block btn-success btn-lg">Применить</button>
+    </div>
+  </section>                                                       
+</right-sidebar>
+
+<script src="/src/components/ui/right-sidebar/right-sidebar.js"></script>
 <script src="/src/components/ui/mobile-navbar/mobile-navbar.js"></script>
 <script src="/src/components/ui/top-header/top-header.js"></script>        
+<script src="/src/components/ui/tree-selector/tree-selector.js"></script>
+<script src="/src/components/ui/autocomplete/AutoComplete.js"></script>
 <script src="/src/pages/partials/products.js"></script>

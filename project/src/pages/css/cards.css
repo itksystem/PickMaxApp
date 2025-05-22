@@ -1398,3 +1398,38 @@ ul.schedule-russian-post li {
     height: 100%;
     object-fit: cover;
 }
+
+.filter-button-section{
+    position: absolute;
+    bottom: 0;
+    width: -webkit-fill-available;
+}
+
+div.section-content.brands {
+    height: 40vh;
+    position: relative;
+    overflow: scroll;
+    width: 100%;
+    max-height: 40vh;
+}
+
+div.section-content.categories {
+    height: 40vh;
+    position: relative;
+    overflow: scroll;
+    width: 100%;
+    max-height: 40vh;
+}
+
+.flex-container.buttons{
+   position:relative;
+   bottom: 0;
+   width: -webkit-fill-available;
+   padding-bottom: 1rem;
+}
+
+.flex-container.filters{
+    height: -webkit-fill-available;
+    max-height: -webkit-fill-available;
+}
+

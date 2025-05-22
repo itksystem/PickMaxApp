@@ -3455,3 +3455,65 @@
 {"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-05-17T10:45:04.978Z"}
 {"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-05-17T10:50:48.004Z"}
 {"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-05-17T10:50:48.436Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-05-17T14:49:05.272Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-05-18T06:08:54.428Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-05-18T06:09:04.731Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-05-18T06:09:05.167Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-05-18T08:12:49.649Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-05-18T08:12:50.105Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-05-18T08:57:32.125Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-05-18T08:57:32.659Z"}
+{"error":"invalid json response body at http://91.218.230.34:3001/api/auth/v1/checkToken reason: Unexpected token U in JSON at position 0","level":"error","message":"C:\\Distrib\\TZ\\PickMaxApp\\project\\src\\pages\\app.hbs","service":"pickapp-service","success":false,"timestamp":"2025-05-18T09:41:19.680Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-05-18T09:41:25.443Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-05-18T09:41:30.629Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-05-18T09:41:31.037Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-05-19T11:58:40.128Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-05-19T11:59:58.947Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-05-19T11:59:59.381Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-05-19T12:00:36.144Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-05-19T12:00:36.567Z"}
+{"level":"info","message":"itk_system@mail.ru 123456","service":"pickapp-service","timestamp":"2025-05-19T19:21:17.883Z"}
+{"level":"info","message":"Set profile image successfully.","service":"pickapp-service","timestamp":"2025-05-19T19:21:22.843Z"}
+{"level":"info","message":"getRegions successfully.","service":"pickapp-service","timestamp":"2025-05-19T19:21:23.291Z"}
+{"level":"error","message":"404","service":"pickapp-service","stack":"Error: 404\n    at WarehouseServiceClientHandler.getProductById (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-warehouse-service-client-handler\\WarehouseServiceClientHandler.js:32:38)\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)\n    at async C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:23:28","timestamp":"2025-05-22T19:17:54.012Z"}
+{"level":"error","message":"404","service":"pickapp-service","stack":"Error: 404\n    at WarehouseServiceClientHandler.getProductById (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-warehouse-service-client-handler\\WarehouseServiceClientHandler.js:32:38)\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)\n    at async C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:23:28","timestamp":"2025-05-22T19:19:02.383Z"}
+{"level":"error","message":"404","service":"pickapp-service","stack":"Error: 404\n    at WarehouseServiceClientHandler.getProductById (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-warehouse-service-client-handler\\WarehouseServiceClientHandler.js:32:38)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)\n    at async C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:23:28","timestamp":"2025-05-22T19:27:29.379Z"}
+{"level":"error","message":"404","service":"pickapp-service","stack":"Error: 404\n    at WarehouseServiceClientHandler.getProductById (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-warehouse-service-client-handler\\WarehouseServiceClientHandler.js:32:38)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)\n    at async C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:23:28","timestamp":"2025-05-22T19:28:57.632Z"}
+{"level":"error","message":"404","service":"pickapp-service","stack":"Error: 404\n    at WarehouseServiceClientHandler.getProductById (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-warehouse-service-client-handler\\WarehouseServiceClientHandler.js:32:38)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)\n    at async C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:23:28","timestamp":"2025-05-22T19:30:32.991Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T19:31:44.244Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T19:40:42.418Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T19:40:56.612Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T19:44:38.506Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T19:48:39.597Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2025-05-22T19:57:06.455Z"}
+{"level":"error","message":401,"service":"pickapp-service","timestamp":"2025-05-22T19:58:13.166Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:00:03.159Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:01:56.521Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:02:49.005Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:03:02.456Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:03:04.810Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:03:07.107Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:04:29.966Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:11:06.962Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:16:45.594Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:20:32.695Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:25:29.029Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:38:12.082Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:38:45.667Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:41:58.146Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:44:31.516Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:49:02.300Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:50:29.983Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:57:23.845Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T20:58:47.585Z"}
+{"level":"error","message":"response.data is not iterable","service":"pickapp-service","stack":"TypeError: response.data is not iterable\n    at C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:60:39\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)","timestamp":"2025-05-22T20:58:47.596Z"}
+{"code":"ECONNRESET","errno":"ECONNRESET","level":"error","message":"request to http://127.0.0.1:3002/api/warehouse/v1/products/categories failed, reason: read ECONNRESET","service":"pickapp-service","stack":"FetchError: request to http://127.0.0.1:3002/api/warehouse/v1/products/categories failed, reason: read ECONNRESET\n    at ClientRequest.<anonymous> (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\node-fetch\\lib\\index.js:1501:11)\n    at ClientRequest.emit (events.js:315:20)\n    at Socket.socketErrorListener (_http_client.js:469:9)\n    at Socket.emit (events.js:315:20)\n    at emitErrorNT (internal/streams/destroy.js:106:8)\n    at emitErrorCloseNT (internal/streams/destroy.js:74:3)\n    at processTicksAndRejections (internal/process/task_queues.js:80:21)","timestamp":"2025-05-22T21:01:47.479Z","type":"system"}
+{"code":"ECONNRESET","errno":"ECONNRESET","level":"error","message":"request to http://127.0.0.1:3002/api/warehouse/v1/products/categories failed, reason: read ECONNRESET","service":"pickapp-service","stack":"FetchError: request to http://127.0.0.1:3002/api/warehouse/v1/products/categories failed, reason: read ECONNRESET\n    at ClientRequest.<anonymous> (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\node-fetch\\lib\\index.js:1501:11)\n    at ClientRequest.emit (events.js:315:20)\n    at Socket.socketErrorListener (_http_client.js:469:9)\n    at Socket.emit (events.js:315:20)\n    at emitErrorNT (internal/streams/destroy.js:106:8)\n    at emitErrorCloseNT (internal/streams/destroy.js:74:3)\n    at processTicksAndRejections (internal/process/task_queues.js:80:21)","timestamp":"2025-05-22T21:01:47.490Z","type":"system"}
+{"level":"error","message":"404","service":"pickapp-service","stack":"Error: 404\n    at WarehouseServiceClientHandler.getProductById (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-warehouse-service-client-handler\\WarehouseServiceClientHandler.js:32:38)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)\n    at async C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:37:28","timestamp":"2025-05-22T21:37:29.177Z"}
+{"level":"error","message":"404","service":"pickapp-service","stack":"Error: 404\n    at WarehouseServiceClientHandler.getProductById (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\openfsm-warehouse-service-client-handler\\WarehouseServiceClientHandler.js:32:38)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)\n    at async C:\\Distrib\\TZ\\PickMaxApp\\routes\\warehouseBffRouter.js:37:28","timestamp":"2025-05-22T21:39:25.388Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T21:40:17.103Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T21:42:02.312Z"}
+{"level":"error","message":404,"service":"pickapp-service","timestamp":"2025-05-22T21:42:23.905Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-05-22T21:44:07.067Z"}
+{"level":"error","message":500,"service":"pickapp-service","timestamp":"2025-05-22T21:45:19.693Z"}
+{"code":"ECONNRESET","errno":"ECONNRESET","level":"error","message":"request to http://127.0.0.1:3002/api/warehouse/v1/products/brands failed, reason: read ECONNRESET","service":"pickapp-service","stack":"FetchError: request to http://127.0.0.1:3002/api/warehouse/v1/products/brands failed, reason: read ECONNRESET\n    at ClientRequest.<anonymous> (C:\\Distrib\\TZ\\PickMaxApp\\node_modules\\node-fetch\\lib\\index.js:1501:11)\n    at ClientRequest.emit (events.js:315:20)\n    at Socket.socketErrorListener (_http_client.js:469:9)\n    at Socket.emit (events.js:315:20)\n    at emitErrorNT (internal/streams/destroy.js:106:8)\n    at emitErrorCloseNT (internal/streams/destroy.js:74:3)\n    at processTicksAndRejections (internal/process/task_queues.js:80:21)","timestamp":"2025-05-22T21:47:14.264Z","type":"system"}

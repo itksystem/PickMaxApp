@@ -15,6 +15,32 @@ const RecommendatuionServiceHandler = require("../handlers/RecommendatuionServic
 const recoClient = new RecommendatuionServiceHandler();
 require('dotenv').config({ path: '.env-pickmax-service' });
 
+
+router.get('/v1/products/categories',
+	async (req, res) => {          
+        try {                        
+            const response = await warehouseClient.getProductCategories(req) ;
+            if (!response.success)  throw(response?.status || 500)
+                res.status(200).json(response);           
+        } catch (error) {
+                logger.error(error || 'Неизвестная ошибка' );   
+                res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
+        }              
+});
+
+router.get('/v1/products/brands',
+	async (req, res) => {          
+        try {                        
+            const response = await warehouseClient.getProductBrands(req) ;
+            if (!response.success)  throw(response?.status || 500)
+                res.status(200).json(response);           
+        } catch (error) {
+                logger.error(error || 'Неизвестная ошибка' );   
+                res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
+        }              
+});
+
+
 router.get('/v1/products/:id', 
     async (req, res) => {
         try {
@@ -53,9 +79,9 @@ router.get('/v1/products/:id',
       } catch (error) {
           logger.error(error || 'Неизвестная ошибка' );   
          res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
-      }
-   }
-);   
+       }
+     }
+    );   
 
    router.post('/v1/basket/product-add', 	
 	async (req, res) => {
@@ -120,5 +146,5 @@ router.get('/v1/products/:id',
         }              
    });
  
-
+    
    module.exports = router;

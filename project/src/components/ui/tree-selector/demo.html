@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TreeSelector Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .demo-container {
+            display: flex;
+            gap: 30px;
+        }
+        .data-panel, .result-panel {
+            flex: 1;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #selectedItems {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            min-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>TreeSelector Demo</h1>
+    
+    <div class="demo-container">
+        <div class="data-panel">
+            <h2>Данные</h2>
+            <textarea id="treeData">[
+    { "id": 1, "parentId": null, "name": "Электроника" },
+    { "id": 2, "parentId": 1, "name": "Смартфоны" },
+    { "id": 3, "parentId": 1, "name": "Ноутбуки" },
+    { "id": 4, "parentId": 2, "name": "Apple" },
+    { "id": 5, "parentId": 2, "name": "Samsung" },
+    { "id": 6, "parentId": null, "name": "Одежда" },
+    { "id": 7, "parentId": 6, "name": "Мужская" },
+    { "id": 8, "parentId": 6, "name": "Женская" },
+    { "id": 9, "parentId": 3, "name": "Игровые" },
+    { "id": 10, "parentId": 3, "name": "Ультрабуки" }
+]</textarea>
+            <button id="loadData">Загрузить данные</button>
+        </div>
+        
+        <div class="result-panel">
+            <h2>Дерево категорий</h2>
+            <tree-selector id="categoryTree"></tree-selector>
+            
+            <h3>Выбранные элементы:</h3>
+            <div id="selectedItems"></div>
+        </div>
+    </div>
+
+    <script>
+        class TreeSelector extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+                this._flatData = [];
+                this._treeData = [];
+                this._selectedItems = new Set();
+            }
+
+            connectedCallback() {
+                this.render();
+            }
+
+            set data(value) {
+                this._flatData = value;
+                this._treeData = this.buildTree(value);
+                this.render();
+            }
+
+            get data() {
+                return this._flatData;
+            }
+
+            get selectedItems() {
+                return Array.from(this._selectedItems);
+            }
+
+            buildTree(items) {
+                const itemMap = {};
+                const tree = [];
+
+                items.forEach(item => {
+                    itemMap[item.id] = { ...item, children: [] };
+                });
+
+                items.forEach(item => {
+                    if (item.parentId) {
+                        if (itemMap[item.parentId]) {
+                            itemMap[item.parentId].children.push(itemMap[item.id]);
+                        }
+                    } else {
+                        tree.push(itemMap[item.id]);
+                    }
+                });
+
+                return tree;
+            }
+
+            handleCheckboxChange(event, item) {
+                event.stopPropagation();
+                
+                if (event.target.checked) {
+                    this._selectedItems.add(item.id);
+                    if (item.children && item.children.length > 0) {
+                        this.selectAllChildren(item, true);
+                    }
+                } else {
+                    this._selectedItems.delete(item.id);
+                    if (item.children && item.children.length > 0) {
+                        this.selectAllChildren(item, false);
+                    }
+                }
+                
+                this.dispatchEvent(new CustomEvent('selection-change', {
+                    detail: { selectedItems: this.selectedItems }
+                }));
+            }
+
+            selectAllChildren(item, select) {
+                if (select) {
+                    this._selectedItems.add(item.id);
+                } else {
+                    this._selectedItems.delete(item.id);
+                }
+                
+                if (item.children && item.children.length > 0) {
+                    item.children.forEach(child => this.selectAllChildren(child, select));
+                }
+            }
+
+            renderTreeItem(item) {
+                const hasChildren = item.children && item.children.length > 0;
+                const isSelected = this._selectedItems.has(item.id);
+                
+                return `
+                    <li class="tree-item">
+                        <div class="item-content" data-id="${item.id}">
+                            ${hasChildren ? 
+                                `<span class="toggle">▶</span>` : 
+                                `<span class="spacer"></span>`
+                            }
+                            <input 
+                                type="checkbox" 
+                                id="item-${item.id}" 
+                                ${isSelected ? 'checked' : ''}
+                            >
+                            <label for="item-${item.id}">${item.name}</label>
+                        </div>
+                        ${hasChildren ? `
+                            <ul class="tree-subtree" style="display: none;">
+                                ${item.children.map(child => this.renderTreeItem(child)).join('')}
+                            </ul>
+                        ` : ''}
+                    </li>
+                `;
+            }
+
+            render() {
+                this.shadowRoot.innerHTML = `
+                    <style>
+                        .tree {
+                            list-style: none;
+                            padding-left: 0;
+                            font-family: Arial, sans-serif;
+                        }
+                        .tree-item {
+                            margin: 4px 0;
+                        }
+                        .item-content {
+                            display: flex;
+                            align-items: center;
+                            cursor: pointer;
+                            padding: 4px 0;
+                        }
+                        .item-content:hover {
+                            background-color: #f0f0f0;
+                        }
+                        .toggle, .spacer {
+                            width: 20px;
+                            display: inline-block;
+                            text-align: center;
+                            font-size: 10px;
+                        }
+                        .tree-subtree {
+                            padding-left: 20px;
+                            list-style: none;
+                        }
+                        input[type="checkbox"] {
+                            margin-right: 8px;
+                        }
+                    </style>
+                    <ul class="tree">
+                        ${this._treeData.map(item => this.renderTreeItem(item)).join('')}
+                    </ul>
+                `;
+
+                this.shadowRoot.querySelectorAll('.item-content').forEach(el => {
+                    const id = parseInt(el.dataset.id);
+                    const item = this.findItemById(id, this._treeData);
+                    
+                    const checkbox = el.querySelector('input[type="checkbox"]');
+                    checkbox.addEventListener('change', (e) => this.handleCheckboxChange(e, item));
+                    
+                    const toggle = el.querySelector('.toggle');
+                    if (toggle) {
+                        toggle.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const subtree = el.parentElement.querySelector('.tree-subtree');
+                            if (subtree.style.display === 'none') {
+                                subtree.style.display = 'block';
+                                toggle.textContent = '▼';
+                            } else {
+                                subtree.style.display = 'none';
+                                toggle.textContent = '▶';
+                            }
+                        });
+                    }
+                });
+            }
+
+            findItemById(id, items) {
+                for (const item of items) {
+                    if (item.id === id) return item;
+                    if (item.children && item.children.length > 0) {
+                        const found = this.findItemById(id, item.children);
+                        if (found) return found;
+                    }
+                }
+                return null;
+            }
+        }
+
+        customElements.define('tree-selector', TreeSelector);
+
+        // Демо-логика
+        document.addEventListener('DOMContentLoaded', () => {
+            const tree = document.getElementById('categoryTree');
+            const loadBtn = document.getElementById('loadData');
+            const dataInput = document.getElementById('treeData');
+            const selectedItemsDiv = document.getElementById('selectedItems');
+
+            // Обработчик загрузки данных
+            loadBtn.addEventListener('click', () => {
+                try {
+                    const data = JSON.parse(dataInput.value);
+                    tree.data = data;
+                } catch (e) {
+                    alert('Ошибка в формате JSON: ' + e.message);
+                }
+            });
+
+            // Обработчик изменения выбора
+            tree.addEventListener('selection-change', (e) => {
+                selectedItemsDiv.innerHTML = e.detail.selectedItems.join(', ');
+            });
+
+            // Загрузить данные при старте
+            loadBtn.click();
+        });
+    </script>
+</body>
+</html>

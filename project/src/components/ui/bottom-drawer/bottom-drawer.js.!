@@ -5,18 +5,18 @@ class BottomDrawer extends HTMLElement {
         this.attachShadow({ mode: 'open' });
 
         // Подключаем стили
-	const styles = [
-	  '/src/components/ui/bottom-drawer/css/bottom-drawer.css',
-	  '/src/pages/css/bootstrap.min.css',
-	  '/src/pages/plugins/fontawesome-free/css/all.min.css'
-	];
+        ['bottom-drawer.css', 'bootstrap.min.css'].forEach(file => {
+            const link = document.createElement('link');
+            link.setAttribute('rel', 'stylesheet');
+            link.setAttribute('href', `/src/${file.includes('bootstrap') ? 'pages/css' : 'components/ui/bottom-drawer/css'}/${file}`);
 
-	styles.forEach(url => {
-	  const link = document.createElement('link');
-	  link.rel = 'stylesheet';
-	  link.href = url;
-	  this.shadowRoot.appendChild(link);
-	});
+            const link1 = document.createElement('link');
+            link1.setAttribute('rel', 'stylesheet');
+            link1.setAttribute('href', `/src/pages/plugins/fontawesome-free/css/all.min.css`);
+            this.shadowRoot.appendChild(link);
+            this.shadowRoot.appendChild(link1);
+
+        });
 
         // Разметка
         this.shadowRoot.innerHTML += `
@@ -52,10 +52,6 @@ class BottomDrawer extends HTMLElement {
         this.isOpen = false;
 
         this.attachEvents();
-    }
-
-    disconnectedCallback() {
-	  document.removeEventListener(this.getAttribute('action-id'), this.handleActionEvent);
     }
 
     attachEvents() {
