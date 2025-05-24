@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Badge with Animation</title>
+</head>
+<body>
+
+  <custom-badge id="badge1" value="Ошибка" type="error"></custom-badge>
+  <custom-badge id="badge2" value="Внимание" type="alert"></custom-badge>
+  <custom-badge id="badge3" value="ОК" type="normal"></custom-badge>
+
+  <br><br>
+  <button onclick="document.getElementById('badge1').hide()">Скрыть #1</button>
+  <button onclick="document.getElementById('badge1').show()">Показать #1</button>
+
+  <script>
+    class BadgeClass extends HTMLElement {
+      static get observedAttributes() {
+        return ['value', 'color', 'type'];
+      }
+
+      constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+
+        this.badge = document.createElement('span');
+        this.badge.className = 'badge';
+
+        const style = document.createElement('style');
+        style.textContent = `
+          .badge {
+    display: inline-block;
+    padding: .3em .3em;
+    font-size: 50%;
+    font-weight: 100;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+          }
+
+          @keyframes fadeInScale {
+            to {
+              opacity: 1;
+              transform: scale(1);
+            }
+          }
+
+          .hidden {
+            display: none !important;
+          }
+        `;
+
+        this.shadowRoot.append(style, this.badge);
+      }
+
+      connectedCallback() {
+        this._update();
+        this.show(); // Показываем с анимацией при подключении
+      }
+
+      attributeChangedCallback(name, oldValue, newValue) {
+        this._update();
+      }
+
+      _update() {
+        this.badge.textContent = this.getAttribute('value') || '';
+
+        const userColor = this.getAttribute('color');
+        const type = this.getAttribute('type');
+
+        if (userColor) {
+          this.badge.style.backgroundColor = userColor;
+        } else {
+          switch (type) {
+            case 'error':
+              this.badge.style.backgroundColor = '#dc3545';
+              this.badge.style.color = '#ffffff';
+              break;
+            case 'info':
+              this.badge.style.backgroundColor = '#ffc107';
+              this.badge.style.color = '#ffffff';
+              break;
+            case 'normal':
+            default:
+              this.badge.style.backgroundColor = '#28a745';
+              this.badge.style.color = '#ffffff';
+              break;
+          }
+        }
+      }
+
+      show() {
+        this.badge.classList.remove('hidden');
+        this.badge.style.animation = 'none'; // сброс анимации
+        // форсируем перерасчёт (reflow), чтобы анимация повторялась
+        void this.badge.offsetWidth;
+        this.badge.style.animation = 'fadeInScale 0.3s ease-out forwards';
+      }
+
+      hide() {
+        this.badge.classList.add('hidden');
+      }
+    }
+
+    customElements.define('custom-badge', BadgeClass);
+  </script>
+</body>
+</html>

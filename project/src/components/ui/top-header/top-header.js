@@ -62,6 +62,7 @@ class TopHeader extends HTMLElement {
                             </button>
                             <button class="btn btn-block btn-outline-dark filter-button">
                                 <i class="fas fa-filter"></i>
+			       <custom-badge id="filter-badge" value="+" type="normal"></custom-badge>
                             </button>
                         </div>
                     </div>
