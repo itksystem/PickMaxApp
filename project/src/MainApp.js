@@ -188,8 +188,7 @@ showCasePage() {
 	    console.log(o.loading, o.hasMoreProducts);			
 	    let search  = o.searchWord;
 	    let filters = o.getProductPageFilters();
-	    let filterView = (filters?.categories?.length > 0 
-			|| filters?.categories?.length > 0 
+	    let filterView = (filters?.categories?.length > 0 || filters?.brands?.length > 0 
 			  || filters?.minPrice != null
 			     || filters?.maxPrice != null )
 	    console.log(`fliterView=>`,filterView);
