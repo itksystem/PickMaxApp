@@ -55,16 +55,12 @@ class TopHeader extends HTMLElement {
                     </div>
                     <div class="header__bottom">
                         <div class="header__search">
-                            <input type="search" class="search-input" 
-                                   placeholder="${this.getAttribute('search-placeholder') || 'Поиск'}">
-                            <button class="disabled btn btn-block btn-outline-dark search-button">
-                                <i class="fas fa-search"></i>
-                            </button>
-                            <button class="btn btn-block btn-outline-dark filter-button">
+                            <query-search-selector  placeholder="${this.getAttribute('search-placeholder') || 'Поиск'}"></query-search-selector>
+                            <button class="btn btn-outline-dark filter-button">
                                 <i class="fas fa-filter"></i>
 			       <custom-badge id="filter-badge" value="+" type="normal"></custom-badge>
                             </button>
-                        </div>
+			</div>
                     </div>
                 </div>
             </header>

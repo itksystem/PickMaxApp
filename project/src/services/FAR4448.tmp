@@ -438,7 +438,7 @@ class WebAPI {
    getClientAddressMethod() { return `/api/bff/client/v1/suggest/address`}
 
 // поисковые слова
-    getSearchQueriesMethod() { return `/api/bff/warehouse/v1/products/search-queries`; }
+    getSearchQueriesMethod() { return `/api/bff/warehouse/v1/search-queries`; }
 
 // Второй фактор
     getSecurityQuestionsMethod() { return `/api/bff/confirmation/v1/security-questions`; }

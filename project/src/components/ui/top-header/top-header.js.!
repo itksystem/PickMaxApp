@@ -1,83 +1,161 @@
+
 class TopHeader extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-       // Создаем callback-ы
         this.onSearchButtonClick = null;
         this.onEnterPress = null;
+        this.onFilterButtonClick = null;
+	this.onSearchInputChange = null;
+        
+        // Кэширование элементов
+        this.elements = {
+            header: null,
+            searchInput: null,
+            searchButton: null,
+            filterButton: null
+        };
     }
 
-   static get observedAttributes() {
+    static get observedAttributes() {
         return ['search-placeholder'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-      console.log(name, oldValue, newValue);
-        if (name === 'search-placeholder' && this.searchInput) {
-            this.searchInput.setAttribute('placeholder', newValue);
+        if (name === 'search-placeholder' && this.elements.searchInput) {
+            this.elements.searchInput.placeholder = newValue;
         }
     }
 
     connectedCallback() {
-        // Создаем структуру HTML меню
-       const linkElem = document.createElement('link');
-       linkElem.setAttribute('rel', 'stylesheet');
-       linkElem.setAttribute('href', '/src/components/ui/top-header/css/top-header.css');
-       this.shadowRoot.appendChild(linkElem);
+        this._render();
+        this._setupEventListeners();
+        this.setSearchButtonCallback(this.searchButtonCallback.bind(this));
+        this.setFilterButtonCallback(this.filterButtonCallback.bind(this));
+        this.setEnterPressCallback(this.enterPressCallback.bind(this));
+        this.setSearchInputChangeCallback(this.searchInputChangeCallback.bind(this));
 
-       const linkElem2 = document.createElement('link');
-       linkElem2.setAttribute('rel', 'stylesheet');
-       linkElem2.setAttribute('href', '/src/pages/plugins/fontawesome-free/css/all.min.css');
-       this.shadowRoot.appendChild(linkElem2);
+	document.addEventListener('DOMContentLoaded', () => {
+        	this._setupScrollBehavior();
+        });
+    }
 
-       const linkElem3 = document.createElement('link');
-       linkElem3.setAttribute('rel', 'stylesheet');
-       linkElem3.setAttribute('href', '/src/pages/css/bootstrap.min.css');
-       this.shadowRoot.appendChild(linkElem3);
-
-       this.shadowRoot.innerHTML += `
+    _render() {
+        // Создаем все стили сразу
+        this.shadowRoot.innerHTML = `
+            <style>
+                @import "/src/components/ui/top-header/css/top-header.css";
+                @import "/src/pages/plugins/fontawesome-free/css/all.min.css";
+                @import "/src/pages/css/bootstrap.min.css";
+            </style>
             <header class="header">
                 <div class="header__container">
                     <div class="header__top">
-			<a href="/" class="header__logo">
-                     
-                        </a>
+                        <a href="/" class="header__logo"></a>
                     </div>
                     <div class="header__bottom">
                         <div class="header__search">
-                            <input type="search" class="search-input" placeholder=""${this.getAttribute('search-placeholder') || 'Поиск'}">
-                            <button  class="btn btn-block btn-outline-dark search-button"><i class="fas fa-search"></i></button>
-                            <button  class="btn btn-block btn-outline-dark filter-button"><i class="fas fa-filter"></i></button>
+                            <input type="search" class="search-input" 
+                                   placeholder="${this.getAttribute('search-placeholder') || 'Поиск'}">
+                            <button class="disabled btn btn-block btn-outline-dark search-button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                            <button class="btn btn-block btn-outline-dark filter-button">
+                                <i class="fas fa-filter"></i>
+			       <custom-badge id="filter-badge" value="+" type="normal"></custom-badge>
+                            </button>
                         </div>
                     </div>
                 </div>
             </header>
-        `;  // 🔍
-     // Обработчики событий для кнопки и клавиши Enter
-        this.searchInput = this.shadowRoot.querySelector('.search-input');
-        this.searchButton = this.shadowRoot.querySelector('.search-button');
-        this.filterButton = this.shadowRoot.querySelector('.filter-button');
+        `;
 
-        if( this.searchInput) {
-        this.searchInput.addEventListener('keydown', (event) => {
-            console.log(event.key);
-            if (event.key === 'Enter' && typeof this.onEnterPress === 'function') {
-                this.onEnterPress(this.searchInput.value);
-            }
-          });
-        }
-
-        if(this.searchButton) {
-        this.searchButton.addEventListener('click', () => {
-            console.log(event.key);
-            if (typeof this.onSearchButtonClick === 'function') {
-                this.onSearchButtonClick(this.searchInput.value);
-            }
-        });
-      }
+        // Кэшируем элементы
+        this.elements.header = this.shadowRoot.querySelector('.header');
+        this.elements.searchInput = this.shadowRoot.querySelector('.search-input');
+        this.elements.searchButton = this.shadowRoot.querySelector('.search-button');
+        this.elements.filterButton = this.shadowRoot.querySelector('.filter-button');
     }
 
-    // Метод для установки placeholder через свойство
+    _setupEventListeners() {
+        if (this.elements.searchInput) {
+            this.elements.searchInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' && typeof this.onEnterPress === 'function') {
+                    this.onEnterPress(this.elements.searchInput.value);
+                }
+            });
+            this.elements.searchInput.addEventListener('input', (event) => {
+                if (typeof this.onSearchInputChange === 'function') {
+                    this.onSearchInputChange(this.elements.searchInput.value);
+	 	if(this.elements.searchInput.value.trim() === ''){
+                    this.elements.searchButton.classList.add('disabled')
+		  } else
+                    this.elements.searchButton.classList.remove('disabled')
+                }
+            });
+        }
+
+        if (this.elements.searchButton) {
+            this.elements.searchButton.addEventListener('click', (event) => {
+                if (typeof this.onSearchButtonClick === 'function') {
+                    this.onSearchButtonClick(this.elements.searchInput.value);
+                }
+            });
+        }
+
+        if (this.elements.filterButton) {
+            this.elements.filterButton.addEventListener('click', (event) => {
+                if (typeof this.onFilterButtonClick === 'function') {
+                    this.onFilterButtonClick();
+                }
+            });
+        }
+
+
+    }
+
+ 
+ _setupScrollBehavior() {
+        let lastScroll = 0;
+        const headerHeight = this.elements.header?.offsetHeight || 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (currentScroll > lastScroll && currentScroll > headerHeight) {
+                this.elements.header.style.top = `-${headerHeight}px`;
+            } else {
+                this.elements.header.style.top = '0';
+            }
+
+            lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+        });
+
+        // Обработка свайпов для мобильных устройств
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        const handleGesture = () => {
+            if (touchEndY < touchStartY - 50) {
+                this.elements.header.style.top = `-${headerHeight}px`;
+            }
+
+            if (touchEndY > touchStartY + 50) {
+                this.elements.header.style.top = '0';
+            }
+        };
+
+        window.addEventListener('touchstart', (e) => {
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        window.addEventListener('touchend', (e) => {
+            touchEndY = e.changedTouches[0].screenY;
+            handleGesture();
+        }, { passive: true });
+    }
+
+    // Методы для управления placeholder
     set searchPlaceholder(value) {
         this.setAttribute('search-placeholder', value);
     }
@@ -87,82 +165,56 @@ class TopHeader extends HTMLElement {
     }
 
     // Методы для установки callback-ов
-    setSearchButtonCallback(callback) {
+    setSearchButtonCallback(callback) {	
         this.onSearchButtonClick = callback;
+    }
+
+    searchButtonCallback(callback) {
+	console.log(`searchButtonCallback`);
+	this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
+	  event : EVENT_TOP_HEADER_SEARCH_ACTION, value : this.elements.searchInput.value
+	})
     }
 
     setEnterPressCallback(callback) {
         this.onEnterPress = callback;
     }
 
+    setSearchInputChangeCallback(callback) {
+        this.onSearchInputChange = callback;
+    }
 
+    searchInputChangeCallback(){
+	console.log(`searchInputChangeCallback`);
+	this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
+	  event : EVENT_TOP_HEADER_SEARCH_INPUT_CHANGE_ACTION, value : this.elements.searchInput.value
+	})
+    }                          
 
+    enterPressCallback(){
+	console.log(`enterPressCallback`);
+	this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
+	  event : EVENT_TOP_HEADER_SEARCH_ACTION, value : this.elements.searchInput.value
+	})
+    }
 
+    setFilterButtonCallback(callback) {
+        this.onFilterButtonClick = callback;
+    }
 
+    filterButtonCallback(){
+	console.log(`filterButtonCallback`);
+	this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
+	  event : EVENT_TOP_HEADER_FILTER_ACTION
+	})
+    }                        
+
+    sendEvent(queue, o){
+	console.log(queue, o);
+      if (eventBus) {
+        eventBus.emit(queue, o);
+      }
+    }
 }
 
-
-document.addEventListener('DOMContentLoaded', () => {
-    const header = document.querySelector('top-header').shadowRoot.querySelector('.header');
-    let lastScroll = 0;
-
-    // Функция для скрытия/отображения меню при прокрутке
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-        if (currentScroll > lastScroll && currentScroll > header.offsetHeight) {
-            // Прокрутка вниз - скрыть меню
-            header.style.top = `-${header.offsetHeight}px`;
-        } else {
-            // Прокрутка вверх - показать меню
-            header.style.top = '0';
-        }
-
-        lastScroll = currentScroll <= 0 ? 0 : currentScroll; // Для мобильных устройств
-    });
-
-    // Обработка открытия мобильного меню
-
-    const topHeader = document.querySelector('top-header').shadowRoot.querySelector('.header');
-/*
-    burger.addEventListener('click', () => {
-        topHeader.classList.toggle('header--mobile-menu-open');
-    });
-*/
-    // Обработка свайпов для мобильных устройств
-    let touchStartY = 0;
-    let touchEndY = 0;
-
-    const handleGesture = () => {
-        if (touchEndY < touchStartY - 50) {
-            // Свайп вверх - скрыть меню
-            header.style.top = `-${header.offsetHeight}px`;
-        }
-
-        if (touchEndY > touchStartY + 50) {
-            // Свайп вниз - показать меню
-            header.style.top = '0';
-        }
-    };
-
-    window.addEventListener('touchstart', (e) => {
-        touchStartY = e.changedTouches[0].screenY;
-    }, false);
-
-    window.addEventListener('touchend', (e) => {
-        touchEndY = e.changedTouches[0].screenY;
-        handleGesture();
-    }, false);
-
-    // Закрытие мобильного меню при выборе пункта
-    const navLinks = document.querySelector('top-header').shadowRoot.querySelectorAll('.header__nav-item a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            topHeader.classList.remove('header--mobile-menu-open');
-        });
-    });
-});
-
-console.log('initialize top-header... ');
 customElements.define('top-header', TopHeader);
-

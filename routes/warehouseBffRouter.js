@@ -146,5 +146,24 @@ router.get('/v1/products/:id',
         }              
    });
  
+   router.post('/v1/products/search-queries', 	
+	async (req, res) => {          
+        try {            
+            const {query} = req.body;
+            if(!query) {
+                        res.status(200).json({status: true, queries : []});
+                        return;
+                 }
+            const response = await warehouseClient.getSearchQueries(req, query) ;
+            if (!response?.data?.status)  throw(500)
+                res.status(200).json({status: true, queries : response?.data?.queries || []});            
+        } catch (error) {
+                logger.error(error || 'Неизвестная ошибка' );   
+                res.status(Number(error) || 500).json({ code: (Number(error) || 500), message:  commonFunction.getDescriptionByCode((Number(error) || 500)) });
+        }              
+   });
+
+
+     
     
    module.exports = router;

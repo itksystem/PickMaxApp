@@ -1,11 +1,11 @@
-class RussiaRegionSelector extends HTMLElement {
+class QuerySearchSelector extends HTMLElement {
     constructor() {
         super();
         this.token = "bc9d9254dea2089592ccee5328f19ce9d004a43c";
         this.timeoutId = null;
         this.selectedSuggestion = null;
         this.onSelectCallback = null;
-        this.selectedRegions = [];
+        this.selectedQuery = [];
         this.maxSelection = 3; // Максимальное количество выбираемых городов
         this.attachShadow({ mode: 'open' });
 
@@ -14,76 +14,51 @@ class RussiaRegionSelector extends HTMLElement {
         this.webRequest = new WebRequest();
     }
 
-    async loadInitialRegions() {
-        try {
-            const regions = await this.getClientRegions();
-            
-            if (regions && regions.length > 0) {
-                regions.forEach(region => {
-                    this.selectedRegions.push({
-                        label: region.regionName,
-                        value: region.fiasId,
-                    });
-                });
-                
-                this.updateChips();
-                
-                const button = this.shadowRoot.getElementById('select-button');
-                button.disabled = this.selectedRegions.length >= this.maxSelection;
-                
-                if (this.selectedRegions.length >= this.maxSelection) {
-                    this.showLimitMessage();
-                }
-            }
-        } catch (error) {
-            console.error('Ошибка при загрузке начальных регионов:', error);
-        }
+    // Методы для установки callback-ов
+    setSearchButtonCallback(callback) {	
+        this.onSearchButtonClick = callback;
     }
 
-    async convertToDaDataFormat(regions) {
-        const results = [];
-        
-        for (const region of regions) {
-            try {
-                const response = await fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/address", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json",
-                        "Authorization": "Token " + this.token
-                    },
-                    body: JSON.stringify({
-                        query: region.fiasId,
-                        count: 1
-                    })
-                });
-
-                if (!response.ok) throw new Error("Ошибка запроса");
-                
-                const data = await response.json();
-                if (data.suggestions && data.suggestions.length > 0) {
-                    const suggestion = data.suggestions[0];
-                    results.push({
-                        regionName: `${suggestion.data.region} ${this.getRegionTitle(suggestion)}`,
-                        fiasId: suggestion.data.region_fias_id
-                    });
-                }
-            } catch (error) {
-                console.error(`Ошибка при получении данных для региона ${region.fiasId}:`, error);
-                results.push({
-                    regionName: region.regionName || "Неизвестный регион",
-                    fiasId: region.fiasId
-                });
-            }
-        }
-        
-        return results;
+    searchButtonCallback(callback) {
+	console.log(`searchButtonCallback`);
+	this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
+	  event : EVENT_TOP_HEADER_SEARCH_ACTION, value : this.input.value
+	})
     }
+
+    setEnterPressCallback(callback) {
+        this.onEnterPress = callback;
+    }
+
+    setSearchInputChangeCallback(callback) {
+        this.onSearchInputChange = callback;
+    }
+
+    searchInputChangeCallback(){
+	console.log(`searchInputChangeCallback`);
+	this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
+	  event : EVENT_TOP_HEADER_SEARCH_INPUT_CHANGE_ACTION, value : this.elements.searchInput.value
+	})
+    }                          
+
+    enterPressCallback(){
+	console.log(`enterPressCallback`);
+	this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
+	  event : EVENT_TOP_HEADER_SEARCH_ACTION, value : this.elements.searchInput.value
+	})
+    }
+
+    sendEvent(queue, o){
+	console.log(queue, o);
+      if (eventBus) {
+        eventBus.emit(queue, o);
+      }
+    }
+
 
     connectedCallback() {
         this.render();
         this.initEventListeners();
-        this.loadInitialRegions(); // Загружаем регионы при инициализации
     }
 
     setOnSelectCallback(callback) {
@@ -94,10 +69,15 @@ class RussiaRegionSelector extends HTMLElement {
 
     render() {
         this.shadowRoot.innerHTML = `
-            <div class="town-select">
+            <style>
+                @import "/src/components/ui/top-header/css/top-header.css";
+                @import "/src/pages/plugins/fontawesome-free/css/all.min.css";
+                @import "/src/pages/css/bootstrap.min.css";
+            </style>
+            <div class="query-select">
                 <div class="input-container">
-                    <input type="text" class="form-control is-valid" placeholder="Укажите регионы" id="region-input">
-                    <button id="select-button" disabled>+</button>
+                    <input type="text" class="form-control is-valid" placeholder="Поиск" id="query-input">
+                    <button id="select-button" disabled><i class="fas fa-search"></i></button>
                 </div>
                 <div class="suggestions-container" id="suggestions-container"></div>
                 <div class="limit-message" id="limit-message"></div>
@@ -110,7 +90,7 @@ class RussiaRegionSelector extends HTMLElement {
     getStyles() {
         return `
             <style>
-                .town-select {
+                .query-select {
                     position: relative;
                     width: 100%;
                     font-family: Arial, sans-serif;
@@ -120,13 +100,13 @@ class RussiaRegionSelector extends HTMLElement {
                     display: flex;
                     gap: 10px;
                 }
-                .town-select input:focus {
+                .query-select input:focus {
                     border-color: var(--bs-form-valid-border-color);
                     outline: none;
                     box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
                 }
                 
-                .town-select input {
+                .query-select input {
                     display: block;
                     width: 100%;
                     padding: .375rem .75rem;
@@ -145,23 +125,23 @@ class RussiaRegionSelector extends HTMLElement {
                     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
                 }
                 
-                .town-select button {
-                    padding: 10px 15px;
-                    background-color: #4CAF50;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    font-size: 16px;
-                    transition: background-color 0.3s;
-                }
+		.query-select button {
+		    padding: 0.3rem 1rem;
+		    background-color: #4CAF50;
+		    color: white;
+		    border: none;
+		    border-radius: 20%;
+		    cursor: pointer;
+		    font-size: 16px;
+		    transition: background-color 0.3s;
+		}
                 
-                .town-select button:disabled {
+                .query-select button:disabled {
                     background-color: #cccccc;
                     cursor: not-allowed;
                 }
                 
-                .town-select button:not(:disabled):hover {
+                .query-select button:not(:disabled):hover {
                     background-color: #45a049;
                 }
                 
@@ -180,18 +160,18 @@ class RussiaRegionSelector extends HTMLElement {
                     display: none;
                 }
                 
-                .region-selector-suggestion-item {
+                .query-selector-suggestion-item {
                     padding: 10px;
                     cursor: pointer;
                     border-bottom: 1px solid #eee;
                     font-size: 0.87rem;
                 }
                 
-                .region-selector-suggestion-item:last-child {
+                .query-selector-suggestion-item:last-child {
                     border-bottom: none;
                 }
                 
-                .region-selector-suggestion-item:hover, .region-selector-suggestion-item.highlighted {
+                .query-selector-suggestion-item:hover, .query-selector-suggestion-item.highlighted {
                     background-color: #f5f5f5;
                 }
                 
@@ -220,16 +200,14 @@ class RussiaRegionSelector extends HTMLElement {
 
     initEventListeners() {         
         try {
-            const input = this.shadowRoot.getElementById('region-input');
+            this.input = this.shadowRoot.getElementById('query-input');
             const button = this.shadowRoot.getElementById('select-button');
             const container = this.shadowRoot.getElementById('suggestions-container');
 
-            input.addEventListener('input', this.handleInput.bind(this));
-            input.addEventListener('focus', this.showSuggestionsIfData.bind(this));
-            input.addEventListener('keydown', this.handleKeyDown.bind(this));
-            button.addEventListener('click', this.handleButtonClick.bind(this));
-            this.shadowRoot.addEventListener('chip-removed', this.handleChipRemoved.bind(this));
-
+            this.input.addEventListener('input', this.handleInput.bind(this));
+            this.input.addEventListener('focus', this.showSuggestionsIfData.bind(this));
+            this.input.addEventListener('keydown', this.handleKeyDown.bind(this));
+            button.addEventListener('click', this.searchButtonCallback.bind(this));
             document.addEventListener('click', (e) => {
                 if (!this.shadowRoot.contains(e.target)) {
                     container.style.display = 'none';
@@ -240,15 +218,12 @@ class RussiaRegionSelector extends HTMLElement {
         }
     }
 
-    async getClientRegions() {
+    async getSearchQueries() {
         try {
-            console.log('getClientRegions');
-            const response = await this.webRequest.get(
-                this.api.getClientRegionsMethod(),
-                {},
-                true
-            );
-            return response?.regions || [];
+            console.log('getSearchQueries');
+            const response = await this.webRequest.get( this.api.getSearchQueriesMethod(), {},   true      );
+	    console.log();	
+            return response?.queries || [];
         } catch (error) {
             console.log('Ошибка при получении регионов:', error);
             return [];
@@ -257,11 +232,11 @@ class RussiaRegionSelector extends HTMLElement {
 
     handleChipRemoved(e) {
         const value = e.detail.value;
-        this.selectedRegions = this.selectedRegions.filter(region => region.value !== value);
+        this.selectedQuery = this.selectedQuery.filter(query => query.value !== value);
         this.updateChips();
 
         // Разблокируем кнопку если стало меньше максимального количества
-        if (this.selectedRegions.length < this.maxSelection) {
+        if (this.selectedQuery.length < this.maxSelection) {
             const button = this.shadowRoot.getElementById('select-button');
             button.disabled = false;
             const message = this.shadowRoot.getElementById('limit-message');
@@ -300,7 +275,7 @@ class RussiaRegionSelector extends HTMLElement {
     }
 
     async fetchAndShowSuggestions(query) {
-        const input = this.shadowRoot.getElementById('region-input');
+        const input = this.shadowRoot.getElementById('query-input');
         const container = this.shadowRoot.getElementById('suggestions-container');
         
         container.innerHTML = '<div class="loading">Загрузка...</div>';
@@ -316,39 +291,23 @@ class RussiaRegionSelector extends HTMLElement {
     }
 
     async fetchSuggestions(query) {
-        const response = await fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization": "Token " + this.token
-            },
-            body: JSON.stringify({
-                query: query,
-                locations: [
-                    { fias_level: 1 }
-                ],
-                restrict_value: true
-            })
-        });
-
-        if (!response.ok) throw new Error("Ошибка запроса");
-        const data = await response.json();
-        return data.suggestions || [];
+       const response = await this.webRequest.post(this.api.getSearchQueriesMethod(),{ query : query}, true);
+       if (!response.status) throw new Error("Ошибка запроса");
+       return response?.queries || [];
     }
 
     getRegionTitle(suggestion) {
-        if (!suggestion?.data?.region_type_full) return '';
+        if (!suggestion?.data?.query_type_full) return '';
 
-        if (suggestion.data.region_type_full === "город" ) {
+        if (suggestion.data.query_type_full === "город" ) {
             return "";
         }
 
-        if (suggestion.data.region_type_full === "республика") {
+        if (suggestion.data.query_type_full === "республика") {
             return "Республика";
         }
 
-        return suggestion.data.region_type_full;
+        return suggestion.data.query_type_full;
     }
 
     showSuggestions(suggestions, currentValue) {
@@ -359,14 +318,12 @@ class RussiaRegionSelector extends HTMLElement {
             container.innerHTML = '<div class="loading">Ничего не найдено</div>';
             return;
         }
-
+	console.log(`showSuggestions`,suggestions);
         suggestions.forEach(suggestion => {
-            let isRegion = suggestion.data.region_fias_id == suggestion.data.fias_id;
-            
-            if (isRegion && !this.selectedRegions.some(r => r.value === suggestion.data.region_fias_id)) {
+
                 const item = document.createElement('div');
-                item.className = 'region-selector-suggestion-item';
-                item.textContent = `${suggestion?.data?.region} ${this.getRegionTitle(suggestion)}`;
+                item.className = 'query-selector-suggestion-item';
+                item.textContent = `${suggestion?.query}`;
                 item.dataset.value = JSON.stringify(suggestion);
                 
                 item.addEventListener('click', () => {
@@ -374,7 +331,6 @@ class RussiaRegionSelector extends HTMLElement {
                 });
                 
                 container.appendChild(item);
-            }
         });
 
         container.style.display = 'block';
@@ -386,45 +342,29 @@ class RussiaRegionSelector extends HTMLElement {
     }
 
     selectSuggestion(suggestion, addChip = true) {
-        const input = this.shadowRoot.getElementById('region-input');
+        const input = this.shadowRoot.getElementById('query-input');
         const button = this.shadowRoot.getElementById('select-button');
         
-        input.value = `${suggestion?.data?.region} ${this.getRegionTitle(suggestion)}`;
+        input.value = `${suggestion?.query}`;
         this.selectedSuggestion = suggestion;
         this.hideSuggestions();
         button.disabled = false;
-
-        if (addChip && !this.selectedRegions.some(r => r.value === suggestion.data.region_fias_id)) {
-            const regionName = `${suggestion.data.region} ${this.getRegionTitle(suggestion)}`;
-            this.selectedRegions.push({
-                label: regionName,
-                value: suggestion.data.region_fias_id,
-                data: suggestion.data
-            });
-            this.updateChips();
-        }
 
         if (this.onSelectCallback) {
             this.onSelectCallback(suggestion);
         }
 
-        // Отключаем кнопку если выбрано максимальное количество городов
-        if (this.selectedRegions.length === this.maxSelection) {
-            const button = this.shadowRoot.getElementById('select-button');
-            button.disabled = true;
-            this.showLimitMessage();
-        }
     }
 
     updateChips() {
         const container = this.shadowRoot.getElementById('chips-container');
         container.innerHTML = '';
         
-        this.selectedRegions.forEach(region => {
+        this.selectedQuery.forEach(query => {
             const chip = document.createElement('chip-button');
-            chip.setAttribute('label', region.label);
-            chip.setAttribute('value', region.value);
-            chip.setAttribute('title', `ФИАС ID: ${region.value}`);
+            chip.setAttribute('label', query.label);
+            chip.setAttribute('value', query.value);
+            chip.setAttribute('title', `ФИАС ID: ${query.value}`);
             container.appendChild(chip);
         });
     }
@@ -433,15 +373,15 @@ class RussiaRegionSelector extends HTMLElement {
         let o = this;
         if (this.selectedSuggestion) {
             this.selectSuggestion(this.selectedSuggestion, true); // Добавляем чип при нажатии кнопки
-            const input = this.shadowRoot.getElementById('region-input');
+            const input = this.shadowRoot.getElementById('query-input');
             input.value = '';
             input.focus();
             const button = this.shadowRoot.getElementById('select-button');
             button.disabled = true;
 
             let selectedSuggestion = this.selectedSuggestion;
-            selectedSuggestion.regionName = `${this.selectedSuggestion.data.region} ${this.getRegionTitle(this.selectedSuggestion)}`;
-            this.dispatchEvent(new CustomEvent('region-selected', {
+            selectedSuggestion.queryName = `${this.selectedSuggestion.data.query} ${this.getRegionTitle(this.selectedSuggestion)}`;
+            this.dispatchEvent(new CustomEvent('query-selected', {
                 detail: { selectedSuggestion },
                 bubbles: true,
                 composed: true
@@ -451,7 +391,7 @@ class RussiaRegionSelector extends HTMLElement {
 
     handleKeyDown(e) {
         const container = this.shadowRoot.getElementById('suggestions-container');
-        const items = container.querySelectorAll('.region-selector-suggestion-item');
+        const items = container.querieselectorAll('.query-selector-suggestion-item');
         let currentIndex = -1;
 
         if (container.style.display !== 'block') return;
@@ -475,7 +415,7 @@ class RussiaRegionSelector extends HTMLElement {
             items[prevIndex].scrollIntoView({ block: 'nearest' });
         } else if (e.key === 'Enter') {
             e.preventDefault();
-            const highlighted = container.querySelector('.region-selector-suggestion-item.highlighted');
+            const highlighted = container.querieselector('.query-selector-suggestion-item.highlighted');
             if (highlighted) {
                 const suggestion = JSON.parse(highlighted.dataset.value);
                 this.selectSuggestion(suggestion, false); // Не добавляем чип при Enter
@@ -489,4 +429,4 @@ class RussiaRegionSelector extends HTMLElement {
     }
 }
 
-customElements.define('region-selector', RussiaRegionSelector);
+customElements.define('query-search-selector', QuerySearchSelector);
