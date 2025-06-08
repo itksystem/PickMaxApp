@@ -120,8 +120,8 @@ showCasePage() {
         o.cache = new Map(); // Кэш для уже загруженных страниц
 
 	const urlParams = new URLSearchParams(window.location.search);
-        o.searchWord = urlParams.get('search'); // "hello"
-	console.log(o.searchWord);
+	const searchValue = urlParams.get('search'); // "hello"
+	console.log(searchValue);
 
 	o.saveProductPageFilters({});
 

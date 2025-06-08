@@ -6,7 +6,7 @@ class QuerySearchSelector extends HTMLElement {
         this.selectedSuggestion = null;
         this.onSelectCallback = null;
         this.selectedQuery = [];
-        this.maxSelection = 3; // Максимальное количество выбираемых городов
+        this.maxSelection = 3; // Максимальное количество выбираемых элементов
         this.attachShadow({ mode: 'open' });
 
         this.common = new CommonFunctions();
@@ -14,16 +14,17 @@ class QuerySearchSelector extends HTMLElement {
         this.webRequest = new WebRequest();
     }
 
-    // Методы для установки callback-ов
+    // Установка callback-функций
     setSearchButtonCallback(callback) {	
         this.onSearchButtonClick = callback;
     }
 
-    searchButtonCallback(callback) {
-	console.log(`searchButtonCallback`);
-	this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
-	  event : EVENT_TOP_HEADER_SEARCH_ACTION, value : this.input.value
-	})
+    searchButtonCallback() {
+        console.log(`searchButtonCallback`);
+        this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
+            event: EVENT_TOP_HEADER_SEARCH_ACTION, 
+            value: this.input.value
+        })
     }
 
     setEnterPressCallback(callback) {
@@ -34,27 +35,28 @@ class QuerySearchSelector extends HTMLElement {
         this.onSearchInputChange = callback;
     }
 
-    searchInputChangeCallback(){
-	console.log(`searchInputChangeCallback`);
-	this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
-	  event : EVENT_TOP_HEADER_SEARCH_INPUT_CHANGE_ACTION, value : this.elements.searchInput.value
-	})
+    searchInputChangeCallback() {
+        console.log(`searchInputChangeCallback`);
+        this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
+            event: EVENT_TOP_HEADER_SEARCH_INPUT_CHANGE_ACTION, 
+            value: this.elements.searchInput.value
+        })
     }                          
 
-    enterPressCallback(){
-	console.log(`enterPressCallback`);
-	this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
-	  event : EVENT_TOP_HEADER_SEARCH_ACTION, value : this.elements.searchInput.value
-	})
+    enterPressCallback() {
+        console.log(`enterPressCallback`);
+        this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
+            event: EVENT_TOP_HEADER_SEARCH_ACTION, 
+            value: this.elements.searchInput.value
+        })
     }
 
-    sendEvent(queue, o){
-	console.log(queue, o);
-      if (eventBus) {
-        eventBus.emit(queue, o);
-      }
+    sendEvent(queue, o) {
+        console.log(queue, o);
+        if (eventBus) {
+            eventBus.emit(queue, o);
+        }
     }
-
 
     connectedCallback() {
         this.render();
@@ -76,7 +78,10 @@ class QuerySearchSelector extends HTMLElement {
             </style>
             <div class="query-select">
                 <div class="input-container">
-                    <input type="text" class="form-control is-valid" placeholder="Поиск" id="query-input">
+                      <div class="input-line-container w-100">
+                        <input type="text" class="form-control" placeholder="Поиск" id="query-input">
+                        <button class="clear-input" id="clear-input" style="display: none; "><i class="fas fa-times"></i></button>
+                      </div>
                     <button id="select-button" disabled><i class="fas fa-search"></i></button>
                 </div>
                 <div class="suggestions-container" id="suggestions-container"></div>
@@ -98,12 +103,8 @@ class QuerySearchSelector extends HTMLElement {
                 
                 .input-container {
                     display: flex;
-                    gap: 10px;
-                }
-                .query-select input:focus {
-                    border-color: var(--bs-form-valid-border-color);
-                    outline: none;
-                    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+                    gap: 5px;
+                    align-items: center;
                 }
                 
                 .query-select input {
@@ -125,17 +126,43 @@ class QuerySearchSelector extends HTMLElement {
                     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
                 }
                 
-		.query-select button {
-		    padding: 0.3rem 1rem;
-		    background-color: #4CAF50;
-		    color: white;
-		    border: none;
-		    border-radius: 20%;
-		    cursor: pointer;
-		    font-size: 16px;
-		    transition: background-color 0.3s;
-		}
+                .query-select input:focus {
+                    border-color: var(--bs-form-valid-border-color);
+                    outline: none;
+                    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+                }
                 
+                button.clear-input {
+                    background: none!important;
+                    border: none;
+                    cursor: pointer;
+                    color: #999;
+                    padding: 0 5px;
+                    font-size: 16px;
+		    font-size: 16px;
+		    position: absolute;
+		    top: 0;
+		    right: 3rem;
+		    color: #999!important;	
+                }
+
+                
+                .clear-input:hover {
+                    color: #666;
+                }
+                
+                .query-select button {
+                    padding: 0.3rem 1rem;
+                    background-color: #4CAF50;
+                    color: white;
+                    border: none;
+                    border-radius: 20%;
+                    cursor: pointer;
+                    font-size: 16px;
+                    transition: background-color 0.3s;
+                }
+
+              
                 .query-select button:disabled {
                     background-color: #cccccc;
                     cursor: not-allowed;
@@ -171,7 +198,8 @@ class QuerySearchSelector extends HTMLElement {
                     border-bottom: none;
                 }
                 
-                .query-selector-suggestion-item:hover, .query-selector-suggestion-item.highlighted {
+                .query-selector-suggestion-item:hover, 
+                .query-selector-suggestion-item.highlighted {
                     background-color: #f5f5f5;
                 }
                 
@@ -188,6 +216,7 @@ class QuerySearchSelector extends HTMLElement {
                     margin-top: 10px;
                     gap: 5px;
                 }
+                
                 .limit-message {
                     color: #e74c3c;
                     font-size: 0.9rem;
@@ -201,31 +230,67 @@ class QuerySearchSelector extends HTMLElement {
     initEventListeners() {         
         try {
             this.input = this.shadowRoot.getElementById('query-input');
-            const button = this.shadowRoot.getElementById('select-button');
+            this.clearButton = this.shadowRoot.getElementById('clear-input');
+            const searchButton = this.shadowRoot.getElementById('select-button');
             const container = this.shadowRoot.getElementById('suggestions-container');
 
-            this.input.addEventListener('input', this.handleInput.bind(this));
-            this.input.addEventListener('focus', this.showSuggestionsIfData.bind(this));
+            // Обработчик ввода текста
+            this.input.addEventListener('input', (e) => {
+                this.handleInput(e);
+                this.toggleClearButton();
+            });
+            
+            // Обработчик фокуса
+            this.input.addEventListener('focus', () => {
+                this.showSuggestionsIfData();
+                this.toggleClearButton();
+            });
+            
+            // Обработчик нажатия клавиш
             this.input.addEventListener('keydown', this.handleKeyDown.bind(this));
-            button.addEventListener('click', this.searchButtonCallback.bind(this));
+            
+            // Обработчик клика по кнопке поиска
+            searchButton.addEventListener('click', this.searchButtonCallback.bind(this));
+            
+            // Обработчик клика по кнопке очистки
+            this.clearButton.addEventListener('click', () => {
+                this.input.value = '';
+                this.input.focus();
+                this.toggleClearButton();
+                this.hideSuggestions();
+            });
+            
+            // Скрытие подсказок при клике вне компонента
             document.addEventListener('click', (e) => {
                 if (!this.shadowRoot.contains(e.target)) {
                     container.style.display = 'none';
                 }
             });
         } catch(error) {
-            console.log(error);
+            console.error('Ошибка инициализации обработчиков событий:', error);
+        }
+    }
+
+    // Показать/скрыть кнопку очистки
+    toggleClearButton() {
+        if (this.input.value.trim().length > 0) {
+            this.clearButton.style.display = 'block';
+        } else {
+            this.clearButton.style.display = 'none';
         }
     }
 
     async getSearchQueries() {
         try {
-            console.log('getSearchQueries');
-            const response = await this.webRequest.get( this.api.getSearchQueriesMethod(), {},   true      );
-	    console.log();	
+            console.log('Получение поисковых запросов');
+            const response = await this.webRequest.get(
+                this.api.getSearchQueriesMethod(), 
+                {}, 
+                true
+            );
             return response?.queries || [];
         } catch (error) {
-            console.log('Ошибка при получении регионов:', error);
+            console.error('Ошибка при получении запросов:', error);
             return [];
         }
     }
@@ -246,7 +311,7 @@ class QuerySearchSelector extends HTMLElement {
 
     showLimitMessage() {
         const message = this.shadowRoot.getElementById('limit-message');
-        message.textContent = `Доступно не более ${this.maxSelection} регионов`;
+        message.textContent = `Можно выбрать не более ${this.maxSelection} элементов`;
         message.style.display = 'block';
     }
 
@@ -267,6 +332,8 @@ class QuerySearchSelector extends HTMLElement {
         if (query.length === 0) {
             this.hideSuggestions();
             return;
+        } else {
+            button.disabled = false;
         }
 
         this.timeoutId = setTimeout(async () => {
@@ -285,29 +352,19 @@ class QuerySearchSelector extends HTMLElement {
             const suggestions = await this.fetchSuggestions(query);
             this.showSuggestions(suggestions, input.value);
         } catch (error) {
-            console.error('Ошибка:', error);
+            console.error('Ошибка загрузки подсказок:', error);
             container.innerHTML = '<div class="loading">Ошибка загрузки данных</div>';
         }
     }
 
     async fetchSuggestions(query) {
-       const response = await this.webRequest.post(this.api.getSearchQueriesMethod(),{ query : query}, true);
-       if (!response.status) throw new Error("Ошибка запроса");
-       return response?.queries || [];
-    }
-
-    getRegionTitle(suggestion) {
-        if (!suggestion?.data?.query_type_full) return '';
-
-        if (suggestion.data.query_type_full === "город" ) {
-            return "";
-        }
-
-        if (suggestion.data.query_type_full === "республика") {
-            return "Республика";
-        }
-
-        return suggestion.data.query_type_full;
+        const response = await this.webRequest.post(
+            this.api.getSearchQueriesMethod(),
+            { query: query }, 
+            true
+        );
+        if (!response.status) throw new Error("Ошибка запроса");
+        return response?.queries || [];
     }
 
     showSuggestions(suggestions, currentValue) {
@@ -318,19 +375,18 @@ class QuerySearchSelector extends HTMLElement {
             container.innerHTML = '<div class="loading">Ничего не найдено</div>';
             return;
         }
-	console.log(`showSuggestions`,suggestions);
-        suggestions.forEach(suggestion => {
 
-                const item = document.createElement('div');
-                item.className = 'query-selector-suggestion-item';
-                item.textContent = `${suggestion?.query}`;
-                item.dataset.value = JSON.stringify(suggestion);
-                
-                item.addEventListener('click', () => {
-                    this.selectSuggestion(suggestion, false); // Не добавляем чип сразу
-                });
-                
-                container.appendChild(item);
+        suggestions.forEach(suggestion => {
+            const item = document.createElement('div');
+            item.className = 'query-selector-suggestion-item';
+            item.textContent = `${suggestion?.query}`;
+            item.dataset.value = JSON.stringify(suggestion);
+            
+            item.addEventListener('click', () => {
+                this.selectSuggestion(suggestion, false);
+            });
+            
+            container.appendChild(item);
         });
 
         container.style.display = 'block';
@@ -349,11 +405,16 @@ class QuerySearchSelector extends HTMLElement {
         this.selectedSuggestion = suggestion;
         this.hideSuggestions();
         button.disabled = false;
+        this.toggleClearButton();
+
+        this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
+            event: EVENT_TOP_HEADER_SEARCH_ACTION, 
+            value: input.value
+        });
 
         if (this.onSelectCallback) {
             this.onSelectCallback(suggestion);
         }
-
     }
 
     updateChips() {
@@ -364,23 +425,22 @@ class QuerySearchSelector extends HTMLElement {
             const chip = document.createElement('chip-button');
             chip.setAttribute('label', query.label);
             chip.setAttribute('value', query.value);
-            chip.setAttribute('title', `ФИАС ID: ${query.value}`);
+            chip.setAttribute('title', `ID: ${query.value}`);
             container.appendChild(chip);
         });
     }
 
     handleButtonClick() {
-        let o = this;
         if (this.selectedSuggestion) {
-            this.selectSuggestion(this.selectedSuggestion, true); // Добавляем чип при нажатии кнопки
+            this.selectSuggestion(this.selectedSuggestion, true);
             const input = this.shadowRoot.getElementById('query-input');
             input.value = '';
             input.focus();
             const button = this.shadowRoot.getElementById('select-button');
             button.disabled = true;
+            this.toggleClearButton();
 
             let selectedSuggestion = this.selectedSuggestion;
-            selectedSuggestion.queryName = `${this.selectedSuggestion.data.query} ${this.getRegionTitle(this.selectedSuggestion)}`;
             this.dispatchEvent(new CustomEvent('query-selected', {
                 detail: { selectedSuggestion },
                 bubbles: true,
@@ -391,7 +451,7 @@ class QuerySearchSelector extends HTMLElement {
 
     handleKeyDown(e) {
         const container = this.shadowRoot.getElementById('suggestions-container');
-        const items = container.querieselectorAll('.query-selector-suggestion-item');
+        const items = container.querySelectorAll('.query-selector-suggestion-item');
         let currentIndex = -1;
 
         if (container.style.display !== 'block') return;
@@ -415,13 +475,18 @@ class QuerySearchSelector extends HTMLElement {
             items[prevIndex].scrollIntoView({ block: 'nearest' });
         } else if (e.key === 'Enter') {
             e.preventDefault();
-            const highlighted = container.querieselector('.query-selector-suggestion-item.highlighted');
+            this.sendEvent(QUEUE_TOP_HEADER_ACTIONS, {
+                event: EVENT_TOP_HEADER_SEARCH_ACTION, 
+                value: this.input.value
+            });
+
+            const highlighted = container.querySelector('.query-selector-suggestion-item.highlighted');
             if (highlighted) {
                 const suggestion = JSON.parse(highlighted.dataset.value);
-                this.selectSuggestion(suggestion, false); // Не добавляем чип при Enter
+                this.selectSuggestion(suggestion, false);
             } else if (items.length > 0) {
                 const suggestion = JSON.parse(items[0].dataset.value);
-                this.selectSuggestion(suggestion, false); // Не добавляем чип при Enter
+                this.selectSuggestion(suggestion, false);
             }
         } else if (e.key === 'Escape') {
             this.hideSuggestions();
